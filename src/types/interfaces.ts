@@ -45,4 +45,4 @@ interface RecipeStructure {
   };
 }
 
-export { RecipeStructure };
+export type { RecipeStructure };

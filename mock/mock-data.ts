@@ -1,4 +1,4 @@
-import { RecipeStructure } from "./interfaces";
+import { RecipeStructure } from "../src/types/interfaces";
 import {
   ALLERGY_TAGS,
   BAKING_PAN_SHAPES,
@@ -8,7 +8,7 @@ import {
   RECIPE_CATEGORIES,
   RECIPE_SUBCATEGORIES,
   UNITS,
-} from "./enums/index.enum";
+} from "../src/types/enums/index.enum";
 
 let recipes: Array<RecipeStructure> = [
   {
