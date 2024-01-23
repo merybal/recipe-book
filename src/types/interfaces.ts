@@ -1,13 +1,13 @@
 import {
-  ALLERGY_TAGS,
-  BAKING_PAN_SHAPES,
-  COUNTRIES,
-  ICONS,
-  NOTE_LOCATIONS,
-  RECIPE_CATEGORIES,
-  RECIPE_SUBCATEGORIES,
-  UNITS,
-} from "./enums/index.enum";
+  AllergyTags,
+  BakingPanShapes,
+  Countries,
+  Icons,
+  NoteLocations,
+  RecipeCategories,
+  RecipeSubcategories,
+  Units,
+} from "./constants/index.enum";
 
 interface RecipeStructure {
   title: string;
@@ -17,26 +17,26 @@ interface RecipeStructure {
     ingredients: {
       ingredient: string;
       quantity: string; // can be c/n
-      unit?: UNITS; // not required because of c/n
+      unit?: Units; // not required because of c/n
     }[];
     steps: string;
   }[];
   serves?: string;
   notes?: {
-    location: NOTE_LOCATIONS; //pre or post recipe
+    location: NoteLocations; //pre or post recipe
     note: string;
   }[];
-  icon: ICONS; //check type, will be svg
-  allergyTags?: ALLERGY_TAGS[];
-  categories: RECIPE_CATEGORIES[];
-  subCategories: RECIPE_SUBCATEGORIES[];
+  icon: Icons; //check type, will be svg
+  allergyTags?: AllergyTags[];
+  categories: RecipeCategories[];
+  subCategories: RecipeSubcategories[];
   source?: {
     author?: string;
     url?: string;
   };
-  countryOfOrigin?: COUNTRIES;
+  countryOfOrigin?: Countries;
   bakingPan?: {
-    shape: BAKING_PAN_SHAPES;
+    shape: BakingPanShapes;
     size: string;
   };
   bakingInstructions?: {
