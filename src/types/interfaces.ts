@@ -7,7 +7,13 @@ import {
   RecipeCategories,
   RecipeSubcategories,
   Units,
-} from "./constants/index.enum";
+} from "./constants";
+
+interface Ingredient {
+  ingredient: string;
+  quantity: string; // can be c/n
+  unit?: Units; // not required because of c/n
+}
 
 interface RecipeStructure {
   title: string;
@@ -45,4 +51,4 @@ interface RecipeStructure {
   };
 }
 
-export type { RecipeStructure };
+export type { RecipeStructure, Ingredient };

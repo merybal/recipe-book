@@ -1,5 +1,6 @@
-const ICONS = {} as const;
-// TODO completar
+const ICONS = {
+  TART: "Tarta",
+} as const;
 
 type ObjectValues<T> = T[keyof T];
 

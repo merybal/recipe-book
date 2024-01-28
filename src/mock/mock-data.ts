@@ -1,14 +1,4 @@
-import { RecipeStructure } from "../src/types/interfaces";
-import {
-  ALLERGY_TAGS,
-  BAKING_PAN_SHAPES,
-  COUNTRIES,
-  ICONS,
-  NOTE_LOCATIONS,
-  RECIPE_CATEGORIES,
-  RECIPE_SUBCATEGORIES,
-  UNITS,
-} from "../src/types/enums/index.enum";
+import { RecipeStructure } from "../types/interfaces";
 
 let recipes: Array<RecipeStructure> = [
   {
@@ -20,17 +10,17 @@ let recipes: Array<RecipeStructure> = [
           {
             ingredient: "Harina 0000",
             quantity: "235",
-            unit: UNITS.GRAMS,
+            unit: "g",
           },
           {
             ingredient: "Manteca",
             quantity: "200",
-            unit: UNITS.GRAMS,
+            unit: "g",
           },
           {
             ingredient: "Azúcar impalpable",
             quantity: "150",
-            unit: UNITS.GRAMS,
+            unit: "g",
           },
           {
             ingredient: "Huevos",
@@ -39,7 +29,7 @@ let recipes: Array<RecipeStructure> = [
           {
             ingredient: "Sal",
             quantity: "1",
-            unit: UNITS.PINCH,
+            unit: "pzc",
           },
           {
             ingredient: "Ralladura de limón",
@@ -66,24 +56,20 @@ let recipes: Array<RecipeStructure> = [
     ],
     notes: [
       {
-        location: NOTE_LOCATIONS.PRE,
+        location: "pre",
         note: "Sacar la manteca de la heladera con anticipacion ya que se necesita en estado pomada para todas las preparaciones.",
       },
     ],
-    icon: ICONS,
-    allergyTags: [ALLERGY_TAGS.VEGETARIAN],
-    categories: [RECIPE_CATEGORIES.SWEET],
-    subCategories: [
-      RECIPE_SUBCATEGORIES.CAKE,
-      RECIPE_SUBCATEGORIES.TART,
-      RECIPE_SUBCATEGORIES.FRUIT,
-    ],
+    icon: "Tarta",
+    allergyTags: ["Vegetariano"],
+    categories: ["Dulce"],
+    subCategories: ["Torta", "Tarta", "Fruta"],
     source: {
       author: "Lau Bolomo",
     },
-    countryOfOrigin: COUNTRIES.GB,
+    countryOfOrigin: "United Kingdom",
     bakingPan: {
-      shape: BAKING_PAN_SHAPES.ROUND,
+      shape: "Circular",
       size: "24 cm",
     },
     bakingInstructions: {
