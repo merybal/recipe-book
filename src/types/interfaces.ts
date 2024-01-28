@@ -16,6 +16,7 @@ interface Ingredient {
 }
 
 interface RecipeStructure {
+  id: number;
   title: string;
   preparations: // Las preparaciones pueden venir por separado o todos los ingredientes juntos
   {

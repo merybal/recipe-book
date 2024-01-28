@@ -7,11 +7,11 @@ interface Ingredient {
   unit?: Units; // not required because of c/n
 }
 
-interface IngredientsProps {
+interface IngredientListProps {
   ingredientList: Ingredient[];
 }
 
-const Ingredients = ({ ingredientList }: IngredientsProps) => {
+const IngredientList = ({ ingredientList }: IngredientListProps) => {
   return (
     <div>
       <h2>Ingredientes</h2>
@@ -30,4 +30,4 @@ const Ingredients = ({ ingredientList }: IngredientsProps) => {
   );
 };
 
-export default Ingredients;
+export default IngredientList;
