@@ -37,11 +37,13 @@ let recipes: Array<RecipeStructure> = [
             quantity: "c/n",
           },
         ],
-        steps: `Precalentar el horno a 180°C.
-        Mezclar la manteca pomada con el azúcar con la batidora hasta que se haga una crema. Agregar los huevos y la ralladura de limón, y después la harina.
-        Llevar a la heladera 1 hora o al freezer 30 min.
-        Estirar la masa hasta lograr un espesor de 5 mm (no menos que eso porque se puede desarmar por el líquido del relleno). Fonzar el molde enmantecado y pinchar la masa con un tenedor hasta atravesarla, para que no se infle. Cubrir con papel aluminio y dar peso con garbanzos o porotos.
-        Darle una primera cocción en el horno a 180°C durante 10 min, destapar y cocer 5-10 min mas sin dejar que se dore. Tiene que quedar “blanca”.`,
+        // steps: `Precalentar el horno a 180°C.
+        // Mezclar la manteca pomada con el azúcar con la batidora hasta que se haga una crema. Agregar los huevos y la ralladura de limón, y después la harina.
+        // Llevar a la heladera 1 hora o al freezer 30 min.
+        // Estirar la masa hasta lograr un espesor de 5 mm (no menos que eso porque se puede desarmar por el líquido del relleno). Fonzar el molde enmantecado y pinchar la masa con un tenedor hasta atravesarla, para que no se infle. Cubrir con papel aluminio y dar peso con garbanzos o porotos.
+        // Darle una primera cocción en el horno a 180°C durante 10 min, destapar y cocer 5-10 min mas sin dejar que se dore. Tiene que quedar “blanca”.`,
+        steps:
+          "Precalentar el horno a 180°C.\nMezclar la manteca pomada con el azúcar con la batidora hasta que se haga una crema. Agregar los huevos y la ralladura de limón, y después la harina.\nLlevar a la heladera 1 hora o al freezer 30 min.\nEstirar la masa hasta lograr un espesor de 5 mm (no menos que eso porque se puede desarmar por el líquido del relleno). Fonzar el molde enmantecado y pinchar la masa con un tenedor hasta atravesarla, para que no se infle. Cubrir con papel aluminio y dar peso con garbanzos o porotos.\nDarle una primera cocción en el horno a 180°C durante 10 min, destapar y cocer 5-10 min mas sin dejar que se dore. Tiene que quedar “blanca”.",
       },
       {
         title: "Relleno",

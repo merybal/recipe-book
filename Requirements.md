@@ -17,5 +17,7 @@ Propuesta inicial
 - Pagina de secciones/categorias
 - Pagina de conversiones de medidas, temperaturas, etc
 
+- Mobile y desktop
+
 PROYECTO FUTURO (basado en este)
-Pagina de recetas internacionales por pais.
+Pagina de recetas internacionales por pais. (microservicios)

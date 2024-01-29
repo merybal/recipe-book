@@ -18,7 +18,7 @@ const IngredientList = ({ ingredientList }: IngredientListProps) => {
       <ul>
         {ingredientList.map((item) => {
           return (
-            <li>
+            <li key={item.ingredient}>
               <p>{item.ingredient}</p>
               <p>{item.quantity}</p>
               <p>{item.unit}</p>
