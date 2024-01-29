@@ -1,3 +1,5 @@
+//TODO revisar nombre, no se entiende
+
 const NOTE_LOCATIONS = {
   PRE: "pre",
   POST: "post",
