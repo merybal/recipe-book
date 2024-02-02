@@ -19,6 +19,7 @@ const IngredientList = ({ ingredientList }: IngredientListProps) => {
         {ingredientList.map((item) => {
           return (
             <li key={item.ingredient}>
+              {/* TODO pasar concatenado en un solo P */}
               <p>{item.ingredient}</p>
               <p>{item.quantity}</p>
               <p>{item.unit}</p>
