@@ -18,6 +18,7 @@ interface Ingredient {
 interface RecipeStructure {
   id: number;
   title: string;
+  image: string;
   preparations: // Las preparaciones pueden venir por separado o todos los ingredientes juntos
   {
     title?: string; // Si no tiene titulo es porque no tiene subpreparacion
