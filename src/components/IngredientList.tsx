@@ -20,9 +20,9 @@ const IngredientList = ({ ingredientList }: IngredientListProps) => {
           return (
             <li key={item.ingredient}>
               {/* TODO pasar concatenado en un solo P */}
-              <p>{item.ingredient}</p>
-              <p>{item.quantity}</p>
-              <p>{item.unit}</p>
+              <p>
+                {item.ingredient} {item.quantity} {item.unit}
+              </p>
             </li>
           );
         })}

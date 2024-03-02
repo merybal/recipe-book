@@ -1,5 +1,5 @@
 import "./App.css";
-import Recipe from "./pages/Recipe";
+import Recipe from "@/pages/Recipe";
 
 function App() {
   return (
