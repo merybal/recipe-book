@@ -1,5 +1,5 @@
 // TODO Hacer un componente que componga el ingrediente y otro que cree la lista?
-import { Units } from "../types/constants/units";
+import { Units } from "@/types/constants/units";
 
 interface Ingredient {
   ingredient: string;
@@ -14,7 +14,7 @@ interface IngredientListProps {
 const IngredientList = ({ ingredientList }: IngredientListProps) => {
   return (
     <div>
-      <h2>Ingredientes</h2>
+      <h2 className="">Ingredientes</h2>
       <ul>
         {ingredientList.map((item) => {
           return (
