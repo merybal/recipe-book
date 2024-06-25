@@ -1,0 +1,11 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+@import "./styles/_reset.scss";
+@import "./styles/_variables.scss";
+@import "./styles/_base.scss";
+
+* {
+  box-sizing: border-box;
+}

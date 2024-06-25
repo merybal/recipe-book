@@ -1,0 +1,23 @@
+@import "./variables";
+
+body {
+  //   color: white;
+}
+
+h1,
+h2 {
+  font-family: $title;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p,
+a {
+  font-family: $text;
+}
