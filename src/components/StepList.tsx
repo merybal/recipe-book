@@ -1,24 +1,30 @@
 //TODO revisar nombre del componente, Process? StepsBody? Instructions
-import "./tempstyling.css";
+import { PreparationsProps } from "@/types/interfaces";
 
-interface StepListProps {
-  steps: string;
-}
+import styles from "./StepList.module.scss";
 
-const StepList = ({ steps }: StepListProps) => {
-  const replaceWithBr = () => {
-    return steps.replace(/\n/g, "<br />");
-  };
+const StepList = ({ preparations }: PreparationsProps) => {
+  console.log(preparations);
 
   return (
-    <div>
-      <h2>Procedimiento</h2>
+    <div className={styles["step-list"]}>
+      <h2 className="">Procedimiento</h2>
+      {preparations.map((preparation) => {
+        const replaceWithBr = () => {
+          return preparation.steps.replace(/\n/g, "<br />");
+        };
+        return (
+          <div>
+            <h3>{preparation.title}</h3>
+            {/* <p className={styles.steps}>{preparation.steps}</p> */}
+            <p
+              className={styles.steps}
+              dangerouslySetInnerHTML={{ __html: replaceWithBr() }}
+            />
+          </div>
+        );
+      })}
       {/* TODO como renderizo el texto separado por parrafos desde un solo string */}
-      {/* <p className="text-body">{steps}</p> */}
-      <p
-        className="text-body"
-        dangerouslySetInnerHTML={{ __html: replaceWithBr() }}
-      />
     </div>
   );
 };

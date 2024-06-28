@@ -4,8 +4,8 @@ const recipes: Array<RecipeStructure> = [
   {
     id: 1,
     title: "Apple Crumble Lau",
-    image:
-      "https://i.pinimg.com/564x/2e/74/82/2e74822ac0e898b00ea20ed53d077c30.jpg",
+    imgUrl:
+      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
     preparations: [
       {
         title: "Masa",
