@@ -1,0 +1,16 @@
+.recipe-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  .recipe-title {
+    text-align: center;
+    text-transform: uppercase;
+
+    .main-image {
+    }
+  }
+
+  .preparation-title {
+    text-transform: uppercase;
+  }
+}

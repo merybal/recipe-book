@@ -15,10 +15,24 @@ interface Ingredient {
   unit?: Units; // not required because of c/n
 }
 
+interface Preparation {
+  title?: string;
+  ingredients: {
+    ingredient: string;
+    quantity: string; // can be c/n
+    unit?: Units;
+  }[];
+  steps: string;
+}
+
+interface PreparationsProps {
+  preparations: Preparation[];
+}
+
 interface RecipeStructure {
   id: number;
   title: string;
-  image: string;
+  imgUrl: string;
   preparations: // Las preparaciones pueden venir por separado o todos los ingredientes juntos
   {
     title?: string; // Si no tiene titulo es porque no tiene subpreparacion
@@ -53,4 +67,4 @@ interface RecipeStructure {
   };
 }
 
-export type { RecipeStructure, Ingredient };
+export type { RecipeStructure, Ingredient, Preparation, PreparationsProps };
