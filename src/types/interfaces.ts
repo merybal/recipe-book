@@ -15,6 +15,20 @@ interface Ingredient {
   unit?: Units; // not required because of c/n
 }
 
+interface Preparation {
+  title?: string;
+  ingredients: {
+    ingredient: string;
+    quantity: string; // can be c/n
+    unit?: Units;
+  }[];
+  steps: string;
+}
+
+interface PreparationsProps {
+  preparations: Preparation[];
+}
+
 interface RecipeStructure {
   id: number;
   title: string;
@@ -53,4 +67,4 @@ interface RecipeStructure {
   };
 }
 
-export type { RecipeStructure, Ingredient };
+export type { RecipeStructure, Ingredient, Preparation, PreparationsProps };
