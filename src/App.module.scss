@@ -1,0 +1,25 @@
+@import "src/styles/_variables.scss";
+@import "src/styles/_base.scss";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 75rem; //1200px
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 2rem;
+
+  .app-header {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    .logo {
+      max-height: 6rem;
+      flex-shrink: 0;
+    }
+  }
+}

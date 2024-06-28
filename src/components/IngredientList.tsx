@@ -1,32 +1,30 @@
-// TODO Hacer un componente que componga el ingrediente y otro que cree la lista?
-import { Units } from "@/types/constants/units";
+import { PreparationsProps } from "@/types/interfaces";
 
-interface Ingredient {
-  ingredient: string;
-  quantity: string; // can be c/n
-  unit?: Units; // not required because of c/n
-}
+import styles from "./IngredientList.module.scss";
 
-interface IngredientListProps {
-  ingredientList: Ingredient[];
-}
-
-const IngredientList = ({ ingredientList }: IngredientListProps) => {
+const IngredientList = ({ preparations }: PreparationsProps) => {
   return (
-    <div>
-      <h2 className="">Ingredientes</h2>
-      <ul>
-        {ingredientList.map((item) => {
-          return (
-            <li key={item.ingredient}>
-              {/* TODO pasar concatenado en un solo P */}
-              <p>
-                {item.ingredient} {item.quantity} {item.unit}
-              </p>
-            </li>
-          );
-        })}
-      </ul>
+    <div className={styles["ingredient-list"]}>
+      <h2>Ingredientes</h2>
+      {preparations.map((preparation) => {
+        return (
+          <div key={preparation.title}>
+            <h3>{preparation.title}</h3>
+            <ul>
+              {preparation.ingredients.map((item) => {
+                return (
+                  <li key={item.ingredient} className={styles["ingredient"]}>
+                    <p>{item.ingredient}</p>
+                    <p>
+                      {item.quantity} {item.unit}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 };
