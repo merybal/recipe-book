@@ -4,8 +4,6 @@ import { PreparationsProps } from "@/types/interfaces";
 import styles from "./StepList.module.scss";
 
 const StepList = ({ preparations }: PreparationsProps) => {
-  console.log(preparations);
-
   return (
     <div className={styles["step-list"]}>
       <h2 className="">Procedimiento</h2>
@@ -14,7 +12,7 @@ const StepList = ({ preparations }: PreparationsProps) => {
           return preparation.steps.replace(/\n/g, "<br />");
         };
         return (
-          <div>
+          <div key={preparation.title}>
             <h3>{preparation.title}</h3>
             {/* <p className={styles.steps}>{preparation.steps}</p> */}
             <p
