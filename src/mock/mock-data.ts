@@ -36,7 +36,7 @@ const recipes: Array<RecipeStructure> = [
           },
           {
             ingredient: "Ralladura de limón",
-            quantity: "c/n",
+            unit: "c/n",
           },
         ],
         steps:

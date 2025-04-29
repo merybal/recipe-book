@@ -11,17 +11,13 @@ import {
 
 interface Ingredient {
   ingredient: string;
-  quantity: string; // can be c/n
+  quantity?: string; //como tipar para que sea Numero entero, Numero con coma y fraccion
   unit?: Units; // not required because of c/n
 }
 
 interface Preparation {
   title?: string;
-  ingredients: {
-    ingredient: string;
-    quantity: string; // can be c/n
-    unit?: Units;
-  }[];
+  ingredients: Ingredient[];
   steps: string;
 }
 
@@ -33,16 +29,8 @@ interface RecipeStructure {
   id: number;
   title: string;
   imgUrl: string;
-  preparations: // Las preparaciones pueden venir por separado o todos los ingredientes juntos
-  {
-    title?: string; // Si no tiene titulo es porque no tiene subpreparacion
-    ingredients: {
-      ingredient: string;
-      quantity: string; // can be c/n
-      unit?: Units; // not required because of c/n
-    }[];
-    steps: string;
-  }[];
+  /* Las preparaciones pueden venir por separado o todos los ingredientes juntos */
+  preparations: Preparation[];
   serves?: string;
   notes?: {
     location: NoteLocations; //pre or post recipe
