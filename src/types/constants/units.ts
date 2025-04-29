@@ -13,7 +13,7 @@
 // } as const;
 
 const UNITS = {
-  // TODO completar
+  // TODO completarlo
   GRAMS: "g",
   KILOGRAMS: "kg",
   PINCH: "pzc",
