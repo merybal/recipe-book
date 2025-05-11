@@ -4,7 +4,7 @@ import JSZip from "jszip";
 
 type Section = {
   sectionTitle?: string;
-  sectionBody: string[]; //o array de strings dependiendo de si tiene parrafos
+  sectionBody: string[];
 };
 
 type FoodAllergy = "glutenFree" | "lactoseFree" | "vegan" | "vegetarian";
@@ -47,19 +47,31 @@ const FileUploadIDML = () => {
   const getSubSectionContent = (
     i: number,
     storyContentArray: Element[],
+    h2: string,
     h3: string,
     p: string,
-    recipeObject: Recipe
+    recipeObject: Recipe,
+    sectionKey: keyof Recipe
   ) => {
     const sections: Section[] = [];
     let currentSection: Section | null = null;
+    let genericSection: Section | null = null;
+    let hasSeenH3 = false;
+
     for (let j = i + 1; j < storyContentArray.length; j++) {
       const element = storyContentArray[j];
       const style = element.getAttribute("AppliedParagraphStyle");
 
-      // Nuevo subtítulo (nueva sección)
+      // Cortar si aparece un nuevo h2 (y no es un h3 disfrazado)
+      if (style?.includes(h2) && !style.includes(h3) && j > i + 1) {
+        break;
+      }
+
+      // Detectar subtítulo (h3)
       if (style?.includes(h3)) {
-        // Si ya hay una sección activa, guardarla antes de iniciar otra
+        hasSeenH3 = true;
+
+        // Guardar sección previa
         if (currentSection) {
           sections.push(currentSection);
         }
@@ -72,30 +84,42 @@ const FileUploadIDML = () => {
           sectionTitle: titleContent[0] || "",
           sectionBody: [],
         };
+
+        continue;
       }
 
-      // Cuerpo de sección actual
-      if (style?.includes(p) && currentSection) {
+      // Detectar párrafos (p)
+      if (style?.includes(p)) {
         const bodyContent = Array.from(element.querySelectorAll("Content"))
           .map((el) => el.textContent?.trim())
           .filter((text): text is string => Boolean(text));
 
-        currentSection.sectionBody.push(...bodyContent);
-      }
-
-      // Si aparece un nuevo h2 (como "Preparación", "Cocción", etc), se corta la búsqueda
-      if (style?.includes("h2-left") && !style.includes(h3) && j > i + 1) {
-        break;
+        if (hasSeenH3 && currentSection) {
+          currentSection.sectionBody.push(...bodyContent);
+        } else {
+          if (!genericSection) {
+            genericSection = {
+              sectionTitle: "",
+              sectionBody: [],
+            };
+          }
+          genericSection.sectionBody.push(...bodyContent);
+        }
       }
     }
 
-    // Guardar la última sección si existe
-    if (currentSection) {
+    if (hasSeenH3 && currentSection) {
       sections.push(currentSection);
     }
 
-    // Agregar a recipeObject
-    recipeObject.ingredients.push(...sections);
+    if (!hasSeenH3 && genericSection) {
+      sections.push(genericSection);
+    }
+
+    const target = recipeObject[sectionKey];
+    if (Array.isArray(target)) {
+      (target as Section[]).push(...sections);
+    }
   };
 
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -157,14 +181,14 @@ const FileUploadIDML = () => {
         if (style?.includes(h2Left)) {
           switch (text) {
             case "Ingredientes":
-              console.log("entro ingredientes");
-
               getSubSectionContent(
                 i,
                 storyContentArray,
+                h2Left,
                 h3Left,
                 pLeft,
-                recipeObject
+                recipeObject,
+                "ingredients"
               );
 
               break;
@@ -185,6 +209,18 @@ const FileUploadIDML = () => {
             default:
               break;
           }
+        }
+
+        if (style?.includes(h2Right)) {
+          getSubSectionContent(
+            i,
+            storyContentArray,
+            h2Right,
+            h3Right,
+            pRight,
+            recipeObject,
+            "preparation"
+          );
         }
       }
     }
