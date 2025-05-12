@@ -1,24 +1,21 @@
-import type { Section } from "./FileUploadIDML";
+import type { InstructionsSection } from "@/types/types";
 
-import styles from "./RecipeSection.module.scss";
+import styles from "./Instructions.module.scss";
 
-type RecipeSectionProps = {
+type InstructionsProps = {
   title: string;
-  sections: Section[];
+  sections: InstructionsSection[];
 };
 
-const RecipeSection = ({ title, sections }: RecipeSectionProps) => {
-  const sectionClassName =
-    title === "Ingredientes" ? "ingredient" : "preparation";
-
+const Instructions = ({ title, sections }: InstructionsProps) => {
   return (
-    <div className={styles["recipe-section"]}>
+    <div>
       <h2>{title}</h2>
       {sections.map((section, i) => {
         return (
-          <div key={`seccion-${i}`} className={styles["section-subtitle"]}>
+          <div key={`seccion-${i}`}>
             {section.sectionTitle && <h3>{section.sectionTitle}</h3>}
-            <ul className={styles[`${sectionClassName}-list`]}>
+            <ul>
               {section.sectionBody &&
                 section.sectionBody.map((paragraph, j) => {
                   return (
@@ -35,4 +32,4 @@ const RecipeSection = ({ title, sections }: RecipeSectionProps) => {
   );
 };
 
-export default RecipeSection;
+export default Instructions;
