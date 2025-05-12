@@ -1,6 +1,7 @@
-import RecipeSection from "@/components/RecipeSection";
+import Instructions from "@/components/Instructions";
+import IngredientList from "@/components/IngredientList";
 
-import type { RecipeType } from "@/components/FileUploadIDML";
+import type { RecipeType } from "@/types/types";
 
 import recipes from "@/mock/mock-data";
 
@@ -17,7 +18,7 @@ const Recipe = ({ recipe }: RecipeProps) => {
     cookingTime,
     mold,
     serves,
-    preparation,
+    instructions,
     source,
     foodAllergies,
   } = recipe;
@@ -25,8 +26,8 @@ const Recipe = ({ recipe }: RecipeProps) => {
     <div className={styles["recipe-container"]}>
       <h1 className={styles["recipe-title"]}>{title}</h1>
       <img className={styles["main-image"]} src={recipes[0].imgUrl} />
-      <RecipeSection title="Ingredientes" sections={ingredients} />
-      <RecipeSection title="Preparación" sections={preparation} />
+      <IngredientList sections={ingredients} />
+      <Instructions title="Preparación" sections={instructions} />
     </div>
   );
 };
