@@ -2,31 +2,39 @@ import React, { useState } from "react";
 import JSZip from "jszip";
 // Docs: https://stuk.github.io/jszip/
 
-type Section = {
+import Recipe from "@/pages/Recipe";
+
+export type Section = {
   sectionTitle?: string;
   sectionBody: string[];
 };
 
+type Source = {
+  //puede tener mas de una?
+  name?: ""; //name siempre obligatorio?
+  url?: ""; //puede tener mas de un link
+};
+
 type FoodAllergy = "glutenFree" | "lactoseFree" | "vegan" | "vegetarian";
 
-type Recipe = {
+export type RecipeType = {
   title: string;
-  preparation: Section[];
   ingredients: Section[];
   cookingTime?: string[];
   mold?: string[];
   serves?: string[];
-  source?: string;
+  preparation: Section[];
+  source?: Source;
   foodAllergies?: FoodAllergy[];
 };
 
 const FileUploadIDML = () => {
-  const [recipe, setRecipe] = useState<Recipe>();
+  const [recipe, setRecipe] = useState<RecipeType>();
 
-  function getSectionContent<K extends keyof Recipe>(
+  function getSectionContent<K extends keyof RecipeType>(
     i: number,
     storyContentArray: Element[],
-    recipeObject: Recipe,
+    recipeObject: RecipeType,
     section: K
   ) {
     const next = storyContentArray[i + 1];
@@ -50,8 +58,8 @@ const FileUploadIDML = () => {
     h2: string,
     h3: string,
     p: string,
-    recipeObject: Recipe,
-    sectionKey: keyof Recipe
+    recipeObject: RecipeType,
+    sectionKey: keyof RecipeType
   ) => {
     const sections: Section[] = [];
     let currentSection: Section | null = null;
@@ -122,27 +130,85 @@ const FileUploadIDML = () => {
     }
   };
 
+  async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
+    const allergyTags: string[] = [];
+
+    for (const path of Object.keys(zip.files)) {
+      // Filtrar solo archivos XML que probablemente contengan <Link>
+      if (!path.endsWith(".xml")) continue;
+
+      const content = await zip.files[path].async("text");
+      const xml = new DOMParser().parseFromString(content, "application/xml");
+
+      const links = Array.from(xml.getElementsByTagName("Link"));
+
+      for (const link of links) {
+        const uri = link.getAttribute("LinkResourceURI");
+        if (uri) {
+          // Extraer solo el nombre del archivo, si hay una ruta
+          const parts = uri.split(/[\\/]/);
+          const name = parts[parts.length - 1];
+
+          const foodAllergyImageNames = [
+            "gluten",
+            "dairy",
+            "vegan",
+            "vegetarian",
+          ];
+
+          const foundAllergies = foodAllergyImageNames.filter((allergy) =>
+            name.includes(allergy)
+          );
+
+          for (const allergy of foundAllergies) {
+            switch (allergy) {
+              case "gluten":
+                allergyTags.push("glutenFree" as FoodAllergy);
+                break;
+              case "dairy":
+                allergyTags.push("lactoseFree" as FoodAllergy);
+                break;
+              case "vegan":
+                allergyTags.push("vegan" as FoodAllergy);
+                break;
+              case "vegetarian":
+                allergyTags.push("vegetarian" as FoodAllergy);
+                break;
+            }
+          }
+        }
+      }
+    }
+
+    return allergyTags;
+  }
+
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const zip = await JSZip.loadAsync(file);
-    const storyFiles = Object.keys(zip.files).filter((path) =>
-      path.startsWith("Stories/")
-    );
-
-    // console.log("storyFiles", storyFiles);
-
-    const recipeObject: Recipe = {
+    const recipeObject: RecipeType = {
+      //revisar si se inician las cosas opcionales
       title: "",
       preparation: [],
       ingredients: [],
       cookingTime: [],
       mold: [],
       serves: [],
-      source: "",
+      source: {},
       foodAllergies: [],
     };
+
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const zip = await JSZip.loadAsync(file);
+    const allergyTags = await getImageNamesFromIDML(zip);
+    recipeObject?.foodAllergies?.push(...(allergyTags as FoodAllergy[]));
+    // console.log("Imágenes encontradas:", imageNames);
+
+    const storyFiles = Object.keys(zip.files).filter((path) =>
+      path.startsWith("Stories/")
+    );
+
+    // console.log("storyFiles", storyFiles);
 
     for (const path of storyFiles) {
       //barre los archivos xlm
@@ -176,6 +242,10 @@ const FileUploadIDML = () => {
 
         if (style?.includes(titleA || titleB)) {
           recipeObject.title = text;
+        }
+
+        if (style?.includes(source)) {
+          console.log("entra a source");
         }
 
         if (style?.includes(h2Left)) {
@@ -224,6 +294,7 @@ const FileUploadIDML = () => {
         }
       }
     }
+
     console.log("Recipe que se va a setear:", recipeObject);
     setRecipe(recipeObject);
   };
@@ -231,16 +302,7 @@ const FileUploadIDML = () => {
   return (
     <div>
       <input type="file" accept=".idml" onChange={handleFile} />
-      <div>
-        {/* {sections.map((section, i) => (
-          <div key={i}>
-            <h2>{section.title}</h2>
-            {section.paragraphs.map((p, j) => (
-              <p key={j}>{p}</p>
-            ))}
-          </div>
-        ))} */}
-      </div>
+      <div>{recipe && <Recipe recipe={recipe} />}</div>
     </div>
   );
 };
