@@ -21,7 +21,6 @@ const FileUploadIDML = () => {
 
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const recipeObject: RecipeType = {
-      //revisar si se inician las cosas opcionales
       title: "",
       instructions: [],
       ingredients: [],
@@ -39,13 +38,10 @@ const FileUploadIDML = () => {
     const zip = await JSZip.loadAsync(file);
     const allergyTags = await getImageNamesFromIDML(zip);
     recipeObject?.foodAllergies?.push(...(allergyTags as FoodAllergy[]));
-    // console.log("Imágenes encontradas:", imageNames);
 
     const storyFiles = Object.keys(zip.files).filter((path) =>
       path.startsWith("Stories/")
     );
-
-    // console.log("storyFiles", storyFiles);
 
     for (const path of storyFiles) {
       //barre los archivos xlm
@@ -54,20 +50,18 @@ const FileUploadIDML = () => {
 
       const parser = new DOMParser();
       const xml = parser.parseFromString(content, "application/xml");
-      // console.log("xml", xml);
 
       const paragraphs = xml.getElementsByTagName("ParagraphStyleRange");
       const storyContentArray = Array.from(paragraphs);
-      // console.log("paragraphs", paragraphs);
 
       const titleA = "h1a";
       const titleB = "h1b";
-      const h2Left = "h2-left"; // titulo ingredientes
-      const h3Left = "h3-left"; // subtitulo ingredientes
-      const pLeft = "p-left"; // cuerpo ingredientes
-      const h2Right = "h2-right"; // titulo ingredientes
-      const h3Right = "h3-right"; // subtitulo ingredientes
-      const pRight = "p-right"; // cuerpo ingredientes
+      const h2Left = "h2-left";
+      const h3Left = "h3-left";
+      const pLeft = "p-left";
+      const h2Right = "h2-right";
+      const h3Right = "h3-right";
+      const pRight = "p-right";
 
       for (const [i, para] of storyContentArray.entries()) {
         //barre el contenido de los archivos
@@ -90,13 +84,12 @@ const FileUploadIDML = () => {
                 h3Left,
                 pLeft
               );
-              // const test = parseIngredientList(ingredientsSections);
-              // console.log("test", test);
 
               recipeObject.ingredients =
                 parseIngredientList(ingredientsSections);
               break;
             }
+
             case "Cocción":
               getSectionContent(
                 i,
@@ -105,14 +98,17 @@ const FileUploadIDML = () => {
                 "cookingTime"
               );
               break;
+
             case "Molde":
               getSectionContent(i, storyContentArray, recipeObject, "mold");
 
               break;
+
             case "Rinde":
               getSectionContent(i, storyContentArray, recipeObject, "serves");
 
               break;
+
             default:
               break;
           }
