@@ -1,6 +1,6 @@
 import type { IngredientsSection } from "@/types/types";
 
-import styles from "./IngredientList.scss";
+import styles from "./IngredientList.module.scss";
 
 type IngredientListProps = {
   sections: IngredientsSection[];
@@ -18,10 +18,15 @@ const IngredientList = ({ sections }: IngredientListProps) => {
               {section.sectionBody &&
                 section.sectionBody.map((paragraph, j) => {
                   return (
-                    <li key={`ingrediente-${j}`}>
-                      <p>{paragraph.name}</p>
-                      <p>{paragraph.quantity}</p>
-                      <p>{paragraph.unit}</p>
+                    <li
+                      key={`ingrediente-${j}`}
+                      className={styles["ingredient-li"]}
+                    >
+                      <p>{paragraph.name},</p>
+                      <div className={styles["ingredient-quantity"]}>
+                        <p>{paragraph.quantity}</p>
+                        <p>{paragraph.unit}</p>
+                      </div>
                     </li>
                   );
                 })}

@@ -1,0 +1,9 @@
+.ingredient-li {
+  display: flex;
+  gap: 4px;
+
+  .ingredient-quantity {
+    display: flex;
+    gap: 4px;
+  }
+}
