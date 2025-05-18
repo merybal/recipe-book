@@ -1,13 +1,27 @@
-.recipe-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  .recipe-title {
-    text-align: center;
-    text-transform: uppercase;
+.test {
+  background-color: lightblue;
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 45vh;
 
     .main-image {
+      object-fit: cover;
+      overflow: hidden;
+      height: 45vh;
     }
+  }
+
+  .recipe-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .recipe-title {
+    // text-align: center;
+    // text-transform: uppercase;
   }
 
   .preparation-title {

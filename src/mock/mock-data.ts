@@ -1,4 +1,108 @@
 import { RecipeStructure } from "../types/interfaces";
+import type { RecipeType } from "@/types/types";
+
+const recipe: RecipeType = {
+  title: "Torta de Manzana",
+  instructions: [
+    {
+      sectionTitle: "Masa",
+      sectionBody: [
+        "Precalentar horno a 180ºC.",
+        "Procesar la manteca, la harina y el azúcar juntos hasta obtener masa con aspecto de migas homogéneas. Si no tiene procesadora, dejar la manteca fuera hasta que tome consistencia blanda. Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar. Enfriar la masa en la heladera o freezer.",
+        "Pelar y cortar la manzana en cubos de 1 a 1,5 cm. Enmantecar el molde y esparcir las manzanas sobre la base. Cubrir las manzanas esparciéndoles la masa sobre ellas.",
+      ],
+    },
+    {
+      sectionTitle: "Relleno",
+      sectionBody: [
+        "Precalentar horno a 110ºC.",
+        "Procesar la manteca, la harina y el azúcar juntos hasta obtener masa con aspecto de migas homogéneas. Si no tiene procesadora, dejar la manteca fuera hasta que tome consistencia blanda. Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar. Enfriar la masa en la heladera o freezer.",
+        "Pelar y cortar la manzana en cubos de 1 a 1,5 cm. Enmantecar el molde y esparcir las manzanas sobre la base. Cubrir las manzanas esparciéndoles la masa sobre ellas.",
+      ],
+    },
+  ],
+  ingredients: [
+    {
+      sectionTitle: "Masa",
+      sectionBody: [
+        {
+          name: "Harina 0000",
+          quantity: "116",
+          unit: "g",
+        },
+        {
+          name: "Manteca",
+          quantity: "100",
+          unit: "g",
+        },
+        {
+          name: "Azúcar impalpable",
+          quantity: "75",
+          unit: "g",
+        },
+        {
+          name: "Yema de huevo",
+          quantity: "2",
+        },
+        {
+          name: "Sal fina",
+          quantity: "1",
+        },
+        {
+          name: "Ralladura de limón",
+          unit: "c/n",
+        },
+      ],
+    },
+    {
+      sectionTitle: "Relleno",
+      sectionBody: [
+        {
+          name: "Harina 000",
+          quantity: "116",
+          unit: "g",
+        },
+        {
+          name: "Manteca",
+          quantity: "100",
+          unit: "g",
+        },
+        {
+          name: "Azúcar impalpable",
+          quantity: "75",
+          unit: "g",
+        },
+        {
+          name: "Yema de huevo",
+          quantity: "2",
+        },
+        {
+          name: "Sal fina",
+          quantity: "1",
+        },
+        {
+          name: "Ralladura de limón",
+          unit: "c/n",
+        },
+      ],
+    },
+  ],
+  cookingTime: ["10 min", "180°C"],
+  mold: ["Circular", "22-24 cm"],
+  serves: ["4 porciones"],
+  notes: [
+    "Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar.",
+    "Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar.",
+  ],
+  source: {
+    name: ["Paulina Cocina", "Laura Bolomo"],
+    url: [
+      "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
+      "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
+    ],
+  },
+  foodAllergies: ["lactoseFree", "glutenFree", "vegan"],
+};
 
 const recipes: Array<RecipeStructure> = [
   {
@@ -78,4 +182,4 @@ const recipes: Array<RecipeStructure> = [
   },
 ];
 
-export default recipes;
+export { recipes, recipe };

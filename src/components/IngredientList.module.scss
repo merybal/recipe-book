@@ -1,9 +1,21 @@
-.ingredient-li {
+.ingredients-sections {
   display: flex;
-  gap: 4px;
+  flex-direction: column;
+  margin-bottom: 1rem;
 
-  .ingredient-quantity {
+  .ingredients-ul {
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    gap: 0.875rem;
+
+    .ingredient-li {
+      display: flex;
+      gap: 4px;
+
+      .ingredient-quantity {
+        display: flex;
+        gap: 4px;
+      }
+    }
   }
 }

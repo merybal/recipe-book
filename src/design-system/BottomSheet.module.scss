@@ -1,0 +1,41 @@
+.bottom-sheet {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 1000;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  transition: height 0.3s ease;
+
+  .handle-container {
+    height: 48px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .handle {
+      width: 40px;
+      height: 6px;
+      background: gray;
+      border-radius: 2.5px;
+    }
+  }
+
+  .content {
+    padding: 16px;
+    overflow-y: auto;
+    height: calc(100% - 48px);
+  }
+}
+
+.half-screen {
+  height: 60vh;
+}
+
+.full-screen {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  height: 100vh;
+}

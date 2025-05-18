@@ -12,9 +12,9 @@ const IngredientList = ({ sections }: IngredientListProps) => {
       <h2>Ingredientes</h2>
       {sections.map((section, i) => {
         return (
-          <div key={`seccion-${i}`}>
+          <div key={`seccion-${i}`} className={styles["ingredients-sections"]}>
             {section.sectionTitle && <h3>{section.sectionTitle}</h3>}
-            <ul>
+            <ul className={styles["ingredients-ul"]}>
               {section.sectionBody &&
                 section.sectionBody.map((paragraph, j) => {
                   return (
