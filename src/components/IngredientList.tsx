@@ -1,4 +1,5 @@
 import type { IngredientsSection } from "@/types/types";
+import { ReactComponent as CheckCircle } from "../assets/check-circle.svg";
 
 import styles from "./IngredientList.module.scss";
 
@@ -9,31 +10,36 @@ type IngredientListProps = {
 const IngredientList = ({ sections }: IngredientListProps) => {
   return (
     <div>
-      <h2>Ingredientes</h2>
-      {sections.map((section, i) => {
-        return (
-          <div key={`seccion-${i}`} className={styles["ingredients-sections"]}>
-            {section.sectionTitle && <h3>{section.sectionTitle}</h3>}
-            <ul className={styles["ingredients-ul"]}>
-              {section.sectionBody &&
-                section.sectionBody.map((paragraph, j) => {
-                  return (
-                    <li
-                      key={`ingrediente-${j}`}
-                      className={styles["ingredient-li"]}
-                    >
-                      <p>{paragraph.name},</p>
-                      <div className={styles["ingredient-quantity"]}>
-                        <p>{paragraph.quantity}</p>
-                        <p>{paragraph.unit}</p>
-                      </div>
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        );
-      })}
+      <h2 className={styles.ingredientsTitle}>Ingredientes</h2>
+      <div className={styles.sectionsContainer}>
+        {sections.map((section, i) => {
+          return (
+            <div key={`seccion-${i}`} className={styles.section}>
+              {section.sectionTitle && (
+                <h3 className={styles.sectionTitle}>{section.sectionTitle}</h3>
+              )}
+              <ul className={styles["ingredientsUl"]}>
+                {section.sectionBody &&
+                  section.sectionBody.map((paragraph, j) => {
+                    return (
+                      <li
+                        key={`ingrediente-${j}`}
+                        className={styles["ingredientLi"]}
+                      >
+                        <CheckCircle className={styles["checkCircle"]} />
+                        <p>{paragraph.name},</p>
+                        <div className={styles["ingredientQuantity"]}>
+                          <p>{paragraph.quantity}</p>
+                          <p>{paragraph.unit}</p>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

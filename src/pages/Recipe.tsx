@@ -28,9 +28,9 @@ const Recipe = ({ recipe }: RecipeProps) => {
   const isMobile = useIsMobile();
 
   const content = (
-    <div className={styles["recipe-container"]}>
-      <h1 className={styles["recipe-title"]}>{title}</h1>
-
+    <div className={styles.recipeContainer}>
+      <h1 className={styles.title}>{title}</h1>
+      <Separator />
       <IngredientList sections={ingredients} />
       <Separator />
       <Instructions title="Preparación" sections={instructions} />
@@ -38,15 +38,15 @@ const Recipe = ({ recipe }: RecipeProps) => {
   );
 
   return (
-    <div className={styles["test"]}>
-      <div className={styles["image-container"]}>
+    <>
+      <div className={styles.imageContainer}>
         <img
-          className={styles["main-image"]}
+          className={styles.recipeImage}
           src="https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg"
         />
       </div>
       {isMobile ? <BottomSheet>{content}</BottomSheet> : <div>{content}</div>}
-    </div>
+    </>
   );
 };
 

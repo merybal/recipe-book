@@ -1,7 +1,11 @@
+@use "../styles/_font" as *;
+@use "../styles/_color" as *;
 @import "./variables";
 
+// TODO borrar las que no se usen
 body {
-  color: $font-color;
+  @include Color($font-color: main-text);
+  @include Font($family: text);
 }
 
 h1,
@@ -9,34 +13,29 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: $text;
-  font-weight: 700;
+  @include Font($family: text, $weight: bold);
 }
 
 h1 {
-  font-size: 1.5rem;
+  @include Font($size: lg);
 }
 
 h2 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  @include Font($size: md);
 }
 
 h3 {
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
+  @include Font($size: sm);
 }
 
 p,
 a {
-  font-family: $text;
-  color: $primary-text;
-  font-weight: 500;
+  @include Font($weight: medium);
 }
 
 @media (max-width: 600px) {
   p,
   a {
-    font-size: 0.875rem;
+    @include Font($size: sm);
   }
 }

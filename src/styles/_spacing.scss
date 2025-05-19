@@ -1,0 +1,106 @@
+$sizes: (
+  // 0px
+  none: 0,
+  // 4px
+  xxs: 0.25rem,
+  // 8px
+  xs: 0.5rem,
+  // 12px
+  sm: 0.75rem,
+  // 16px
+  md: 1rem,
+  // 24px
+  lg: 1.5rem,
+  // 32px
+  xl: 2rem,
+  // 48px
+  xxl: 3rem
+);
+
+@function resolve-size($value) {
+  @if map-has-key($sizes, $value) {
+    @return map-get($sizes, $value);
+  } @else {
+    @return $value;
+  }
+}
+
+@mixin Padding(
+  $all: null,
+  $top: null,
+  $bottom: null,
+  $left: null,
+  $right: null,
+  $x: null,
+  $y: null
+) {
+  @if $all {
+    padding: resolve-size($all);
+  }
+
+  @if $x {
+    padding-left: resolve-size($x);
+    padding-right: resolve-size($x);
+  }
+
+  @if $y {
+    padding-top: resolve-size($y);
+    padding-bottom: resolve-size($y);
+  }
+
+  @if $top {
+    padding-top: resolve-size($top);
+  }
+
+  @if $bottom {
+    padding-bottom: resolve-size($bottom);
+  }
+
+  @if $left {
+    padding-left: resolve-size($left);
+  }
+
+  @if $right {
+    padding-right: resolve-size($right);
+  }
+}
+
+@mixin Margin(
+  $all: null,
+  $top: null,
+  $bottom: null,
+  $left: null,
+  $right: null,
+  $x: null,
+  $y: null
+) {
+  @if $all {
+    margin: resolve-size($all);
+  }
+
+  @if $x {
+    margin-left: resolve-size($x);
+    margin-right: resolve-size($x);
+  }
+
+  @if $y {
+    margin-top: resolve-size($y);
+    margin-bottom: resolve-size($y);
+  }
+
+  @if $top {
+    margin-top: resolve-size($top);
+  }
+
+  @if $bottom {
+    margin-bottom: resolve-size($bottom);
+  }
+
+  @if $left {
+    margin-left: resolve-size($left);
+  }
+
+  @if $right {
+    margin-right: resolve-size($right);
+  }
+}
