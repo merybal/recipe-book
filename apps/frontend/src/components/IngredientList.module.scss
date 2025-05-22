@@ -1,0 +1,41 @@
+@use "../styles/spacing" as *;
+
+.ingredientsTitle {
+  @include Margin($bottom: lg);
+}
+
+.sectionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  .section {
+    display: flex;
+    flex-direction: column;
+
+    .sectionTitle {
+      @include Margin($bottom: md);
+    }
+
+    .ingredientsUl {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .ingredientLi {
+        display: flex;
+        gap: 0.25rem;
+        align-items: center;
+
+        .checkCircle {
+          @include Margin($right: xxs);
+        }
+
+        .ingredientAmount {
+          display: flex;
+          gap: 0.25rem;
+        }
+      }
+    }
+  }
+}

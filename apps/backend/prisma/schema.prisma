@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Recipes {
+  id                    Int                   @id @default(autoincrement())
+  title                 String                @db.VarChar(255)
+  cooking_time          String?               @db.VarChar(255)
+  cooking_temperature   Int?                  @db.Integer
+  servings              String?               @db.VarChar(255)
+  mold_type             String?               @db.VarChar(255)
+  mold_size             String?               @db.VarChar(255)
+  created_at            DateTime              @default(now())
+  updated_at            DateTime              @default(now()) @updatedAt
+  deleted_at            DateTime?
+  ingredients           Ingredients[]
+  instructions          Instructions[]
+  recipe_food_allergies RecipeFoodAllergies[]
+}
+
+model Ingredients {
+  id              Int       @id @default(autoincrement())
+  recipe_id       Int
+  subrecipe_title String?   @db.VarChar(255)
+  name            String    @db.VarChar(255)
+  amount          String?   @db.VarChar(255)
+  unit            String?   @db.VarChar(255)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now()) @updatedAt
+  deleted_at      DateTime?
+  recipe          Recipes   @relation(fields: [recipe_id], references: [id])
+}
+
+model Instructions {
+  id              Int       @id @default(autoincrement())
+  recipe_id       Int
+  subrecipe_title String?   @db.VarChar(255)
+  body            String    @db.VarChar(255)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now()) @updatedAt
+  deleted_at      DateTime?
+  recipe          Recipes   @relation(fields: [recipe_id], references: [id])
+}
+
+model FoodAllergies {
+  id                    Int                   @id @default(autoincrement())
+  name                  String                @db.VarChar(255)
+  created_at            DateTime              @default(now())
+  updated_at            DateTime              @default(now()) @updatedAt
+  deleted_at            DateTime?
+  recipe_food_allergies RecipeFoodAllergies[]
+}
+
+model RecipeFoodAllergies {
+  id              Int           @id @default(autoincrement())
+  recipe_id       Int
+  food_allergy_id Int
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @default(now()) @updatedAt
+  deleted_at      DateTime?
+  recipe          Recipes       @relation(fields: [recipe_id], references: [id])
+  food_allergy    FoodAllergies @relation(fields: [food_allergy_id], references: [id])
+}
