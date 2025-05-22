@@ -26,3 +26,6 @@ yarn-error.log*
 
 pendientes.md
 Logo.psd
+
+/apps/backend/.env
+.env
