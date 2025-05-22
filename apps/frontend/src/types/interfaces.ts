@@ -31,7 +31,7 @@ interface RecipeStructure {
   imgUrl: string;
   /* Las preparaciones pueden venir por separado o todos los ingredientes juntos */
   preparations: Preparation[];
-  serves?: string;
+  servings?: string;
   notes?: {
     location: NoteLocations; //pre or post recipe
     note: string;

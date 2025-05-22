@@ -29,7 +29,7 @@ const Recipe = ({ recipe }: RecipeProps) => {
     ingredients,
     cookingTime,
     mold,
-    serves,
+    servings,
     instructions,
     source,
     foodAllergies,
@@ -61,9 +61,9 @@ const Recipe = ({ recipe }: RecipeProps) => {
                 })}
               </Tag>
             )}
-            {serves && (
+            {servings && (
               <Tag>
-                {serves.map((line) => {
+                {servings.map((line) => {
                   return <p key={line}>{line}</p>;
                 })}
               </Tag>

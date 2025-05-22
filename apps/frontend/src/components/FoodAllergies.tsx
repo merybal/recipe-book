@@ -1,5 +1,5 @@
 // TODO elegir nuevos iconos que peguen mejor
-import { ReactComponent as LactoseFreeIcon } from "../assets/dairy-free.svg";
+import { ReactComponent as DairyFreeIcon } from "../assets/dairy-free.svg";
 import { ReactComponent as GlutenFreeIcon } from "../assets/gluten-free.svg";
 import { ReactComponent as VeganIcon } from "../assets/vegan.svg";
 import { ReactComponent as VegatarianIcon } from "../assets/vegetarian.svg";
@@ -12,7 +12,7 @@ export type FoodAllergiesProps = {
 };
 
 const iconMap: Record<string, JSX.Element> = {
-  lactoseFree: <LactoseFreeIcon className={styles.allergyIcon} />,
+  dairyFree: <DairyFreeIcon className={styles.allergyIcon} />,
   glutenFree: <GlutenFreeIcon className={styles.allergyIcon} />,
   vegan: <VeganIcon className={styles.allergyIcon} />,
   vegetarian: <VegatarianIcon className={styles.allergyIcon} />,

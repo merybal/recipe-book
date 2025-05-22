@@ -192,7 +192,7 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
               allergyTags.push("glutenFree" as FoodAllergy);
               break;
             case "dairy":
-              allergyTags.push("lactoseFree" as FoodAllergy);
+              allergyTags.push("dairyFree" as FoodAllergy);
               break;
             case "vegan":
               allergyTags.push("vegan" as FoodAllergy);

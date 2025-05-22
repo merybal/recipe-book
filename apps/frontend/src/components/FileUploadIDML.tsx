@@ -26,7 +26,7 @@ const FileUploadIDML = () => {
       ingredients: [],
       cookingTime: [],
       mold: [],
-      serves: [],
+      servings: [],
       notes: [],
       source: {},
       foodAllergies: [],
@@ -105,7 +105,7 @@ const FileUploadIDML = () => {
               break;
 
             case "Rinde":
-              getSectionContent(i, storyContentArray, recipeObject, "serves");
+              getSectionContent(i, storyContentArray, recipeObject, "servings");
 
               break;
 

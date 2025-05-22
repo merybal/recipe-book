@@ -104,16 +104,15 @@ const TileGrid = ({ className, grid = "single" }: TileGridProps) => {
       )}
     >
       {recipeArray.map((recipe) => (
-        <>
+        <div key={recipe.id}>
           <Tile
-            key={recipe.id}
             className={styles.tile}
             imageUrl={recipe.imageUrl}
             title={recipe.title}
             variant={grid === "single" ? "rectangle" : "square"}
             {...(recipe.source && { source: recipe.source })}
           />
-        </>
+        </div>
       ))}
     </div>
   );

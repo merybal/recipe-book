@@ -27,8 +27,66 @@
 
 ## Project setup
 
-```bash
+```
 $ pnpm install
+```
+
+## Backend Setup for Recipe Book
+
+This backend is built with:
+
+- [NestJS](https://nestjs.com/) — A progressive Node.js framework
+- [Prisma](https://www.prisma.io/) — Modern ORM for PostgreSQL
+- [PostgreSQL](https://www.postgresql.org/)
+- [Neon](https://neon.tech/) — Serverless PostgreSQL platform
+
+---
+
+### Prerequisites
+
+- Node.js v18 or higher
+- npm or pnpm
+- Access to PostgreSQL (local or Neon cloud)
+
+---
+
+### Installation and Database Setup
+
+1. Clone the repository and navigate to the backend folder:
+
+```
+git clone <your-repo-url>
+cd recipe-book/backend
+```
+
+2. Install dependencies:
+
+```
+pnpm install
+```
+
+3. Create a .env file in the backend folder with your database URL:
+
+```
+DATABASE_URL="postgresql://<user>:<password>@<host>:5432/<database>?schema=public"
+```
+
+4. Run Prisma migrations to create your database schema:
+
+```
+npx prisma migrate dev --name init
+```
+
+5. Generate Prisma client:
+
+```
+npx prisma generate
+```
+
+6. (Optional) Open Prisma Studio to explore your data:
+
+```
+npx prisma studio
 ```
 
 ## Compile and run the project

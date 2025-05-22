@@ -63,7 +63,7 @@ const FileUpload = () => {
     const indexIngredients = lower.indexOf("ingredientes");
     const indexCookingTime = lower.indexOf("cocción");
     const indexMold = lower.indexOf("molde");
-    const indexServes = lower.indexOf("rinde");
+    const indexServings = lower.indexOf("rinde");
 
     const secciones = {
       title: undefined as string | undefined,
@@ -72,7 +72,7 @@ const FileUpload = () => {
       ingredients: undefined as string | undefined,
       cookingTime: undefined as string | undefined,
       mold: undefined as string | undefined,
-      serves: undefined as string | undefined,
+      servings: undefined as string | undefined,
     };
 
     // Helper para cortar texto entre dos índices
@@ -86,7 +86,7 @@ const FileUpload = () => {
       { key: "ingredients", index: indexIngredients, label: "ingredientes" },
       { key: "cookingTime", index: indexCookingTime, label: "cocción" },
       { key: "mold", index: indexMold, label: "molde" },
-      { key: "serves", index: indexServes, label: "rinde" },
+      { key: "servings", index: indexServings, label: "rinde" },
     ]
       .filter((p) => p.index !== -1)
       .sort((a, b) => a.index - b.index);
@@ -117,7 +117,7 @@ const FileUpload = () => {
     if (secciones.source) setSource(secciones.source);
     if (secciones.cookingTime) setCookingTime(secciones.cookingTime);
     if (secciones.mold) setMold(secciones.mold);
-    if (secciones.serves) setPortions(secciones.serves);
+    if (secciones.servings) setPortions(secciones.servings);
   };
 
   function extraerSeccionesConDuplicados(texto: string) {
@@ -129,7 +129,7 @@ const FileUpload = () => {
       { key: "ingredients", label: "ingredientes" },
       { key: "cookingTime", label: "cocción" },
       { key: "mold", label: "molde" },
-      { key: "serves", label: "rinde" },
+      { key: "servings", label: "rinde" },
       { key: "source", label: "fuente:" },
     ];
 
@@ -170,7 +170,7 @@ const FileUpload = () => {
       ingredients: undefined,
       cookingTime: undefined,
       mold: undefined,
-      serves: undefined,
+      servings: undefined,
       source: undefined,
     };
 
@@ -205,7 +205,7 @@ const FileUpload = () => {
     if (secciones.source) setSource(secciones.source);
     if (secciones.cookingTime) setCookingTime(secciones.cookingTime);
     if (secciones.mold) setMold(secciones.mold);
-    if (secciones.serves) setPortions(secciones.serves);
+    if (secciones.servings) setPortions(secciones.servings);
   }
 
   return (

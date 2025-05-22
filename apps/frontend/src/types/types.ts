@@ -7,11 +7,11 @@ export type Source = {
 
 export type Ingredient = {
   name: string;
-  amount?: string; //para considerar fracciones //TODO CAMBIAR A AMOUNT
+  amount?: string; //para considerar fracciones //TODO cambiar a number?
   unit?: Units;
 };
 
-export type FoodAllergy = "glutenFree" | "lactoseFree" | "vegan" | "vegetarian"; //TODO cambiar a dairy free
+export type FoodAllergy = "glutenFree" | "dairyFree" | "vegan" | "vegetarian";
 
 export type InstructionsSection = {
   sectionTitle?: string;
@@ -28,7 +28,7 @@ export type RecipeType = {
   ingredients: IngredientsSection[];
   cookingTime?: string[];
   mold?: string[];
-  serves?: string[]; //TODO CAMBIAR A SERVINGS
+  servings?: string[];
   instructions: InstructionsSection[];
   notes?: string[];
   source?: Source;

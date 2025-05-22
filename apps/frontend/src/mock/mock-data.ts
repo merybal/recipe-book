@@ -89,7 +89,7 @@ const recipe: RecipeType = {
   ],
   cookingTime: ["10 min", "180°C"],
   mold: ["Circular", "22-24 cm"],
-  serves: ["4 porciones"],
+  servings: ["4 porciones"],
   notes: [
     "Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar.",
     "Poner en bowl, trabajar muy rápido con la mano, incorporando la harina y el azúcar.",
@@ -101,7 +101,7 @@ const recipe: RecipeType = {
       "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
     ],
   },
-  foodAllergies: ["lactoseFree", "glutenFree", "vegan", "vegetarian"],
+  foodAllergies: ["dairyFree", "glutenFree", "vegan", "vegetarian"],
 };
 
 const recipes: Array<RecipeStructure> = [
