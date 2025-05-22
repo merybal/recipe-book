@@ -1,4 +1,5 @@
-@use "../styles/_font" as *;
+@use "../styles/font" as *;
+@use "../styles/spacing" as *;
 
 .imageContainer {
   display: flex;
@@ -17,9 +18,27 @@
 .recipeContainer {
   display: flex;
   flex-direction: column;
-  .title {
-    // text-align: center;
-    // text-transform: uppercase;
+
+  header {
+    display: flex;
+    flex-direction: column;
+
+    .titleContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .recipeInfoContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .tagContainer {
+        display: flex;
+        gap: 0.5rem;
+      }
+    }
   }
 }
 

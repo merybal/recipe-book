@@ -4,7 +4,7 @@
 
 // TODO borrar las que no se usen
 body {
-  @include Color($font-color: main-text);
+  @include Color($font: main-text);
   @include Font($family: text);
 }
 
@@ -17,15 +17,15 @@ h5 {
 }
 
 h1 {
-  @include Font($size: lg);
+  @include Font($size: xl);
 }
 
 h2 {
-  @include Font($size: md);
+  @include Font($size: lg);
 }
 
 h3 {
-  @include Font($size: sm);
+  @include Font($size: md);
 }
 
 p,
@@ -36,6 +36,19 @@ a {
 @media (max-width: 600px) {
   p,
   a {
-    @include Font($size: sm);
+    @include Font(
+      $size: sm
+    ); //TODO revisar si cambian los tamaños segun la pantalla
+  }
+}
+
+@media (max-width: 768px) {
+  * {
+    scrollbar-width: none; // Firefox
+    -ms-overflow-style: none; // IE/Edge Legacy
+  }
+
+  *::-webkit-scrollbar {
+    display: none; // Chrome, Safari
   }
 }

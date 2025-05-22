@@ -1,6 +1,8 @@
 $colors: (
   primary: #1fcc79,
+  primary-light: #e3fff8,
   secondary: #ff6464,
+  secondary-light: #ffcccc,
   main-text: #3e5481,
   // main-text: #2e3e5c,
   secondary-text: #9fa5c0,
@@ -18,12 +20,16 @@ $colors: (
   }
 }
 
-@mixin Color($bg-color: null, $font-color: null) {
-  @if $bg-color {
-    background-color: resolve-color($bg-color);
+@mixin Color($bg: null, $font: null, $fill: null) {
+  @if $bg {
+    background-color: resolve-color($bg);
   }
 
-  @if $font-color {
-    color: resolve-color($font-color);
+  @if $font {
+    color: resolve-color($font);
+  }
+
+  @if $fill {
+    fill: resolve-color($fill);
   }
 }

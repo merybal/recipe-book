@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import styles from "./Button.module.scss";
 
-interface ButtonProps {
+type ButtonProps = {
   className?: string;
   disabled?: boolean;
   iconLeft?: string;
@@ -16,9 +16,9 @@ interface ButtonProps {
   variant?: "primary" | "secondary";
   loading?: boolean;
   onClick: () => void;
-}
+};
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
   className,
   disabled = false,
   iconLeft,
@@ -30,7 +30,7 @@ const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   loading = false,
   onClick,
-}) => {
+}: ButtonProps) => {
   return (
     <button
       className={clsx(

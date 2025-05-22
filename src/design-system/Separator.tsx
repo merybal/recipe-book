@@ -1,26 +1,24 @@
-import React from "react";
-
 import clsx from "clsx";
 
 import styles from "./Separator.module.scss";
 
-interface SeparatorProps {
+type SeparatorProps = {
   className?: string;
   align?: "left" | "center" | "right";
   variant?: "horizontal" | "vertical";
-}
+};
 
-const Separator: React.FC<SeparatorProps> = ({
+const Separator = ({
   className,
   align = "center",
   variant = "horizontal",
-}) => {
+}: SeparatorProps) => {
   return (
     <div
       className={clsx(
         styles.separator,
         { [styles[`${variant}`]]: variant },
-        { [styles[`text-${align}`]]: align },
+        { [styles[`${align}Text`]]: align },
         className
       )}
     ></div>

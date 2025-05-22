@@ -1,7 +1,10 @@
 import Instructions from "@/components/Instructions";
 import IngredientList from "@/components/IngredientList";
-import Separator from "../design-system/Separator";
 import BottomSheet from "../design-system/BottomSheet";
+import FoodAllergies from "../components/FoodAllergies";
+import Source from "../components/Source";
+import Separator from "../design-system/Separator";
+import Tag from "../design-system/Tag";
 
 import type { RecipeType } from "@/types/types";
 
@@ -12,6 +15,13 @@ import styles from "./Recipe.module.scss";
 type RecipeProps = {
   recipe: RecipeType;
 };
+
+/**
+ * //TODO
+ * - revisar que pasa cuando no hay tags o autores. como se modifica el layout
+ * - hay que programar el volver a la pagina anterior?
+ * - desktop
+ */
 
 const Recipe = ({ recipe }: RecipeProps) => {
   const {
@@ -28,13 +38,45 @@ const Recipe = ({ recipe }: RecipeProps) => {
   const isMobile = useIsMobile();
 
   const content = (
-    <div className={styles.recipeContainer}>
-      <h1 className={styles.title}>{title}</h1>
+    <section className={styles.recipeContainer}>
+      <header>
+        <div className={styles.titleContainer}>
+          <h1 className={styles.title}>{title}</h1>
+          {foodAllergies && <FoodAllergies allergies={foodAllergies} />}
+        </div>
+        <Separator />
+        <div className={styles.recipeInfoContainer}>
+          <div className={styles.tagContainer}>
+            {cookingTime && (
+              <Tag>
+                {cookingTime.map((line) => {
+                  return <p key={line}>{line}</p>;
+                })}
+              </Tag>
+            )}
+            {mold && (
+              <Tag>
+                {mold.map((line) => {
+                  return <p key={line}>{line}</p>;
+                })}
+              </Tag>
+            )}
+            {serves && (
+              <Tag>
+                {serves.map((line) => {
+                  return <p key={line}>{line}</p>;
+                })}
+              </Tag>
+            )}
+          </div>
+          {source && <Source source={source} />}
+        </div>
+      </header>
       <Separator />
       <IngredientList sections={ingredients} />
       <Separator />
-      <Instructions title="Preparación" sections={instructions} />
-    </div>
+      <Instructions isNumbered sections={instructions} />
+    </section>
   );
 
   return (

@@ -2,9 +2,9 @@ import React, { useState, useRef } from "react";
 import clsx from "clsx";
 import styles from "./BottomSheet.module.scss";
 
-interface BottomSheetProps {
+type BottomSheetProps = {
   children: React.ReactNode;
-}
+};
 
 const BottomSheet = ({ children }: BottomSheetProps) => {
   const [screenHeight, setScreenHeight] = useState<"half" | "full">("half");

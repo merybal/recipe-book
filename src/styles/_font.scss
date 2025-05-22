@@ -5,22 +5,23 @@ $font-properties: (
   // FAMILY
   text: ("Inter", sans-serif),
   // SIZE
-  // 10px
-  xxs: 0.625rem,
   // 12px
-  xs: 0.75rem,
+  xxs: 0.75rem,
+  // 14px
+  xs: 0.875rem,
   // 16px
   sm: 1rem,
   // 18px
   md: 1.125rem,
+  // 20px
+  lg: 1.25rem,
   // 24px
-  lg: 1.5rem,
+  xl: 1.5rem,
   // 32px
-  xl: 2rem,
-  // 48px
-  xxl: 3rem,
+  xxl: 2rem,
 
   // WEIGHT
+  light: 300,
   medium: 500,
   bold: 700,
 
@@ -28,6 +29,7 @@ $font-properties: (
   left: left,
   center: center,
   right: right,
+  justify: justify,
 
   // TRANSFORM
   cap: capitalize,
