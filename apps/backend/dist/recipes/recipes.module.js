@@ -19,17 +19,23 @@ var __decorate =
     return c > 3 && r && Object.defineProperty(target, key, r), r;
   };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.AppModule = void 0;
+exports.RecipesModule = void 0;
 const common_1 = require('@nestjs/common');
-const recipes_module_1 = require('./recipes/recipes.module');
-let AppModule = class AppModule {};
-exports.AppModule = AppModule;
-exports.AppModule = AppModule = __decorate(
+const recipes_service_1 = require('./recipes.service');
+const recipes_controller_1 = require('./recipes.controller');
+const prisma_service_1 = require('../prisma/prisma.service');
+let RecipesModule = class RecipesModule {};
+exports.RecipesModule = RecipesModule;
+exports.RecipesModule = RecipesModule = __decorate(
   [
     (0, common_1.Module)({
-      imports: [recipes_module_1.RecipesModule],
+      controllers: [recipes_controller_1.RecipesController],
+      providers: [
+        recipes_service_1.RecipesService,
+        prisma_service_1.PrismaService,
+      ],
     }),
   ],
-  AppModule,
+  RecipesModule,
 );
-//# sourceMappingURL=app.module.js.map
+//# sourceMappingURL=recipes.module.js.map
