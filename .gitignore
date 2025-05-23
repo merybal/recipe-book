@@ -29,3 +29,6 @@ Logo.psd
 
 /apps/backend/.env
 .env
+/apps/backend/dist
+/apps/backend/tsconfig.build.tsbuildinfo
+/apps/backend/tsconfig.tsbuildinfo
