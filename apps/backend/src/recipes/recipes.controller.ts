@@ -12,7 +12,6 @@ import { RecipesService } from './recipes.service';
 import { Prisma } from '../../generated/prisma/client';
 
 import { CreateRecipeDto } from './dto/create-recipe.dto';
-import { CreateInstructionsDto } from '../instructions/dto/create-instructions.dto';
 
 @Controller('recipes')
 export class RecipesController {
@@ -44,14 +43,5 @@ export class RecipesController {
   @Delete(':id')
   async deleteRecipe(@Param('id', ParseIntPipe) id: number) {
     return this.recipesService.deleteRecipe(id);
-  }
-
-  // Instructions
-  @Post(':id/instructions')
-  async addInstructions(
-    @Param('id') recipeId: string,
-    @Body() data: CreateInstructionsDto,
-  ) {
-    return this.recipesService.addInstructions(+recipeId, data);
   }
 }

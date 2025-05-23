@@ -1,6 +1,6 @@
 export declare class CreateInstructionsDto {
-  instructions: {
-    sectionTitle?: string;
-    sectionBody: string[];
-  }[];
+    instructions: {
+        sectionTitle?: string;
+        sectionBody: string[];
+    }[];
 }
