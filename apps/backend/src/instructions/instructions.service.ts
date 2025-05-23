@@ -19,4 +19,10 @@ export class InstructionsService {
       data: instructionsToCreate,
     });
   }
+
+  async getInstructionsByRecipeId(recipeId: number) {
+    return this.prisma.instructions.findMany({
+      where: { recipe_id: recipeId },
+    });
+  }
 }

@@ -1,4 +1,11 @@
-import { Controller, Post, Param, Body, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Param,
+  Body,
+  ParseIntPipe,
+  Get,
+} from '@nestjs/common';
 import { IngredientsService } from './ingredients.service';
 import { CreateIngredientsDto } from './dto/create-ingredients.dto';
 
@@ -15,5 +22,12 @@ export class IngredientsController {
       recipeId,
       createIngredientsDto,
     );
+  }
+
+  @Get()
+  async getIngredientsByRecipeId(
+    @Param('recipeId', ParseIntPipe) recipeId: number,
+  ) {
+    return this.ingredientsService.getIngredientsByRecipeId(recipeId);
   }
 }

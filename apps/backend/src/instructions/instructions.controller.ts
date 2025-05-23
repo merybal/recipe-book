@@ -1,4 +1,11 @@
-import { Controller, Post, Param, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Param,
+  Body,
+  ParseIntPipe,
+  Get,
+} from '@nestjs/common';
 import { InstructionsService } from './instructions.service';
 import { CreateInstructionsDto } from '../instructions/dto/create-instructions.dto';
 
@@ -6,11 +13,18 @@ import { CreateInstructionsDto } from '../instructions/dto/create-instructions.d
 export class InstructionsController {
   constructor(private readonly instructionsService: InstructionsService) {}
 
-  @Post(':id/instructions')
+  @Post()
   async addInstructions(
-    @Param('id') recipeId: string,
+    @Param('recipeId') recipeId: string,
     @Body() data: CreateInstructionsDto,
   ) {
     return this.instructionsService.addInstructions(+recipeId, data);
+  }
+
+  @Get()
+  async getInstructionsByRecipeId(
+    @Param('recipeId', ParseIntPipe) recipeId: number,
+  ) {
+    return this.instructionsService.getInstructionsByRecipeId(recipeId);
   }
 }

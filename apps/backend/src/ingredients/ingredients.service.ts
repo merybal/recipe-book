@@ -21,4 +21,10 @@ export class IngredientsService {
       data: flattenedIngredients,
     });
   }
+
+  async getIngredientsByRecipeId(recipeId: number) {
+    return this.prisma.ingredients.findMany({
+      where: { recipe_id: recipeId },
+    });
+  }
 }
