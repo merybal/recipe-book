@@ -1,17 +1,19 @@
 import {
   Controller,
   Get,
+  Patch,
   Post,
-  Put,
+  // Put,
   Delete,
   Param,
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
-import { Prisma } from '../../generated/prisma/client';
+// import { Prisma } from '../../generated/prisma/client';
 
 import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
 @Controller('recipes')
 export class RecipesController {
@@ -32,13 +34,29 @@ export class RecipesController {
     return this.recipesService.getRecipeById(id);
   }
 
-  @Put(':id')
-  async updateRecipe(
+  // @Patch(':id')
+  // async update(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() data: UpdateRecipeDto,
+  // ) {
+  //   return this.recipesService.update(id, data);
+  // }
+
+  @Patch(':id')
+  update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() data: Prisma.RecipesUpdateInput,
+    @Body() updateRecipeDto: UpdateRecipeDto,
   ) {
-    return this.recipesService.updateRecipe(id, data);
+    return this.recipesService.update(id, updateRecipeDto);
   }
+
+  // @Put(':id')
+  // async updateRecipe(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @Body() data: Prisma.RecipesUpdateInput,
+  // ) {
+  //   return this.recipesService.updateRecipe(id, data);
+  // }
 
   @Delete(':id')
   async deleteRecipe(@Param('id', ParseIntPipe) id: number) {
