@@ -70,6 +70,7 @@ export class RecipesService {
       select: {
         id: true,
         title: true,
+        image_url: true,
         recipe_food_allergies: {
           select: {
             food_allergy: {
@@ -88,6 +89,7 @@ export class RecipesService {
     return recipes.map((r) => ({
       id: r.id,
       title: r.title,
+      image_url: r.image_url,
       food_allergies: r.recipe_food_allergies.map((a) => a.food_allergy.name),
     }));
   }
