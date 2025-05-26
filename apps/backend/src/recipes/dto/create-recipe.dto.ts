@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsInt } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsInt,
+  IsNumber,
+  IsArray,
+} from 'class-validator';
 
 export class CreateRecipeDto {
   @IsString()
@@ -23,4 +29,13 @@ export class CreateRecipeDto {
   @IsOptional()
   @IsString()
   mold_size?: string;
+
+  @IsOptional()
+  @IsString()
+  image_url?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  foodAllergyIds?: number[];
 }

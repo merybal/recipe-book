@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Recipes } from '../../generated/prisma/client';
+import { Recipes } from '@prisma/client';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
@@ -9,26 +9,87 @@ export class RecipesService {
   constructor(private prisma: PrismaService) {}
 
   async createRecipe(data: CreateRecipeDto) {
-    return this.prisma.recipes.create({
+    const {
+      title,
+      cooking_time,
+      cooking_temperature,
+      servings,
+      mold_type,
+      mold_size,
+      image_url,
+      foodAllergyIds = [],
+    } = data;
+
+    const recipe = await this.prisma.recipes.create({
       data: {
-        title: data.title,
-        cooking_time: data.cooking_time,
-        cooking_temperature: data.cooking_temperature,
-        servings: data.servings,
-        mold_type: data.mold_type,
-        mold_size: data.mold_size,
+        title,
+        cooking_time,
+        cooking_temperature,
+        servings,
+        mold_type,
+        mold_size,
+        image_url,
       },
     });
+
+    if (foodAllergyIds.length) {
+      await this.prisma.recipeFoodAllergies.createMany({
+        data: foodAllergyIds.map((foodAllergyId) => ({
+          recipe_id: recipe.id,
+          food_allergy_id: foodAllergyId,
+        })),
+        skipDuplicates: true,
+      });
+    }
+
+    return this.getRecipeById(recipe.id); // devolver con relaciones
   }
 
   async getAllRecipes() {
-    return this.prisma.recipes.findMany({
+    const recipes = await this.prisma.recipes.findMany({
       orderBy: { created_at: 'desc' },
       include: {
         ingredients: true,
         instructions: true,
+        recipe_food_allergies: {
+          include: {
+            food_allergy: true,
+          },
+        },
       },
     });
+
+    return recipes.map((r) => ({
+      ...r,
+      food_allergies: r.recipe_food_allergies.map((a) => a.food_allergy.name),
+    }));
+  }
+
+  async getRecipePreviewList() {
+    const recipes = await this.prisma.recipes.findMany({
+      select: {
+        id: true,
+        title: true,
+        recipe_food_allergies: {
+          select: {
+            food_allergy: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        deleted_at: null,
+      },
+    });
+
+    return recipes.map((r) => ({
+      id: r.id,
+      title: r.title,
+      food_allergies: r.recipe_food_allergies.map((a) => a.food_allergy.name),
+    }));
   }
 
   async getRecipeById(id: number) {
@@ -47,35 +108,14 @@ export class RecipesService {
       throw new NotFoundException(`Recipe with id ${id} not found`);
     }
 
-    return recipe;
+    // Extraemos solo los campos necesarios
+    const { recipe_food_allergies, ...rest } = recipe;
+
+    return {
+      ...rest,
+      food_allergies: recipe_food_allergies.map((a) => a.food_allergy.name),
+    };
   }
-
-  // async update(id: number, data: Prisma.RecipesUpdateInput) {
-  //   const existing = await this.prisma.recipes.findUnique({ where: { id } });
-  //   if (!existing)
-  //     throw new NotFoundException(`Recipe with id ${id} not found`);
-
-  //   return this.prisma.recipes.update({
-  //     where: { id },
-  //     data,
-  //   });
-  // }
-
-  // async update(id: number, data: UpdateRecipeDto) {
-  //   // Verificamos que la receta exista
-  //   const recipe = await this.prisma.recipes.findUnique({ where: { id } });
-
-  //   if (!recipe) {
-  //     throw new NotFoundException(`Receta con ID ${id} no encontrada`);
-  //   }
-
-  //   // Actualizamos la receta
-  //   return this.prisma.recipes.update({
-  //     where: { id },
-  //     data,
-  //   });
-  // }
-
   async update(id: number, data: UpdateRecipeDto) {
     const { ingredients, instructions, ...recipeData } = data;
 
@@ -108,7 +148,20 @@ export class RecipesService {
       });
     }
 
-    return { message: 'Recipe updated successfully' };
+    // return { message: 'Recipe updated successfully' };
+    return await this.getRecipeById(id);
+  }
+
+  async addFoodAllergies(recipeId: number, foodAllergyIds: number[]) {
+    const data = foodAllergyIds.map((foodAllergyId) => ({
+      recipe_id: recipeId,
+      food_allergy_id: foodAllergyId,
+    }));
+
+    return this.prisma.recipeFoodAllergies.createMany({
+      data,
+      skipDuplicates: true,
+    });
   }
 
   async deleteRecipe(id: number): Promise<Recipes> {

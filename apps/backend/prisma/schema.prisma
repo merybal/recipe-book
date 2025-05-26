@@ -21,6 +21,7 @@ model Recipes {
   servings              String?               @db.VarChar(255)
   mold_type             String?               @db.VarChar(255)
   mold_size             String?               @db.VarChar(255)
+  image_url             String?               @db.VarChar(255)
   created_at            DateTime              @default(now())
   updated_at            DateTime              @default(now()) @updatedAt
   deleted_at            DateTime?

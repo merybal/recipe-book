@@ -3,25 +3,37 @@ import {
   Get,
   Patch,
   Post,
-  // Put,
   Delete,
   Param,
   Body,
   ParseIntPipe,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
-// import { Prisma } from '../../generated/prisma/client';
 
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { AddFoodAllergiesDto } from '@/food-allergies/dto/add-food-allergies.dto';
 
 @Controller('recipes')
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
-  // Recipes
+
   @Post()
   async createRecipe(@Body() data: CreateRecipeDto) {
     return this.recipesService.createRecipe(data);
+  }
+
+  @Get('recipe-preview-list')
+  async getRecipePreviewList() {
+    return this.recipesService.getRecipePreviewList();
+  }
+
+  @Post(':id/food-allergies')
+  addFoodAllergies(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: AddFoodAllergiesDto,
+  ) {
+    return this.recipesService.addFoodAllergies(id, body.foodAllergyIds);
   }
 
   @Get()
@@ -34,14 +46,6 @@ export class RecipesController {
     return this.recipesService.getRecipeById(id);
   }
 
-  // @Patch(':id')
-  // async update(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() data: UpdateRecipeDto,
-  // ) {
-  //   return this.recipesService.update(id, data);
-  // }
-
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
@@ -49,14 +53,6 @@ export class RecipesController {
   ) {
     return this.recipesService.update(id, updateRecipeDto);
   }
-
-  // @Put(':id')
-  // async updateRecipe(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @Body() data: Prisma.RecipesUpdateInput,
-  // ) {
-  //   return this.recipesService.updateRecipe(id, data);
-  // }
 
   @Delete(':id')
   async deleteRecipe(@Param('id', ParseIntPipe) id: number) {

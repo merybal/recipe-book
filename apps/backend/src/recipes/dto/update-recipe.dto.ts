@@ -59,6 +59,10 @@ export class UpdateRecipeDto {
   mold_size?: string;
 
   @IsOptional()
+  @IsString()
+  image_url?: string;
+
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => IngredientDto)
