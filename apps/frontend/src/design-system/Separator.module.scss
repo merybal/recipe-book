@@ -1,6 +1,7 @@
 @use "../styles/spacing" as *;
 
 .separator {
+  //TODO revisar si se usa mixin
   border-top: 1px solid #d0dbea;
 }
 

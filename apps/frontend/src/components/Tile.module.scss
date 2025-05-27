@@ -1,24 +1,25 @@
 @use "../styles/spacing" as *;
 @use "../styles/font" as *;
 @use "../styles/color" as *;
+@use "../styles/border" as *;
 
 .tile {
   .square-image {
     //TODO sin terminar
+    @include Border($radius: 1rem);
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    border-radius: 1rem;
   }
 
   .rectangle-image {
     @include Margin($bottom: md);
+    @include Border($radius: 1rem);
     width: 100%;
     height: auto;
     aspect-ratio: 2 / 1;
     overflow: hidden;
-    border-radius: 1rem;
   }
 
   .recipeImage {
@@ -30,7 +31,6 @@
 
   .textContainer {
     display: flex;
-    // gap: 0.5rem;
     justify-content: space-between;
     .title {
       @include Margin($bottom: sm);

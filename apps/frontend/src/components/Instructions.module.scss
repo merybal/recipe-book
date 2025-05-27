@@ -1,6 +1,7 @@
 @use "../styles/font" as *;
 @use "../styles/color" as *;
 @use "../styles/spacing" as *;
+@use "../styles/border" as *;
 
 .instructions {
   display: flex;
@@ -23,13 +24,13 @@
 
         .stepNumber {
           @include Color($bg: main-text, $font: white);
+          @include Border($radius: 50%);
           display: flex;
           justify-content: center;
-          flex-shrink: 0;
           align-items: center;
+          flex-shrink: 0;
           height: 1.5rem;
           width: 1.5rem;
-          border-radius: 50%;
 
           p {
             @include Font($size: xxs, $weight: bold);

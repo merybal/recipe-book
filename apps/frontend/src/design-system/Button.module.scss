@@ -1,25 +1,66 @@
-@import "../styles/_variables";
+@use "../styles/spacing" as *;
+@use "../styles/color" as *;
+@use "../styles/font" as *;
+@use "../styles/border" as *;
+
+//TODO agregar hover y focus para desktop
 
 .button {
-  background-color: $button-primary;
-  border: none;
-  border-radius: 2rem;
-  color: white;
-  font-family: $text;
-  font-weight: 600;
+  @include Padding($x: xl);
+  @include Font($weight: bold);
+  @include Border($style: none);
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.variant-primary {
+  @include Color($bg: primary, $font: white);
+}
+
+.variant-secondary {
+  @include Color($bg: transparent, $font: primary);
+  @include Border($width: medium, $style: solid, $color: primary);
+}
+
+.variant-tertiary {
+  @include Color($bg: transparent, $font: primary);
+}
+
+.disruptive-variant-primary {
+  @include Color($bg: secondary, $font: white);
+}
+
+.disruptive-variant-secondary {
+  @include Color($bg: transparent, $font: secondary);
+  @include Border($width: medium, $style: solid, $color: secondary);
+}
+
+.disruptive-variant-tertiary {
+  @include Color($bg: transparent, $font: secondary);
 }
 
 .size-small {
+  @include Font($size: xxs);
+  @include Border($radius: 1rem);
   height: 2rem;
-  font-size: 0.75rem;
 }
 
 .size-medium {
+  @include Font($size: xs);
+  @include Border($radius: 1.5rem);
   height: 3rem;
-  font-size: 1rem;
 }
 
 .size-large {
+  @include Font($size: sm);
+  @include Border($radius: 1.75rem);
   height: 3.5rem;
-  font-size: 1rem;
+}
+
+.full-width {
+  width: 100%;
 }

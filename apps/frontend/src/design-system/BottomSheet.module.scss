@@ -1,5 +1,6 @@
 @use "../styles/spacing" as *;
 @use "../styles/color" as *;
+@use "../styles/border" as *;
 
 .bottom-sheet {
   @include Color($bg: white);
@@ -20,9 +21,9 @@
 
     .handle {
       @include Color($bg: outline);
+      @include Border($radius: 0.1875rem);
       width: 3rem;
       height: 0.375rem;
-      border-radius: 0.1875rem;
     }
   }
 

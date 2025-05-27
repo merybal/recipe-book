@@ -1,0 +1,43 @@
+@use "./color" as *; // Importa las funciones y mapas de colores
+
+$border-properties: (
+  // WIDTH
+  // 1px
+  thin: 0.0625rem,
+  // 2px
+  medium: 0.125rem,
+  // 4px
+  thick: 0.25rem,
+
+  // STYLE
+  solid: solid,
+  dashed: dashed,
+  dotted: dotted,
+  none: none,
+
+  // RADIUS //TODO revisar
+  sm: 4px,
+  md: 8px,
+  lg: 16px,
+  full: 9999px
+);
+
+@function resolve-border($value) {
+  @if map-has-key($border-properties, $value) {
+    @return map-get($border-properties, $value);
+  } @else {
+    @return $value;
+  }
+}
+
+@mixin Border($width: null, $style: null, $color: null, $radius: null) {
+  @if $width or $style or $color {
+    border: #{resolve-border($width)}
+      #{resolve-border($style)}
+      #{resolve-color($color)};
+  }
+
+  @if $radius {
+    border-radius: resolve-border($radius);
+  }
+}
