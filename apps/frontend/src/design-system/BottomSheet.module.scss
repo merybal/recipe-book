@@ -27,7 +27,7 @@
   }
 
   .content {
-    @include Padding($all: md);
+    @include Padding($x: lg, $top: md, $bottom: lg);
     overflow-y: auto;
     height: calc(100% - 3rem);
     &::-webkit-scrollbar {

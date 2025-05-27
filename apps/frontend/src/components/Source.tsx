@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import { ReactComponent as ExternalLink } from "../assets/external-link.svg";
-import { ReactComponent as ChefHat } from "../assets/chef-hat.svg";
+
+import Icon from "@/design-system/Icon";
 
 import styles from "./Source.module.scss";
 import type { Source } from "@/types/types";
@@ -15,9 +15,12 @@ const Source = ({ source }: SourceProps) => {
       {source?.name?.map((name, i) => {
         return (
           <div className={styles.source} key={i}>
-            <div className={styles.chefHatContainer}>
-              <ChefHat className={styles.chefHat} />
-            </div>
+            <Icon
+              name="chefHat"
+              color="primary"
+              background="primary-light"
+              size="sm"
+            />
             <p>{name}</p>
             {source?.url && source?.url[i] && (
               <a
@@ -25,7 +28,7 @@ const Source = ({ source }: SourceProps) => {
                 target="_blank"
                 className={styles.externalLink}
               >
-                <ExternalLink className={styles.externalLinkIcon} />
+                <Icon name="externalLink" color="primary" size="sm" />
               </a>
             )}
           </div>

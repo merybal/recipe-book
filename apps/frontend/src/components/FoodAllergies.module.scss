@@ -3,20 +3,5 @@
 .foodAllergiesContainer {
   display: flex;
   gap: 0.5rem;
-
-  .iconContainer {
-    @include Color($bg: primary-light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    border-radius: 50%;
-    height: 2rem;
-    width: 2rem;
-
-    .allergyIcon {
-      height: 1.75rem;
-      width: 1.75rem;
-    }
-  }
+  align-items: flex-start;
 }

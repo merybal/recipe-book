@@ -1,34 +1,39 @@
-// TODO elegir nuevos iconos que peguen mejor
-import { ReactComponent as DairyFreeIcon } from "../assets/dairy-free.svg";
-import { ReactComponent as GlutenFreeIcon } from "../assets/gluten-free.svg";
-import { ReactComponent as VeganIcon } from "../assets/vegan.svg";
-import { ReactComponent as VegatarianIcon } from "../assets/vegetarian.svg";
-import clsx from "clsx";
+import Icon from "@/design-system/Icon";
 
+import type { IconName } from "@/design-system/Icons";
 import type { FoodAllergy } from "@/types/types";
+
+import clsx from "clsx";
 import styles from "./FoodAllergies.module.scss";
 
 export type FoodAllergiesProps = {
-  className?: string;
   allergies?: FoodAllergy[];
+  background?: string;
+  className?: string;
 };
 
-const iconMap: Record<string, JSX.Element> = {
-  dairyFree: <DairyFreeIcon className={styles.allergyIcon} />,
-  glutenFree: <GlutenFreeIcon className={styles.allergyIcon} />,
-  vegan: <VeganIcon className={styles.allergyIcon} />,
-  vegetarian: <VegatarianIcon className={styles.allergyIcon} />,
+const allergyToIconName: Record<FoodAllergy, IconName> = {
+  glutenFree: "wheat",
+  dairyFree: "milk",
+  vegan: "leaf",
+  vegetarian: "carrot",
 };
 
 const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {
+  const filteredAllergies = allergies?.includes("vegan")
+    ? allergies.filter((a) => a !== "vegetarian")
+    : allergies;
+
   return (
     <div className={clsx(styles.foodAllergiesContainer, className)}>
-      {allergies &&
-        allergies.map((allergy) => (
-          <div key={allergy} className={styles.iconContainer}>
-            {iconMap[allergy]}
-          </div>
-        ))}
+      {filteredAllergies?.map((allergy) => (
+        <Icon
+          key={allergy}
+          className={styles.allergyIcon}
+          name={allergyToIconName[allergy]}
+          size="sm"
+        />
+      ))}
     </div>
   );
 };

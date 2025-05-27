@@ -1,5 +1,5 @@
 import type { IngredientsSection } from "@/types/types";
-import { ReactComponent as CheckCircle } from "../assets/check-circle.svg";
+import Icon from "@/design-system/Icon";
 
 import styles from "./IngredientList.module.scss";
 
@@ -26,7 +26,12 @@ const IngredientList = ({ sections }: IngredientListProps) => {
                         key={`ingrediente-${j}`}
                         className={styles["ingredientLi"]}
                       >
-                        <CheckCircle className={styles["checkCircle"]} />
+                        <Icon
+                          name="check"
+                          color="primary"
+                          background="primary-light"
+                          size="xs"
+                        />
                         <p>{paragraph.name},</p>
                         <div className={styles["ingredientAmount"]}>
                           <p>{paragraph.amount}</p>

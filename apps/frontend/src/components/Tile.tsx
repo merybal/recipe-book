@@ -27,7 +27,6 @@ const Tile = ({
   title,
   variant = "rectangle",
 }: TileProps) => {
-  console.log(source);
   return (
     <div
       className={clsx(

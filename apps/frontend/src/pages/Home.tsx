@@ -23,8 +23,6 @@ const Home = () => {
           foodAllergies: r.food_allergies,
         }));
         setRecipePreviews(mappedData);
-
-        console.log("Fetched recipe previews:", mappedData);
       } catch (error) {
         console.error("Error fetching recipe previews", error);
       }
