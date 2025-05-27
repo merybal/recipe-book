@@ -8,6 +8,8 @@ type IngredientListProps = {
 };
 
 const IngredientList = ({ sections }: IngredientListProps) => {
+  console.log("sections", sections);
+
   return (
     <div>
       <h2 className={styles.ingredientsTitle}>Ingredientes</h2>

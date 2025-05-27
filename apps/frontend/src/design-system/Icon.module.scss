@@ -8,14 +8,14 @@
 }
 
 @each $name, $value in $colors {
-  .bg-#{$name} {
+  .bg-#{inspect($name)} {
     @include Color($bg: $name);
     border-radius: 50%;
   }
 }
 
 @each $name, $value in $colors {
-  .color-#{$name} {
+  .color-#{inspect($name)} {
     @include Color($font: $name);
   }
 }

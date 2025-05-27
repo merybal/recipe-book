@@ -1,5 +1,8 @@
 import clsx from "clsx";
 import Tile from "./Tile";
+import ButtonUnstyled from "@/design-system/ButtonUnstyled";
+
+import { useNavigate } from "react-router-dom";
 
 import type { FoodAllergy } from "@/types/types";
 
@@ -115,6 +118,11 @@ const TileGrid = ({
   grid = "single",
   previewData,
 }: TileGridProps) => {
+  const navigate = useNavigate();
+
+  const handleTileClick = (id: number) => {
+    navigate(`/recipes/${id}`);
+  };
   return (
     <div
       className={clsx(
@@ -123,20 +131,22 @@ const TileGrid = ({
         className
       )}
     >
-      {previewData &&
-        previewData.map((recipe) => (
-          <div key={recipe.id}>
-            <Tile
-              allergies={recipe.foodAllergies}
-              className={styles.tile}
-              imageUrl={recipe.imageUrl || DefaultRecipeImage}
-              title={recipe.title}
-              variant={grid === "single" ? "rectangle" : "square"}
-              // {...(recipe.source && { source: recipe.source })}
-              source={recipeArray[0].source}
-            />
-          </div>
-        ))}
+      {previewData?.map((recipe) => (
+        <ButtonUnstyled
+          key={recipe.id}
+          onClick={() => handleTileClick(recipe.id)}
+        >
+          <Tile
+            allergies={recipe.foodAllergies}
+            className={styles.tile}
+            imageUrl={recipe.imageUrl || DefaultRecipeImage}
+            title={recipe.title}
+            variant={grid === "single" ? "rectangle" : "square"}
+            // {...(recipe.source && { source: recipe.source })}
+            source={recipeArray[0].source}
+          />
+        </ButtonUnstyled>
+      ))}
     </div>
   );
 };
