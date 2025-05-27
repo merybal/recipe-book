@@ -18,9 +18,9 @@ const Home = () => {
         const mappedData = response.data.map((r: any) => ({
           id: r.id,
           title: r.title,
-          imageUrl: r.image_url, // camelCase para el frontend
-          source: r.source, // si lo usás tal cual
-          foodAllergies: r.food_allergies, // si usás esta propiedad
+          imageUrl: r.image_url,
+          source: r.source,
+          foodAllergies: r.food_allergies,
         }));
         setRecipePreviews(mappedData);
 

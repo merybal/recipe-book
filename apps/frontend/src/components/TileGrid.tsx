@@ -1,7 +1,9 @@
 import clsx from "clsx";
-import Tile from "../design-system/Tile";
+import Tile from "./Tile";
 
 import type { FoodAllergy } from "@/types/types";
+
+import DefaultRecipeImage from "../assets/savory-recipe-default.jpg";
 
 import styles from "./TileGrid.module.scss";
 
@@ -91,10 +93,6 @@ const recipeArray = [
   },
 ];
 
-// TODO elegir una imagen por defecto y almacenar en assets
-const defaultImageUrl =
-  "https://snaped.fns.usda.gov/sites/default/files/styles/crop_freeform_thumbnail/public/2024-08/Recipes%20cover.jpg.webp?itok=pjaMOW1S";
-
 export type PreviewData = {
   id: number;
   title: string;
@@ -129,11 +127,13 @@ const TileGrid = ({
         previewData.map((recipe) => (
           <div key={recipe.id}>
             <Tile
+              allergies={recipe.foodAllergies}
               className={styles.tile}
-              imageUrl={recipe.imageUrl || defaultImageUrl}
+              imageUrl={recipe.imageUrl || DefaultRecipeImage}
               title={recipe.title}
               variant={grid === "single" ? "rectangle" : "square"}
-              {...(recipe.source && { source: recipe.source })}
+              // {...(recipe.source && { source: recipe.source })}
+              source={recipeArray[0].source}
             />
           </div>
         ))}

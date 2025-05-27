@@ -1,5 +1,5 @@
 @use "../styles/spacing" as *;
 
 .home {
-  @include Margin($x: md);
+  @include Margin($x: lg);
 }

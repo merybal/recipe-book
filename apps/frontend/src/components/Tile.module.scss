@@ -1,0 +1,51 @@
+@use "../styles/spacing" as *;
+@use "../styles/font" as *;
+@use "../styles/color" as *;
+
+.tile {
+  .square-image {
+    //TODO sin terminar
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+
+  .rectangle-image {
+    @include Margin($bottom: md);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+
+  .recipeImage {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+  }
+
+  .textContainer {
+    display: flex;
+    // gap: 0.5rem;
+    justify-content: space-between;
+    .title {
+      @include Margin($bottom: sm);
+      text-wrap: wrap;
+    }
+
+    .subtitle {
+      @include Font($size: xs);
+      @include Color($font: secondary-text);
+      text-wrap: wrap;
+    }
+
+    .allergies {
+      flex-shrink: 0;
+      @include Margin($left: sm);
+    }
+  }
+}

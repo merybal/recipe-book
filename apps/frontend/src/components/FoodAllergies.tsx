@@ -3,11 +3,13 @@ import { ReactComponent as DairyFreeIcon } from "../assets/dairy-free.svg";
 import { ReactComponent as GlutenFreeIcon } from "../assets/gluten-free.svg";
 import { ReactComponent as VeganIcon } from "../assets/vegan.svg";
 import { ReactComponent as VegatarianIcon } from "../assets/vegetarian.svg";
+import clsx from "clsx";
 
 import type { FoodAllergy } from "@/types/types";
 import styles from "./FoodAllergies.module.scss";
 
 export type FoodAllergiesProps = {
+  className?: string;
   allergies?: FoodAllergy[];
 };
 
@@ -18,9 +20,9 @@ const iconMap: Record<string, JSX.Element> = {
   vegetarian: <VegatarianIcon className={styles.allergyIcon} />,
 };
 
-const FoodAllergies = ({ allergies }: FoodAllergiesProps) => {
+const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {
   return (
-    <div className={styles.foodAllergiesContainer}>
+    <div className={clsx(styles.foodAllergiesContainer, className)}>
       {allergies &&
         allergies.map((allergy) => (
           <div key={allergy} className={styles.iconContainer}>
