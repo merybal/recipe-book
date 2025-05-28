@@ -24,7 +24,9 @@ export type IngredientsSection = {
 };
 
 export type RecipeType = {
+  id: string;
   title: string;
+  imageUrl?: string;
   ingredients: IngredientsSection[];
   cookingTime?: string[];
   mold?: string[];

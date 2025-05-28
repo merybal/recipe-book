@@ -34,52 +34,6 @@ const Home = () => {
 
   return (
     <div className={clsx(styles.home)}>
-      <Button
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        onClick={() => console.log("click")}
-      />
-      <Button
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        variant="secondary"
-        onClick={() => console.log("click")}
-      />
-      <Button
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        variant="tertiary"
-        onClick={() => console.log("click")}
-      />
-      <Button
-        disruptive
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        size="small"
-        onClick={() => console.log("click")}
-      />
-      <Button
-        disruptive
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        variant="secondary"
-        size="medium"
-        onClick={() => console.log("click")}
-      />
-      <Button
-        disruptive
-        label="Prueba"
-        iconLeft="wheat"
-        iconRight="wheat"
-        variant="tertiary"
-        size="large"
-        onClick={() => console.log("click")}
-      />
       <p>esto es un HOME</p>
       <TileGrid previewData={recipePreviews} />
     </div>

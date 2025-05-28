@@ -1,36 +1,35 @@
 import {
+  IsArray,
+  IsNumber,
   IsOptional,
   IsString,
-  IsNumber,
   ValidateNested,
-  IsArray,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class IngredientDto {
-  @IsOptional()
-  @IsString()
-  subrecipe_title?: string;
-
   @IsString()
   name: string;
 
-  @IsOptional()
-  @IsString()
-  amount?: string;
+  @IsNumber()
+  amount: number;
 
-  @IsOptional()
-  @IsString()
-  unit?: string;
+  @IsNumber()
+  unit_id: number;
 }
 
-class InstructionDto {
-  @IsOptional()
+class SubrecipeDto {
   @IsString()
-  subrecipe_title?: string;
+  title: string;
 
-  @IsString()
-  body: string;
+  @IsArray()
+  @IsString({ each: true })
+  instructions: string[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => IngredientDto)
+  ingredients: IngredientDto[];
 }
 
 export class UpdateRecipeDto {
@@ -39,16 +38,16 @@ export class UpdateRecipeDto {
   title?: string;
 
   @IsOptional()
-  @IsString()
-  cooking_time?: string;
+  @IsNumber()
+  cooking_time?: number;
 
   @IsOptional()
   @IsNumber()
   cooking_temperature?: number;
 
   @IsOptional()
-  @IsString()
-  servings?: string;
+  @IsNumber()
+  servings?: number;
 
   @IsOptional()
   @IsString()
@@ -64,13 +63,12 @@ export class UpdateRecipeDto {
 
   @IsOptional()
   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => IngredientDto)
-  ingredients?: IngredientDto[];
+  @IsNumber({}, { each: true })
+  foodAllergyIds?: number[];
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => InstructionDto)
-  instructions?: InstructionDto[];
+  @Type(() => SubrecipeDto)
+  subrecipes?: SubrecipeDto[];
 }

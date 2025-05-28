@@ -1,3 +1,7 @@
+// import { useParams } from "react-router-dom";
+// import { useEffect, useState } from "react";
+// import axios from "axios"
+
 import Instructions from "@/components/Instructions";
 import IngredientList from "@/components/IngredientList";
 import BottomSheet from "../design-system/BottomSheet";
@@ -24,6 +28,34 @@ type RecipeProps = {
  */
 
 const Recipe = ({ recipe }: RecipeProps) => {
+  // const { id } = useParams<{ id: string }>();
+  // const isMobile = useIsMobile();
+
+  // const [recipe, setRecipe] = useState<RecipeType | null>(null);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(false);
+
+  // useEffect(() => {
+  //   if (!id) return;
+
+  //   const fetchRecipe = async () => {
+  //     try {
+  //       const response = await axios.get(`http://localhost:3000/recipes/${id}`);
+  //       setRecipe(response.data);
+  //     } catch (err) {
+  //       console.error("Error fetching recipe:", err);
+  //       setError(true);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchRecipe();
+  // }, [id]);
+
+  // if (loading) return <p>Cargando receta...</p>;
+  // if (error || !recipe) return <p>Error al cargar la receta.</p>;
+
   const {
     title,
     ingredients,

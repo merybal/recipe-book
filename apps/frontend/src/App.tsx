@@ -15,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/recipe" element={<Recipe recipe={recipe} />} />
         {/* <Route path="*" element={<NotFound />} /> */}
+        {/* <Route path="/recipes/:id" element={<Recipe />} /> */}
       </Routes>
     </div>
   );
