@@ -60,7 +60,7 @@ const Recipe = () => {
 
     function parseSubrecipe(subrecipe: SubrecipeRaw) {
       const parsedSubrecipe: SubrecipeType = {
-        ...(subrecipe.title && { amount: subrecipe.title }),
+        ...(subrecipe.title && { title: subrecipe.title }),
 
         //"Batir los huevos\nAgregar la harina\nHornear"
         instructions: subrecipe.instructions

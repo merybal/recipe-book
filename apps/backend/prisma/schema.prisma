@@ -46,7 +46,7 @@ model Subrecipes {
   id           Int           @id @default(autoincrement())
   recipe_id    Int
   title        String?       @db.VarChar(255)
-  instructions String        @db.VarChar(255)
+  instructions String        @db.Text
   created_at   DateTime      @default(now())
   updated_at   DateTime      @default(now()) @updatedAt
   deleted_at   DateTime?
