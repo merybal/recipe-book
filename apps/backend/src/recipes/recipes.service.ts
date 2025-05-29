@@ -62,4 +62,16 @@ export class RecipesService {
       },
     });
   }
+
+  async addFoodAllergies(recipeId: number, foodAllergyIds: number[]) {
+    const createManyInput = foodAllergyIds.map((foodAllergyId) => ({
+      recipe_id: recipeId,
+      food_allergy_id: foodAllergyId,
+    }));
+
+    return this.prisma.recipeFoodAllergies.createMany({
+      data: createManyInput,
+      skipDuplicates: true,
+    });
+  }
 }

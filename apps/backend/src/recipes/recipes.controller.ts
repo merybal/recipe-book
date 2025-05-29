@@ -9,10 +9,19 @@ import {
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { AddFoodAllergiesDto } from '@/food-allergies/dto/add-food-allergies.dto';
 
 @Controller('recipes')
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
+
+  @Post(':id/food-allergies')
+  async addFoodAllergies(
+    @Param('id', ParseIntPipe) recipeId: number,
+    @Body() dto: AddFoodAllergiesDto,
+  ) {
+    return this.recipesService.addFoodAllergies(recipeId, dto.foodAllergyIds);
+  }
 
   @Get(':id')
   async getRecipe(@Param('id', ParseIntPipe) id: number) {

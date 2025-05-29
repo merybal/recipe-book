@@ -16,6 +16,7 @@ import type {
   SubrecipeRaw,
   IngredientType,
   IngredientRaw,
+  RecipeFoodAllergyRaw,
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -79,6 +80,7 @@ const Recipe = () => {
         const response = await axios.get(`http://localhost:3000/recipes/${id}`);
 
         const recipeData = response.data;
+        console.log("recipeData", recipeData);
 
         const parsedRecipe: RecipeType = {
           id: id,
@@ -111,11 +113,15 @@ const Recipe = () => {
           ...(recipeData.servings && { size: recipeData.servings }),
 
           ...(recipeData.recipe_food_allergies?.length > 0 && {
-            foodAllergies: recipeData.recipe_food_allergies,
+            foodAllergies: recipeData.recipe_food_allergies.map(
+              (item: RecipeFoodAllergyRaw) => item.food_allergy.name
+            ),
           }),
           // notes?: recipeData.[],
           // source?: Source,
         };
+
+        console.log("parsed recipe", parsedRecipe);
 
         setRecipe(parsedRecipe);
       } catch (err) {
