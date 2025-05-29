@@ -12,24 +12,24 @@ export type Source = {
 };
 
 export type BakingInstructionsType = {
-  time?: string;
-  temperature?: number;
+  time?: number; // always minutes
+  temperature?: number; //always celcius
 };
 
 export type MoldType = {
-  type: string;
-  size: string;
+  type?: string;
+  size?: string;
 };
 
 export type RecipeType = {
-  id: string;
+  id?: string; //when the recipe is created from the frontend it has no id
   title: string;
   imageUrl?: string;
   subrecipes: SubrecipeType[];
   bakingInstructions?: BakingInstructionsType;
   mold?: MoldType;
   servings?: string;
-  notes?: string[]; //TODO falta en el back
+  notes?: string[]; //TODO falta en el back, agregar con type text al schema
   source?: Source; //TODO falta en el back
   foodAllergies?: FoodAllergyType[];
 };

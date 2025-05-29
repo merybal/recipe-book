@@ -4,6 +4,8 @@ export type FoodAllergyType =
   | "vegan"
   | "vegetarian";
 
+//TODO hacer un diccionario con lo que viene del back. corregir los datos cargados en la tabla del back
+
 export type FoodAllergyRaw = {
   id: number;
   name: string;

@@ -16,7 +16,7 @@ datasource db {
 model Recipes {
   id                    Int                   @id @default(autoincrement())
   title                 String                @db.VarChar(255)
-  cooking_time          String?               @db.VarChar(255)
+  cooking_time          Int?                  @db.Integer
   cooking_temperature   Int?                  @db.Integer
   servings              String?               @db.VarChar(255)
   mold_type             String?               @db.VarChar(255)

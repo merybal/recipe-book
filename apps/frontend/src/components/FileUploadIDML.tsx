@@ -5,16 +5,17 @@ import JSZip from "jszip";
 import Recipe from "@/pages/Recipe";
 
 import {
-  getSectionContent,
+  getBakingInstructions,
+  getServings,
   getSubSectionContent,
   getImageNamesFromIDML,
   parseIngredientList,
+  getMold,
   getNotes,
   getSource,
 } from "@/utils/file-upload-idml-utils";
 
-import type { RecipeType } from "@/types/types";
-import type { FoodAllergy } from "@/types/types";
+import type { RecipeType, FoodAllergyType } from "@/types";
 
 const FileUploadIDML = () => {
   const [recipe, setRecipe] = useState<RecipeType>();
@@ -22,14 +23,7 @@ const FileUploadIDML = () => {
   const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const recipeObject: RecipeType = {
       title: "",
-      instructions: [],
-      ingredients: [],
-      cookingTime: [],
-      mold: [],
-      servings: [],
-      notes: [],
-      source: {},
-      foodAllergies: [],
+      subrecipes: [],
     };
 
     const file = event.target.files?.[0];
@@ -37,14 +31,18 @@ const FileUploadIDML = () => {
 
     const zip = await JSZip.loadAsync(file);
     const allergyTags = await getImageNamesFromIDML(zip);
-    recipeObject?.foodAllergies?.push(...(allergyTags as FoodAllergy[]));
+
+    if (allergyTags.length) {
+      recipeObject.foodAllergies = [];
+      recipeObject.foodAllergies.push(...(allergyTags as FoodAllergyType[]));
+    }
 
     const storyFiles = Object.keys(zip.files).filter((path) =>
       path.startsWith("Stories/")
     );
 
     for (const path of storyFiles) {
-      //barre los archivos xlm
+      // goes through xml files
       const content = await zip.files[path].async("text");
       // console.log("content", path, content);
 
@@ -54,6 +52,7 @@ const FileUploadIDML = () => {
       const paragraphs = xml.getElementsByTagName("ParagraphStyleRange");
       const storyContentArray = Array.from(paragraphs);
 
+      // IDML paragraph styles
       const titleA = "h1a";
       const titleB = "h1b";
       const h2Left = "h2-left";
@@ -63,10 +62,10 @@ const FileUploadIDML = () => {
       const h3Right = "h3-right";
       const pRight = "p-right";
 
-      for (const [i, para] of storyContentArray.entries()) {
-        //barre el contenido de los archivos
-        const style = para.getAttribute("AppliedParagraphStyle");
-        const text = para.querySelector("Content")?.textContent?.trim();
+      for (const [i, paragraph] of storyContentArray.entries()) {
+        // goes through each of the files' content
+        const style = paragraph.getAttribute("AppliedParagraphStyle");
+        const text = paragraph.querySelector("Content")?.textContent?.trim();
 
         if (!text) continue;
 
@@ -91,21 +90,19 @@ const FileUploadIDML = () => {
             }
 
             case "Cocción":
-              getSectionContent(
+              recipeObject.bakingInstructions = getBakingInstructions(
                 i,
-                storyContentArray,
-                recipeObject,
-                "cookingTime"
+                storyContentArray
               );
               break;
 
             case "Molde":
-              getSectionContent(i, storyContentArray, recipeObject, "mold");
+              recipeObject.mold = getMold(i, storyContentArray);
 
               break;
 
             case "Rinde":
-              getSectionContent(i, storyContentArray, recipeObject, "servings");
+              recipeObject.servings = getServings(i, storyContentArray);
 
               break;
 
@@ -125,7 +122,7 @@ const FileUploadIDML = () => {
 
           recipeObject.instructions = instructionsSections;
 
-          getNotes(i, storyContentArray, recipeObject);
+          recipeObject.notes = getNotes(i, storyContentArray);
           getSource(i, storyContentArray, recipeObject);
         }
       }
@@ -138,7 +135,7 @@ const FileUploadIDML = () => {
   return (
     <div>
       <input type="file" accept=".idml" onChange={handleFile} />
-      <div>{recipe && <Recipe recipe={recipe} />}</div>
+      {/* <div>{recipe && <Recipe recipe={recipe} />}</div> */}
     </div>
   );
 };

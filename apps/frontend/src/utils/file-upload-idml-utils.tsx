@@ -1,7 +1,9 @@
 import type {
   RecipeType,
+  BakingInstructionsType,
+  MoldType,
   InstructionsSection,
-  FoodAllergy,
+  FoodAllergyType,
   Source,
 } from "@/types";
 import type { Units } from "@/types/constants/units";
@@ -9,12 +11,7 @@ import { UNITS } from "@/types/constants/units";
 
 import JSZip from "jszip";
 
-export function getSectionContent<K extends keyof RecipeType>(
-  i: number,
-  storyContentArray: Element[],
-  recipeObject: RecipeType,
-  section: K
-) {
+export function getBakingInstructions(i: number, storyContentArray: Element[]) {
   const next = storyContentArray[i + 1];
   if (!next) return;
 
@@ -22,11 +19,51 @@ export function getSectionContent<K extends keyof RecipeType>(
     .map((el) => el.textContent?.trim())
     .filter((text): text is string => Boolean(text));
 
-  const target = recipeObject[section];
+  const bakingInstructions: BakingInstructionsType = {};
 
-  if (Array.isArray(target)) {
-    (target as string[]).push(...sectionContent);
-  }
+  sectionContent.forEach((item) => {
+    if (item.includes("min")) {
+      bakingInstructions.time = parseInt(item);
+    } else if (item.includes("°C")) {
+      bakingInstructions.temperature = parseInt(item);
+    }
+  });
+
+  return bakingInstructions;
+}
+
+export function getMold(i: number, storyContentArray: Element[]) {
+  const next = storyContentArray[i + 1];
+  if (!next) return;
+
+  const sectionContent = Array.from(next.querySelectorAll("Content"))
+    .map((el) => el.textContent?.trim())
+    .filter((text): text is string => Boolean(text));
+
+  const mold: MoldType = {};
+
+  sectionContent.forEach((item) => {
+    // checks if there is a number inside the string
+    if (/\d/.test(item)) {
+      mold.size = item;
+    } else {
+      mold.type = item;
+    }
+  });
+
+  return mold;
+}
+
+export function getServings(i: number, storyContentArray: Element[]) {
+  const next = storyContentArray[i + 1];
+  if (!next) return;
+
+  const contentEl = next.querySelector("Content");
+  if (!contentEl) return;
+
+  const servings = contentEl.textContent?.trim();
+  console.log("servings", servings);
+  return servings;
 }
 
 export const getSubSectionContent = (
@@ -36,6 +73,7 @@ export const getSubSectionContent = (
   h3: string,
   p: string
 ) => {
+  // console.log("story", storyContentArray);
   const sections = [];
   let currentSection: InstructionsSection | null = null;
   let genericSection: InstructionsSection | null = null;
@@ -56,6 +94,7 @@ export const getSubSectionContent = (
 
       if (currentSection) {
         sections.push(currentSection);
+        console.log("currentSection", currentSection);
       }
 
       const titleContent = Array.from(element.querySelectorAll("Content"))
@@ -98,15 +137,12 @@ export const getSubSectionContent = (
   }
 
   objetito.push(...sections);
+  // console.log("objetito", objetito);
 
   return objetito;
 };
 
-export function getNotes(
-  i: number,
-  storyContentArray: Element[],
-  recipeObject: RecipeType
-) {
+export function getNotes(i: number, storyContentArray: Element[]) {
   const notes = "notes";
 
   for (let j = i + 1; j < storyContentArray.length; j++) {
@@ -118,7 +154,7 @@ export function getNotes(
         .filter((text): text is string => Boolean(text))
         .map((text) => text.replace(/^Notas?:\s*/i, "").trim());
 
-      recipeObject.notes = notesContent;
+      return notesContent;
     }
   }
 }
@@ -189,16 +225,16 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
         for (const allergy of foundAllergies) {
           switch (allergy) {
             case "gluten":
-              allergyTags.push("glutenFree" as FoodAllergy);
+              allergyTags.push("glutenFree" as FoodAllergyType);
               break;
             case "dairy":
-              allergyTags.push("dairyFree" as FoodAllergy);
+              allergyTags.push("dairyFree" as FoodAllergyType);
               break;
             case "vegan":
-              allergyTags.push("vegan" as FoodAllergy);
+              allergyTags.push("vegan" as FoodAllergyType);
               break;
             case "vegetarian":
-              allergyTags.push("vegetarian" as FoodAllergy);
+              allergyTags.push("vegetarian" as FoodAllergyType);
               break;
           }
         }
