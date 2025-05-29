@@ -1,28 +1,29 @@
-import type { IngredientsSection } from "@/types/types";
 import Icon from "@/design-system/Icon";
+
+import type { SubrecipeType } from "@/types";
 
 import styles from "./IngredientList.module.scss";
 
 type IngredientListProps = {
-  sections: IngredientsSection[];
+  subrecipes: SubrecipeType[];
 };
 
-const IngredientList = ({ sections }: IngredientListProps) => {
-  console.log("sections", sections);
+const IngredientList = ({ subrecipes }: IngredientListProps) => {
+  console.log("subrecipes", subrecipes);
 
   return (
     <div>
       <h2 className={styles.ingredientsTitle}>Ingredientes</h2>
       <div className={styles.sectionsContainer}>
-        {sections.map((section, i) => {
+        {subrecipes.map((subrecipe, i) => {
           return (
             <div key={`seccion-${i}`} className={styles.section}>
-              {section.sectionTitle && (
-                <h3 className={styles.sectionTitle}>{section.sectionTitle}</h3>
+              {subrecipe.title && (
+                <h3 className={styles.sectionTitle}>{subrecipe.title}</h3>
               )}
               <ul className={styles["ingredientsUl"]}>
-                {section.sectionBody &&
-                  section.sectionBody.map((paragraph, j) => {
+                {subrecipe.ingredients &&
+                  subrecipe.ingredients.map((paragraph, j) => {
                     return (
                       <li
                         key={`ingrediente-${j}`}
@@ -37,7 +38,12 @@ const IngredientList = ({ sections }: IngredientListProps) => {
                         <p>{paragraph.name},</p>
                         <div className={styles["ingredientAmount"]}>
                           <p>{paragraph.amount}</p>
-                          <p>{paragraph.unit}</p>
+                          {/*TODO <p>{paragraph.unit}</p> */}
+                          <p>
+                            {typeof paragraph.unit === "string"
+                              ? paragraph.unit
+                              : paragraph.unit.singular}
+                          </p>
                         </div>
                       </li>
                     );

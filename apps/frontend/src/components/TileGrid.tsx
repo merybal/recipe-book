@@ -4,7 +4,7 @@ import ButtonUnstyled from "@/design-system/ButtonUnstyled";
 
 import { useNavigate } from "react-router-dom";
 
-import type { FoodAllergy } from "@/types/types";
+import type { FoodAllergyType } from "@/types";
 
 import DefaultRecipeImage from "../assets/savory-recipe-default.jpg";
 
@@ -104,7 +104,7 @@ export type PreviewData = {
     name: string[];
     url: string[];
   };
-  foodAllergies?: FoodAllergy[];
+  foodAllergies?: FoodAllergyType[];
 };
 
 type TileGridProps = {

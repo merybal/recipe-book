@@ -2,8 +2,8 @@ import clsx from "clsx";
 
 import styles from "./Tile.module.scss";
 
-import type { Source as SourceProps } from "@/types/types";
-import type { FoodAllergy } from "@/types/types";
+import type { Source as SourceProps } from "@/types";
+import type { FoodAllergyType } from "@/types";
 
 import FoodAllergies from "./FoodAllergies";
 
@@ -11,7 +11,7 @@ import FoodAllergies from "./FoodAllergies";
 // TODO se van a agregar food allergies?
 
 type TileProps = {
-  allergies?: FoodAllergy[];
+  allergies?: FoodAllergyType[];
   className?: string;
   imageUrl: string;
   source?: SourceProps;

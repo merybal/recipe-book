@@ -1,23 +1,23 @@
-import type { InstructionsSection } from "@/types/types";
+import type { SubrecipeType } from "@/types";
 
 import styles from "./Instructions.module.scss";
 
 type InstructionsProps = {
   isNumbered?: boolean;
-  sections: InstructionsSection[];
+  subrecipes: SubrecipeType[];
 };
 
-const Instructions = ({ isNumbered, sections }: InstructionsProps) => {
+const Instructions = ({ isNumbered, subrecipes }: InstructionsProps) => {
   return (
     <div className={styles.instructions}>
       <h2>Preparación</h2>
-      {sections.map((section, i) => {
+      {subrecipes.map((subrecipes, i) => {
         return (
-          <div key={`seccion-${i}`} className={styles.section}>
-            {section.sectionTitle && <h3>{section.sectionTitle}</h3>}
+          <div key={`seccion-${i}`} className={styles.subrecipe}>
+            {subrecipes.title && <h3>{subrecipes.title}</h3>}
             <ul className={styles.instructionsUl}>
-              {section.sectionBody &&
-                section.sectionBody.map((paragraph, j) => {
+              {subrecipes.instructions &&
+                subrecipes.instructions.map((paragraph, j) => {
                   return (
                     <li
                       key={`ingrediente-${j}`}

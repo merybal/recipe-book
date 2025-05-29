@@ -1,24 +1,27 @@
-// import { useParams } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import axios from "axios"
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import Instructions from "@/components/Instructions";
 import IngredientList from "@/components/IngredientList";
 import BottomSheet from "../design-system/BottomSheet";
 import FoodAllergies from "../components/FoodAllergies";
-import Source from "../components/Source";
+// import Source from "../components/Source";
 import Separator from "../design-system/Separator";
 import Tag from "../design-system/Tag";
 
-import type { RecipeType } from "@/types/types";
+import type {
+  RecipeType,
+  SubrecipeType,
+  SubrecipeRaw,
+  IngredientType,
+  IngredientRaw,
+} from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { normalizeUnit } from "@/utils/file-upload-idml-utils";
 
 import styles from "./Recipe.module.scss";
-
-type RecipeProps = {
-  recipe: RecipeType;
-};
 
 /**
  * //TODO
@@ -27,87 +30,150 @@ type RecipeProps = {
  * - desktop
  */
 
-const Recipe = ({ recipe }: RecipeProps) => {
-  // const { id } = useParams<{ id: string }>();
-  // const isMobile = useIsMobile();
-
-  // const [recipe, setRecipe] = useState<RecipeType | null>(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(false);
-
-  // useEffect(() => {
-  //   if (!id) return;
-
-  //   const fetchRecipe = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3000/recipes/${id}`);
-  //       setRecipe(response.data);
-  //     } catch (err) {
-  //       console.error("Error fetching recipe:", err);
-  //       setError(true);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchRecipe();
-  // }, [id]);
-
-  // if (loading) return <p>Cargando receta...</p>;
-  // if (error || !recipe) return <p>Error al cargar la receta.</p>;
-
-  const {
-    title,
-    ingredients,
-    cookingTime,
-    mold,
-    servings,
-    instructions,
-    source,
-    foodAllergies,
-  } = recipe;
+const Recipe = () => {
+  const { id } = useParams<{ id: string }>();
+  const [recipe, setRecipe] = useState<RecipeType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const isMobile = useIsMobile();
+
+  useEffect(() => {
+    if (!id) return;
+
+    //TODO pasar a utils o a hook
+
+    function parseIngredient(ingredient: IngredientRaw): IngredientType {
+      const unit = normalizeUnit(
+        ingredient.units.name,
+        ingredient.amount ? ingredient.amount : undefined
+      );
+
+      const parsedIngredient: IngredientType = {
+        name: ingredient.name,
+        ...(ingredient.amount && { amount: ingredient.amount }),
+        unit: unit,
+      };
+
+      return parsedIngredient;
+    }
+
+    function parseSubrecipe(subrecipe: SubrecipeRaw) {
+      const parsedSubrecipe: SubrecipeType = {
+        ...(subrecipe.title && { amount: subrecipe.title }),
+
+        //"Batir los huevos\nAgregar la harina\nHornear"
+        instructions: subrecipe.instructions
+          .split("\n")
+          .map((i) => i.trim())
+          .filter(Boolean), //TODO cambiar para que se parsee separando parrafos con /n
+        ingredients: subrecipe.ingredients.map(parseIngredient),
+      };
+
+      return parsedSubrecipe;
+    }
+
+    const fetchRecipe = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:3000/recipes/${id}`);
+
+        const recipeData = response.data;
+
+        const parsedRecipe: RecipeType = {
+          id: id,
+          title: recipeData.title,
+          ...(recipeData.imageUrl && { imageUrl: recipeData.image_url }),
+          subrecipes: recipeData.subrecipes.map(parseSubrecipe),
+
+          ...(recipeData.cooking_time || recipeData.cooking_temperature
+            ? {
+                bakingInstructions: {
+                  ...(recipeData.cooking_time && {
+                    time: recipeData.cooking_time,
+                  }),
+                  ...(recipeData.cooking_temperature && {
+                    temperature: recipeData.cooking_temperature,
+                  }),
+                },
+              }
+            : {}),
+
+          ...(recipeData.mold_type || recipeData.mold_size
+            ? {
+                mold: {
+                  ...(recipeData.mold_type && { type: recipeData.mold_type }),
+                  ...(recipeData.mold_size && { size: recipeData.mold_size }),
+                },
+              }
+            : {}),
+
+          ...(recipeData.servings && { size: recipeData.servings }),
+
+          ...(recipeData.recipe_food_allergies?.length > 0 && {
+            foodAllergies: recipeData.recipe_food_allergies,
+          }),
+          // notes?: recipeData.[],
+          // source?: Source,
+        };
+
+        setRecipe(parsedRecipe);
+      } catch (err) {
+        console.error(err);
+        setError("Hubo un error al cargar la receta");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id]);
+
+  if (loading) return <div>Cargando...</div>;
+  if (error) return <div>{error}</div>;
+  if (!recipe) return <div>No se encontró la receta</div>;
 
   const content = (
     <section className={styles.recipeContainer}>
       <header>
         <div className={styles.titleContainer}>
-          <h1 className={styles.title}>{title}</h1>
-          {foodAllergies && <FoodAllergies allergies={foodAllergies} />}
+          <h1 className={styles.title}>{recipe.title}</h1>
+          {recipe.foodAllergies && (
+            <FoodAllergies allergies={recipe.foodAllergies} />
+          )}
         </div>
         <Separator />
         <div className={styles.recipeInfoContainer}>
           <div className={styles.tagContainer}>
-            {cookingTime && (
+            {recipe.bakingInstructions && (
               <Tag>
-                {cookingTime.map((line) => {
-                  return <p key={line}>{line}</p>;
-                })}
+                {recipe.bakingInstructions.time && (
+                  <p>{recipe.bakingInstructions.time}</p>
+                )}
+                {recipe.bakingInstructions.temperature && (
+                  <p>{recipe.bakingInstructions.temperature}°C</p>
+                )}
               </Tag>
             )}
-            {mold && (
+            {recipe.mold && (
               <Tag>
-                {mold.map((line) => {
-                  return <p key={line}>{line}</p>;
-                })}
+                {recipe.mold.type && <p>{recipe.mold.type}</p>}
+                {recipe.mold.size && <p>{recipe.mold.size}</p>}
               </Tag>
             )}
-            {servings && (
+            {recipe.servings && (
               <Tag>
-                {servings.map((line) => {
-                  return <p key={line}>{line}</p>;
-                })}
+                <p>{recipe.servings}</p>
               </Tag>
             )}
           </div>
-          {source && <Source source={source} />}
+          {/* {source && <Source source={source} />} */}
         </div>
       </header>
       <Separator />
-      <IngredientList sections={ingredients} />
+      <IngredientList subrecipes={recipe.subrecipes} />
       <Separator />
-      <Instructions isNumbered sections={instructions} />
+      <Instructions isNumbered subrecipes={recipe.subrecipes} />
     </section>
   );
 

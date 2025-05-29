@@ -1,100 +1,87 @@
-// const UNITS = {
-//   // TODO completar. Aagregar equivalencias?
-//   GRAMS: { abbrv: "g", fullUnit: "gramos" },
-//   KILOGRAMS: { abbrv: "kg", fullUnit: "kilogramos / kilos", equivalence: "" },
-//   PINCH: { abbrv: "pzc", fullUnit: "pizca" },
-//   TEASPOON: { abbrv: "cdta", fullUnit: "cucharadita de te" },
-//   TABLESPOON: { abbrv: "cda", fullUnit: "cucharada sopera" },
-//   AMOUNT_NEEDED: { abbrv: "c/n", fullUnit: "cantidad necesaria" },
-//   MILILITERS: { abbrv: "ml", fullUnit: "mililitros" },
-//   LITERS: { abbrv: "l", fullUnit: "litros" },
-//   CUBIC_CENTIMITERS: { abbrv: "cc", fullUnit: "centímetros cúbicos" },
-//   CUP: { abbrv: "taza", fullUnit: "taza" },
-// } as const;
+//TODO revisar si queda aca
+//TODO ver si se agregan las unidades de la tabla con logica
 
-// const UNITS = {
-//   // TODO completarlo
-//   AMOUNT_NEEDED: "c/n",
-//   GRAMS: "g",
-//   KILOGRAMS: "kg",
-//   PINCH: "pzc",
-//   TEASPOON: "cdta", //agregar plurales?
-//   TABLESPOON: "cda",
-//   MILILITERS: "ml",
-//   LITERS: "l",
-//   CUBIC_CENTIMITERS: "cc",
-//   CUP: "taza",
-//   DICE: "dado",
-//   CLOVE: "diente",
-// } as const;
+export type Abbreviation = {
+  singular: string;
+  plural?: string;
+};
+
 export type Unit = {
-  abbrv: string;
+  abbreviation: Abbreviation;
   fullUnit: string;
   synonyms: string[];
 };
 
 export const UNITS: Record<string, Unit> = {
   GRAMS: {
-    abbrv: "g",
+    abbreviation: { singular: "g" },
     fullUnit: "gramos",
-    synonyms: ["gramo", "gramos", "g"],
+    synonyms: ["grams", "gramo", "gramos", "g"],
   },
   KILOGRAMS: {
-    abbrv: "kg",
-    fullUnit: "kilogramos",
-    synonyms: ["kg", "kilo", "kilos", "kilogramo", "kilogramos"],
+    abbreviation: { singular: "kg" },
+    fullUnit: "kilogramo",
+    synonyms: ["kilogram", "kg", "kilo", "kilos", "kilogramo", "kilogramos"],
   },
   PINCH: {
-    abbrv: "pzc",
+    abbreviation: { singular: "pzc", plural: "pzcs" },
     fullUnit: "pizca",
-    synonyms: ["pizca", "pzc"],
+    synonyms: ["pinch", "pizca", "pzc"],
   },
   TEASPOON: {
-    abbrv: "cdta",
+    abbreviation: { singular: "cdta", plural: "cdtas" },
     fullUnit: "cucharadita",
-    synonyms: ["cdta", "cucharadita", "cucharadita de té"],
+    synonyms: ["teaspoon", "cdta", "cucharadita", "cucharadita de té"],
   },
   TABLESPOON: {
-    abbrv: "cda",
+    abbreviation: { singular: "cda", plural: "cdas" },
     fullUnit: "cucharada sopera",
-    synonyms: ["cda", "cucharada", "cucharada sopera"],
+    synonyms: ["tablespoon", "cda", "cucharada", "cucharada sopera"],
   },
   AMOUNT_NEEDED: {
-    abbrv: "c/n",
+    abbreviation: { singular: "c/n" },
     fullUnit: "cantidad necesaria",
-    synonyms: ["c/n", "cantidad necesaria"],
+    synonyms: ["amount_needed", "c/n", "cantidad necesaria"],
   },
   MILILITERS: {
-    abbrv: "ml",
+    abbreviation: { singular: "ml" },
     fullUnit: "mililitros",
-    synonyms: ["ml", "mililitro", "mililitros"],
+    synonyms: ["mililiter", "mililitre", "ml", "mililitro", "mililitros"],
   },
   LITERS: {
-    abbrv: "l",
+    abbreviation: { singular: "l" },
     fullUnit: "litros",
-    synonyms: ["l", "litro", "litros"],
+    synonyms: ["liter", "litre", "l", "litro", "litros"],
   },
   CUBIC_CENTIMETERS: {
-    abbrv: "cc",
+    abbreviation: { singular: "cc" },
     fullUnit: "centímetros cúbicos",
-    synonyms: ["cc", "cm3", "centímetro cúbico", "centímetros cúbicos"],
+    synonyms: [
+      "cubic_centimeter",
+      "cubic centimeter",
+      "cubic centimetre",
+      "cc",
+      "cm3",
+      "centímetro cúbico",
+      "centímetros cúbicos",
+    ],
   },
   CUP: {
-    abbrv: "taza",
+    abbreviation: { singular: "taza", plural: "tazas" },
     fullUnit: "taza",
-    synonyms: ["taza", "tazas"],
+    synonyms: ["cup", "taza", "tazas"],
   },
   DICE: {
-    abbrv: "dado",
+    abbreviation: { singular: "dado", plural: "dados" },
     fullUnit: "dado",
-    synonyms: ["dado", "dados"],
+    synonyms: ["dice", "dado", "dados"],
   },
   CLOVE: {
-    abbrv: "diente",
+    abbreviation: { singular: "diente", plural: "dientes" },
     fullUnit: "diente",
-    synonyms: ["diente", "dientes"],
+    synonyms: ["clove", "diente", "dientes"],
   },
 } as const;
 
 type UnitObject = (typeof UNITS)[keyof typeof UNITS];
-export type Units = UnitObject["abbrv"];
+export type Units = UnitObject["abbreviation"];

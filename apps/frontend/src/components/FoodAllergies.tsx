@@ -1,18 +1,18 @@
 import Icon from "@/design-system/Icon";
 
 import type { IconName } from "@/design-system/Icons";
-import type { FoodAllergy } from "@/types/types";
+import type { FoodAllergyType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./FoodAllergies.module.scss";
 
 export type FoodAllergiesProps = {
-  allergies?: FoodAllergy[];
+  allergies?: FoodAllergyType[];
   background?: string;
   className?: string;
 };
 
-const allergyToIconName: Record<FoodAllergy, IconName> = {
+const allergyToIconName: Record<FoodAllergyType, IconName> = {
   glutenFree: "wheat",
   dairyFree: "milk",
   vegan: "leaf",

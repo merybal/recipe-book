@@ -3,7 +3,7 @@ import type {
   InstructionsSection,
   FoodAllergy,
   Source,
-} from "@/types/types";
+} from "@/types";
 import type { Units } from "@/types/constants/units";
 import { UNITS } from "@/types/constants/units";
 
@@ -210,14 +210,19 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
 }
 
 // TODO Pasar a un utils general? seguro se use en el form
-export function normalizeUnit(input: string): Units | undefined {
-  const lowerInput = input.trim().toLowerCase();
+export function normalizeUnit(unit: string, amount?: string): Units | string {
+  const lowerCaseUnit = unit.trim().toLowerCase();
+  const parsedAmount = amount ? parseInt(amount) : null;
   for (const unit of Object.values(UNITS)) {
-    if (unit.synonyms.includes(lowerInput)) {
-      return unit.abbrv;
+    if (unit.synonyms.includes(lowerCaseUnit)) {
+      if (parsedAmount && parsedAmount > 1 && unit.abbreviation.plural) {
+        return unit.abbreviation.plural;
+      }
+      return unit.abbreviation;
     }
   }
-  return undefined;
+  //TODO ver si se ataja cuando la unidad no existe
+  return unit;
 }
 
 export function parseIngredientLine(ingredientLine: string) {
@@ -233,10 +238,10 @@ export function parseIngredientLine(ingredientLine: string) {
 
   // Manejar cantidad necesaria
   const normalizedUnit = normalizeUnit(amount);
-  if (normalizedUnit === UNITS.AMOUNT_NEEDED.abbrv) {
+  if (normalizedUnit === UNITS.AMOUNT_NEEDED.abbreviation) {
     return {
       name: namePart,
-      unit: UNITS.AMOUNT_NEEDED.abbrv,
+      unit: UNITS.AMOUNT_NEEDED.abbreviation,
     };
   }
 

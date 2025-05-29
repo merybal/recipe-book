@@ -13,9 +13,9 @@ function App() {
     <div className={styles.app}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/recipe" element={<Recipe recipe={recipe} />} />
+        {/* <Route path="/recipe" element={<Recipe recipe={recipe} />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}
-        {/* <Route path="/recipes/:id" element={<Recipe />} /> */}
+        <Route path="/recipes/:id" element={<Recipe />} />
       </Routes>
     </div>
   );

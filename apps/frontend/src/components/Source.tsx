@@ -3,7 +3,7 @@ import clsx from "clsx";
 import Icon from "@/design-system/Icon";
 
 import styles from "./Source.module.scss";
-import type { Source } from "@/types/types";
+import type { Source } from "@/types";
 
 export type SourceProps = {
   source: Source;
