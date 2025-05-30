@@ -2,7 +2,7 @@ import { IngredientType, IngredientRaw } from "./ingredient";
 
 export type SubrecipeType = {
   title?: string;
-  instructions: string[];
+  instructions: string;
   ingredients: IngredientType[];
 };
 
@@ -15,4 +15,9 @@ export type SubrecipeRaw = {
   updated_at: string;
   deleted_at: string | null;
   ingredients: IngredientRaw[];
+};
+
+export type SubrecipeIdmlType = {
+  sectionTitle?: string;
+  sectionBody: string[];
 };

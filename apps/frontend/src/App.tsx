@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import Recipe from "./pages/Recipe";
 import Home from "./pages/Home";
+import FileUploadIDML from "./components/FileUploadIDML";
 
 //TODO hacer un componente layout?
 
@@ -16,6 +17,7 @@ function App() {
         {/* <Route path="/recipe" element={<Recipe recipe={recipe} />} /> */}
         {/* <Route path="*" element={<NotFound />} /> */}
         <Route path="/recipes/:id" element={<Recipe />} />
+        <Route path="/file-upload" element={<FileUploadIDML />} />
       </Routes>
     </div>
   );

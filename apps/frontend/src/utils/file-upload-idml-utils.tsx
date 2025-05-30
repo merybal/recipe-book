@@ -2,7 +2,7 @@ import type {
   RecipeType,
   BakingInstructionsType,
   MoldType,
-  InstructionsSection,
+  SubrecipeIdmlType,
   FoodAllergyType,
   Source,
 } from "@/types";
@@ -62,11 +62,10 @@ export function getServings(i: number, storyContentArray: Element[]) {
   if (!contentEl) return;
 
   const servings = contentEl.textContent?.trim();
-  console.log("servings", servings);
   return servings;
 }
 
-export const getSubSectionContent = (
+export const getSubrecipesContent = (
   i: number,
   storyContentArray: Element[],
   h2: string,
@@ -75,11 +74,11 @@ export const getSubSectionContent = (
 ) => {
   // console.log("story", storyContentArray);
   const sections = [];
-  let currentSection: InstructionsSection | null = null;
-  let genericSection: InstructionsSection | null = null;
+  let currentSection: SubrecipeIdmlType | null = null;
+  let genericSection: SubrecipeIdmlType | null = null;
   let hasSeenH3 = false;
 
-  const objetito = [];
+  const subrecipes = [];
 
   for (let j = i + 1; j < storyContentArray.length; j++) {
     const element = storyContentArray[j];
@@ -94,7 +93,6 @@ export const getSubSectionContent = (
 
       if (currentSection) {
         sections.push(currentSection);
-        console.log("currentSection", currentSection);
       }
 
       const titleContent = Array.from(element.querySelectorAll("Content"))
@@ -136,10 +134,9 @@ export const getSubSectionContent = (
     sections.push(genericSection);
   }
 
-  objetito.push(...sections);
-  // console.log("objetito", objetito);
+  subrecipes.push(...sections);
 
-  return objetito;
+  return subrecipes;
 };
 
 export function getNotes(i: number, storyContentArray: Element[]) {
@@ -254,52 +251,70 @@ export function normalizeUnit(unit: string, amount?: string): Units | string {
       if (parsedAmount && parsedAmount > 1 && unit.abbreviation.plural) {
         return unit.abbreviation.plural;
       }
-      return unit.abbreviation;
+      return unit.abbreviation.singular;
     }
   }
   //TODO ver si se ataja cuando la unidad no existe
   return unit;
 }
 
-export function parseIngredientLine(ingredientLine: string) {
-  const [namePart, amountPart] = ingredientLine.split(",").map((s) => s.trim());
+export function parseAmount(value: string): number {
+  // mixed fraction ("1 1/2")
+  if (value.includes(" ")) {
+    const [whole, fraction] = value.split(" ");
+    return parseInt(whole) + parseAmount(fraction);
+  }
 
-  if (!amountPart) {
+  // simple fraction (eg: "1/2")
+  if (value.includes("/")) {
+    const [numerator, denominator] = value.split("/").map(Number);
+    if (!denominator) return Number(value);
+    return numerator / denominator;
+  }
+
+  // Integer
+  return parseFloat(value);
+}
+
+export function parseIngredientLine(ingredientLine: string) {
+  const [namePart, amountAndUnitPart] = ingredientLine
+    .split(",")
+    .map((s) => s.trim());
+
+  if (!amountAndUnitPart) {
     return { name: namePart };
   }
 
-  const parts = amountPart.split(" ").filter(Boolean);
-  let amount = parts[0];
-  let rawUnit = parts.slice(1).join(" ").toLowerCase();
+  const parts = amountAndUnitPart.split(" ").filter(Boolean);
 
-  // Manejar cantidad necesaria
-  const normalizedUnit = normalizeUnit(amount);
-  if (normalizedUnit === UNITS.AMOUNT_NEEDED.abbreviation) {
-    return {
-      name: namePart,
-      unit: UNITS.AMOUNT_NEEDED.abbreviation,
-    };
+  let amountRaw: string | undefined;
+  let unitRaw: string | undefined;
+
+  // check if there is a combined fraction (eg: "1 1/2")
+  if (
+    parts.length >= 2 &&
+    /^\d+$/.test(parts[0]) && // integer
+    /^\d+\/\d+$/.test(parts[1]) // fraction
+  ) {
+    amountRaw = `${parts[0]} ${parts[1]}`;
+    unitRaw = parts.slice(2).join(" ");
   }
-
-  // // Convertir fracciones Unicode
-  // if (unicodeFractionsMap[amount]) {
-  //   amount = unicodeFractionsMap[amount];
-  // }
-
-  const unit = normalizeUnit(rawUnit);
+  // simple fraction (eg: "1/2")
+  else if (/^\d+\/\d+$/.test(parts[0])) {
+    amountRaw = parts[0];
+    unitRaw = parts.slice(1).join(" ");
+  }
+  // integer (eg: "100 g")
+  else if (/\d/.test(parts[0])) {
+    amountRaw = parts[0];
+    unitRaw = parts.slice(1).join(" ");
+  } else {
+    unitRaw = parts.join(" ");
+  }
 
   return {
     name: namePart,
-    amount,
-    unit,
+    ...(amountRaw && { amount: parseAmount(amountRaw) }),
+    ...(unitRaw && { unit: normalizeUnit(unitRaw) }),
   };
-}
-
-export function parseIngredientList(ingredients: InstructionsSection[]) {
-  // TODO como atajo las fracciones?
-  // TODO como atajo el o
-  return ingredients.map((section) => ({
-    sectionTitle: section.sectionTitle,
-    sectionBody: section.sectionBody.map(parseIngredientLine),
-  }));
 }

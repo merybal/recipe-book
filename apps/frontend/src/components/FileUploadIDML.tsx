@@ -7,15 +7,15 @@ import Recipe from "@/pages/Recipe";
 import {
   getBakingInstructions,
   getServings,
-  getSubSectionContent,
+  getSubrecipesContent,
   getImageNamesFromIDML,
-  parseIngredientList,
+  parseIngredientLine,
   getMold,
   getNotes,
   getSource,
 } from "@/utils/file-upload-idml-utils";
 
-import type { RecipeType, FoodAllergyType } from "@/types";
+import type { RecipeType, FoodAllergyType, SubrecipeIdmlType } from "@/types";
 
 const FileUploadIDML = () => {
   const [recipe, setRecipe] = useState<RecipeType>();
@@ -76,7 +76,7 @@ const FileUploadIDML = () => {
         if (style?.includes(h2Left)) {
           switch (text) {
             case "Ingredientes": {
-              const ingredientsSections = getSubSectionContent(
+              const subrecipes = getSubrecipesContent(
                 i,
                 storyContentArray,
                 h2Left,
@@ -84,8 +84,17 @@ const FileUploadIDML = () => {
                 pLeft
               );
 
-              recipeObject.ingredients =
-                parseIngredientList(ingredientsSections);
+              const subrecipesArray = subrecipes.map(
+                (subrecipe: SubrecipeIdmlType) => {
+                  return {
+                    title: subrecipe.sectionTitle,
+                    ingredients: subrecipe.sectionBody.map(parseIngredientLine),
+                    instructions: "",
+                  };
+                }
+              );
+
+              recipeObject.subrecipes = subrecipesArray;
               break;
             }
 
@@ -112,7 +121,7 @@ const FileUploadIDML = () => {
         }
 
         if (style?.includes(h2Right)) {
-          const instructionsSections = getSubSectionContent(
+          const subrecipes = getSubrecipesContent(
             i,
             storyContentArray,
             h2Right,
@@ -120,15 +129,21 @@ const FileUploadIDML = () => {
             pRight
           );
 
-          recipeObject.instructions = instructionsSections;
+          subrecipes.forEach((subrecipe) => {
+            const match = recipeObject.subrecipes.find(
+              (sub) => sub.title === subrecipe.sectionTitle
+            );
+            if (match) {
+              match.instructions = subrecipe.sectionBody.join("\n");
+            }
+          });
 
           recipeObject.notes = getNotes(i, storyContentArray);
           getSource(i, storyContentArray, recipeObject);
         }
       }
     }
-
-    console.log("Recipe que se va a setear:", recipeObject);
+    console.log(recipeObject);
     setRecipe(recipeObject);
   };
 
