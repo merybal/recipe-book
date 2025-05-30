@@ -8,7 +8,7 @@ export type Abbreviation = {
 
 export type Unit = {
   abbreviation: Abbreviation;
-  fullUnit: string;
+  fullUnit: string; //TODO for conversion/explanation page
   synonyms: string[];
 };
 
@@ -83,5 +83,5 @@ export const UNITS: Record<string, Unit> = {
   },
 } as const;
 
-type UnitObject = (typeof UNITS)[keyof typeof UNITS];
-export type Units = UnitObject["abbreviation"];
+export type UnitObject = (typeof UNITS)[keyof typeof UNITS];
+export type Units = UnitObject["abbreviation"]; //TODO YA NO SE USA?

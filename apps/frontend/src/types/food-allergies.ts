@@ -1,10 +1,12 @@
-export type FoodAllergyType =
-  | "glutenFree"
-  | "dairyFree"
-  | "vegan"
-  | "vegetarian";
+import { FOOD_ALLERGIES } from "./constants/food-allergies";
 
-//TODO hacer un diccionario con lo que viene del back. corregir los datos cargados en la tabla del back
+export type FoodAllergyType = keyof typeof FOOD_ALLERGIES;
+
+// export type FoodAllergyType =
+//   | "glutenFree"
+//   | "dairyFree"
+//   | "vegan"
+//   | "vegetarian";
 
 export type FoodAllergyRaw = {
   id: number;

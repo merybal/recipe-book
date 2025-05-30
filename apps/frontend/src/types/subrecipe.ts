@@ -2,7 +2,7 @@ import { IngredientType, IngredientRaw } from "./ingredient";
 
 export type SubrecipeType = {
   title?: string;
-  instructions: string;
+  instructions: string[];
   ingredients: IngredientType[];
 };
 

@@ -13,9 +13,7 @@ const Home = () => {
   useEffect(() => {
     const fetchRecipePreviews = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/recipes/recipe-preview-list"
-        );
+        const response = await axios.get("/api/recipes/recipe-preview-list");
         const mappedData = response.data.map((r: any) => ({
           id: r.id,
           title: r.title,

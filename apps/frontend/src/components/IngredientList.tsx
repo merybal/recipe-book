@@ -24,6 +24,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
               <ul className={styles["ingredientsUl"]}>
                 {subrecipe.ingredients &&
                   subrecipe.ingredients.map((paragraph, j) => {
+                    console.log(typeof paragraph.unit);
                     return (
                       <li
                         key={`ingrediente-${j}`}
@@ -38,12 +39,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                         <p>{paragraph.name},</p>
                         <div className={styles["ingredientAmount"]}>
                           <p>{paragraph.amount}</p>
-                          {/*TODO <p>{paragraph.unit}</p> */}
-                          <p>
-                            {typeof paragraph.unit === "string"
-                              ? paragraph.unit
-                              : paragraph.unit.singular}
-                          </p>
+                          {paragraph.unit && <p>{paragraph.unit}</p>}
                         </div>
                       </li>
                     );

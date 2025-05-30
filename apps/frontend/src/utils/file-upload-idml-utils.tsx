@@ -243,12 +243,12 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
 }
 
 // TODO Pasar a un utils general? seguro se use en el form
-export function normalizeUnit(unit: string, amount?: string): Units | string {
+export function normalizeUnit(unit: string, amount?: number): Units | string {
   const lowerCaseUnit = unit.trim().toLowerCase();
-  const parsedAmount = amount ? parseInt(amount) : null;
+  // const parsedAmount = amount ? parseInt(amount) : null;
   for (const unit of Object.values(UNITS)) {
     if (unit.synonyms.includes(lowerCaseUnit)) {
-      if (parsedAmount && parsedAmount > 1 && unit.abbreviation.plural) {
+      if (amount && amount > 1 && unit.abbreviation.plural) {
         return unit.abbreviation.plural;
       }
       return unit.abbreviation.singular;

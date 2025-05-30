@@ -10,6 +10,8 @@ import FoodAllergies from "../components/FoodAllergies";
 import Separator from "../design-system/Separator";
 import Tag from "../design-system/Tag";
 
+import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
+
 import type {
   RecipeType,
   SubrecipeType,
@@ -45,17 +47,19 @@ const Recipe = () => {
     //TODO pasar a utils o a hook
 
     function parseIngredient(ingredient: IngredientRaw): IngredientType {
-      const unit = normalizeUnit(
-        ingredient.units.name,
-        ingredient.amount ? ingredient.amount : undefined
-      );
+      const parsedUnit =
+        ingredient.units?.name &&
+        normalizeUnit(
+          ingredient.units.name,
+          ingredient.amount && ingredient.amount
+        );
 
       //TODO revisar types
 
       const parsedIngredient: IngredientType = {
         name: ingredient.name,
-        ...(ingredient.amount && { amount: ingredient.amount }),
-        unit: unit,
+        ...(ingredient.amount && { amount: ingredient.amount }), //TODO REVISAR
+        ...(parsedUnit && { unit: parsedUnit }),
       };
 
       return parsedIngredient;
@@ -79,7 +83,7 @@ const Recipe = () => {
     const fetchRecipe = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:3000/recipes/${id}`);
+        const response = await axios.get(`/api/recipes/${id}`);
 
         const recipeData = response.data;
         console.log("recipeData", recipeData);
@@ -115,9 +119,11 @@ const Recipe = () => {
           ...(recipeData.servings && { size: recipeData.servings }),
 
           ...(recipeData.recipe_food_allergies?.length > 0 && {
-            foodAllergies: recipeData.recipe_food_allergies.map(
-              (item: RecipeFoodAllergyRaw) => item.food_allergy.name
-            ),
+            foodAllergies: recipeData.recipe_food_allergies
+              .map((item: RecipeFoodAllergyRaw) =>
+                parseFoodAllergiesforFrontend(item.food_allergy.name)
+              )
+              .filter(Boolean), // filtra los undefined en caso de valores no reconocidos
           }),
           // notes?: recipeData.[],
           // source?: Source,
