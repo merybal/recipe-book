@@ -9,4 +9,13 @@ export default defineConfig({
   optimizeDeps: {
     include: ["pdfjs-dist/build/pdf.worker.js"],
   },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000", // Tu backend corriendo en WSL
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
 });
