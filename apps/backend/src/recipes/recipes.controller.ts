@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
+import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 import { AddFoodAllergiesDto } from '@/food-allergies/dto/add-food-allergies.dto';
 
 @Controller('recipes')
@@ -40,5 +41,12 @@ export class RecipesController {
   @Post()
   createRecipe(@Body() createRecipeDto: CreateRecipeDto) {
     return this.recipesService.createRecipe(createRecipeDto);
+  }
+
+  @Post('full')
+  async createFullRecipe(
+    @Body() CreateRecipeWithRelationsDto: CreateRecipeWithRelationsDto,
+  ) {
+    return this.recipesService.createFullRecipe(CreateRecipeWithRelationsDto);
   }
 }

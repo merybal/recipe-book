@@ -19,7 +19,7 @@ export class SubrecipesService {
 
   async addIngredient(
     subrecipeId: number,
-    data: { name: string; amount?: string; unit_id: number },
+    data: { name: string; amount?: number; unit_id: number },
   ) {
     const subrecipe = await this.prisma.subrecipes.findUnique({
       where: { id: subrecipeId },
@@ -46,7 +46,7 @@ export class SubrecipesService {
         ingredients: {
           where: { deleted_at: null },
           include: {
-            units: true, // para traer info de la unidad
+            units: true,
           },
         },
       },

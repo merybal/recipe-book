@@ -5,8 +5,8 @@ export class CreateRecipeDto {
   title: string;
 
   @IsOptional()
-  @IsString()
-  cooking_time?: string;
+  @IsInt()
+  cooking_time?: number;
 
   @IsOptional()
   @IsInt()

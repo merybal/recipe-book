@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 
 @Injectable()
 export class RecipesService {
@@ -72,6 +73,54 @@ export class RecipesService {
     return this.prisma.recipeFoodAllergies.createMany({
       data: createManyInput,
       skipDuplicates: true,
+    });
+  }
+
+  async createFullRecipe(dto: CreateRecipeWithRelationsDto) {
+    return this.prisma.recipes.create({
+      data: {
+        title: dto.title,
+        cooking_time: dto.cooking_time,
+        cooking_temperature: dto.cooking_temperature,
+        servings: dto.servings,
+        mold_type: dto.mold_type,
+        mold_size: dto.mold_size,
+        image_url: dto.image_url,
+
+        subrecipes: {
+          create: dto.subrecipes.map((sub) => ({
+            title: sub.title,
+            instructions: sub.instructions,
+            ingredients: {
+              create: sub.ingredients.map((ing) => ({
+                name: ing.name,
+                amount: ing.amount,
+                unit_id: ing.unit_id,
+              })),
+            },
+          })),
+        },
+
+        recipe_food_allergies: {
+          create: dto.food_allergy_ids.map((id) => ({
+            food_allergy: {
+              connect: { id },
+            },
+          })),
+        },
+      },
+      include: {
+        subrecipes: {
+          include: {
+            ingredients: true,
+          },
+        },
+        recipe_food_allergies: {
+          include: {
+            food_allergy: true,
+          },
+        },
+      },
     });
   }
 }

@@ -8,7 +8,7 @@ export class IngredientsController {
   @Post(':id/ingredients')
   addIngredient(
     @Param('id', ParseIntPipe) subrecipeId: number,
-    @Body() body: { name: string; amount?: string; unit_id: number },
+    @Body() body: { name: string; amount?: number; unit_id: number },
   ) {
     return this.subrecipesService.addIngredient(subrecipeId, body);
   }
