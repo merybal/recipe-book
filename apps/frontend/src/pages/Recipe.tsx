@@ -50,6 +50,8 @@ const Recipe = () => {
         ingredient.amount ? ingredient.amount : undefined
       );
 
+      //TODO revisar types
+
       const parsedIngredient: IngredientType = {
         name: ingredient.name,
         ...(ingredient.amount && { amount: ingredient.amount }),

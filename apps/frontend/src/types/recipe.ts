@@ -37,7 +37,7 @@ export type RecipeType = {
 export type RecipeRaw = {
   id: number;
   title: string;
-  cooking_time: string | null;
+  cooking_time: number | null;
   cooking_temperature: number | null;
   servings: string | null;
   mold_type: string | null;

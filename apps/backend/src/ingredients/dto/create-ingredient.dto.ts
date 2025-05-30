@@ -8,6 +8,7 @@ export class CreateIngredientDto {
   @IsNumber()
   amount?: number;
 
+  @IsOptional()
   @IsInt()
   unit_id: number;
 }

@@ -1,5 +1,5 @@
 import { RecipeStructure } from "../types/interfaces";
-import type { RecipeType } from "@/types/types";
+import type { RecipeType } from "@/types";
 
 const recipe: RecipeType = {
   title: "Torta de Manzana",

@@ -39,7 +39,7 @@ model Ingredients {
   deleted_at   DateTime?
   subrecipe    Subrecipes @relation(fields: [subrecipe_id], references: [id])
   units        Units?     @relation(fields: [unit_id], references: [id])
-  unit_id      Int
+  unit_id      Int?
 }
 
 model Subrecipes {
