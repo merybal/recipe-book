@@ -6,7 +6,8 @@ import type {
   FoodAllergyType,
   Source,
 } from "@/types";
-import type { Units } from "@/types/constants/units";
+
+import type { UnitAbbreviationsType } from "@/types";
 import { UNITS } from "@/types/constants/units";
 
 import JSZip from "jszip";
@@ -72,7 +73,6 @@ export const getSubrecipesContent = (
   h3: string,
   p: string
 ) => {
-  // console.log("story", storyContentArray);
   const sections = [];
   let currentSection: SubrecipeIdmlType | null = null;
   let genericSection: SubrecipeIdmlType | null = null;
@@ -243,7 +243,10 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
 }
 
 // TODO Pasar a un utils general? seguro se use en el form
-export function normalizeUnit(unit: string, amount?: number): Units | string {
+export function normalizeUnit(
+  unit: string,
+  amount?: number
+): UnitAbbreviationsType | string {
   const lowerCaseUnit = unit.trim().toLowerCase();
   // const parsedAmount = amount ? parseInt(amount) : null;
   for (const unit of Object.values(UNITS)) {

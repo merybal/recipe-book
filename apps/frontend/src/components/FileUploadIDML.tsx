@@ -89,7 +89,7 @@ const FileUploadIDML = () => {
                   return {
                     title: subrecipe.sectionTitle,
                     ingredients: subrecipe.sectionBody.map(parseIngredientLine),
-                    instructions: "",
+                    instructions: [],
                   };
                 }
               );
@@ -134,7 +134,8 @@ const FileUploadIDML = () => {
               (sub) => sub.title === subrecipe.sectionTitle
             );
             if (match) {
-              match.instructions = subrecipe.sectionBody.join("\n");
+              // match.instructions = subrecipe.sectionBody.join("\n"); //TODO hacer solo en el post
+              match.instructions = subrecipe.sectionBody;
             }
           });
 

@@ -24,7 +24,7 @@
 
         .stepNumber {
           @include Color($bg: main-text, $font: white);
-          @include Border($radius: 50%);
+          @include Border($radius: full);
           display: flex;
           justify-content: center;
           align-items: center;

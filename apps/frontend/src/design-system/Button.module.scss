@@ -45,19 +45,19 @@
 
 .size-small {
   @include Font($size: xxs);
-  @include Border($radius: 1rem);
+  @include Border($radius: full);
   height: 2rem;
 }
 
 .size-medium {
   @include Font($size: xs);
-  @include Border($radius: 1.5rem);
+  @include Border($radius: full);
   height: 3rem;
 }
 
 .size-large {
   @include Font($size: sm);
-  @include Border($radius: 1.75rem);
+  @include Border($radius: full);
   height: 3.5rem;
 }
 

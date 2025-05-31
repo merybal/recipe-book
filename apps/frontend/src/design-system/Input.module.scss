@@ -1,0 +1,80 @@
+@use "../styles/border" as *;
+@use "../styles/spacing" as *;
+@use "../styles/color" as *;
+@use "../styles/font" as *;
+
+// TODO faltan estados desktop: hover y focus visible
+// TODO falta disabled y readonly y ver cual mas
+
+.label {
+  position: relative;
+
+  .input {
+    @include Font($family: text, $weight: medium, $size: sm);
+    @include Border(
+      $width: medium,
+      $style: solid,
+      $color: outline,
+      $radius: full
+    );
+    @include Padding($x: lg, $y: md);
+    @include Color($font: main-text);
+    height: 3.5rem;
+  }
+
+  .input::placeholder {
+    @include Color($font: secondary-text);
+    @include Font($family: text, $weight: medium);
+  }
+
+  .input:focus {
+    @include Border($width: medium, $style: solid, $color: primary);
+  }
+
+  .input:focus-visible {
+    outline: none;
+  }
+
+  .icon-left-space {
+    @include Padding($left: xxl);
+  }
+
+  .icon-left {
+    left: 1.5rem;
+  }
+
+  .icon-right-space {
+    @include Padding($right: xxl);
+  }
+
+  .icon-left,
+  .icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: color 0.3s ease;
+  }
+
+  .icon-right {
+    right: 1.5rem;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .error {
+    @include Border($width: medium, $style: solid, $color: disruptive);
+  }
+}
+
+.message {
+  //TODO manejar el ancho del mensaje cuando es inline o full width
+  @include Font($weight: medium, $size: xs);
+  @include Padding($top: sm, $left: lg);
+  @include Color($font: secondary-text);
+}
+
+.error-message {
+  @include Color($font: disruptive);
+}

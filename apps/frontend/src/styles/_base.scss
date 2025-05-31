@@ -29,8 +29,9 @@ h3 {
 }
 
 p,
-a {
-  @include Font($weight: medium);
+a,
+input {
+  @include Font($family: text, $weight: medium);
 }
 
 @media (max-width: 600px) {

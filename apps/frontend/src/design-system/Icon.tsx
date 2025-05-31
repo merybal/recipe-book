@@ -1,4 +1,5 @@
 // library: https://lucide.dev/
+// TODO ver como dar credito a lucide por los icons
 import { iconMap, IconName } from "./Icons";
 import clsx from "clsx";
 import styles from "./Icon.module.scss";

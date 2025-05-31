@@ -1,6 +1,7 @@
 import Icon from "./Icon";
-
 import { IconName } from "./Icons";
+
+import { ButtonHTMLAttributes } from "react";
 
 import clsx from "clsx";
 
@@ -19,7 +20,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary" | "tertiary";
   // loading?: boolean;
   onClick: () => void;
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const iconSizeMap = {
   small: "xs",
@@ -40,6 +41,7 @@ const Button = ({
   variant = "primary",
   // loading = false,
   onClick,
+  ...rest
 }: ButtonProps) => {
   const pixelSize = iconSizeMap[size];
 
@@ -56,6 +58,7 @@ const Button = ({
       disabled={disabled}
       type={type}
       onClick={onClick}
+      {...rest}
     >
       {iconLeft && <Icon name={iconLeft} size={pixelSize} />}
       {label}
