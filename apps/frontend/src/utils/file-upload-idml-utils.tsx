@@ -8,7 +8,7 @@ import type {
 } from "@/types";
 
 import type { UnitAbbreviationsType } from "@/types";
-import { UNITS } from "@/types/constants/units";
+import { UNITS } from "@/constants";
 
 import JSZip from "jszip";
 

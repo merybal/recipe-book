@@ -1,4 +1,4 @@
-import { FOOD_ALLERGIES } from "./constants/food-allergies";
+import { FOOD_ALLERGIES } from "../constants";
 
 export type FoodAllergyType = keyof typeof FOOD_ALLERGIES;
 

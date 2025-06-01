@@ -1,4 +1,15 @@
-import { UnitObject } from "./constants/units";
+import { UnitObject } from "../constants";
+
+export type Abbreviation = {
+  singular: string;
+  plural?: string;
+};
+
+export type Unit = {
+  abbreviation: Abbreviation;
+  fullUnit: string; //TODO for conversion/explanation page
+  synonyms: string[];
+};
 
 type Singulars = UnitObject["abbreviation"]["singular"];
 type Plurals = NonNullable<UnitObject["abbreviation"]["plural"]>;

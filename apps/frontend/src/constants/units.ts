@@ -1,16 +1,6 @@
-//TODO revisar si queda aca
 //TODO ver si se agregan las unidades de la tabla con logica
 
-export type Abbreviation = {
-  singular: string;
-  plural?: string;
-};
-
-export type Unit = {
-  abbreviation: Abbreviation;
-  fullUnit: string; //TODO for conversion/explanation page
-  synonyms: string[];
-};
+import type { Unit } from "@/types";
 
 export const UNITS: Record<string, Unit> = {
   GRAMS: {
@@ -84,4 +74,3 @@ export const UNITS: Record<string, Unit> = {
 } as const;
 
 export type UnitObject = (typeof UNITS)[keyof typeof UNITS];
-export type Units = UnitObject["abbreviation"]; //TODO YA NO SE USA?

@@ -1,4 +1,4 @@
-import { FOOD_ALLERGIES } from "@/types/constants/food-allergies";
+import { FOOD_ALLERGIES } from "@/constants";
 
 const allergyMapInverse = Object.entries(FOOD_ALLERGIES).reduce<
   Record<string, keyof typeof FOOD_ALLERGIES>
