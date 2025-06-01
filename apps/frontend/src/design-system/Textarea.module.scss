@@ -3,71 +3,50 @@
 @use "../styles/color" as *;
 @use "../styles/font" as *;
 
-// TODO faltan estados desktop: focus visible
-// TODO falta readonly y ver cual mas
+// TODO faltan estados desktop: hover y focus visible
+// TODO falta disabled y readonly y ver cual mas
 
 .label {
-  position: relative;
-
-  .input {
+  .textarea {
     @include Font($family: text, $weight: medium, $size: sm);
     @include Border(
       $width: medium,
       $style: solid,
       $color: outline,
-      $radius: full
+      $radius: 1.75rem
     );
 
     @include Padding($x: lg, $y: md);
     @include Color($font: main-text);
-    height: 3.5rem;
-    width: 20rem;
+    min-height: 3.5rem;
+    max-width: 20rem;
+    min-width: 20rem;
+
     transition: border 0.3s ease;
   }
 
-  .input::placeholder {
+  .textarea::placeholder {
     @include Color($font: secondary-text);
     @include Font($family: text, $weight: medium);
   }
 
-  .input:focus {
+  .textarea:focus {
     @include Border($width: medium, $style: solid, $color: primary);
   }
 
-  .input:focus-visible {
+  .textarea:focus-visible {
     outline: none;
   }
 
-  .input:disabled {
+  .textarea:disabled {
     @include Color($bg: disabled);
-  }
-
-  .icon-left-space {
-    @include Padding($left: xxl);
-  }
-
-  .icon-left {
-    left: 1.5rem;
-  }
-
-  .icon-right-space {
-    @include Padding($right: xxl);
-  }
-
-  .icon-left,
-  .icon-right {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: color 0.3s ease;
-  }
-
-  .icon-right {
-    right: 1.5rem;
+    resize: none;
   }
 
   .full-width {
     width: 100%;
+    max-width: unset;
+    min-width: unset;
   }
 
   .error {

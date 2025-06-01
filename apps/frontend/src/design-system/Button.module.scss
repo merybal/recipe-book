@@ -3,7 +3,7 @@
 @use "../styles/font" as *;
 @use "../styles/border" as *;
 
-//TODO agregar hover y focus para desktop
+// TODO agregar focus visible
 
 .button {
   @include Padding($x: xl);
@@ -19,15 +19,18 @@
 
 .variant-primary {
   @include Color($bg: primary, $font: white);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .variant-secondary {
   @include Color($bg: transparent, $font: primary);
   @include Border($width: medium, $style: solid, $color: primary);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 }
 
 .variant-tertiary {
   @include Color($bg: transparent, $font: primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .disruptive-variant-primary {
@@ -63,4 +66,32 @@
 
 .full-width {
   width: 100%;
+}
+
+.variant-primary:disabled {
+  @include Color($bg: disabled, $font: secondary-text);
+  cursor: not-allowed;
+}
+
+.variant-secondary:disabled {
+  @include Color($font: secondary-text);
+  @include Border($width: medium, $style: solid, $color: disabled);
+  cursor: not-allowed;
+}
+
+.variant-tertiary:disabled {
+  @include Color($font: secondary-text);
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .variant-primary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover);
+  }
+
+  .variant-secondary:hover:not(:disabled):not(:focus),
+  .variant-tertiary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover, $font: white);
+    @include Border($width: medium, $style: solid, $color: primary-hover);
+  }
 }

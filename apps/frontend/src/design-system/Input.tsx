@@ -69,6 +69,7 @@ const Input = ({
           <Icon
             className={styles["icon-left"]}
             {...(isFocused && { color: "primary" })}
+            {...(disabled && { color: "outline" })}
             {...(error && !isFocused && { color: "disruptive" })}
             name={iconLeft}
             size="sm"
@@ -114,6 +115,7 @@ const Input = ({
             <Icon
               className={styles["icon-right"]}
               {...(isFocused && { color: "primary" })}
+              {...(disabled && { color: "outline" })}
               {...(error && !isFocused && { color: "disruptive" })}
               name={iconRight}
               size="sm"
