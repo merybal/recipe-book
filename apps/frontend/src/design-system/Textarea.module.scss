@@ -13,7 +13,7 @@
       $width: medium,
       $style: solid,
       $color: outline,
-      $radius: 1.75rem
+      $radius: xl
     );
 
     @include Padding($x: lg, $y: md);

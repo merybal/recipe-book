@@ -9,7 +9,7 @@ const sizeMap = {
   sm: 20,
   md: 24,
   lg: 32,
-  xl: 40,
+  xl: 48,
 } as const;
 
 type IconSize = keyof typeof sizeMap;

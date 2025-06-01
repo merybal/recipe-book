@@ -2,12 +2,13 @@ import Icon from "./Icon";
 import { IconName } from "./Icons";
 
 import { ButtonHTMLAttributes } from "react";
+import { iconSizeMap } from "@/constants";
 
 import clsx from "clsx";
 
 import styles from "./Button.module.scss";
 
-type ButtonProps = {
+export type ButtonProps = {
   className?: string;
   disabled?: boolean;
   disruptive?: boolean;
@@ -21,12 +22,6 @@ type ButtonProps = {
   // loading?: boolean;
   onClick: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
-
-const iconSizeMap = {
-  small: "xs",
-  medium: "sm",
-  large: "md",
-} as const;
 
 const Button = ({
   className,
