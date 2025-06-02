@@ -5,6 +5,7 @@ import {
   ChefHat,
   CircleX,
   ExternalLink,
+  File,
   FileUp,
   Image,
   ImagePlus,
@@ -18,6 +19,7 @@ import {
   Upload,
   Vegan,
   Wheat,
+  X,
 } from "lucide-react";
 
 export const iconMap = {
@@ -26,6 +28,7 @@ export const iconMap = {
   chefHat: ChefHat,
   circleX: CircleX,
   externalLink: ExternalLink,
+  file: File,
   fileUp: FileUp,
   image: Image,
   imagePlus: ImagePlus,
@@ -39,6 +42,7 @@ export const iconMap = {
   upload: Upload,
   wheat: Wheat,
   vegan: Vegan,
+  x: X,
 };
 
 export type IconName = keyof typeof iconMap;

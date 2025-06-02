@@ -1,0 +1,30 @@
+@use "../styles/spacing" as *;
+@use "../styles/color" as *;
+@use "../styles/font" as *;
+@use "../styles/border" as *;
+
+.buttonIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.size-small {
+  @include Border($radius: full);
+  height: 2rem;
+  width: 2rem;
+}
+
+.size-medium {
+  @include Border($radius: full);
+  height: 3rem;
+  width: 3rem;
+}
+
+.size-large {
+  @include Border($radius: full);
+  height: 3.5rem;
+  width: 3.5rem;
+}

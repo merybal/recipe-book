@@ -3,8 +3,6 @@
 @use "../styles/font" as *;
 @use "../styles/border" as *;
 
-// TODO agregar focus visible
-
 .button {
   @include Padding($x: xl);
   @include Font($weight: bold);
@@ -20,6 +18,7 @@
 
 .variant-primary {
   @include Color($bg: primary, $font: white);
+  @include Border($style: none);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -31,6 +30,7 @@
 
 .variant-tertiary {
   @include Color($bg: transparent, $font: primary);
+  @include Border($style: none);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -44,6 +44,7 @@
 }
 
 .disruptive-variant-tertiary {
+  @include Border($style: none);
   @include Color($bg: transparent, $font: secondary);
 }
 
@@ -69,6 +70,13 @@
   width: 100%;
 }
 
+.variant-primary:focus-visible,
+.variant-secondary:focus-visible,
+.variant-tertiary:focus-visible {
+  outline: 2px solid resolve-color(primary);
+  outline-offset: 2px;
+}
+
 .variant-primary:disabled {
   @include Color($bg: disabled, $font: secondary-text);
   cursor: not-allowed;
@@ -90,9 +98,12 @@
     @include Color($bg: primary-hover);
   }
 
-  .variant-secondary:hover:not(:disabled):not(:focus),
-  .variant-tertiary:hover:not(:disabled):not(:focus) {
+  .variant-secondary:hover:not(:disabled):not(:focus) {
     @include Color($bg: primary-hover, $font: white);
     @include Border($width: medium, $style: solid, $color: primary-hover);
+  }
+
+  .variant-tertiary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover, $font: white);
   }
 }
