@@ -1,17 +1,15 @@
 import { useState, useEffect, useCallback } from "react";
 
-import ButtonIcon from "../ButtonIcon/ButtonIcon";
-import Icon from "../Icon/Icon";
-
+import Icon from "../Icon";
+import FilePreviews from "./FilePreviews";
 import type { DragAndDropProps } from "./DragAndDrop.types";
 import { iconSizeMap } from "../Icon";
+
+import { processFiles } from "./DragAndDrop.utils";
 
 import clsx from "clsx";
 import styles from "./DragAndDrop.module.scss";
 import buttonStyles from "../Button/Button.module.scss";
-
-//TODO crear utils y organizar el DS. se pasan los mixins al ds?
-
 const DragAndDrop = ({
   accept,
   boxIcon,
@@ -83,71 +81,32 @@ const DragAndDrop = ({
     };
   }, [value]);
 
-  const processFiles = useCallback(
+  const handleFiles = useCallback(
     (files: FileList) => {
-      let newFiles = Array.from(files);
-      const errors: string[] = [];
-
-      if (accept) {
-        const acceptedTypes = accept.split(",").map((t) => t.trim());
-        newFiles = newFiles.filter((file) => {
-          const isAccepted = acceptedTypes.some((type) =>
-            type.startsWith(".") ? file.name.endsWith(type) : file.type === type
-          );
-          if (!isAccepted) {
-            errors.push(`Tipo de archivo no permitido: ${file.name}`);
-          }
-          return isAccepted;
-        });
-      }
-
-      if (maxFileSize) {
-        newFiles = newFiles.filter((file) => {
-          if (file.size > maxFileSize) {
-            errors.push(
-              `El archivo ${file.name} excede el tamaño máximo de ${Math.round(
-                maxFileSize / 1024 / 1024
-              )}MB`
-            );
-            return false;
-          }
-          return true;
-        });
-      }
-
-      if (maxFileAmount && value.length + newFiles.length > maxFileAmount) {
-        const cantidadDisponible = maxFileAmount - value.length;
-        errors.push(`Podés subir hasta ${maxFileAmount} archivos en total`);
-        newFiles = newFiles.slice(0, cantidadDisponible);
-      }
-
-      newFiles = newFiles.filter((file) => {
-        const isDuplicate = value.some(
-          (existing) =>
-            existing.name === file.name && existing.size === file.size
-        );
-        if (isDuplicate) {
-          errors.push(`Archivo duplicado: ${file.name}`);
-          return false;
-        }
-        return true;
+      const { acceptedFiles, errors } = processFiles({
+        files,
+        currentValue: value,
+        accept,
+        maxFileSize,
+        maxFileAmount,
+        multiple,
       });
 
       setValidationErrors(errors);
       onValidationError?.(errors);
 
-      if (newFiles.length > 0) {
-        onChange(multiple ? [...value, ...newFiles] : [newFiles[0]]);
+      if (acceptedFiles.length > 0) {
+        onChange(acceptedFiles);
       }
     },
     [
-      value,
-      onChange,
-      multiple,
       accept,
       maxFileSize,
       maxFileAmount,
+      multiple,
+      onChange,
       onValidationError,
+      value,
     ]
   );
 
@@ -157,14 +116,14 @@ const DragAndDrop = ({
     if (disabled) return;
     const files = e.dataTransfer.files;
     if (files.length) {
-      processFiles(files);
+      handleFiles(e.dataTransfer.files);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     if (e.target.files) {
-      processFiles(e.target.files);
+      handleFiles(e.target.files);
       e.target.value = "";
     }
   };
@@ -181,16 +140,13 @@ const DragAndDrop = ({
     setIsDragging(false);
   };
 
-  const handleRemoveFile = (index: number) => {
-    if (disabled) return;
-    const newFiles = value.filter((_, i) => i !== index);
-    onChange(newFiles);
-  };
-
-  const allAreImages = previews.every(
-    (preview) =>
-      typeof preview === "string" &&
-      (preview.startsWith("blob:") || preview.startsWith("data:"))
+  const handleRemoveFile = useCallback(
+    (index: number) => {
+      if (disabled) return;
+      const newFiles = value.filter((_, i) => i !== index);
+      onChange(newFiles);
+    },
+    [disabled, value, onChange]
   );
 
   return (
@@ -244,55 +200,13 @@ const DragAndDrop = ({
         )}
       </div>
 
-      {value.length > 0 && value.length > 0 && (
-        <div
-          className={clsx(
-            styles["preview-list"],
-            allAreImages && styles["row-layout"],
-            !inline && styles["full-width"]
-          )}
-        >
-          {value.map((file, idx) => {
-            const preview = previews[idx];
-            const isImagePreview =
-              typeof preview === "string" &&
-              (preview.startsWith("blob:") || preview.startsWith("data:"));
-
-            return (
-              <div
-                className={clsx(
-                  styles["preview-container"],
-                  isImagePreview && allAreImages && styles["image-container"]
-                )}
-                key={idx}
-              >
-                {!allAreImages && <Icon name="file" size={pixelSize} />}
-                {isImagePreview && allAreImages ? (
-                  <img
-                    src={preview}
-                    alt={`Preview ${idx}`}
-                    className={styles["preview-image"]}
-                  />
-                ) : (
-                  <p>{file.name}</p>
-                )}
-                <ButtonIcon
-                  className={clsx(
-                    isImagePreview && allAreImages
-                      ? styles["image-remove-button"]
-                      : styles["file-remove-button"]
-                  )}
-                  icon="x"
-                  label={`Eliminar archivo ${file.name}`}
-                  size="small"
-                  type="button"
-                  variant="secondary"
-                  onClick={() => handleRemoveFile(idx)}
-                />
-              </div>
-            );
-          })}
-        </div>
+      {previews.length === value.length && (
+        <FilePreviews
+          inline={inline}
+          previews={previews}
+          value={value}
+          handleRemoveFile={handleRemoveFile}
+        />
       )}
     </>
   );

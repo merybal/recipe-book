@@ -64,3 +64,20 @@ export type DragAndDropProps = {
   "disruptive" | "iconLeft" | "iconRight" | "size" | "variant"
 > &
   Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "value" | "onChange">;
+
+export type FilePreviewsProps = {
+  /**
+   * Is DragAndDropInline
+   */
+  inline?: boolean;
+  /**
+   * File previews
+   */
+  previews: string[];
+  /**
+   * Files uploaded
+   * @default []
+   */
+  value: File[];
+  handleRemoveFile: (index: number) => void;
+};
