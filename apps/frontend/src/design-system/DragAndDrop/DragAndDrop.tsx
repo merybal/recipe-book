@@ -22,6 +22,7 @@ const DragAndDrop = ({
   className,
   disabled,
   disruptive,
+  error,
   helper,
   iconLeft,
   iconRight,
@@ -231,11 +232,16 @@ const DragAndDrop = ({
           />
         </label>
         {helper && <p className={styles.message}>{helper}</p>}
-        {validationErrors.map((err, i) => (
+        {validationErrors.map((error, i) => (
           <p key={i} className={clsx(styles.message, styles["error-message"])}>
-            {err}
+            {error}
           </p>
         ))}
+        {error && (
+          <p className={clsx(styles.message, styles["error-message"])}>
+            {error}
+          </p>
+        )}
       </div>
 
       {value.length > 0 && value.length > 0 && (
