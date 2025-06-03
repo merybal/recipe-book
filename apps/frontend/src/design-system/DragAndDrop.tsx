@@ -11,6 +11,8 @@ import clsx from "clsx";
 import styles from "./DragAndDrop.module.scss";
 import buttonStyles from "./Button.module.scss";
 
+//TODO crear utils y organizar el DS
+
 export type DragAndDropProps = {
   accept?: string;
   boxIcon?: IconName;
@@ -23,8 +25,11 @@ export type DragAndDropProps = {
   error?: string;
   helper?: string;
   inline?: boolean;
+  maxFileAmount?: number;
+  maxFileSize?: number; // bytes
   value: File[];
   onChange: (files: File[]) => void;
+  onValidationError?: (errors: string[]) => void;
 } & Pick<
   ButtonProps,
   "disruptive" | "iconLeft" | "iconRight" | "size" | "variant"
@@ -41,26 +46,25 @@ const DragAndDrop = ({
   className,
   disabled,
   disruptive,
-  error,
   helper,
   iconLeft,
   iconRight,
   inline,
+  maxFileAmount,
+  maxFileSize,
   multiple,
   size = "medium",
   value = [],
   variant = "primary",
   onChange,
+  onValidationError,
   ...rest
 }: DragAndDropProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [previews, setPreviews] = useState<string[]>([]);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const pixelSize = iconSizeMap[size];
-
-  useEffect(() => {
-    console.log("previews actualizados:", previews);
-  }, [previews]);
 
   useEffect(() => {
     const newPreviews: string[] = [];
@@ -104,15 +108,70 @@ const DragAndDrop = ({
 
   const processFiles = useCallback(
     (files: FileList) => {
-      const newFiles = Array.from(files);
+      let newFiles = Array.from(files);
+      const errors: string[] = [];
 
-      if (multiple) {
-        onChange([...value, ...newFiles]);
-      } else {
-        onChange(newFiles);
+      if (accept) {
+        const acceptedTypes = accept.split(",").map((t) => t.trim());
+        newFiles = newFiles.filter((file) => {
+          const isAccepted = acceptedTypes.some((type) =>
+            type.startsWith(".") ? file.name.endsWith(type) : file.type === type
+          );
+          if (!isAccepted) {
+            errors.push(`Tipo de archivo no permitido: ${file.name}`);
+          }
+          return isAccepted;
+        });
+      }
+
+      if (maxFileSize) {
+        newFiles = newFiles.filter((file) => {
+          if (file.size > maxFileSize) {
+            errors.push(
+              `El archivo ${file.name} excede el tamaño máximo de ${Math.round(
+                maxFileSize / 1024 / 1024
+              )}MB`
+            );
+            return false;
+          }
+          return true;
+        });
+      }
+
+      if (maxFileAmount && value.length + newFiles.length > maxFileAmount) {
+        const cantidadDisponible = maxFileAmount - value.length;
+        errors.push(`Podés subir hasta ${maxFileAmount} archivos en total`);
+        newFiles = newFiles.slice(0, cantidadDisponible);
+      }
+
+      newFiles = newFiles.filter((file) => {
+        const isDuplicate = value.some(
+          (existing) =>
+            existing.name === file.name && existing.size === file.size
+        );
+        if (isDuplicate) {
+          errors.push(`Archivo duplicado: ${file.name}`);
+          return false;
+        }
+        return true;
+      });
+
+      setValidationErrors(errors);
+      onValidationError?.(errors);
+
+      if (newFiles.length > 0) {
+        onChange(multiple ? [...value, ...newFiles] : [newFiles[0]]);
       }
     },
-    [value, onChange, multiple]
+    [
+      value,
+      onChange,
+      multiple,
+      accept,
+      maxFileSize,
+      maxFileAmount,
+      onValidationError,
+    ]
   );
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -150,6 +209,12 @@ const DragAndDrop = ({
     const newFiles = value.filter((_, i) => i !== index);
     onChange(newFiles);
   };
+
+  const allAreImages = previews.every(
+    (preview) =>
+      typeof preview === "string" &&
+      (preview.startsWith("blob:") || preview.startsWith("data:"))
+  );
 
   return (
     <>
@@ -189,52 +254,62 @@ const DragAndDrop = ({
             {...rest}
           />
         </label>
-        {helper && !error && <p className={styles.message}>{helper}</p>}
-        {error && (
-          <p className={clsx(styles.message, styles["error-message"])}>
-            {error}
+        {helper && <p className={styles.message}>{helper}</p>}
+        {validationErrors.map((err, i) => (
+          <p key={i} className={clsx(styles.message, styles["error-message"])}>
+            {err}
           </p>
-        )}
+        ))}
       </div>
 
-      {value.length > 0 && (
-        <div className={styles.previewList}>
-          {value.length > 0 && (
-            <div className={styles.previewList}>
-              {value.map((file, idx) => {
-                const preview = previews[idx];
-                const isImagePreview =
-                  typeof preview === "string" &&
-                  (preview.startsWith("blob:") || preview.startsWith("data:"));
-
-                return (
-                  <div className={styles.previewText} key={idx}>
-                    {!isImagePreview && <Icon name="file" size={pixelSize} />}
-                    {isImagePreview ? (
-                      <img
-                        src={preview}
-                        alt={`Preview ${idx}`}
-                        className={styles.previewImage}
-                      />
-                    ) : preview && preview.startsWith("Archivo:") ? (
-                      <p>{preview}</p>
-                    ) : (
-                      <pre>{preview}</pre>
-                    )}
-                    <ButtonIcon
-                      disabled={disabled}
-                      label={`Eliminar archivo ${file.name}`}
-                      icon="x"
-                      size="small"
-                      variant="secondary"
-                      type="button"
-                      onClick={() => handleRemoveFile(idx)}
-                    />
-                  </div>
-                );
-              })}
-            </div>
+      {value.length > 0 && value.length > 0 && (
+        <div
+          className={clsx(
+            styles["preview-list"],
+            allAreImages && styles["row-layout"],
+            !inline && styles["full-width"]
           )}
+        >
+          {value.map((file, idx) => {
+            const preview = previews[idx];
+            const isImagePreview =
+              typeof preview === "string" &&
+              (preview.startsWith("blob:") || preview.startsWith("data:"));
+
+            return (
+              <div
+                className={clsx(
+                  styles["preview-container"],
+                  isImagePreview && allAreImages && styles["image-container"]
+                )}
+                key={idx}
+              >
+                {!allAreImages && <Icon name="file" size={pixelSize} />}
+                {isImagePreview && allAreImages ? (
+                  <img
+                    src={preview}
+                    alt={`Preview ${idx}`}
+                    className={styles["preview-image"]}
+                  />
+                ) : (
+                  <p>{file.name}</p>
+                )}
+                <ButtonIcon
+                  className={clsx(
+                    isImagePreview && allAreImages
+                      ? styles["image-remove-button"]
+                      : styles["file-remove-button"]
+                  )}
+                  icon="x"
+                  label={`Eliminar archivo ${file.name}`}
+                  size="small"
+                  type="button"
+                  variant="secondary"
+                  onClick={() => handleRemoveFile(idx)}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
     </>
