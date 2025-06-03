@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import clsx from "clsx";
 import type { PreviewData } from "../components/TileGrid";
-import { Button } from "@/design-system";
 
 import styles from "./Home.module.scss";
 import TileGrid from "../components/TileGrid";

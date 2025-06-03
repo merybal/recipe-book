@@ -1,0 +1,18 @@
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+
+.separator {
+  border-top: 0.0625rem solid resolve-color(outline);
+}
+
+.horizontal {
+  width: 100%;
+  @include Margin($y: lg);
+}
+
+.vertical {
+  height: 100%;
+}
+
+.leftText {
+}

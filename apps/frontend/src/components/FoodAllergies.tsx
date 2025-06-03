@@ -1,6 +1,6 @@
 import Icon from "@/design-system/Icon";
 
-import type { IconName } from "@/design-system/Icons";
+import type { IconName } from "@/design-system/Icon";
 import type { FoodAllergyType } from "@/types";
 
 import clsx from "clsx";

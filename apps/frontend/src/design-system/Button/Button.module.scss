@@ -1,0 +1,109 @@
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/border" as *;
+
+.button {
+  @include Padding($x: xl);
+  @include Font($weight: bold);
+  @include Border($style: none);
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.variant-primary {
+  @include Color($bg: primary, $font: white);
+  @include Border($style: none);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.variant-secondary {
+  @include Color($bg: transparent, $font: primary);
+  @include Border($width: medium, $style: solid, $color: primary);
+  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.variant-tertiary {
+  @include Color($bg: transparent, $font: primary);
+  @include Border($style: none);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.disruptive-variant-primary {
+  @include Color($bg: secondary, $font: white);
+}
+
+.disruptive-variant-secondary {
+  @include Color($bg: transparent, $font: secondary);
+  @include Border($width: medium, $style: solid, $color: secondary);
+}
+
+.disruptive-variant-tertiary {
+  @include Border($style: none);
+  @include Color($bg: transparent, $font: secondary);
+}
+
+.size-small {
+  @include Font($size: xxs);
+  @include Border($radius: full);
+  height: 2rem;
+}
+
+.size-medium {
+  @include Font($size: xs);
+  @include Border($radius: full);
+  height: 3rem;
+}
+
+.size-large {
+  @include Font($size: sm);
+  @include Border($radius: full);
+  height: 3.5rem;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.variant-primary:focus-visible,
+.variant-secondary:focus-visible,
+.variant-tertiary:focus-visible {
+  outline: 0.125rem solid resolve-color(primary);
+  outline-offset: 2px;
+}
+
+.variant-primary:disabled {
+  @include Color($bg: disabled, $font: secondary-text);
+  cursor: not-allowed;
+}
+
+.variant-secondary:disabled {
+  @include Color($font: secondary-text);
+  @include Border($width: medium, $style: solid, $color: disabled);
+  cursor: not-allowed;
+}
+
+.variant-tertiary:disabled {
+  @include Color($font: secondary-text);
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .variant-primary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover);
+  }
+
+  .variant-secondary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover, $font: white);
+    @include Border($width: medium, $style: solid, $color: primary-hover);
+  }
+
+  .variant-tertiary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: primary-hover, $font: white);
+  }
+}

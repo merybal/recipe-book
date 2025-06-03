@@ -1,0 +1,19 @@
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/border" as *;
+
+.tag {
+  @include Color($bg: secondary-light, $font: secondary);
+  @include Border($radius: 1.25rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+  height: 3rem;
+  width: 100%;
+
+  p {
+    @include Font($size: xs, $weight: medium);
+  }
+}
