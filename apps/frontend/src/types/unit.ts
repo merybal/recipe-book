@@ -8,6 +8,7 @@ export type Abbreviation = {
 export type Unit = {
   abbreviation: Abbreviation;
   fullUnit: string; //TODO for conversion/explanation page
+  name: string; // backend table name
   synonyms: string[];
 };
 

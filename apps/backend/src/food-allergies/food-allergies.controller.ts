@@ -12,7 +12,7 @@ export class FoodAllergiesController {
   }
 
   @Get()
-  findAll() {
-    return this.foodAllergiesService.findAll();
+  getFoodAllergies() {
+    return this.foodAllergiesService.getFoodAllergies();
   }
 }

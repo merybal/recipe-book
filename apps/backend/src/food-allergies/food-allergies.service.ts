@@ -12,7 +12,10 @@ export class FoodAllergiesService {
     });
   }
 
-  async findAll(): Promise<FoodAllergies[]> {
-    return this.prisma.foodAllergies.findMany();
+  async getFoodAllergies(): Promise<FoodAllergies[]> {
+    return this.prisma.foodAllergies.findMany({
+      where: { deleted_at: null },
+      orderBy: { name: 'asc' },
+    });
   }
 }

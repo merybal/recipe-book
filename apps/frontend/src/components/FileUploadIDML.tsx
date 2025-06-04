@@ -1,6 +1,13 @@
-import React, { useState } from "react";
-import JSZip from "jszip";
+import { useState, useEffect } from "react";
 // Docs: https://stuk.github.io/jszip/
+import JSZip from "jszip";
+
+import axios from "axios";
+
+import DragAndDrop from "@/design-system/DragAndDrop";
+import Button from "@/design-system/Button";
+
+import styles from "./FileUpload.module.scss";
 
 import Recipe from "@/pages/Recipe";
 
@@ -13,20 +20,51 @@ import {
   getMold,
   getNotes,
   getSource,
+  getUnitId,
 } from "@/utils/file-upload-idml-utils";
 
-import type { RecipeType, FoodAllergyType, SubrecipeIdmlType } from "@/types";
+import type {
+  RecipeType,
+  FoodAllergyType,
+  FoodAllergyRaw,
+  SubrecipeIdmlType,
+  UnitRaw,
+} from "@/types";
 
 const FileUploadIDML = () => {
+  const [units, setUnits] = useState<UnitRaw[]>([]);
+  const [allergies, setAllergies] = useState<FoodAllergyRaw[]>([]);
   const [recipe, setRecipe] = useState<RecipeType>();
+  const [files, setFiles] = useState<File[]>([]);
 
-  const handleFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [unitsRes, allergiesRes] = await Promise.all([
+          axios.get("/api/units"),
+          axios.get("/api/food-allergies"),
+        ]);
+
+        setUnits(unitsRes.data);
+        setAllergies(allergiesRes.data);
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      }
+      // console.log("units", units);
+      // console.log("allergies", allergies);
+    };
+
+    fetchData();
+  }, []);
+
+  const handleFile = async () => {
     const recipeObject: RecipeType = {
       title: "",
       subrecipes: [],
     };
 
-    const file = event.target.files?.[0];
+    const file = files?.[0];
+
     if (!file) return;
 
     const zip = await JSZip.loadAsync(file);
@@ -148,10 +186,72 @@ const FileUploadIDML = () => {
     setRecipe(recipeObject);
   };
 
+  function transformRecipeForPost(
+    recipe: RecipeType,
+    units: UnitRaw[],
+    allergies: FoodAllergyRaw[]
+  ) {
+    const formattedRecipe = {
+      title: recipe.title,
+      servings: recipe.servings,
+      mold_type: recipe.mold?.type || null,
+      mold_size: recipe.mold?.size || null,
+      cooking_time: recipe.bakingInstructions?.time || null,
+      cooking_temperature: recipe.bakingInstructions?.temperature || null,
+      image_url: recipe.imageUrl || null,
+
+      subrecipes: {
+        create: recipe.subrecipes.map((sub) => ({
+          title: sub.title || null,
+          instructions: Array.isArray(sub.instructions)
+            ? sub.instructions.join("\n")
+            : sub.instructions,
+          ingredients: {
+            create: sub.ingredients.map((ing) => ({
+              name: ing.name,
+              amount: ing.amount ?? null,
+              unit_id: getUnitId(ing.unit, units),
+            })),
+          },
+        })),
+      },
+
+      recipe_food_allergies: {
+        create: (recipe.foodAllergies ?? [])
+          .map((name) => allergies.find((a) => a.name === name)?.id)
+          .filter((id): id is number => !!id)
+          .map((id) => ({ food_allergy_id: id })),
+      },
+    };
+
+    console.log(formattedRecipe);
+
+    return formattedRecipe;
+  }
+
+  const handleUpload = async () => {
+    if (!recipe) return;
+
+    const body = transformRecipeForPost(recipe, units, allergies);
+
+    try {
+      const res = await axios.post("/api/recipes", body);
+      console.log("Receta subida con éxito:", res.data);
+    } catch (error) {
+      console.error("Error al subir la receta:", error);
+    }
+  };
+
   return (
-    <div>
-      <input type="file" accept=".idml" onChange={handleFile} />
-      {/* <div>{recipe && <Recipe recipe={recipe} />}</div> */}
+    <div className={styles["file-upload"]}>
+      <DragAndDrop
+        accept=".idml"
+        maxFileAmount={1}
+        value={files}
+        onChange={setFiles}
+      />
+      <Button label="Submit" onClick={handleFile} />
+      <Button label="Post recipe" onClick={handleUpload} />
     </div>
   );
 };

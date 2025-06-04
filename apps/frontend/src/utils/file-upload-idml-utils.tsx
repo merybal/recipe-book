@@ -5,6 +5,7 @@ import type {
   SubrecipeIdmlType,
   FoodAllergyType,
   Source,
+  UnitRaw,
 } from "@/types";
 
 import type { UnitAbbreviationsType } from "@/types";
@@ -248,7 +249,7 @@ export function normalizeUnit(
   amount?: number
 ): UnitAbbreviationsType | string {
   const lowerCaseUnit = unit.trim().toLowerCase();
-  // const parsedAmount = amount ? parseInt(amount) : null;
+
   for (const unit of Object.values(UNITS)) {
     if (unit.synonyms.includes(lowerCaseUnit)) {
       if (amount && amount > 1 && unit.abbreviation.plural) {
@@ -257,6 +258,8 @@ export function normalizeUnit(
       return unit.abbreviation.singular;
     }
   }
+
+  console.log("unit", unit);
   //TODO ver si se ataja cuando la unidad no existe
   return unit;
 }
@@ -320,4 +323,26 @@ export function parseIngredientLine(ingredientLine: string) {
     ...(amountRaw && { amount: parseAmount(amountRaw) }),
     ...(unitRaw && { unit: normalizeUnit(unitRaw) }),
   };
+}
+
+export function getUnitId(
+  unit: string | undefined | null,
+  units: UnitRaw[]
+): number | null {
+  if (!unit) return null;
+
+  const normalized = normalizeUnit(unit);
+  if (!normalized) return null;
+
+  const unitEntry = Object.values(UNITS).find((u) =>
+    u.synonyms.map((s) => s.toLowerCase()).includes(normalized.toLowerCase())
+  );
+
+  if (!unitEntry) return null;
+
+  const match = units.find(
+    (u) => u.name.toLowerCase() === unitEntry.name.toLowerCase()
+  );
+
+  return match?.id ?? null;
 }
