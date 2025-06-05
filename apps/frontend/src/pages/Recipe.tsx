@@ -7,8 +7,8 @@ import IngredientList from "@/components/IngredientList";
 import BottomSheet from "../design-system/BottomSheet";
 import FoodAllergies from "../components/FoodAllergies";
 // import Source from "../components/Source";
-import Separator from "../design-system/Separator";
-import Tag from "../design-system/Tag";
+import Separator from "../design-system/Separator/Separator";
+import Tag from "../design-system/Tag/Tag";
 
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 
@@ -22,7 +22,7 @@ import type {
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { normalizeUnit } from "@/utils/file-upload-idml-utils";
+import { normalizeUnit } from "@/utils/file-upload-idml-utils"; //TODO rename file
 
 import styles from "./Recipe.module.scss";
 
@@ -148,17 +148,17 @@ const Recipe = () => {
   if (!recipe) return <div>No se encontró la receta</div>;
 
   const content = (
-    <section className={styles.recipeContainer}>
+    <section className={styles["recipe-container"]}>
       <header>
-        <div className={styles.titleContainer}>
+        <div className={styles["title-container"]}>
           <h1 className={styles.title}>{recipe.title}</h1>
           {recipe.foodAllergies && (
             <FoodAllergies allergies={recipe.foodAllergies} />
           )}
         </div>
         <Separator />
-        <div className={styles.recipeInfoContainer}>
-          <div className={styles.tagContainer}>
+        <div className={styles["recipe-info-container"]}>
+          <div className={styles["tag-container"]}>
             {recipe.bakingInstructions && (
               <Tag>
                 {recipe.bakingInstructions.time && (
@@ -193,9 +193,9 @@ const Recipe = () => {
 
   return (
     <>
-      <div className={styles.imageContainer}>
+      <div className={styles["image-Container"]}>
         <img
-          className={styles.recipeImage}
+          className={styles["recipe-image"]}
           src="https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg"
         />
       </div>

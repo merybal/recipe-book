@@ -1,17 +1,18 @@
-.formWrapper {
-  display: flex;
-  flex-direction: column;
+@use "../styles/flex" as *;
+@use "../styles/border" as *;
 
-  .recipeForm {
-    display: flex;
-    flex-direction: column;
+.form-wrapper {
+  @include Flex($direction: column);
 
-    .inputText {
-      border: 1px solid black;
+  .recipe-form {
+    @include Flex($direction: column);
+
+    .input-text {
+      @include Border($width: thin, $style: solid, $color: black);
     }
 
-    .textArea {
-      border: 1px solid black;
+    .text-area {
+      @include Border($width: thin, $style: solid, $color: black);
       min-height: 500px;
     }
   }

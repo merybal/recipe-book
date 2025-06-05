@@ -1,7 +1,6 @@
 @use "../styles/color" as *;
+@use "../styles/flex" as *;
 
-.foodAllergiesContainer {
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
+.food-allergies-container {
+  @include Flex($align: flex-start, $gap: xs);
 }

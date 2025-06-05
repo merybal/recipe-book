@@ -2,17 +2,14 @@
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
 @use "../../styles/border" as *;
+@use "../../styles/flex" as *;
 
 .button {
   @include Padding($x: xl);
   @include Font($weight: bold);
   @include Border($style: none);
+  @include Flex($align: center, $gap: xs, $justify: center, $shrink: none);
   letter-spacing: 0.2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
   cursor: pointer;
 }
 

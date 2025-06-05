@@ -3,6 +3,8 @@ import React, { useState } from "react";
 //https://lirantal.com/blog/how-to-read-and-parse-pdfs-pdfjs-create-pdfs-pdf-lib-nodejs
 import { GlobalWorkerOptions, getDocument } from "pdfjs-dist";
 
+//TODO matar componente y libreria
+
 GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
   import.meta.url

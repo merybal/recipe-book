@@ -25,7 +25,7 @@ const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {
     : allergies;
 
   return (
-    <div className={clsx(styles.foodAllergiesContainer, className)}>
+    <div className={clsx(styles["food-allergies-container"], className)}>
       {filteredAllergies?.map((allergy) => (
         <Icon
           key={allergy}

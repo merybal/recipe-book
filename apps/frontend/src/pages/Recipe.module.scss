@@ -1,42 +1,35 @@
 @use "../styles/font" as *;
 @use "../styles/spacing" as *;
+@use "../styles/flex" as *;
+@use "../styles/flex" as *;
 
-.imageContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.image-container {
+  @include Flex($align: center, $justify: center);
   width: 100%;
   height: 45vh;
 
-  .recipeImage {
+  .recipe-image {
     object-fit: cover;
     overflow: hidden;
     height: 45vh;
   }
 }
 
-.recipeContainer {
-  display: flex;
-  flex-direction: column;
+.recipe-container {
+  @include Flex($direction: column);
 
   header {
-    display: flex;
-    flex-direction: column;
+    @include Flex($direction: column);
 
-    .titleContainer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .title-container {
+      @include Flex($align: center, $justify: space-between);
     }
 
-    .recipeInfoContainer {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    .recipe-info-container {
+      @include Flex($direction: column, $gap: lg);
 
-      .tagContainer {
-        display: flex;
-        gap: 0.5rem;
+      .tag-container {
+        @include Flex($gap: xxs);
       }
     }
   }

@@ -28,12 +28,12 @@ const RecipeForm = () => {
   };
 
   return (
-    <div className={styles.formWrapper}>
+    <div className={styles["form-wrapper"]}>
       <h1>Recipe form</h1>
-      <form className={styles.recipeForm}>
+      <form className={styles["recipe-form"]}>
         <label>Titulo</label>
         <input
-          className={styles.inputText}
+          className={styles["input-text"]}
           name="title"
           required
           type="text"
@@ -53,7 +53,7 @@ const RecipeForm = () => {
           <>
             <label>Titulo sección</label>
             <input
-              className={styles.inputText}
+              className={styles["input-text"]}
               name="title-section"
               type="text"
               value={titleSection}
@@ -61,7 +61,7 @@ const RecipeForm = () => {
             />
             <label>Ingredientes sección</label>
             <textarea
-              className={styles.textArea}
+              className={styles["text-area"]}
               name="steps"
               required
               value={steps}
@@ -72,7 +72,7 @@ const RecipeForm = () => {
           <>
             <label>Receta</label>
             <textarea
-              className={styles.textArea}
+              className={styles["text-area"]}
               name="steps"
               required
               value={steps}

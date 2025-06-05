@@ -1,6 +1,7 @@
 @use "../../styles/color" as *;
 @use "../../styles/border" as *;
 @use "../../styles/spacing" as *;
+@use "../../styles/flex" as *;
 
 .bottom-sheet {
   @include Color($bg: white);
@@ -13,11 +14,9 @@
   transition: height 0.3s ease;
 
   .handle-container {
+    @include Flex($align: center, $justify: center);
     height: 3rem;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     .handle {
       @include Color($bg: outline);

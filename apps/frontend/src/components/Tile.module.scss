@@ -2,6 +2,7 @@
 @use "../styles/font" as *;
 @use "../styles/color" as *;
 @use "../styles/border" as *;
+@use "../styles/flex" as *;
 
 .tile {
   .square-image {
@@ -22,16 +23,16 @@
     overflow: hidden;
   }
 
-  .recipeImage {
+  .recipe-image {
     object-fit: cover;
     width: 100%;
     height: 100%;
     object-position: center;
   }
 
-  .textContainer {
-    display: flex;
-    justify-content: space-between;
+  .text-container {
+    @include Flex($justify: space-between);
+
     .title {
       @include Margin($bottom: sm);
       text-wrap: wrap;
@@ -44,7 +45,7 @@
     }
 
     .allergies {
-      flex-shrink: 0;
+      @include Flex($shrink: none);
       @include Margin($left: sm);
     }
   }

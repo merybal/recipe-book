@@ -126,7 +126,7 @@ const TileGrid = ({
   return (
     <div
       className={clsx(
-        styles.tileGrid,
+        styles["tile-grid"],
         { [styles[`${grid}`]]: grid },
         className
       )}

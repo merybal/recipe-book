@@ -36,9 +36,9 @@ const Tile = ({
       )}
     >
       <div className={clsx({ [styles[`${variant}-image`]]: variant })}>
-        <img className={styles.recipeImage} src={imageUrl} />
+        <img className={styles["recipe-image"]} src={imageUrl} />
       </div>
-      <div className={styles.textContainer}>
+      <div className={styles["text-container"]}>
         <div>
           <h3 className={styles.title}>{title}</h3>
           {source && source.name?.length && (

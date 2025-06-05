@@ -15,16 +15,16 @@ const Instructions = ({ isNumbered, subrecipes }: InstructionsProps) => {
         return (
           <div key={`seccion-${i}`} className={styles.subrecipe}>
             {subrecipes.title && <h3>{subrecipes.title}</h3>}
-            <ul className={styles.instructionsUl}>
+            <ul className={styles["instructions-ul"]}>
               {subrecipes.instructions &&
                 subrecipes.instructions.map((paragraph, j) => {
                   return (
                     <li
                       key={`ingrediente-${j}`}
-                      className={styles.instructionsLi}
+                      className={styles["instructions-li"]}
                     >
                       {isNumbered && (
-                        <div className={styles.stepNumber}>
+                        <div className={styles["step-number"]}>
                           <p>{j + 1}</p>
                         </div>
                       )}

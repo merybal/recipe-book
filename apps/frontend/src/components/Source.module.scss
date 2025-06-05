@@ -1,14 +1,11 @@
-@use "../styles/color" as *;
 @use "../styles/spacing" as *;
+@use "../styles/flex" as *;
 
-.sourceContainer {
-  display: flex;
-  //TODO revisar cuando viene un solo autor
-  justify-content: space-around;
+//TODO revisar cuando viene un solo autor
+.source-container {
+  @include Flex($justify: space-around);
 
   .source {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+    @include Flex($align: center, $gap: xs);
   }
 }

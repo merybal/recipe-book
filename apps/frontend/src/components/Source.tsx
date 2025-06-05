@@ -11,7 +11,7 @@ export type SourceProps = {
 
 const Source = ({ source }: SourceProps) => {
   return (
-    <div className={clsx(styles.sourceContainer)}>
+    <div className={clsx(styles["source-container"])}>
       {source?.name?.map((name, i) => {
         return (
           <div className={styles.source} key={i}>

@@ -1,0 +1,94 @@
+@use "./spacing" as *;
+
+$flex-properties: (
+  // FLEX DIRECTION
+  row: row,
+  row-reverse: row-reverse,
+  column: column,
+  column-reverse: column-reverse,
+
+  // JUSTIFY CONTENT
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+  evenly: space-evenly,
+
+  // ALIGN ITEMS / SELF / CONTENT
+  stretch: stretch,
+  baseline: baseline,
+  auto: auto,
+
+  // FLEX WRAP
+  nowrap: nowrap,
+  wrap: wrap,
+  wrap-reverse: wrap-reverse
+);
+
+@function resolve-flex($value) {
+  @if map-has-key($flex-properties, $value) {
+    @return map-get($flex-properties, $value);
+  } @else {
+    @return $value;
+  }
+}
+
+@mixin Flex(
+  $direction: null,
+  $justify: null,
+  $align: null,
+  $wrap: null,
+  $content: null,
+  $self: null,
+  $gap: null,
+  $row-gap: null,
+  $column-gap: null,
+  $shrink: null
+) {
+  display: flex;
+
+  @if $direction {
+    flex-direction: resolve-flex($direction);
+  }
+
+  @if $justify {
+    justify-content: resolve-flex($justify);
+  }
+
+  @if $align {
+    align-items: resolve-flex($align);
+  }
+
+  @if $wrap {
+    flex-wrap: resolve-flex($wrap);
+  }
+
+  @if $content {
+    align-content: resolve-flex($content);
+  }
+
+  @if $self {
+    align-self: resolve-flex($self);
+  }
+
+  @if $gap {
+    gap: resolve-size($gap);
+  }
+
+  @if $row-gap {
+    row-gap: resolve-size($row-gap);
+  }
+
+  @if $column-gap {
+    column-gap: resolve-size($column-gap);
+  }
+
+  @if $shrink != null {
+    @if $shrink == 0 {
+      flex-shrink: 0; // Interpretamos "none" como 0 para shrink
+    } @else {
+      flex-shrink: $shrink;
+    }
+  }
+}

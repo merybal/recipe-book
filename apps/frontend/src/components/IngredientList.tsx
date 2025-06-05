@@ -13,22 +13,22 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
 
   return (
     <div>
-      <h2 className={styles.ingredientsTitle}>Ingredientes</h2>
-      <div className={styles.sectionsContainer}>
+      <h2 className={styles["ingredients-title"]}>Ingredientes</h2>
+      <div className={styles["sections-container"]}>
         {subrecipes.map((subrecipe, i) => {
           return (
             <div key={`seccion-${i}`} className={styles.section}>
               {subrecipe.title && (
-                <h3 className={styles.sectionTitle}>{subrecipe.title}</h3>
+                <h3 className={styles["section-title"]}>{subrecipe.title}</h3>
               )}
-              <ul className={styles["ingredientsUl"]}>
+              <ul className={styles["ingredients-ul"]}>
                 {subrecipe.ingredients &&
                   subrecipe.ingredients.map((paragraph, j) => {
                     console.log(typeof paragraph.unit);
                     return (
                       <li
-                        key={`ingrediente-${j}`}
-                        className={styles["ingredientLi"]}
+                        key={`ingredient-${j}`}
+                        className={styles["ingredient-li"]}
                       >
                         <Icon
                           name="check"
@@ -37,7 +37,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                           size="xs"
                         />
                         <p>{paragraph.name},</p>
-                        <div className={styles["ingredientAmount"]}>
+                        <div className={styles["ingredient-amount"]}>
                           <p>{paragraph.amount}</p>
                           {paragraph.unit && <p>{paragraph.unit}</p>}
                         </div>

@@ -1,11 +1,9 @@
 @use "../../styles/color" as *;
 @use "../../styles/border" as *;
+@use "../../styles/flex" as *;
 
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  @include Flex($align: center, $justify: center, $shrink: none);
 }
 
 @each $name, $value in $colors {

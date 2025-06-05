@@ -2,33 +2,24 @@
 @use "../styles/color" as *;
 @use "../styles/spacing" as *;
 @use "../styles/border" as *;
+@use "../styles/flex" as *;
 
 .instructions {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  @include Flex($direction: column, $gap: lg);
 
   .subrecipe {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    @include Flex($direction: column, $gap: md);
 
-    .instructionsUl {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
+    .instructions-ul {
+      @include Flex($direction: column, $gap: sm);
 
-      .instructionsLi {
-        display: flex;
-        gap: 0.5rem;
+      .instructions-li {
+        @include Flex($gap: xs);
 
-        .stepNumber {
+        .step-number {
           @include Color($bg: main-text, $font: white);
           @include Border($radius: full);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-shrink: 0;
+          @include Flex($justify: center, $align: center, $shrink: none);
           height: 1.5rem;
           width: 1.5rem;
 

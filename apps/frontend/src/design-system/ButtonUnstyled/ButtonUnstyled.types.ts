@@ -1,7 +1,7 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
 export type ButtonUnstyledProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   disabled?: boolean;
   type?: "button" | "submit" | "reset";

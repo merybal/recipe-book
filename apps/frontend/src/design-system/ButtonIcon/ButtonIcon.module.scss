@@ -2,12 +2,10 @@
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
 @use "../../styles/border" as *;
+@use "../../styles/flex" as *;
 
 .buttonIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  @include Flex($align: center, $justify: center, $shrink: none);
   cursor: pointer;
 }
 

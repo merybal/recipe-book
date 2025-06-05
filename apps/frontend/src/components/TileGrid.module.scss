@@ -1,8 +1,11 @@
-.tileGrid {
+@use "../styles/flex" as *;
+
+.tile-grid {
   &.single {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+    @include Flex(
+      $direction: column,
+      $gap: 2.5rem
+    ); //TODO REVISAR SI SE USA VARIABLE
   }
 
   &.double {

@@ -2,17 +2,14 @@
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
 @use "../../styles/border" as *;
+@use "../../styles/flex" as *;
 
 .drop-zone {
   @include Border($width: medium, $style: dashed, $color: outline, $radius: xl);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
+  @include Flex($direction: column, $align: center, $justify: center, $gap: lg);
+  @include Padding($all: xl);
   min-height: 10rem;
   width: 20rem;
-  padding: 2rem;
   transition: background-color 0.3s ease;
 
   .message {
@@ -33,19 +30,12 @@
 .preview-list {
   @include Margin($top: sm);
   @include Padding($x: sm);
+  @include Flex($direction: column, $wrap: wrap, $gap: xs);
   width: 20rem;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  gap: 0.5rem;
 
   &.row-layout {
     @include Padding($x: none);
-
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.5rem;
+    @include Flex($direction: row, $justify: space-between);
 
     &::after {
       content: "";
@@ -59,10 +49,8 @@
   }
 
   .preview-container {
+    @include Flex($align: center, $gap: xs);
     position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
 
     &.image-container {
       width: 6rem;
