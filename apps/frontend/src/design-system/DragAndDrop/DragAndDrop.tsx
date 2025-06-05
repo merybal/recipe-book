@@ -10,6 +10,9 @@ import { processFiles } from "./DragAndDrop.utils";
 import clsx from "clsx";
 import styles from "./DragAndDrop.module.scss";
 import buttonStyles from "../Button/Button.module.scss";
+
+//TODO hacer que la muestra de previews sea opcional por prop
+
 const DragAndDrop = ({
   accept,
   boxIcon,

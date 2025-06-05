@@ -3,10 +3,18 @@
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
 
-// TODO falta readonly y ver cual mas
-
 .label {
   position: relative;
+
+  .label-text {
+    @include Font($weight: bold, $size: sm);
+    @include Margin($bottom: sm);
+    display: none;
+
+    &.show-label {
+      display: block;
+    }
+  }
 
   .input {
     @include Font($family: text, $weight: medium, $size: sm);
@@ -16,7 +24,6 @@
       $color: outline,
       $radius: full
     );
-
     @include Padding($x: lg, $y: md);
     @include Color($font: main-text);
     height: 3.5rem;
@@ -38,6 +45,10 @@
   }
 
   .input:disabled {
+    @include Color($bg: disabled, $font: secondary-text);
+  }
+
+  .read-only {
     @include Color($bg: disabled);
   }
 

@@ -2,5 +2,5 @@
 @use "../styles/flex" as *;
 
 .food-allergies-container {
-  @include Flex($align: flex-start, $gap: xs);
+  @include Flex($align: start, $gap: xs);
 }

@@ -1,0 +1,96 @@
+import { useState, useEffect } from "react";
+import Textarea from "@/design-system/Textarea";
+import ButtonIcon from "@/design-system/ButtonIcon";
+import type { EditableTextareaProps } from "./EditableTextarea.types";
+
+import clsx from "clsx";
+import editableInputStyles from "../EditableInput/EditableInput.module.scss";
+
+const EditableTextarea = ({
+  id,
+  className,
+  label,
+  required,
+  value,
+  onChange,
+}: EditableTextareaProps) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [localValue, setLocalValue] = useState(value);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setLocalValue(value);
+  }, [value]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+    if (required) {
+      setHasError(newValue.trim() === "");
+    }
+  };
+
+  const handleSave = () => {
+    onChange(localValue);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setLocalValue(value);
+    setIsEditing(false);
+  };
+
+  return (
+    <div
+      className={clsx(
+        editableInputStyles["editable-field-container"],
+        className
+      )}
+    >
+      <Textarea
+        id={id}
+        {...(hasError && { error: "Este campo es requerido" })}
+        label={label}
+        readOnly={!isEditing}
+        required={required}
+        showLabel
+        value={localValue}
+        onChange={handleChange}
+      />
+      {isEditing ? (
+        <div
+          className={clsx(editableInputStyles["button-container"], {
+            [editableInputStyles["error-spacing"]]: hasError,
+          })}
+        >
+          <ButtonIcon
+            icon="check"
+            disabled={required && localValue.trim() === ""}
+            label="guardar"
+            size="small"
+            variant="secondary"
+            onClick={handleSave}
+          />
+          <ButtonIcon
+            icon="x"
+            label="cancelar"
+            size="small"
+            variant="secondary"
+            onClick={handleCancel}
+          />
+        </div>
+      ) : (
+        <ButtonIcon
+          className={editableInputStyles["edit-button"]}
+          icon="pencil"
+          label={`editar ${label ?? "campo"}`}
+          size="small"
+          variant="secondary"
+          onClick={() => setIsEditing(true)}
+        />
+      )}
+    </div>
+  );
+};
+
+export default EditableTextarea;

@@ -11,7 +11,9 @@ export type InputProps = {
   iconLeft?: IconName;
   iconRight?: IconName;
   id: string;
-  inline?: boolean; //TODO define max width
+  inline?: boolean;
+  label: string;
   placeholder?: string;
+  showLabel?: boolean;
   type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;

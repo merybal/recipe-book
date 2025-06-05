@@ -4,6 +4,7 @@ import { TextareaProps } from "./Textarea.types";
 
 import clsx from "clsx";
 import styles from "./Textarea.module.scss";
+import inputStyles from "../Input/Input.module.scss";
 
 const Textarea = ({
   className,
@@ -12,7 +13,12 @@ const Textarea = ({
   helper,
   id,
   inline,
+  label,
   placeholder,
+  readOnly,
+  required,
+  rows = 1,
+  showLabel,
   value,
   onChange,
   ...rest
@@ -37,14 +43,27 @@ const Textarea = ({
 
   return (
     <>
-      <label className={clsx(styles.label, className)} htmlFor={id}>
-        <textarea
-          // TODO arranca con mas rows?
-          rows={1}
+      <label
+        className={clsx(inputStyles.label, styles.label, className)}
+        htmlFor={id}
+      >
+        <p
           className={clsx(
+            inputStyles["label-text"],
+            showLabel && inputStyles["show-label"]
+          )}
+        >
+          {label} {required && <span aria-hidden="true">*</span>}
+        </p>
+        <textarea
+          rows={rows}
+          className={clsx(
+            inputStyles.input,
             styles.textarea,
             { [styles["full-width"]]: !inline },
-            { [styles["error"]]: error }
+            { [inputStyles["error"]]: error },
+            { [inputStyles["read-only"]]: readOnly },
+            { [styles["read-only"]]: readOnly }
           )}
           aria-invalid={!!error}
           aria-describedby={
@@ -54,6 +73,8 @@ const Textarea = ({
           id={id}
           placeholder={placeholder}
           ref={textareaRef}
+          readOnly={readOnly}
+          required={required}
           value={value}
           onChange={handleChange}
           {...rest}
@@ -61,7 +82,7 @@ const Textarea = ({
       </label>
       {error && !disabled && (
         <p
-          className={clsx(styles.message, styles["error-message"])}
+          className={clsx(inputStyles.message, inputStyles["error-message"])}
           id={`${id}-error`}
           role="alert"
         >
@@ -69,7 +90,7 @@ const Textarea = ({
         </p>
       )}
       {helper && !error && (
-        <p className={styles.message} id={`${id}-helper`}>
+        <p className={inputStyles.message} id={`${id}-helper`}>
           {helper}
         </p>
       )}

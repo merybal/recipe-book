@@ -8,5 +8,7 @@ export type TextareaProps = {
   helper?: string; //helper message
   id: string;
   inline?: boolean; //TODO define max width
+  label: string;
   placeholder?: string;
+  showLabel?: boolean;
 } & TextareaHTMLAttributes<HTMLTextAreaElement>;

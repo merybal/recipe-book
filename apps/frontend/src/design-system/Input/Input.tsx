@@ -18,7 +18,11 @@ const Input = ({
   iconRight,
   id,
   inline,
+  label,
   placeholder,
+  readOnly,
+  required,
+  showLabel,
   type = "text",
   value,
   onChange,
@@ -47,8 +51,16 @@ const Input = ({
   const showReset = hasReset && value && !disabled;
 
   return (
-    <>
+    <div>
       <label className={clsx(styles.label, className)} htmlFor={id}>
+        <p
+          className={clsx(
+            styles["label-text"],
+            showLabel && styles["show-label"]
+          )}
+        >
+          {label} {required && <span aria-hidden="true">*</span>}
+        </p>
         {iconLeft && (
           <Icon
             className={styles["icon-left"]}
@@ -65,7 +77,8 @@ const Input = ({
             { [styles["full-width"]]: !inline },
             { [styles["icon-left-space"]]: iconLeft },
             { [styles["icon-right-space"]]: iconRight },
-            { [styles["error"]]: error }
+            { [styles["error"]]: error },
+            { [styles["read-only"]]: readOnly }
           )}
           aria-invalid={!!error}
           aria-describedby={
@@ -74,6 +87,8 @@ const Input = ({
           disabled={disabled}
           id={id}
           placeholder={placeholder}
+          readOnly={readOnly}
+          required={required}
           type={type}
           value={value}
           onChange={onChange}
@@ -121,7 +136,7 @@ const Input = ({
           {helper}
         </p>
       )}
-    </>
+    </div>
   );
 };
 
