@@ -23,6 +23,7 @@ const RecipePreview = ({
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
       <EditableInput
+        id="title-input"
         label="Titulo"
         required
         value={recipeData.title}
@@ -30,12 +31,14 @@ const RecipePreview = ({
       />
 
       <EditableInput
+        id="serves-input"
         label="Rinde (porciones)"
         value={recipeData.servings ?? ""}
         onChange={(newValue) => onChange({ ...recipeData, servings: newValue })}
       />
 
       <EditableInput
+        id="mold-type-input"
         label="Tipo de molde"
         value={recipeData.mold?.type ?? ""}
         onChange={(newValue) =>
@@ -47,6 +50,7 @@ const RecipePreview = ({
       />
 
       <EditableInput
+        id="mold-size-input"
         label="Tamaño del molde"
         value={recipeData.mold?.size ?? ""}
         onChange={(newValue) =>
@@ -58,6 +62,7 @@ const RecipePreview = ({
       />
 
       <EditableInput
+        id="temperature-input"
         label="Temperatura de horneado en Celcius (°C)"
         type="number"
         value={recipeData.bakingInstructions?.temperature?.toString() ?? ""}
@@ -73,6 +78,7 @@ const RecipePreview = ({
       />
 
       <EditableInput
+        id="cooking-time-input"
         label="Tiempo de horneado en minutos"
         type="number"
         value={recipeData.bakingInstructions?.time?.toString() ?? ""}

@@ -22,7 +22,7 @@ import type {
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { normalizeUnit } from "@/utils/file-upload-idml-utils"; //TODO rename file
+import { normalizeUnit } from "@/utils/idml-file-uploader-utils"; //TODO rename file
 
 import styles from "./Recipe.module.scss";
 

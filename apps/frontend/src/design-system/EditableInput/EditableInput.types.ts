@@ -7,4 +7,4 @@ export type EditableInputProps = {
   type?: "text" | "number";
   value: string;
   onChange: (newValue: string) => void;
-} & InputProps;
+} & Omit<InputProps, "onChange">;

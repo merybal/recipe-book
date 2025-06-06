@@ -1,17 +1,18 @@
+import JSZip from "jszip"; // Docs: https://stuk.github.io/jszip/
+
 import type {
   RecipeType,
   BakingInstructionsType,
   MoldType,
   SubrecipeIdmlType,
   FoodAllergyType,
+  FoodAllergyRaw,
   Source,
   UnitRaw,
 } from "@/types";
 
 import type { UnitAbbreviationsType } from "@/types";
 import { UNITS } from "@/constants";
-
-import JSZip from "jszip";
 
 export function getBakingInstructions(i: number, storyContentArray: Element[]) {
   const next = storyContentArray[i + 1];
@@ -259,7 +260,6 @@ export function normalizeUnit(
     }
   }
 
-  console.log("unit", unit);
   //TODO ver si se ataja cuando la unidad no existe
   return unit;
 }
@@ -345,4 +345,175 @@ export function getUnitId(
   );
 
   return match?.id ?? null;
+}
+
+export function transformRecipeForPost(
+  recipe: RecipeType,
+  units: UnitRaw[],
+  allergies: FoodAllergyRaw[]
+) {
+  const formattedRecipe = {
+    title: recipe.title,
+    servings: recipe.servings,
+    mold_type: recipe.mold?.type || null,
+    mold_size: recipe.mold?.size || null,
+    cooking_time: recipe.bakingInstructions?.time || null,
+    cooking_temperature: recipe.bakingInstructions?.temperature || null,
+    image_url: recipe.imageUrl || null,
+
+    subrecipes: {
+      create: recipe.subrecipes.map((sub) => ({
+        title: sub.title || null,
+        instructions: Array.isArray(sub.instructions)
+          ? sub.instructions.join("\n")
+          : sub.instructions,
+        ingredients: {
+          create: sub.ingredients.map((ing) => ({
+            name: ing.name,
+            amount: ing.amount ?? null,
+            unit_id: getUnitId(ing.unit, units),
+          })),
+        },
+      })),
+    },
+
+    recipe_food_allergies: {
+      create: (recipe.foodAllergies ?? [])
+        .map((name) => allergies.find((a) => a.name === name)?.id)
+        .filter((id): id is number => !!id)
+        .map((id) => ({ food_allergy_id: id })),
+    },
+  };
+
+  console.log(formattedRecipe);
+
+  return formattedRecipe;
+}
+
+export async function parseIdmlFile(
+  selectedFile: File
+): Promise<RecipeType | undefined> {
+  if (!selectedFile) return undefined;
+
+  const zip = await JSZip.loadAsync(selectedFile);
+  const allergyTags = await getImageNamesFromIDML(zip);
+
+  const recipeObject: RecipeType = {
+    title: "",
+    subrecipes: [],
+  };
+
+  if (allergyTags.length) {
+    recipeObject.foodAllergies = [];
+    recipeObject.foodAllergies.push(...(allergyTags as FoodAllergyType[]));
+  }
+
+  const storyFiles = Object.keys(zip.files).filter((path) =>
+    path.startsWith("Stories/")
+  );
+
+  for (const path of storyFiles) {
+    // goes through xml files
+    const content = await zip.files[path].async("text");
+
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(content, "application/xml");
+
+    const paragraphs = xml.getElementsByTagName("ParagraphStyleRange");
+    const storyContentArray = Array.from(paragraphs);
+
+    // IDML paragraph styles
+    const titleA = "h1a";
+    const titleB = "h1b";
+    const h2Left = "h2-left";
+    const h3Left = "h3-left";
+    const pLeft = "p-left";
+    const h2Right = "h2-right";
+    const h3Right = "h3-right";
+    const pRight = "p-right";
+
+    for (const [i, paragraph] of storyContentArray.entries()) {
+      // goes through each of the files' content
+      const style = paragraph.getAttribute("AppliedParagraphStyle");
+      const text = paragraph.querySelector("Content")?.textContent?.trim();
+
+      if (!text) continue;
+
+      if (style?.includes(titleA || titleB)) {
+        recipeObject.title = text;
+      }
+
+      if (style?.includes(h2Left)) {
+        switch (text) {
+          case "Ingredientes": {
+            const subrecipes = getSubrecipesContent(
+              i,
+              storyContentArray,
+              h2Left,
+              h3Left,
+              pLeft
+            );
+
+            const subrecipesArray = subrecipes.map(
+              (subrecipe: SubrecipeIdmlType) => {
+                return {
+                  title: subrecipe.sectionTitle,
+                  ingredients: subrecipe.sectionBody.map(parseIngredientLine),
+                  instructions: [],
+                };
+              }
+            );
+
+            recipeObject.subrecipes = subrecipesArray;
+            break;
+          }
+
+          case "Cocción":
+            recipeObject.bakingInstructions = getBakingInstructions(
+              i,
+              storyContentArray
+            );
+            break;
+
+          case "Molde":
+            recipeObject.mold = getMold(i, storyContentArray);
+
+            break;
+
+          case "Rinde":
+            recipeObject.servings = getServings(i, storyContentArray);
+
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      if (style?.includes(h2Right)) {
+        const subrecipes = getSubrecipesContent(
+          i,
+          storyContentArray,
+          h2Right,
+          h3Right,
+          pRight
+        );
+
+        subrecipes.forEach((subrecipe) => {
+          const match = recipeObject.subrecipes.find(
+            (sub) => sub.title === subrecipe.sectionTitle
+          );
+          if (match) {
+            // match.instructions = subrecipe.sectionBody.join("\n"); //TODO hacer solo en el post
+            match.instructions = subrecipe.sectionBody;
+          }
+        });
+
+        recipeObject.notes = getNotes(i, storyContentArray);
+        getSource(i, storyContentArray, recipeObject);
+      }
+    }
+  }
+  console.log(recipeObject);
+  return recipeObject;
 }

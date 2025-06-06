@@ -6,4 +6,4 @@ export type EditableTextareaProps = {
   required?: boolean;
   value: string;
   onChange: (newValue: string) => void;
-} & TextareaProps;
+} & Omit<TextareaProps, "onChange">;
