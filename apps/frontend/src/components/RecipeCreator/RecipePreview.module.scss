@@ -1,0 +1,5 @@
+@use "../../styles/flex" as *;
+
+.recipe-preview {
+  @include Flex($direction: column, $gap: md);
+}

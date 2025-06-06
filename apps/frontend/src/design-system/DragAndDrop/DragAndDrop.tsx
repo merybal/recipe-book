@@ -31,6 +31,7 @@ const DragAndDrop = ({
   maxFileAmount,
   maxFileSize,
   multiple,
+  showFilePreviews,
   size = "medium",
   value = [],
   variant = "primary",
@@ -152,6 +153,9 @@ const DragAndDrop = ({
     [disabled, value, onChange]
   );
 
+  //TODO agregar feedback visual al box cuando no se ven las previews
+  //TODO solo se puede sacar el preview cuando es un solo archivo?
+
   return (
     <>
       <div
@@ -203,7 +207,7 @@ const DragAndDrop = ({
         )}
       </div>
 
-      {previews.length === value.length && (
+      {showFilePreviews && previews.length === value.length && (
         <FilePreviews
           inline={inline}
           previews={previews}

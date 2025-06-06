@@ -49,9 +49,13 @@ export type DragAndDropProps = {
    */
   maxFileAmount?: number;
   /**
-   * Maximun file size
+   * Maximun file size in bytes //TODO pasar a megas?
    */
-  maxFileSize?: number; // bytes
+  maxFileSize?: number;
+  /**
+   * Displays a preview of the uploaded files
+   */
+  showFilePreviews?: boolean;
   /**
    * Files uploaded
    * @default []
