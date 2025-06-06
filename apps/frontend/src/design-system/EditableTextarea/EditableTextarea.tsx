@@ -72,7 +72,7 @@ const EditableTextarea = ({
             disabled={required && localValue.trim() === ""}
             label="guardar"
             size="small"
-            variant="secondary"
+            variant="primary"
             onClick={handleSave}
           />
           <ButtonIcon

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import Icon from "../Icon";
 import FilePreviews from "./FilePreviews";
+import ButtonIcon from "../ButtonIcon";
 import type { DragAndDropProps } from "./DragAndDrop.types";
 import { iconSizeMap } from "../Icon";
 
@@ -10,8 +11,6 @@ import { processFiles } from "./DragAndDrop.utils";
 import clsx from "clsx";
 import styles from "./DragAndDrop.module.scss";
 import buttonStyles from "../Button/Button.module.scss";
-
-//TODO hacer que la muestra de previews sea opcional por prop
 
 const DragAndDrop = ({
   accept,
@@ -30,8 +29,7 @@ const DragAndDrop = ({
   inline,
   maxFileAmount,
   maxFileSize,
-  multiple,
-  showFilePreviews,
+  showFilePreviews = true,
   size = "medium",
   value = [],
   variant = "primary",
@@ -44,6 +42,7 @@ const DragAndDrop = ({
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const pixelSize = iconSizeMap[size];
+  const multiple = maxFileAmount !== 1;
 
   useEffect(() => {
     const newPreviews: string[] = [];
@@ -84,6 +83,31 @@ const DragAndDrop = ({
       });
     };
   }, [value]);
+
+  function getLabelText() {
+    if (isDragging && value.length === 0) return boxLabelDragging;
+
+    if (!isDragging) {
+      if (value.length === 1 && maxFileAmount === 1) {
+        return value[0].name;
+      }
+
+      if (value.length > 0) {
+        const plural = value.length !== 1;
+        return `${value.length} archivo${plural ? "s" : ""} seleccionado${
+          plural ? "s" : ""
+        }`;
+      }
+    }
+
+    return boxLabelInitial;
+  }
+
+  function getSecondaryButtonText() {
+    return value.length === 1
+      ? "Borrar archivo seleccionado"
+      : "Borrar archivos seleccionados";
+  }
 
   const handleFiles = useCallback(
     (files: FileList) => {
@@ -153,9 +177,6 @@ const DragAndDrop = ({
     [disabled, value, onChange]
   );
 
-  //TODO agregar feedback visual al box cuando no se ven las previews
-  //TODO solo se puede sacar el preview cuando es un solo archivo?
-
   return (
     <>
       <div
@@ -172,6 +193,7 @@ const DragAndDrop = ({
       >
         {boxIcon && <Icon name={boxIcon} size="xl" />}
         <p>{isDragging ? boxLabelDragging : boxLabelInitial}</p>
+
         <label
           className={clsx(
             buttonStyles.button,
@@ -194,7 +216,22 @@ const DragAndDrop = ({
             {...rest}
           />
         </label>
+
+        {!showFilePreviews && value.length >= 1 && (
+          <div className={styles["inline-preview"]}>
+            <p className={styles.message}>{getLabelText()}</p>
+            <ButtonIcon
+              label={getSecondaryButtonText()}
+              icon="x"
+              size="small"
+              variant="secondary"
+              onClick={() => onChange([])}
+            />
+          </div>
+        )}
+
         {helper && <p className={styles.message}>{helper}</p>}
+
         {validationErrors.map((error, i) => (
           <p key={i} className={clsx(styles.message, styles["error-message"])}>
             {error}

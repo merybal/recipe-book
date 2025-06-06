@@ -12,6 +12,10 @@
   width: 20rem;
   transition: background-color 0.3s ease;
 
+  .inline-preview {
+    @include Flex($align: center, $gap: sm);
+  }
+
   .message {
     @include Font($weight: medium, $size: xs, $align: center);
     @include Color($font: secondary-text);
