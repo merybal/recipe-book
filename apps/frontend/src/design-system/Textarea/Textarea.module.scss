@@ -3,20 +3,18 @@
 .label {
   .textarea {
     @include Border($radius: xl);
-    width: unset;
-    max-width: 20rem;
-    min-width: 20rem;
+
     overflow: hidden;
+    min-height: 3.5rem;
   }
 
   .textarea:disabled,
-  .read-only {
+  .read-only,
+  .remove-resize {
     resize: none;
   }
 
-  .full-width {
-    width: 100%;
-    max-width: unset;
-    min-width: unset;
+  .inline {
+    width: 20rem;
   }
 }

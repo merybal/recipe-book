@@ -8,8 +8,9 @@ import clsx from "clsx";
 import styles from "./EditableInput.module.scss";
 
 const EditableInput = ({
-  id,
   className,
+  id,
+  inline,
   label,
   required,
   type,
@@ -48,7 +49,9 @@ const EditableInput = ({
     <div className={clsx(styles["editable-field-container"], className)}>
       <Input
         id={id}
+        className={clsx({ [styles["input-width"]]: !inline })}
         {...(hasError && { error: "Este campo es requerido" })}
+        inline={inline}
         label={label}
         {...(!isEditing && { readOnly: true })}
         required={required}

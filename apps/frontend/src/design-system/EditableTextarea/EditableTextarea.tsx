@@ -9,6 +9,7 @@ import editableInputStyles from "../EditableInput/EditableInput.module.scss";
 const EditableTextarea = ({
   id,
   className,
+  inline,
   label,
   required,
   value,
@@ -48,8 +49,11 @@ const EditableTextarea = ({
       )}
     >
       <Textarea
-        id={id}
+        className={clsx({ [editableInputStyles["input-width"]]: !inline })}
         {...(hasError && { error: "Este campo es requerido" })}
+        id={id}
+        hasResize={false}
+        inline={inline}
         label={label}
         readOnly={!isEditing}
         required={required}

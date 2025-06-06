@@ -51,8 +51,8 @@ const Input = ({
   const showReset = hasReset && value && !disabled;
 
   return (
-    <div>
-      <label className={clsx(styles.label, className)} htmlFor={id}>
+    <div className={className}>
+      <label className={clsx(styles.label)} htmlFor={id}>
         <p
           className={clsx(
             styles["label-text"],
@@ -74,10 +74,10 @@ const Input = ({
         <input
           className={clsx(
             styles.input,
-            { [styles["full-width"]]: !inline },
+            { [styles.inline]: inline },
             { [styles["icon-left-space"]]: iconLeft },
             { [styles["icon-right-space"]]: iconRight },
-            { [styles["error"]]: error },
+            { [styles.error]: error },
             { [styles["read-only"]]: readOnly }
           )}
           aria-invalid={!!error}

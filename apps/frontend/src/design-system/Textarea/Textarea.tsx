@@ -10,6 +10,7 @@ const Textarea = ({
   className,
   disabled = false,
   error,
+  hasResize,
   helper,
   id,
   inline,
@@ -42,11 +43,8 @@ const Textarea = ({
   };
 
   return (
-    <>
-      <label
-        className={clsx(inputStyles.label, styles.label, className)}
-        htmlFor={id}
-      >
+    <div className={className}>
+      <label className={clsx(inputStyles.label, styles.label)} htmlFor={id}>
         <p
           className={clsx(
             inputStyles["label-text"],
@@ -60,8 +58,9 @@ const Textarea = ({
           className={clsx(
             inputStyles.input,
             styles.textarea,
-            { [styles["full-width"]]: !inline },
-            { [inputStyles["error"]]: error },
+            { [styles.inline]: inline },
+            { [inputStyles.error]: error },
+            { [styles["remove-resize"]]: !hasResize },
             { [inputStyles["read-only"]]: readOnly },
             { [styles["read-only"]]: readOnly }
           )}
@@ -94,7 +93,7 @@ const Textarea = ({
           {helper}
         </p>
       )}
-    </>
+    </div>
   );
 };
 

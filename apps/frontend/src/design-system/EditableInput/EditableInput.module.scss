@@ -5,6 +5,10 @@
 .editable-field-container {
   @include Flex($gap: sm);
 
+  .input-width {
+    flex: 1;
+  }
+
   .button-container {
     @include Flex($gap: xs, $align: start);
     @include Margin($top: 2.5rem);
