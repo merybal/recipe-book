@@ -60,10 +60,6 @@ table,
 caption,
 tbody,
 tfoot,
-thead,
-tr,
-th,
-td,
 article,
 aside,
 canvas,
@@ -91,6 +87,14 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
+thead,
+tr,
+th,
+td {
+  vertical-align: middle;
+}
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,

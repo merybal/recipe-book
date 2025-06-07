@@ -1,14 +1,8 @@
-import type { ReactNode, TableHTMLAttributes } from "react";
+import type { ColumnType } from "../Table";
 
-export type ColumnType<T> = {
-  key: keyof T;
-  header: string;
-  render?: (value: T[keyof T], row: T) => ReactNode;
-};
-
-export type EditableTableProps<T> = {
+export type EditableTableProps<T extends object> = {
   className?: string;
   columns: ColumnType<T>[];
   data: T[];
-  hasCellBorders?: boolean;
-} & TableHTMLAttributes<HTMLTableElement>;
+  onEdit?: (row: T) => void;
+};
