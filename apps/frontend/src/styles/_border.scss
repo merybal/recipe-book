@@ -31,11 +31,44 @@ $border-properties: (
   }
 }
 
-@mixin Border($width: null, $style: null, $color: null, $radius: null) {
+@mixin Border(
+  $width: null,
+  $style: null,
+  $color: null,
+  $radius: null,
+  $top: null,
+  $right: null,
+  $bottom: null,
+  $left: null
+) {
   @if $width or $style or $color {
     border: #{resolve-border($width)}
       #{resolve-border($style)}
       #{resolve-color($color)};
+  }
+
+  @if $top {
+    border-top: #{resolve-border(nth($top, 1))}
+      #{resolve-border(nth($top, 2))}
+      #{resolve-color(nth($top, 3))};
+  }
+
+  @if $right {
+    border-right: #{resolve-border(nth($right, 1))}
+      #{resolve-border(nth($right, 2))}
+      #{resolve-color(nth($right, 3))};
+  }
+
+  @if $bottom {
+    border-bottom: #{resolve-border(nth($bottom, 1))}
+      #{resolve-border(nth($bottom, 2))}
+      #{resolve-color(nth($bottom, 3))};
+  }
+
+  @if $left {
+    border-left: #{resolve-border(nth($left, 1))}
+      #{resolve-border(nth($left, 2))}
+      #{resolve-color(nth($left, 3))};
   }
 
   @if $radius {

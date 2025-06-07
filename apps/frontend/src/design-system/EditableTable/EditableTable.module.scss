@@ -1,0 +1,87 @@
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+@use "../../styles/border" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/font" as *;
+
+.table-container {
+  @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
+  overflow: hidden;
+
+  &.with-borders {
+    .body-row:not(:last-child) .body-cell {
+      @include Border(
+        $bottom: (
+          medium,
+          solid,
+          outline,
+        )
+      );
+    }
+
+    .body-cell:not(:last-child),
+    .table-head th:not(:last-child) {
+      @include Border(
+        $right: (
+          medium,
+          solid,
+          outline,
+        )
+      );
+    }
+
+    .table-head th:first-child,
+    .body-row .body-cell:first-child {
+      border-left: none;
+    }
+
+    .table-head th:last-child,
+    .body-row .body-cell:last-child {
+      border-right: none;
+    }
+
+    .table-head {
+      border-bottom: 1px solid resolve-color(outline);
+    }
+  }
+  .table {
+    @include Margin($all: none);
+    width: 100%;
+    border-collapse: collapse;
+
+    .table-head {
+      @include Color($bg: outline);
+    }
+
+    .head-row {
+      //TODO remover si no se usa
+    }
+
+    .head-row-cell {
+      @include Font($size: sm, $weight: bold);
+      @include Flex($align: center);
+      @include Padding($x: lg);
+      height: 3.5rem;
+    }
+
+    .body-cell-data {
+      @include Font($weight: medium, $size: sm);
+      @include Flex($align: center);
+      @include Padding($x: lg);
+      height: 3.5rem;
+    }
+
+    .body-row:hover {
+      background-color: #f1f1f1;
+    }
+
+    .body-row:last-child .body-cell {
+      border-bottom: none;
+    }
+  }
+
+  // .body-cell:not(:last-child),
+  // .table-head:not(:last-child) {
+  //   // border-right: 1px solid #ddd;
+  // }
+}

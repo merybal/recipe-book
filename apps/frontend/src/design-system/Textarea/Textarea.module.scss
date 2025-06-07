@@ -3,7 +3,6 @@
 .label {
   .textarea {
     @include Border($radius: xl);
-
     overflow: hidden;
     min-height: 3.5rem;
   }
