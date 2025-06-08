@@ -13,9 +13,12 @@
     width: 100%;
     border-collapse: collapse;
 
+    &.fixed-width {
+      table-layout: fixed;
+    }
+
     .table-head {
       @include Color($bg: outline);
-      // vertical-align: unset;
     }
 
     .head-row {
@@ -91,7 +94,7 @@
     }
 
     .table-head {
-      border-bottom: 1px solid resolve-color(outline); //TODO CAMBIAR
+      border-bottom: 1px solid resolve-color(outline); //TODO CAMBIAR a mi mixin
     }
   }
 }

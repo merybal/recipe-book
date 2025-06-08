@@ -14,6 +14,9 @@ import {
 
 import type { RecipeType, FoodAllergyRaw, UnitRaw } from "@/types";
 
+// TODO crear input select para usar en la tabla de ingredientes
+// TODO crear checkbox
+
 const IdmlFileUploader = () => {
   const [units, setUnits] = useState<UnitRaw[]>([]);
   const [allergies, setAllergies] = useState<FoodAllergyRaw[]>([]);

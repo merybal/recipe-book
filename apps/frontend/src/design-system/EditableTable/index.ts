@@ -1,4 +1,7 @@
 import EditableTable from "./EditableTable";
 
-export type { EditableTableProps, ColumnType } from "./EditableTable.types";
+export type {
+  EditableTableProps,
+  EditableColumnType,
+} from "./EditableTable.types";
 export default EditableTable;

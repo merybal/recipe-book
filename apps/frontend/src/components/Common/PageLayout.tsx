@@ -2,6 +2,8 @@ import { ReactNode, isValidElement, Children } from "react";
 import clsx from "clsx";
 import styles from "./PageLayout.module.scss";
 
+//TODO hacer estilos mobile vs estilos desktop
+
 export type PageLayoutProps = {
   children: ReactNode;
   className?: string;

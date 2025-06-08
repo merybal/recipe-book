@@ -5,8 +5,19 @@
 @use "../../styles/font" as *;
 
 .editable-table {
+  @include Flex($direction: column, $gap: lg);
+
   .row-editing {
     @include Padding($all: none);
+  }
+
+  .save-cancel-buttons,
+  .edit-delete-buttons {
+    @include Flex($gap: xs);
+  }
+
+  .save-cancel-buttons {
+    @include Padding($left: lg);
   }
 
   .input-container {
@@ -17,6 +28,8 @@
         $color: transparent,
         $radius: 0
       );
+      @include Padding($x: 1.38rem);
+      height: 3.3rem;
     }
 
     &.input-bottom-left-corner {

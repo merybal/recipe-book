@@ -9,11 +9,11 @@ const Table = <T extends object>({
   columns,
   data,
   hasCellBorders,
+  hasfixedWidth,
   isRowReadonly,
   rowClassName,
   ...rest
 }: TableProps<T>): JSX.Element => {
-  console.log("rowclass", rowClassName);
   return (
     <div
       className={clsx(
@@ -22,11 +22,19 @@ const Table = <T extends object>({
         className
       )}
     >
-      <table className={styles.table} {...rest}>
+      <table
+        className={clsx(styles.table, {
+          [styles["fixed-width"]]: hasfixedWidth,
+        })}
+        {...rest}
+      >
         <thead className={styles["table-head"]}>
           <tr className={styles["head-row"]}>
             {columns.map((column) => (
-              <th key={String(column.key)}>
+              <th
+                key={String(column.key)}
+                style={column.width ? { width: column.width } : undefined}
+              >
                 <div className={styles["head-row-cell"]}>{column.header}</div>
               </th>
             ))}
@@ -47,7 +55,11 @@ const Table = <T extends object>({
                 key={rowIndex}
               >
                 {columns.map((column, columnIndex) => (
-                  <td className={styles["body-cell"]} key={String(column.key)}>
+                  <td
+                    className={styles["body-cell"]}
+                    key={String(column.key)}
+                    style={column.width ? { width: column.width } : undefined}
+                  >
                     <div
                       className={clsx(styles["body-cell-data"], {
                         [styles["custom-row"]]: !!rowClass,
