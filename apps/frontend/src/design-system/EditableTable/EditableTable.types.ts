@@ -5,6 +5,11 @@ export type EditableColumnType<T> = {
 } & ColumnType<T>;
 
 export type EditableTableProps<T extends object> = {
+  /**
+   * Label displayed in add row button
+   * @default "Agregar"
+   */
+  addButtonLabel?: string;
   className?: string;
   /**
    * Eg:

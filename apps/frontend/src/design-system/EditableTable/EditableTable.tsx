@@ -20,6 +20,7 @@ import styles from "./EditableTable.module.scss";
 */
 
 function EditableTable<T extends object>({
+  addButtonLabel = "Agregar",
   className,
   columns,
   data,
@@ -172,11 +173,7 @@ function EditableTable<T extends object>({
         }
         isRowReadonly={(_, index) => index !== editingRowIndex}
       />
-      <Button
-        label="Agregar ingrediente"
-        iconLeft="plus"
-        onClick={handleAddClick}
-      />
+      <Button label={addButtonLabel} iconLeft="plus" onClick={handleAddClick} />
     </div>
   );
 }

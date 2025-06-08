@@ -1,0 +1,13 @@
+@use "../../styles/border" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+
+.select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.select:disabled {
+  cursor: unset;
+}

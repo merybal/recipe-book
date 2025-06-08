@@ -60,20 +60,24 @@
     left: 1.5rem;
   }
 
-  .icon-right-space {
-    @include Padding($right: xxl);
+  .icon-right {
+    right: 1.5rem;
   }
 
-  .icon-left,
-  .icon-right {
+  .icon-with-label {
+    position: absolute;
+    top: 2.875rem;
+  }
+
+  .icon-position {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     transition: color 0.3s ease;
   }
 
-  .icon-right {
-    right: 1.5rem;
+  .icon-right-space {
+    @include Padding($right: xxl);
   }
 
   .inline {

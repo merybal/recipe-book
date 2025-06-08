@@ -54,16 +54,19 @@ const Input = ({
     <div className={className}>
       <label className={clsx(styles.label)} htmlFor={id}>
         <p
-          className={clsx(
-            styles["label-text"],
-            showLabel && styles["show-label"]
-          )}
+          className={clsx(styles["label-text"], {
+            [styles["show-label"]]: showLabel,
+          })}
         >
           {label} {required && <span aria-hidden="true">*</span>}
         </p>
         {iconLeft && (
           <Icon
-            className={styles["icon-left"]}
+            className={clsx(
+              styles["icon-left"],
+              { [styles["icon-position"]]: !showLabel },
+              { [styles["icon-with-label"]]: showLabel }
+            )}
             {...(isFocused && { color: "primary" })}
             {...(disabled && { color: "outline" })}
             {...(error && !isFocused && { color: "disruptive" })}
@@ -99,9 +102,15 @@ const Input = ({
         {showReset ? (
           <ButtonUnstyled
             aria-label="Limpiar campo"
-            className={clsx(styles["icon-right"], styles["reset-button"])}
+            className={clsx(
+              styles["icon-right"],
+              { [styles["icon-position"]]: !showLabel },
+              { [styles["icon-with-label"]]: showLabel },
+              styles["reset-button"]
+            )}
             onClick={handleReset}
           >
+            {/* TODO cambiar a button tertiary? */}
             <Icon
               name="circleX"
               {...(isFocused && { color: "primary" })}
@@ -112,7 +121,11 @@ const Input = ({
         ) : (
           iconRight && (
             <Icon
-              className={styles["icon-right"]}
+              className={clsx(
+                styles["icon-right"],
+                { [styles["icon-position"]]: !showLabel },
+                { [styles["icon-with-label"]]: showLabel }
+              )}
               {...(isFocused && { color: "primary" })}
               {...(disabled && { color: "outline" })}
               {...(error && !isFocused && { color: "disruptive" })}
