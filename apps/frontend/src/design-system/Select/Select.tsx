@@ -27,6 +27,7 @@ const Select = ({
   ...rest
 }: SelectProps) => {
   const [isFocused, setIsFocused] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (readOnly) {
@@ -45,7 +46,20 @@ const Select = ({
   const handleMouseDown = (e: React.MouseEvent<HTMLSelectElement>) => {
     if (readOnly) {
       e.preventDefault();
+
+      // return;
     }
+
+    // setIsOpen(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+    // setIsOpen(false);
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
   };
 
   return (
@@ -96,8 +110,8 @@ const Select = ({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onMouseDown={handleMouseDown}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           {...rest}
         >
           <option value="" disabled hidden>
@@ -109,6 +123,19 @@ const Select = ({
             </option>
           ))}
         </select>
+        <Icon
+          className={clsx(
+            inputStyles["icon-right"],
+            { [inputStyles["icon-position"]]: !showLabel },
+            { [inputStyles["icon-with-label"]]: showLabel }
+          )}
+          {...(isFocused && { color: "primary" })}
+          {...(disabled && { color: "outline" })}
+          {...(error && !isFocused && { color: "disruptive" })}
+          // name={isFocused ? "ChevronUp" : "ChevronDown"}
+          name="ChevronDown"
+          size="sm"
+        />
       </label>
 
       {error && (

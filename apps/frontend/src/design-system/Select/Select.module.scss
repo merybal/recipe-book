@@ -6,6 +6,13 @@
 .select {
   appearance: none;
   cursor: pointer;
+
+  option {
+    @include Font($family: text, $weight: medium, $size: sm);
+    height: 3.5rem;
+
+    // background-color: red;
+  }
 }
 
 .select:disabled {
