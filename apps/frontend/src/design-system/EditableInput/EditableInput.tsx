@@ -64,7 +64,7 @@ const EditableInput = ({
       {isEditing ? (
         <div className={clsx(styles["button-container"])}>
           <ButtonIcon
-            icon="check"
+            icon="Check"
             disabled={required && localValue.trim() === ""}
             label="guardar"
             size="small"
@@ -72,7 +72,7 @@ const EditableInput = ({
             onClick={handleSave}
           />
           <ButtonIcon
-            icon="x"
+            icon="X"
             label="cancelar"
             size="small"
             variant="secondary"
@@ -82,7 +82,7 @@ const EditableInput = ({
       ) : (
         <ButtonIcon
           className={styles["edit-button"]}
-          icon="pencil"
+          icon="Pencil"
           label={`editar ${label ?? "campo"}`}
           size="small"
           variant="secondary"

@@ -45,7 +45,7 @@ const FilePreviews = ({
                 )}
                 key={idx}
               >
-                {!allAreImages && <Icon name="file" size="sm" />}
+                {!allAreImages && <Icon name="File" size="sm" />}
                 {isImagePreview && allAreImages ? (
                   <img
                     src={preview}
@@ -61,7 +61,7 @@ const FilePreviews = ({
                       ? styles["image-remove-button"]
                       : styles["file-remove-button"]
                   )}
-                  icon="x"
+                  icon="X"
                   label={`Eliminar archivo ${file.name}`}
                   size="small"
                   type="button"

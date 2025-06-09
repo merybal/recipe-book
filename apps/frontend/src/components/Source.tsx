@@ -16,7 +16,7 @@ const Source = ({ source }: SourceProps) => {
         return (
           <div className={styles.source} key={i}>
             <Icon
-              name="chefHat"
+              name="ChefHat"
               color="primary"
               background="primary-light"
               size="sm"
@@ -28,7 +28,7 @@ const Source = ({ source }: SourceProps) => {
                 target="_blank"
                 className={styles.externalLink}
               >
-                <Icon name="externalLink" color="primary" size="sm" />
+                <Icon name="ExternalLink" color="primary" size="sm" />
               </a>
             )}
           </div>

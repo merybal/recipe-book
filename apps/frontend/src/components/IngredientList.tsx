@@ -31,7 +31,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                         className={styles["ingredient-li"]}
                       >
                         <Icon
-                          name="check"
+                          name="Check"
                           color="primary"
                           background="primary-light"
                           size="xs"

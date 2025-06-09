@@ -124,14 +124,14 @@ function EditableTable<T extends object>({
         return isEditing ? (
           <div className={styles["save-cancel-buttons"]}>
             <ButtonIcon
-              icon="check"
+              icon="Check"
               label="Guardar"
               size="small"
               variant="tertiary"
               onClick={handleSaveClick}
             />
             <ButtonIcon
-              icon="x"
+              icon="X"
               label="Cancelar"
               size="small"
               variant="tertiary"
@@ -141,14 +141,14 @@ function EditableTable<T extends object>({
         ) : (
           <div className={styles["edit-delete-buttons"]}>
             <ButtonIcon
-              icon="pencil"
+              icon="Pencil"
               label="Editar"
               size="small"
               variant="tertiary"
               onClick={() => rowIndex != null && handleEditClick(rowIndex)}
             />
             <ButtonIcon
-              icon="trash"
+              icon="Trash2"
               disruptive
               label="borrar"
               size="small"
@@ -173,7 +173,7 @@ function EditableTable<T extends object>({
         }
         isRowReadonly={(_, index) => index !== editingRowIndex}
       />
-      <Button label={addButtonLabel} iconLeft="plus" onClick={handleAddClick} />
+      <Button label={addButtonLabel} iconLeft="Plus" onClick={handleAddClick} />
     </div>
   );
 }

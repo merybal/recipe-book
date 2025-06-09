@@ -12,7 +12,7 @@ const ButtonIcon = ({
   className,
   disabled = false,
   disruptive = false,
-  icon = "image",
+  icon = "Image",
   label,
   size = "medium",
   type = "button",

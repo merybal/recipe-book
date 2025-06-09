@@ -222,7 +222,7 @@ const DragAndDrop = ({
             <p className={styles.message}>{getLabelText()}</p>
             <ButtonIcon
               label={getSecondaryButtonText()}
-              icon="x"
+              icon="X"
               size="small"
               variant="secondary"
               onClick={() => onChange([])}

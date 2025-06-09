@@ -13,10 +13,10 @@ export type FoodAllergiesProps = {
 };
 
 const allergyToIconName: Record<FoodAllergyType, IconName> = {
-  glutenFree: "wheat",
-  dairyFree: "milk",
-  vegan: "leaf",
-  vegetarian: "carrot",
+  glutenFree: "Wheat",
+  dairyFree: "Milk",
+  vegan: "Leaf",
+  vegetarian: "Carrot",
 };
 
 const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {

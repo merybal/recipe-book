@@ -68,7 +68,7 @@ const EditableTextarea = ({
           })}
         >
           <ButtonIcon
-            icon="check"
+            icon="Check"
             disabled={required && localValue.trim() === ""}
             label="guardar"
             size="small"
@@ -76,7 +76,7 @@ const EditableTextarea = ({
             onClick={handleSave}
           />
           <ButtonIcon
-            icon="x"
+            icon="X"
             label="cancelar"
             size="small"
             variant="secondary"
@@ -86,7 +86,7 @@ const EditableTextarea = ({
       ) : (
         <ButtonIcon
           className={editableInputStyles["edit-button"]}
-          icon="pencil"
+          icon="Pencil"
           label={`editar ${label ?? "campo"}`}
           size="small"
           variant="secondary"

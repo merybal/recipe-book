@@ -112,7 +112,7 @@ const Input = ({
           >
             {/* TODO cambiar a button tertiary? */}
             <Icon
-              name="circleX"
+              name="CircleX"
               {...(isFocused && { color: "primary" })}
               {...(error && !isFocused && { color: "disruptive" })}
               size="sm"
