@@ -33,6 +33,12 @@ const Select = ({
 
   const selectedOption = options.find((o) => o.value === value);
 
+  const iconColor =
+    (isFocused && "primary") ||
+    (disabled && "outline") ||
+    (error && "disruptive") ||
+    "primary";
+
   useEffect(() => {
     if (isOpen && highlightedIndex !== null && listRef.current) {
       const item = listRef.current.children[highlightedIndex] as HTMLElement;
@@ -146,9 +152,7 @@ const Select = ({
           {iconLeft && (
             <Icon
               className={styles["icon-left"]}
-              {...(isFocused && { color: "primary" })}
-              {...(disabled && { color: "outline" })}
-              {...(error && !isFocused && { color: "disruptive" })}
+              color={iconColor}
               name={iconLeft}
               size="sm"
             />
@@ -168,9 +172,7 @@ const Select = ({
             className={clsx(styles["icon-right"], {
               [styles["rotate-chevron"]]: isOpen,
             })}
-            {...(isFocused && { color: "primary" })}
-            {...(disabled && { color: "outline" })}
-            {...(error && !isFocused && { color: "disruptive" })}
+            color={iconColor}
             name="ChevronDown"
             size="sm"
           />

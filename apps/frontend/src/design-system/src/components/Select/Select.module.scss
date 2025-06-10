@@ -43,6 +43,10 @@
         height: 100%;
       }
 
+      .selected-label {
+        @include FieldText;
+      }
+
       .placeholder {
         @include Placeholder;
       }

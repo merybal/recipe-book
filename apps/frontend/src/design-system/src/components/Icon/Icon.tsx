@@ -23,17 +23,24 @@ const Icon = ({
     return null;
   }
 
+  const resolvedColor = color ? `var(--color-${color})` : undefined;
+  const resolvedBackground = background
+    ? `var(--color-${background})`
+    : undefined;
+
   return (
     <div
       className={clsx(
         styles.icon,
-        { [styles[`bg-${background}`]]: background },
         { [styles[`size-${size}`]]: background },
-        { [styles[`color-${color}`]]: color },
         className
       )}
+      style={{
+        backgroundColor: resolvedBackground,
+        borderRadius: "var(--radius-full)",
+      }}
     >
-      <LucideIcon size={pixelSize} color="currentColor" />
+      <LucideIcon size={pixelSize} color={resolvedColor ?? "currentColor"} />
     </div>
   );
 };

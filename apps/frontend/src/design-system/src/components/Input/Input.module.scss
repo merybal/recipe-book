@@ -26,6 +26,10 @@
       @include FieldBorder;
       @include FieldContainer;
       @include FieldHeight;
+
+      &.editable-table-input {
+        @include RemovesFieldBorder;
+      }
     }
 
     .input::placeholder {

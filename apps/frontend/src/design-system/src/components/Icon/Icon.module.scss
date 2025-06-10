@@ -6,20 +6,6 @@
   @include Flex($align: center, $justify: center, $shrink: none);
 }
 
-@each $name in primary, primary-light, primary-hover, secondary, disruptive,
-  secondary-light, main-text, secondary-text, outline, disabled, black, white,
-  none
-{
-  .bg-#{$name} {
-    @include Color($bg: $name);
-    @include Border($radius: full);
-  }
-
-  .color-#{$name} {
-    @include Color($font: $name);
-  }
-}
-
 .size-xs {
   width: 1.5rem;
   height: 1.5rem;

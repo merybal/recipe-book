@@ -1,8 +1,7 @@
-@use "./font" as *;
-@use "./color" as *;
+@use "../design-system/src/styles/font" as *;
+@use "../design-system/src/styles/color" as *;
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-// TODO borrar las que no se usen
 body {
   @include Color($font: main-text);
   @include Font($family: text);
@@ -37,9 +36,7 @@ input {
 @media (max-width: 600px) {
   p,
   a {
-    @include Font(
-      $size: sm
-    ); //TODO revisar si cambian los tamaños segun la pantalla
+    @include Font($size: sm);
   }
 }
 

@@ -22,6 +22,11 @@
   transition: border 0.3s ease;
 }
 
+@mixin RemovesFieldBorder {
+  @include Border($width: medium, $style: solid, $color: none, $radius: 0);
+  transition: border 0.3s ease;
+}
+
 @mixin FieldBorderFocus {
   @include Border($width: medium, $style: solid, $color: primary);
 }
@@ -37,16 +42,17 @@
 
 @mixin LabelText {
   @include Font($weight: bold, $size: sm);
+  @include Color($font: main-text);
   @include Margin($bottom: sm);
 }
 
 @mixin Placeholder {
-  @include Color($font: secondary-text);
   @include Font($family: text, $weight: medium);
+  @include Color($font: secondary-text);
 }
 
 @mixin HelperMessage {
-  @include Font($weight: medium, $size: xs);
+  @include Font($family: text, $weight: medium, $size: xs);
   @include Padding($top: sm, $left: lg);
   @include Color($font: secondary-text);
 }
