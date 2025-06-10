@@ -1,34 +1,19 @@
 @use "./color" as *;
 
-$border-properties: (
-  // WIDTH
-  // 1px
-  thin: 0.0625rem,
-  // 2px
-  medium: 0.125rem,
-  // 4px
-  thick: 0.25rem,
-
-  // STYLE
-  solid: solid,
-  dashed: dashed,
-  dotted: dotted,
-  none: none,
-
-  // RADIUS //TODO revisar
-  sm: 0.25rem,
-  md: 0.5rem,
-  lg: 1rem,
-  xl: 1.75rem,
-  full: 9999px
-);
-
 @function resolve-border($value) {
-  @if map-has-key($border-properties, $value) {
-    @return map-get($border-properties, $value);
+  @if $value == solid or $value == dashed or $value == dotted or $value == none
+  {
+    @return var(--border-style-#{$value});
+  } @else if $value == thin or $value == medium or $value == thick {
+    @return var(--border-width-#{$value});
   } @else {
+    // fallback: permite pasar valores directos como "1px" si querés
     @return $value;
   }
+}
+
+@function resolve-radius($value) {
+  @return var(--border-radius-#{$value});
 }
 
 @mixin Border(
@@ -72,6 +57,6 @@ $border-properties: (
   }
 
   @if $radius {
-    border-radius: resolve-border($radius);
+    border-radius: resolve-radius($radius);
   }
 }

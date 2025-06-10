@@ -6,15 +6,16 @@
   @include Flex($align: center, $justify: center, $shrink: none);
 }
 
-@each $name, $value in $colors {
-  .bg-#{inspect($name)} {
+@each $name in primary, primary-light, primary-hover, secondary, disruptive,
+  secondary-light, main-text, secondary-text, outline, disabled, black, white,
+  none
+{
+  .bg-#{$name} {
     @include Color($bg: $name);
     @include Border($radius: full);
   }
-}
 
-@each $name, $value in $colors {
-  .color-#{inspect($name)} {
+  .color-#{$name} {
     @include Color($font: $name);
   }
 }

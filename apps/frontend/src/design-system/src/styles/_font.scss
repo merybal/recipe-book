@@ -1,51 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
-// TODO borrar las que no se usen
-// TODO agregar lineheight
-$font-properties: (
-  // FAMILY
-  text: ("Inter", sans-serif),
-  // SIZE
-  // 12px
-  xxs: 0.75rem,
-  // 14px
-  xs: 0.875rem,
-  // 16px
-  sm: 1rem,
-  // 18px
-  md: 1.125rem,
-  // 20px
-  lg: 1.25rem,
-  // 24px
-  xl: 1.5rem,
-  // 32px
-  xxl: 2rem,
-
-  // WEIGHT
-  light: 300,
-  medium: 500,
-  bold: 700,
-
-  // ALIGN
-  left: left,
-  center: center,
-  right: right,
-  justify: justify,
-
-  // TRANSFORM
-  cap: capitalize,
-  upp: uppercase,
-  low: lowercase
-);
-
-@function resolve-font($value) {
-  @if map-has-key($font-properties, $value) {
-    @return map-get($font-properties, $value);
-  } @else {
-    @return $value;
-  }
-}
-
 @mixin Font(
   $family: null,
   $size: null,
@@ -54,27 +8,22 @@ $font-properties: (
   $transform: null
 ) {
   @if $family {
-    font-family: resolve-font($family);
+    font-family: var(--font-family-#{$family});
   }
 
   @if $size {
-    font-size: resolve-font($size);
+    font-size: var(--font-size-#{$size});
   }
 
   @if $weight {
-    font-weight: resolve-font($weight);
+    font-weight: var(--font-weight-#{$weight});
   }
 
   @if $align {
-    text-align: resolve-font($align);
+    text-align: $align;
   }
 
   @if $transform {
-    text-transform: resolve-font($transform);
+    text-transform: $transform;
   }
 }
-
-// @mixin nombre-del-mixin {
-//   color: red;
-//   font-weight: bold;
-// }

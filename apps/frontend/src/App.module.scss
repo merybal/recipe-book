@@ -1,5 +1,5 @@
 @use "./design-system/src/styles/flex" as *;
-@import "src/styles/base.scss";
+@import "./design-system/src/styles/base";
 
 .app {
   @include Flex($direction: column);
