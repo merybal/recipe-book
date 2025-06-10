@@ -1,8 +1,6 @@
 @use "../../styles/spacing" as *;
-@use "../../styles/color" as *;
 @use "../../styles/border" as *;
 @use "../../styles/flex" as *;
-@use "../../styles/font" as *;
 
 .editable-table {
   @include Flex($direction: column, $gap: lg);
@@ -34,7 +32,7 @@
 
     &.input-bottom-left-corner {
       input {
-        border-bottom-left-radius: 26px;
+        border-bottom-left-radius: 1.625rem;
       }
     }
   }

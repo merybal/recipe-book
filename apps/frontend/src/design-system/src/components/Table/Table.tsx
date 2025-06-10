@@ -29,7 +29,7 @@ const Table = <T extends object>({
         {...rest}
       >
         <thead className={styles["table-head"]}>
-          <tr className={styles["head-row"]}>
+          <tr>
             {columns.map((column) => (
               <th
                 key={String(column.key)}

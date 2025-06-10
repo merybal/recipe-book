@@ -2,100 +2,90 @@
 @use "../../styles/spacing" as *;
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
+@use "../../styles/form" as *;
 
-.label {
-  position: relative;
+.input-container {
+  &.inline {
+    @include Inline;
+  }
 
-  .label-text {
-    @include Font($weight: bold, $size: sm);
-    @include Margin($bottom: sm);
-    display: none;
+  .label {
+    position: relative;
 
-    &.show-label {
-      display: block;
+    .label-text {
+      @include LabelText;
+      display: none;
+
+      &.show-label {
+        display: block;
+      }
+    }
+
+    .input {
+      @include FieldText;
+      @include FieldBorder;
+      @include FieldContainer;
+      @include FieldHeight;
+    }
+
+    .input::placeholder {
+      @include Placeholder;
+    }
+
+    .input:focus:not(.disabled) {
+      @include FieldBorderFocus;
+    }
+
+    .input:focus-visible {
+      outline: none;
+    }
+
+    .input:disabled {
+      @include Disabled;
+    }
+
+    .read-only {
+      @include ReadOnly;
+    }
+
+    .icon-left-space {
+      @include Padding($left: xxl);
+    }
+
+    .icon-left {
+      left: 1.5rem;
+    }
+
+    .icon-right {
+      right: 1.5rem;
+    }
+
+    .icon-with-label {
+      position: absolute;
+      top: 2.875rem;
+    }
+
+    .icon-position {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: color 0.3s ease;
+    }
+
+    .icon-right-space {
+      @include Padding($right: xxl);
+    }
+
+    .error {
+      @include FieldBorderError;
     }
   }
 
-  .input {
-    @include Font($family: text, $weight: medium, $size: sm);
-    @include Border(
-      $width: medium,
-      $style: solid,
-      $color: outline,
-      $radius: full
-    );
-    @include Padding($x: lg, $y: md);
-    @include Color($font: main-text);
-    height: 3.5rem;
-    width: 100%;
-    transition: border 0.3s ease;
+  .helper-message {
+    @include HelperMessage;
   }
 
-  .input::placeholder {
-    @include Color($font: secondary-text);
-    @include Font($family: text, $weight: medium);
+  .error-message {
+    @include ErrorMessage;
   }
-
-  .input:focus:not(.disabled) {
-    @include Border($width: medium, $style: solid, $color: primary);
-  }
-
-  .input:focus-visible {
-    outline: none;
-  }
-
-  .input:disabled {
-    @include Color($bg: disabled, $font: secondary-text);
-  }
-
-  .read-only {
-    @include Color($bg: disabled);
-  }
-
-  .icon-left-space {
-    @include Padding($left: xxl);
-  }
-
-  .icon-left {
-    left: 1.5rem;
-  }
-
-  .icon-right {
-    right: 1.5rem;
-  }
-
-  .icon-with-label {
-    position: absolute;
-    top: 2.875rem;
-  }
-
-  .icon-position {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: color 0.3s ease;
-  }
-
-  .icon-right-space {
-    @include Padding($right: xxl);
-  }
-
-  .inline {
-    width: 20rem;
-  }
-
-  .error {
-    @include Border($width: medium, $style: solid, $color: disruptive);
-  }
-}
-
-.message {
-  //TODO manejar el ancho del mensaje cuando es inline o full width
-  @include Font($weight: medium, $size: xs);
-  @include Padding($top: sm, $left: lg);
-  @include Color($font: secondary-text);
-}
-
-.error-message {
-  @include Color($font: disruptive);
 }

@@ -4,7 +4,6 @@ import { TextareaProps } from "./Textarea.types";
 
 import clsx from "clsx";
 import styles from "./Textarea.module.scss";
-import inputStyles from "../Input/Input.module.scss";
 
 const Textarea = ({
   className,
@@ -43,12 +42,18 @@ const Textarea = ({
   };
 
   return (
-    <div className={className}>
-      <label className={clsx(inputStyles.label, styles.label)} htmlFor={id}>
+    <div
+      className={clsx(
+        styles["textarea-container"],
+        { [styles.inline]: inline },
+        className
+      )}
+    >
+      <label className={styles.label} htmlFor={id}>
         <p
           className={clsx(
-            inputStyles["label-text"],
-            showLabel && inputStyles["show-label"]
+            styles["label-text"],
+            showLabel && styles["show-label"]
           )}
         >
           {label} {required && <span aria-hidden="true">*</span>}
@@ -56,13 +61,10 @@ const Textarea = ({
         <textarea
           rows={rows}
           className={clsx(
-            inputStyles.input,
             styles.textarea,
-            { [styles.inline]: inline },
-            { [inputStyles.error]: error },
+            { [styles.error]: error },
             { [styles["remove-resize"]]: !hasResize },
-            { [inputStyles["read-only"]]: readOnly },
-            { [styles["read-only"]]: readOnly }
+            { [styles["read-only"]]: readOnly && !disabled }
           )}
           aria-invalid={!!error}
           aria-describedby={
@@ -80,16 +82,12 @@ const Textarea = ({
         />
       </label>
       {error && !disabled && (
-        <p
-          className={clsx(inputStyles.message, inputStyles["error-message"])}
-          id={`${id}-error`}
-          role="alert"
-        >
+        <p className={styles["error-message"]} id={`${id}-error`} role="alert">
           {error}
         </p>
       )}
       {helper && !error && (
-        <p className={inputStyles.message} id={`${id}-helper`}>
+        <p className={styles["helper-message"]} id={`${id}-helper`}>
           {helper}
         </p>
       )}

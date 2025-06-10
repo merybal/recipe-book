@@ -46,7 +46,7 @@ const EditableInput = ({
   };
 
   return (
-    <div className={clsx(styles["editable-field-container"], className)}>
+    <div className={clsx(styles["editable-input-container"], className)}>
       <Input
         id={id}
         className={clsx({ [styles["input-width"]]: !inline })}

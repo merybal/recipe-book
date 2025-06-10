@@ -1,7 +1,6 @@
 @use "../../styles/border" as *;
 @use "../../styles/spacing" as *;
 @use "../../styles/color" as *;
-@use "../../styles/font" as *;
 @use "../../styles/flex" as *;
 @use "../../styles/form" as *;
 
@@ -24,17 +23,18 @@
 
     .select {
       @include Flex($align: center);
-      @include InputBorder;
-      @include InputContainer;
+      @include FieldBorder;
+      @include FieldContainer;
+      @include FieldHeight;
       cursor: pointer;
 
       &.error {
-        @include InputBorderError;
+        @include FieldBorderError;
       }
 
       option {
-        @include InputText;
-        height: 3.5rem;
+        @include FieldText;
+        @include FieldHeight;
       }
 
       .selected-label,
@@ -63,7 +63,7 @@
     }
 
     .select:focus:not(.disabled) {
-      @include InputBorderFocus;
+      @include FieldBorderFocus;
     }
 
     .disabled {
@@ -76,8 +76,8 @@
   }
 
   .dropdown {
-    @include InputBorder;
-    @include InputText;
+    @include FieldBorder;
+    @include FieldText;
     @include Border($radius: lg);
     @include Margin($top: xxs);
     @include Color($bg: white);
@@ -92,7 +92,7 @@
     .option {
       @include Flex($align: center);
       @include Padding($x: lg);
-      height: 3.5rem;
+      @include FieldHeight;
       cursor: pointer;
     }
 

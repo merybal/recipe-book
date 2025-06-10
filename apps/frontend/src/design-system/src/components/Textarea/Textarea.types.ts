@@ -3,12 +3,12 @@ import { TextareaHTMLAttributes } from "react";
 export type TextareaProps = {
   className?: string;
   disabled?: boolean;
-  error?: string; //error message
+  error?: string;
   hasReset?: boolean; //TODO IMPLEMENTAR
   hasResize?: boolean;
-  helper?: string; //helper message
+  helper?: string;
   id: string;
-  inline?: boolean; //TODO define max width
+  inline?: boolean;
   label: string;
   placeholder?: string;
   showLabel?: boolean;

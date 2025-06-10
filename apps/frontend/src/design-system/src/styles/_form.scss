@@ -2,10 +2,14 @@
 @use "./color" as *;
 @use "./font" as *;
 @use "./spacing" as *;
+@use "./flex" as *;
 
-@mixin InputContainer {
-  @include Padding($x: lg, $y: md);
+@mixin FieldHeight {
   height: 3.5rem;
+}
+
+@mixin FieldContainer {
+  @include Padding($x: lg, $y: md);
   width: 100%;
 }
 
@@ -13,23 +17,22 @@
   width: 20rem;
 }
 
-// BORDER
-@mixin InputBorder {
+@mixin FieldBorder {
   @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
   transition: border 0.3s ease;
 }
 
-@mixin InputBorderFocus {
+@mixin FieldBorderFocus {
   @include Border($width: medium, $style: solid, $color: primary);
 }
 
-@mixin InputBorderError {
+@mixin FieldBorderError {
   @include Border($width: medium, $style: solid, $color: disruptive);
 }
 
-// TEXT
-@mixin InputText {
+@mixin FieldText {
   @include Font($family: text, $weight: medium, $size: sm);
+  @include Color($font: main-text);
 }
 
 @mixin LabelText {
@@ -53,7 +56,6 @@
   @include Color($font: disruptive);
 }
 
-// STATE
 @mixin Disabled {
   @include Color($bg: disabled, $font: secondary-text);
   cursor: unset;
@@ -61,4 +63,14 @@
 
 @mixin ReadOnly {
   @include Color($bg: disabled, $font: main-text);
+}
+
+@mixin EditableButton {
+  @include Margin($top: 2.5rem);
+  @include Flex($self: start);
+}
+
+@mixin EditableButtons {
+  @include EditableButton;
+  @include Flex($gap: xs);
 }

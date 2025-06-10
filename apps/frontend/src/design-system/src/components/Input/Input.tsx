@@ -51,7 +51,13 @@ const Input = ({
   const showReset = hasReset && value && !disabled;
 
   return (
-    <div className={className}>
+    <div
+      className={clsx(
+        styles["input-container"],
+        { [styles.inline]: inline },
+        className
+      )}
+    >
       <label className={clsx(styles.label)} htmlFor={id}>
         <p
           className={clsx(styles["label-text"], {
@@ -62,11 +68,10 @@ const Input = ({
         </p>
         {iconLeft && (
           <Icon
-            className={clsx(
-              styles["icon-left"],
-              { [styles["icon-position"]]: !showLabel },
-              { [styles["icon-with-label"]]: showLabel }
-            )}
+            className={clsx(styles["icon-left"], {
+              [styles["icon-position"]]: !showLabel,
+              [styles["icon-with-label"]]: showLabel,
+            })}
             {...(isFocused && { color: "primary" })}
             {...(disabled && { color: "outline" })}
             {...(error && !isFocused && { color: "disruptive" })}
@@ -75,14 +80,12 @@ const Input = ({
           />
         )}
         <input
-          className={clsx(
-            styles.input,
-            { [styles.inline]: inline },
-            { [styles["icon-left-space"]]: iconLeft },
-            { [styles["icon-right-space"]]: iconRight },
-            { [styles.error]: error },
-            { [styles["read-only"]]: readOnly }
-          )}
+          className={clsx(styles.input, {
+            [styles["icon-left-space"]]: iconLeft,
+            [styles["icon-right-space"]]: iconRight,
+            [styles.error]: error,
+            [styles["read-only"]]: readOnly,
+          })}
           aria-invalid={!!error}
           aria-describedby={
             error ? `${id}-error` : helper ? `${id}-helper` : undefined
@@ -104,8 +107,10 @@ const Input = ({
             aria-label="Limpiar campo"
             className={clsx(
               styles["icon-right"],
-              { [styles["icon-position"]]: !showLabel },
-              { [styles["icon-with-label"]]: showLabel },
+              {
+                [styles["icon-position"]]: !showLabel,
+                [styles["icon-with-label"]]: showLabel,
+              },
               styles["reset-button"]
             )}
             onClick={handleReset}
@@ -121,11 +126,10 @@ const Input = ({
         ) : (
           iconRight && (
             <Icon
-              className={clsx(
-                styles["icon-right"],
-                { [styles["icon-position"]]: !showLabel },
-                { [styles["icon-with-label"]]: showLabel }
-              )}
+              className={clsx(styles["icon-right"], {
+                [styles["icon-position"]]: !showLabel,
+                [styles["icon-with-label"]]: showLabel,
+              })}
               {...(isFocused && { color: "primary" })}
               {...(disabled && { color: "outline" })}
               {...(error && !isFocused && { color: "disruptive" })}
@@ -136,16 +140,12 @@ const Input = ({
         )}
       </label>
       {error && (
-        <p
-          className={clsx(styles.message, styles["error-message"])}
-          id={`${id}-error`}
-          role="alert"
-        >
+        <p className={styles["error-message"]} id={`${id}-error`} role="alert">
           {error}
         </p>
       )}
       {helper && !error && (
-        <p className={styles.message} id={`${id}-helper`}>
+        <p className={styles["helper-message"]} id={`${id}-helper`}>
           {helper}
         </p>
       )}

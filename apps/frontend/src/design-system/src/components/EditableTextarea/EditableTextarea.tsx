@@ -4,7 +4,7 @@ import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 import type { EditableTextareaProps } from "./EditableTextarea.types";
 
 import clsx from "clsx";
-import editableInputStyles from "../EditableInput/EditableInput.module.scss";
+import styles from "./EditableTextarea.module.scss";
 
 const EditableTextarea = ({
   id,
@@ -42,14 +42,9 @@ const EditableTextarea = ({
   };
 
   return (
-    <div
-      className={clsx(
-        editableInputStyles["editable-field-container"],
-        className
-      )}
-    >
+    <div className={clsx(styles["editable-textarea-container"], className)}>
       <Textarea
-        className={clsx({ [editableInputStyles["input-width"]]: !inline })}
+        className={clsx({ [styles["input-width"]]: !inline })}
         {...(hasError && { error: "Este campo es requerido" })}
         id={id}
         hasResize={false}
@@ -63,8 +58,8 @@ const EditableTextarea = ({
       />
       {isEditing ? (
         <div
-          className={clsx(editableInputStyles["button-container"], {
-            [editableInputStyles["error-spacing"]]: hasError,
+          className={clsx(styles["button-container"], {
+            [styles["error-spacing"]]: hasError,
           })}
         >
           <ButtonIcon
@@ -85,7 +80,7 @@ const EditableTextarea = ({
         </div>
       ) : (
         <ButtonIcon
-          className={editableInputStyles["edit-button"]}
+          className={styles["edit-button"]}
           icon="Pencil"
           label={`editar ${label ?? "campo"}`}
           size="small"

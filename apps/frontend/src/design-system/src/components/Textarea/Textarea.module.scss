@@ -1,19 +1,67 @@
 @use "../../styles/border" as *;
+@use "../../styles/form" as *;
 
-.label {
-  .textarea {
-    @include Border($radius: xl);
-    overflow: hidden;
-    min-height: 3.5rem;
+.textarea-container {
+  &.inline {
+    @include Inline;
   }
 
-  .textarea:disabled,
-  .read-only,
-  .remove-resize {
-    resize: none;
+  .label {
+    position: relative;
+
+    .label-text {
+      @include LabelText;
+      display: none;
+
+      &.show-label {
+        display: block;
+      }
+    }
+
+    .textarea {
+      @include FieldBorder;
+      @include FieldText;
+      @include FieldContainer;
+      overflow: hidden;
+      min-height: 3.5rem;
+    }
+
+    .textarea::placeholder {
+      @include Placeholder;
+    }
+
+    .textarea:focus:not(.disabled) {
+      @include FieldBorderFocus;
+    }
+
+    .textarea:focus-visible {
+      outline: none;
+    }
+
+    .textarea:disabled {
+      @include Disabled;
+    }
+
+    .read-only {
+      @include ReadOnly;
+    }
+
+    .textarea:disabled,
+    .read-only,
+    .remove-resize {
+      resize: none;
+    }
+
+    .error {
+      @include FieldBorderError;
+    }
   }
 
-  .inline {
-    width: 20rem;
+  .helper-message {
+    @include HelperMessage;
+  }
+
+  .error-message {
+    @include ErrorMessage;
   }
 }

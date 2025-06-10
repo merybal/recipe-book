@@ -3,9 +3,10 @@
 @use "../../styles/border" as *;
 @use "../../styles/flex" as *;
 @use "../../styles/font" as *;
+@use "../../styles/form" as *;
 
 .table-container {
-  @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
+  @include FieldBorder;
   overflow: hidden;
 
   .table {
@@ -21,19 +22,15 @@
       @include Color($bg: outline);
     }
 
-    .head-row {
-      //TODO remover si no se usa
-    }
-
     .head-row-cell {
       @include Font($size: sm, $weight: bold);
       @include Flex($align: center);
       @include Padding($x: lg);
-      height: 3.5rem;
+      @include FieldHeight;
     }
 
     .body-cell {
-      height: 3.5rem;
+      @include FieldHeight;
     }
 
     .body-cell-data {
@@ -57,7 +54,7 @@
     }
 
     .read-only-row {
-      @include Color($bg: disabled);
+      @include ReadOnly;
     }
   }
 
@@ -94,7 +91,13 @@
     }
 
     .table-head {
-      border-bottom: 1px solid resolve-color(outline); //TODO CAMBIAR a mi mixin
+      @include Border(
+        $bottom: (
+          thin,
+          solid,
+          outline,
+        )
+      );
     }
   }
 }

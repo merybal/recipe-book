@@ -146,9 +146,9 @@ const Select = ({
           {iconLeft && (
             <Icon
               className={styles["icon-left"]}
-              {...(isFocused && !error && { color: "primary" })}
+              {...(isFocused && { color: "primary" })}
               {...(disabled && { color: "outline" })}
-              {...(error && { color: "disruptive" })}
+              {...(error && !isFocused && { color: "disruptive" })}
               name={iconLeft}
               size="sm"
             />
@@ -168,9 +168,9 @@ const Select = ({
             className={clsx(styles["icon-right"], {
               [styles["rotate-chevron"]]: isOpen,
             })}
-            {...(isFocused && !error && { color: "primary" })}
+            {...(isFocused && { color: "primary" })}
             {...(disabled && { color: "outline" })}
-            {...(error && { color: "disruptive" })}
+            {...(error && !isFocused && { color: "disruptive" })}
             name="ChevronDown"
             size="sm"
           />

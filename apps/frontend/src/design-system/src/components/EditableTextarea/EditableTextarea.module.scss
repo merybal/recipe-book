@@ -1,7 +1,7 @@
 @use "../../styles/flex" as *;
 @use "../../styles/form" as *;
 
-.editable-input-container {
+.editable-textarea-container {
   @include Flex($gap: sm);
 
   .input-width {
