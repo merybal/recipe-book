@@ -6,8 +6,6 @@ import Icon from "../Icon/Icon";
 import type { SelectProps, OptionType } from "./Select.types";
 
 import styles from "./Select.module.scss";
-// import inputStyles from "../Input/Input.module.scss";
-
 const Select = ({
   className,
   disabled = false,
@@ -104,19 +102,20 @@ const Select = ({
     }
   };
 
-  //TODO arreglar classnames
-
   return (
     <div
-      className={clsx({ [styles.inline]: inline }, className)}
+      className={clsx(
+        styles["select-container"],
+        { [styles.inline]: inline },
+        className
+      )}
       ref={containerRef}
     >
-      <label className={clsx(styles.label)} htmlFor={id}>
+      <label className={styles.label} htmlFor={id}>
         <p
-          className={clsx(
-            styles["label-text"],
-            showLabel && styles["show-label"]
-          )}
+          className={clsx(styles["label-text"], {
+            [styles["show-label"]]: showLabel,
+          })}
         >
           {label} {required && <span aria-hidden="true">*</span>}
         </p>
@@ -131,11 +130,9 @@ const Select = ({
           aria-describedby={
             error ? `${id}-error` : helper ? `${id}-helper` : undefined
           }
-          className={clsx(styles.input, styles.select, {
-            [styles.inline]: inline,
-            [styles.error]: error,
-            [styles["read-only"]]: readOnly,
-            [styles["read-only"]]: readOnly,
+          className={clsx(styles.select, {
+            [styles.error]: error && !disabled,
+            [styles["read-only"]]: readOnly && !disabled,
             [styles.disabled]: disabled,
           })}
           role="combobox"
@@ -149,9 +146,9 @@ const Select = ({
           {iconLeft && (
             <Icon
               className={styles["icon-left"]}
-              {...(isFocused && { color: "primary" })}
+              {...(isFocused && !error && { color: "primary" })}
               {...(disabled && { color: "outline" })}
-              {...(error && !isFocused && { color: "disruptive" })}
+              {...(error && { color: "disruptive" })}
               name={iconLeft}
               size="sm"
             />
@@ -159,7 +156,6 @@ const Select = ({
 
           <p
             className={clsx(
-              { [styles.disabled]: disabled },
               selectedOption?.label
                 ? styles["selected-label"]
                 : styles["placeholder"]
@@ -172,9 +168,9 @@ const Select = ({
             className={clsx(styles["icon-right"], {
               [styles["rotate-chevron"]]: isOpen,
             })}
-            {...(isFocused && { color: "primary" })}
+            {...(isFocused && !error && { color: "primary" })}
             {...(disabled && { color: "outline" })}
-            {...(error && !isFocused && { color: "disruptive" })}
+            {...(error && { color: "disruptive" })}
             name="ChevronDown"
             size="sm"
           />
@@ -184,7 +180,7 @@ const Select = ({
       {isOpen && (
         <ul
           id={`${id}-listbox`}
-          className={clsx(styles.dropdown, { [styles.inline]: inline })}
+          className={styles.dropdown}
           ref={listRef}
           role="listbox"
         >
@@ -207,16 +203,12 @@ const Select = ({
       )}
 
       {error && (
-        <p
-          className={clsx(styles.message, styles["error-message"])}
-          id={`${id}-error`}
-          role="alert"
-        >
+        <p className={styles["error-message"]} id={`${id}-error`} role="alert">
           {error}
         </p>
       )}
       {helper && !error && (
-        <p className={styles.message} id={`${id}-helper`}>
+        <p className={styles["helper-message"]} id={`${id}-helper`}>
           {helper}
         </p>
       )}

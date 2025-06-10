@@ -3,6 +3,17 @@
 @use "./font" as *;
 @use "./spacing" as *;
 
+@mixin InputContainer {
+  @include Padding($x: lg, $y: md);
+  height: 3.5rem;
+  width: 100%;
+}
+
+@mixin Inline {
+  width: 20rem;
+}
+
+// BORDER
 @mixin InputBorder {
   @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
   transition: border 0.3s ease;
@@ -16,6 +27,7 @@
   @include Border($width: medium, $style: solid, $color: disruptive);
 }
 
+// TEXT
 @mixin InputText {
   @include Font($family: text, $weight: medium, $size: sm);
 }
@@ -30,18 +42,6 @@
   @include Font($family: text, $weight: medium);
 }
 
-@mixin Disabled {
-  @include Color($bg: disabled, $font: secondary-text);
-}
-
-@mixin Read-only {
-  @include Color($bg: disabled, $font: main-text);
-}
-
-@mixin Inline {
-  width: 20rem;
-}
-
 @mixin HelperMessage {
   @include Font($weight: medium, $size: xs);
   @include Padding($top: sm, $left: lg);
@@ -51,4 +51,14 @@
 @mixin ErrorMessage {
   @include HelperMessage;
   @include Color($font: disruptive);
+}
+
+// STATE
+@mixin Disabled {
+  @include Color($bg: disabled, $font: secondary-text);
+  cursor: unset;
+}
+
+@mixin ReadOnly {
+  @include Color($bg: disabled, $font: main-text);
 }

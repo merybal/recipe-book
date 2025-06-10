@@ -5,78 +5,82 @@
 @use "../../styles/flex" as *;
 @use "../../styles/form" as *;
 
-.label {
-  .label-text {
-    @include LabelText;
-    display: none;
+.select-container {
+  position: relative;
 
-    &.show-label {
-      display: block;
-    }
+  &.inline {
+    @include Inline;
   }
 
-  .select {
-    @include Flex($align: center);
-    cursor: pointer;
+  .label {
+    .label-text {
+      @include LabelText;
+      display: none;
 
-    option {
-      @include Font($family: text, $weight: medium, $size: sm);
-      height: 3.5rem;
+      &.show-label {
+        display: block;
+      }
     }
 
-    .selected-label,
-    .placeholder {
+    .select {
       @include Flex($align: center);
-      height: 100%;
+      @include InputBorder;
+      @include InputContainer;
+      cursor: pointer;
+
+      &.error {
+        @include InputBorderError;
+      }
+
+      option {
+        @include InputText;
+        height: 3.5rem;
+      }
+
+      .selected-label,
+      .placeholder {
+        @include Flex($align: center);
+        height: 100%;
+      }
+
+      .placeholder {
+        @include Placeholder;
+      }
+
+      .icon-left {
+        @include Margin($right: xs);
+        transition: transform 0.2s ease;
+      }
+
+      .icon-right {
+        @include Margin($left: auto);
+        transition: transform 0.2s ease;
+      }
+
+      .rotate-chevron {
+        transform: rotate(180deg);
+      }
     }
 
-    .placeholder {
-      @include Color($font: secondary-text);
-      @include Font($family: text, $weight: medium);
+    .select:focus:not(.disabled) {
+      @include InputBorderFocus;
     }
 
-    .icon-left {
-      @include Margin($right: xs);
+    .disabled {
+      @include Disabled;
     }
 
-    .icon-right {
-      @include Margin($left: auto);
-      transition: transform 0.2s ease;
+    .read-only {
+      @include ReadOnly;
     }
-
-    .rotate-chevron {
-      transform: rotate(180deg);
-    }
-
-    &.error {
-      @include InputBorderError;
-    }
-  }
-
-  .disabled {
-    @include Color($bg: disabled, $font: secondary-text);
-    cursor: unset;
-  }
-
-  .disabled:focus {
-    @include Border($width: medium, $style: solid, $color: outline);
-  }
-
-  .read-only {
-    @include Color($bg: secondary-text); //TODO
   }
 
   .dropdown {
+    @include InputBorder;
+    @include InputText;
+    @include Border($radius: lg);
     @include Margin($top: xxs);
     @include Color($bg: white);
-    @include Border(
-      $width: medium,
-      $style: solid,
-      $color: outline,
-      $radius: lg
-    );
-    @include Font($family: text, $weight: medium, $size: sm);
-
     @include Padding($all: none);
     max-height: 15rem;
     overflow-y: auto;
@@ -98,11 +102,15 @@
     }
 
     .selected:not(:hover):not(.highlighted) {
-      @include Color($bg: primary, $font: white); //TODO revisar color
+      @include Color($bg: primary, $font: white);
     }
   }
 
-  .inline {
-    @include Inline;
+  .helper-message {
+    @include HelperMessage;
+  }
+
+  .error-message {
+    @include ErrorMessage;
   }
 }
