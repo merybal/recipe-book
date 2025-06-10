@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Tile from "./Tile";
-import ButtonUnstyled from "@/design-system/ButtonUnstyled";
+import ButtonUnstyled from "@/design-system/src/components/ButtonUnstyled";
 
 import { useNavigate } from "react-router-dom";
 

@@ -1,5 +1,4 @@
-@use "./styles/flex" as *;
-@import "src/styles/variables.scss";
+@use "./design-system/src/styles/flex" as *;
 @import "src/styles/base.scss";
 
 .app {

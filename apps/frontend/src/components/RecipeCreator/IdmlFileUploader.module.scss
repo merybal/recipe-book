@@ -1,4 +1,4 @@
-@use "../../styles/flex" as *;
+@use "../../design-system/src/styles/flex" as *;
 
 .file-upload {
   @include Flex($direction: column, $gap: md);

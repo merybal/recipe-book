@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Textarea from "@/design-system/Textarea";
-import ButtonIcon from "@/design-system/ButtonIcon";
+import Textarea from "@/design-system/src/components/Textarea";
+import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 import type { EditableTextareaProps } from "./EditableTextarea.types";
 
 import clsx from "clsx";

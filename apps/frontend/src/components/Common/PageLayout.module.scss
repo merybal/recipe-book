@@ -1,5 +1,5 @@
-@use "../../styles/spacing" as *;
-@use "../../styles/font" as *;
+@use "../../design-system/src/styles/spacing" as *;
+@use "../../design-system/src/styles/font" as *;
 
 .page-layout {
   @include Padding($x: lg, $top: xl, $bottom: lg);

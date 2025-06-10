@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Input from "@/design-system/Input";
-import ButtonIcon from "@/design-system/ButtonIcon";
+import Input from "@/design-system/src/components/Input";
+import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 
 import { EditableInputProps } from "./EditableInput.types";
 

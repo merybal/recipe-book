@@ -1,5 +1,5 @@
-@use "../styles/flex" as *;
-@use "../styles/border" as *;
+@use "../design-system/src/styles/flex" as *;
+@use "../design-system/src/styles/border" as *;
 
 .form-wrapper {
   @include Flex($direction: column);

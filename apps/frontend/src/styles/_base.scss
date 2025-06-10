@@ -1,6 +1,5 @@
-@use "../styles/font" as *;
-@use "../styles/color" as *;
-@import "./variables";
+@use "../design-system/src/styles/font" as *;
+@use "../design-system/src/styles/color" as *;
 
 // TODO borrar las que no se usen
 body {

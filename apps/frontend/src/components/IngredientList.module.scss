@@ -1,5 +1,5 @@
-@use "../styles/spacing" as *;
-@use "../styles/flex" as *;
+@use "../design-system/src/styles/spacing" as *;
+@use "../design-system/src/styles/flex" as *;
 
 .ingredients-title {
   @include Margin($bottom: lg);

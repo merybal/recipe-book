@@ -1,0 +1,54 @@
+@use "./border" as *;
+@use "./color" as *;
+@use "./font" as *;
+@use "./spacing" as *;
+
+@mixin InputBorder {
+  @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
+  transition: border 0.3s ease;
+}
+
+@mixin InputBorderFocus {
+  @include Border($width: medium, $style: solid, $color: primary);
+}
+
+@mixin InputBorderError {
+  @include Border($width: medium, $style: solid, $color: disruptive);
+}
+
+@mixin InputText {
+  @include Font($family: text, $weight: medium, $size: sm);
+}
+
+@mixin LabelText {
+  @include Font($weight: bold, $size: sm);
+  @include Margin($bottom: sm);
+}
+
+@mixin Placeholder {
+  @include Color($font: secondary-text);
+  @include Font($family: text, $weight: medium);
+}
+
+@mixin Disabled {
+  @include Color($bg: disabled, $font: secondary-text);
+}
+
+@mixin Read-only {
+  @include Color($bg: disabled, $font: main-text);
+}
+
+@mixin Inline {
+  width: 20rem;
+}
+
+@mixin HelperMessage {
+  @include Font($weight: medium, $size: xs);
+  @include Padding($top: sm, $left: lg);
+  @include Color($font: secondary-text);
+}
+
+@mixin ErrorMessage {
+  @include HelperMessage;
+  @include Color($font: disruptive);
+}

@@ -1,8 +1,8 @@
-@use "../styles/spacing" as *;
-@use "../styles/font" as *;
-@use "../styles/color" as *;
-@use "../styles/border" as *;
-@use "../styles/flex" as *;
+@use "../design-system/src/styles/spacing" as *;
+@use "../design-system/src/styles/font" as *;
+@use "../design-system/src/styles/color" as *;
+@use "../design-system/src/styles/border" as *;
+@use "../design-system/src/styles/flex" as *;
 
 .tile {
   .square-image {

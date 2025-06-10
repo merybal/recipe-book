@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import DragAndDrop from "@/design-system/DragAndDrop";
-import Button from "@/design-system/Button";
+import DragAndDrop from "@/design-system/src/components/DragAndDrop";
+import Button from "@/design-system/src/components/Button";
 import RecipePreview from "./RecipePreview";
 
 import styles from "./IdmlFileUploader.module.scss";

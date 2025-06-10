@@ -1,0 +1,108 @@
+@use "../../styles/border" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/form" as *;
+
+.label {
+  .label-text {
+    @include LabelText;
+    display: none;
+
+    &.show-label {
+      display: block;
+    }
+  }
+
+  .select {
+    @include Flex($align: center);
+    cursor: pointer;
+
+    option {
+      @include Font($family: text, $weight: medium, $size: sm);
+      height: 3.5rem;
+    }
+
+    .selected-label,
+    .placeholder {
+      @include Flex($align: center);
+      height: 100%;
+    }
+
+    .placeholder {
+      @include Color($font: secondary-text);
+      @include Font($family: text, $weight: medium);
+    }
+
+    .icon-left {
+      @include Margin($right: xs);
+    }
+
+    .icon-right {
+      @include Margin($left: auto);
+      transition: transform 0.2s ease;
+    }
+
+    .rotate-chevron {
+      transform: rotate(180deg);
+    }
+
+    &.error {
+      @include InputBorderError;
+    }
+  }
+
+  .disabled {
+    @include Color($bg: disabled, $font: secondary-text);
+    cursor: unset;
+  }
+
+  .disabled:focus {
+    @include Border($width: medium, $style: solid, $color: outline);
+  }
+
+  .read-only {
+    @include Color($bg: secondary-text); //TODO
+  }
+
+  .dropdown {
+    @include Margin($top: xxs);
+    @include Color($bg: white);
+    @include Border(
+      $width: medium,
+      $style: solid,
+      $color: outline,
+      $radius: lg
+    );
+    @include Font($family: text, $weight: medium, $size: sm);
+
+    @include Padding($all: none);
+    max-height: 15rem;
+    overflow-y: auto;
+    z-index: 1000;
+    position: absolute;
+    width: 100%;
+    list-style: none;
+
+    .option {
+      @include Flex($align: center);
+      @include Padding($x: lg);
+      height: 3.5rem;
+      cursor: pointer;
+    }
+
+    .option:hover,
+    .highlighted {
+      @include Color($bg: primary-light); //TODO revisar color
+    }
+
+    .selected:not(:hover):not(.highlighted) {
+      @include Color($bg: primary, $font: white); //TODO revisar color
+    }
+  }
+
+  .inline {
+    @include Inline;
+  }
+}

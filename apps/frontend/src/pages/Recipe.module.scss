@@ -1,7 +1,7 @@
-@use "../styles/font" as *;
-@use "../styles/spacing" as *;
-@use "../styles/flex" as *;
-@use "../styles/flex" as *;
+@use "../design-system/src/styles/font" as *;
+@use "../design-system/src/styles/spacing" as *;
+@use "../design-system/src/styles/flex" as *;
+@use "../design-system/src/styles/flex" as *;
 
 .image-container {
   @include Flex($align: center, $justify: center);

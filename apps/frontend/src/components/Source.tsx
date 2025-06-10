@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import Icon from "@/design-system/Icon/Icon";
+import Icon from "@/design-system/src/components/Icon/Icon";
 
 import styles from "./Source.module.scss";
 import type { Source } from "@/types";

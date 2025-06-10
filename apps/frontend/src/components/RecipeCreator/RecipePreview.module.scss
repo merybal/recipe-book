@@ -1,4 +1,4 @@
-@use "../../styles/flex" as *;
+@use "../../design-system/src/styles/flex" as *;
 
 .recipe-preview {
   @include Flex($direction: column, $gap: md);

@@ -4,11 +4,11 @@ import axios from "axios";
 
 import Instructions from "@/components/Instructions";
 import IngredientList from "@/components/IngredientList";
-import BottomSheet from "../design-system/BottomSheet";
+import BottomSheet from "../design-system/src/components/BottomSheet";
 import FoodAllergies from "../components/FoodAllergies";
 // import Source from "../components/Source";
-import Separator from "../design-system/Separator/Separator";
-import Tag from "../design-system/Tag/Tag";
+import Separator from "../design-system/src/components/Separator/Separator";
+import Tag from "../design-system/src/components/Tag/Tag";
 
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 

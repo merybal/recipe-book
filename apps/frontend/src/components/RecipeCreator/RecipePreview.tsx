@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
-import ButtonIcon from "@/design-system/ButtonIcon";
-import Input from "@/design-system/Input";
+import ButtonIcon from "@/design-system/src/components/ButtonIcon";
+import Input from "@/design-system/src/components/Input";
 
 import type { RecipeType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
-import EditableInput from "../../design-system/EditableInput/EditableInput";
+import EditableInput from "../../design-system/src/components/EditableInput/EditableInput";
 
 export type RecipePreviewProps = {
   className?: string;

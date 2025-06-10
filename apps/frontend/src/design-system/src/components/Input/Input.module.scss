@@ -36,7 +36,7 @@
     @include Font($family: text, $weight: medium);
   }
 
-  .input:focus {
+  .input:focus:not(.disabled) {
     @include Border($width: medium, $style: solid, $color: primary);
   }
 
