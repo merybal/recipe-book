@@ -48,6 +48,7 @@ const MultipleEditableFields = ({
       }));
     } else {
       setErrors((prev) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { [key]: _, ...rest } = prev;
         return rest;
       });
@@ -101,7 +102,8 @@ const MultipleEditableFields = ({
         {fields.map((field) => {
           if (field.component === "input") {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { key, label, value, required, ...restInputProps } = field;
+            const { key, label, required, validate, value, ...restInputProps } =
+              field;
 
             return (
               <Input
@@ -120,9 +122,17 @@ const MultipleEditableFields = ({
           }
 
           if (field.component === "select") {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { key, label, value, required, options, ...restSelectProps } =
-              field;
+            const {
+              key,
+              label,
+              options,
+              required,
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              validate,
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              value,
+              ...restSelectProps
+            } = field;
 
             return (
               <Select
