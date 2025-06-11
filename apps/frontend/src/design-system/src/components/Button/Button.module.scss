@@ -6,7 +6,7 @@
 
 .button {
   @include Padding($x: xl);
-  @include Font($weight: bold);
+  @include Font($family: text, $weight: bold);
   @include Border($style: none);
   @include Flex($align: center, $gap: xs, $justify: center, $shrink: none);
   letter-spacing: 0.2px;
