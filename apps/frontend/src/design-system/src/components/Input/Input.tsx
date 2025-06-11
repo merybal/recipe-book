@@ -18,6 +18,9 @@ const Input = ({
   iconRight,
   id,
   inline,
+  inputClassName,
+  isEditableTableInput,
+  isTableCorner,
   label,
   placeholder,
   readOnly,
@@ -29,6 +32,12 @@ const Input = ({
   ...rest
 }: InputProps) => {
   const [isFocused, setIsficused] = useState(false);
+
+  const iconColor =
+    (isFocused && "primary") ||
+    (disabled && "outline") ||
+    (error && "disruptive") ||
+    "main-text";
 
   const handleReset = () => {
     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
@@ -72,19 +81,19 @@ const Input = ({
               [styles["icon-position"]]: !showLabel,
               [styles["icon-with-label"]]: showLabel,
             })}
-            {...(isFocused && { color: "primary" })}
-            {...(disabled && { color: "outline" })}
-            {...(error && !isFocused && { color: "disruptive" })}
+            color={iconColor}
             name={iconLeft}
             size="sm"
           />
         )}
         <input
-          className={clsx(styles.input, {
+          className={clsx(inputClassName, styles.input, {
             [styles["icon-left-space"]]: iconLeft,
             [styles["icon-right-space"]]: iconRight,
             [styles.error]: error,
             [styles["read-only"]]: readOnly,
+            [styles["editable-table-input"]]: isEditableTableInput,
+            [styles["editable-table-corner"]]: isTableCorner,
           })}
           aria-invalid={!!error}
           aria-describedby={
@@ -130,9 +139,7 @@ const Input = ({
                 [styles["icon-position"]]: !showLabel,
                 [styles["icon-with-label"]]: showLabel,
               })}
-              {...(isFocused && { color: "primary" })}
-              {...(disabled && { color: "outline" })}
-              {...(error && !isFocused && { color: "disruptive" })}
+              color={iconColor}
               name={iconRight}
               size="sm"
             />

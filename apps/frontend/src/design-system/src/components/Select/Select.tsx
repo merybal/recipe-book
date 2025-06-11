@@ -37,7 +37,7 @@ const Select = ({
     (isFocused && "primary") ||
     (disabled && "outline") ||
     (error && "disruptive") ||
-    "primary";
+    "main-text";
 
   useEffect(() => {
     if (isOpen && highlightedIndex !== null && listRef.current) {

@@ -93,13 +93,10 @@ function EditableTable<T extends object>({
 
             return (
               <Input
-                className={clsx(
-                  styles["input-container"],
-                  rowIndex === data.length - 1 &&
-                    columnIndex === 0 &&
-                    styles["input-bottom-left-corner"]
-                )}
                 id={`row-${rowIndex}-${String(column.key)}`}
+                {...(rowIndex === data.length - 1 &&
+                  columnIndex === 0 && { isTableCorner: true })}
+                isEditableTableInput
                 label={column.header}
                 type={editableColumn.inputType}
                 value={String(cellValue ?? "")}

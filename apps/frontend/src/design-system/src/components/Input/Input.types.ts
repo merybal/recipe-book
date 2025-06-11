@@ -12,6 +12,9 @@ export type InputProps = {
   iconRight?: IconName;
   id: string;
   inline?: boolean;
+  inputClassName?: string;
+  isEditableTableInput?: boolean;
+  isTableCorner?: boolean;
   label: string;
   placeholder?: string;
   showLabel?: boolean;

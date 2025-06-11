@@ -17,23 +17,4 @@
   .save-cancel-buttons {
     @include Padding($left: lg);
   }
-
-  .input-container {
-    input {
-      @include Border(
-        $width: medium,
-        $style: solid,
-        $color: transparent,
-        $radius: 0
-      );
-      @include Padding($x: 1.38rem);
-      height: 3.3rem;
-    }
-
-    &.input-bottom-left-corner {
-      input {
-        border-bottom-left-radius: 1.625rem;
-      }
-    }
-  }
 }

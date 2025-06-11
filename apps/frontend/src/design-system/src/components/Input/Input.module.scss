@@ -5,6 +5,8 @@
 @use "../../styles/form" as *;
 
 .input-container {
+  width: 100%;
+
   &.inline {
     @include Inline;
   }
@@ -29,6 +31,12 @@
 
       &.editable-table-input {
         @include RemovesFieldBorder;
+        @include Padding($x: 1.36rem);
+        height: 3.3rem;
+      }
+
+      &.editable-table-corner {
+        border-bottom-left-radius: 1.625rem;
       }
     }
 
