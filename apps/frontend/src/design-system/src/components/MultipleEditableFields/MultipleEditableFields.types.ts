@@ -1,13 +1,27 @@
 import { InputProps } from "../Input";
+import { SelectProps } from "../Select";
+import { OptionType } from "../Select";
 
-export type EditableFieldType = {
+export type EditableSelectType = {
   key: string;
   label: string;
   value: string;
   required?: boolean;
-  type?: "text" | "number";
+  component?: "select";
+  options: OptionType[];
   validate?: (value: string) => string | undefined;
-} & Omit<InputProps, "value" | "onChange">;
+} & Omit<SelectProps, "id">;
+
+export type EditableInputType = {
+  key: string;
+  label: string;
+  value: string;
+  required?: boolean;
+  component?: "input";
+  validate?: (value: string) => string | undefined;
+} & Omit<InputProps, "id" | "value" | "onChange">;
+
+export type EditableFieldType = EditableInputType | EditableSelectType;
 
 export type MultipleEditableFieldsProps = {
   className?: string;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Input from "@/design-system/src/components/Input";
+import Select from "@/design-system/src/components/Select";
 import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 
 import { MultipleEditableFieldsProps } from "./MultipleEditableFields.types";
@@ -97,39 +98,46 @@ const MultipleEditableFields = ({
       {singleLabel && <p className={styles["single-label"]}>{singleLabel}</p>}
 
       <div className={styles["fields-container"]}>
-        {fields.map(
-          ({
-            key,
-            label,
-            required,
-            type,
-            showLabel,
-            placeholder,
-            // validate,
-            ...rest
-          }) => {
+        {fields.map((field) => {
+          if (field.component === "input") {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { id, value, ...cleanRest } = rest;
+            const { key, label, value, required, ...restInputProps } = field;
 
             return (
               <Input
                 key={key}
-                id={id || key}
+                id={key}
                 className={styles["field-input"]}
                 error={errors[key]}
                 label={label}
-                placeholder={placeholder}
                 readOnly={!isEditing}
                 required={required}
-                {...(!singleLabel && showLabel && { showLabel: true })}
-                type={type}
                 value={localValues[key] || ""}
                 onChange={(e) => handleChange(key, e.target.value, required)}
-                {...cleanRest}
+                {...restInputProps}
               />
             );
           }
-        )}
+
+          if (field.component === "select") {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { key, label, value, required, options, ...restSelectProps } =
+              field;
+
+            return (
+              <Select
+                id={key}
+                key={key}
+                label={label}
+                options={options}
+                readOnly={!isEditing}
+                value={localValues[key] || ""}
+                onChange={(e) => handleChange(key, e.target.value, required)}
+                {...restSelectProps}
+              />
+            );
+          }
+        })}
       </div>
 
       {isEditing ? (
