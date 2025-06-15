@@ -13,7 +13,6 @@ const theme = {
       none: "none",
     },
     radius: {
-      //TODO revisar
       sm: "0.25rem", // 4px
       md: "0.5rem", // 8px
       lg: "1rem", // 16px

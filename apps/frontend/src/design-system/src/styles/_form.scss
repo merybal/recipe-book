@@ -41,7 +41,7 @@
 }
 
 @mixin LabelText {
-  @include Font($weight: bold, $size: sm);
+  @include Font($family: text, $weight: bold, $size: sm);
   @include Color($font: main-text);
   @include Margin($bottom: sm);
 }
