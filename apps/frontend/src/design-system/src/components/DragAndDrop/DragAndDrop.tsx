@@ -29,7 +29,8 @@ const DragAndDrop = ({
   inline,
   maxFileAmount,
   maxFileSize,
-  showFilePreviews = true,
+  showFilePreviews,
+  showSingleImagePreview,
   size = "medium",
   value = [],
   variant = "primary",
@@ -43,6 +44,13 @@ const DragAndDrop = ({
 
   const pixelSize = iconSizeMap[size];
   const multiple = maxFileAmount !== 1;
+
+  const shouldShowSingleImagePreview =
+    showSingleImagePreview &&
+    value.length === 1 &&
+    maxFileAmount === 1 &&
+    accept?.includes("image/") &&
+    previews.length === 1;
 
   useEffect(() => {
     const newPreviews: string[] = [];
@@ -179,7 +187,98 @@ const DragAndDrop = ({
 
   return (
     <>
-      <div
+      {shouldShowSingleImagePreview ? (
+        <div
+          className={clsx(
+            styles["drop-zone"],
+            styles["single-image-preview"],
+            className
+          )}
+        >
+          <img
+            src={previews[0]}
+            alt="Previsualización del archivo"
+            className={styles["image-preview"]}
+          />
+          <ButtonIcon
+            className={styles["remove-button"]}
+            icon="X"
+            label="Quitar imagen"
+            variant="secondary"
+            size="small"
+            onClick={() => onChange([])}
+          />
+        </div>
+      ) : (
+        <div
+          className={clsx(
+            styles["drop-zone"],
+            !inline && styles["full-width"],
+            isDragging && styles["drag-over"],
+            disabled && styles.disabled,
+            className
+          )}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+        >
+          {boxIcon && <Icon name={boxIcon} size="xl" />}
+          <p>{isDragging ? boxLabelDragging : boxLabelInitial}</p>
+
+          <label
+            className={clsx(
+              buttonStyles.button,
+              { [buttonStyles[`variant-${variant}`]]: variant },
+              { [buttonStyles[`disruptive-variant-${variant}`]]: disruptive },
+              { [buttonStyles[`size-${size}`]]: size },
+              buttonClassName
+            )}
+          >
+            {iconLeft && <Icon name={iconLeft} size={pixelSize} />}
+            {buttonLabel}
+            {iconRight && <Icon name={iconRight} size={pixelSize} />}
+            <input
+              accept={accept}
+              hidden
+              multiple={multiple}
+              type="file"
+              onChange={handleChange}
+              disabled={disabled}
+              {...rest}
+            />
+          </label>
+
+          {!showFilePreviews && value.length >= 1 && (
+            <div className={styles["inline-preview"]}>
+              <p className={styles.message}>{getLabelText()}</p>
+              <ButtonIcon
+                label={getSecondaryButtonText()}
+                icon="X"
+                size="small"
+                variant="secondary"
+                onClick={() => onChange([])}
+              />
+            </div>
+          )}
+
+          {helper && <p className={styles.message}>{helper}</p>}
+
+          {validationErrors.map((error, i) => (
+            <p
+              key={i}
+              className={clsx(styles.message, styles["error-message"])}
+            >
+              {error}
+            </p>
+          ))}
+          {error && (
+            <p className={clsx(styles.message, styles["error-message"])}>
+              {error}
+            </p>
+          )}
+        </div>
+      )}
+      {/* <div
         className={clsx(
           styles["drop-zone"],
           !inline && styles["full-width"],
@@ -242,7 +341,7 @@ const DragAndDrop = ({
             {error}
           </p>
         )}
-      </div>
+      </div> */}
 
       {showFilePreviews && previews.length === value.length && (
         <FilePreviews

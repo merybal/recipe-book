@@ -26,12 +26,21 @@ export function processFiles({
   if (accept) {
     const acceptedTypes = accept.split(",").map((t) => t.trim());
     newFiles = newFiles.filter((file) => {
-      const isAccepted = acceptedTypes.some((type) =>
-        type.startsWith(".") ? file.name.endsWith(type) : file.type === type
-      );
+      const isAccepted = acceptedTypes.some((type) => {
+        if (type.startsWith(".")) {
+          return file.name.endsWith(type);
+        }
+        if (type.endsWith("/*")) {
+          const baseType = type.split("/")[0];
+          return file.type.startsWith(baseType + "/");
+        }
+        return file.type === type;
+      });
+
       if (!isAccepted) {
         errors.push(`Tipo de archivo no permitido: ${file.name}`);
       }
+
       return isAccepted;
     });
   }

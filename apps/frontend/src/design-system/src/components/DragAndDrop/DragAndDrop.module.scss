@@ -8,9 +8,30 @@
   @include Border($width: medium, $style: dashed, $color: outline, $radius: xl);
   @include Flex($direction: column, $align: center, $justify: center, $gap: lg);
   @include Padding($all: xl);
+  @include Color($font: main-text);
+
   min-height: 10rem;
   width: 20rem;
   transition: background-color 0.3s ease;
+
+  &.single-image-preview {
+    @include Padding($all: none);
+    @include Flex($align: center, $justify: center);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-preview {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  .remove-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
 
   .inline-preview {
     @include Flex($align: center, $gap: sm);

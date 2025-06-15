@@ -53,9 +53,13 @@ export type DragAndDropProps = {
    */
   maxFileSize?: number;
   /**
-   * Displays a preview of the uploaded files
+   * Displays a preview of the uploaded files below de the box
    */
   showFilePreviews?: boolean;
+  /**
+   * Displays the image preview in the box, only works if props maxFileAmount=1 and accept="image/*""
+   */
+  showSingleImagePreview?: boolean;
   /**
    * Files uploaded
    * @default []
