@@ -12,7 +12,7 @@ export type ButtonProps = {
   label: string;
   size?: "small" | "medium" | "large";
   type?: "button" | "submit" | "reset";
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: "primary" | "secondary" | "tertiary" | "text";
   // loading?: boolean;
   onClick: () => void;
 } & ButtonHTMLAttributes<HTMLButtonElement>;

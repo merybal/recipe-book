@@ -31,9 +31,9 @@ const Button = ({
     <button
       className={clsx(
         styles.button,
+        { [styles[`size-${size}`]]: size },
         { [styles[`variant-${variant}`]]: variant },
         { [styles[`disruptive-variant-${variant}`]]: disruptive },
-        { [styles[`size-${size}`]]: size },
         { [styles["full-width"]]: !inline },
         className
       )}

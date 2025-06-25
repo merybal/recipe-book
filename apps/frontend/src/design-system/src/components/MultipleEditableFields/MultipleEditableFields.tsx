@@ -96,7 +96,36 @@ const MultipleEditableFields = ({
 
   return (
     <div className={clsx(styles["editable-fields-container"], className)}>
-      {singleLabel && <p className={styles["single-label"]}>{singleLabel}</p>}
+      <div className={styles["single-label-container"]}>
+        {singleLabel && <p className={styles["single-label"]}>{singleLabel}</p>}
+        {isEditing ? (
+          <div>
+            <ButtonIcon
+              icon="Check"
+              label="guardar"
+              size="small"
+              variant="primary"
+              onClick={handleSave}
+            />
+            <ButtonIcon
+              icon="X"
+              label="cancelar"
+              size="small"
+              variant="secondary"
+              onClick={handleCancel}
+            />
+          </div>
+        ) : (
+          <ButtonIcon
+            // className={styles["edit-button"]}
+            icon="Pencil"
+            label="editar campos"
+            size="small"
+            variant="secondary"
+            onClick={() => setIsEditing(true)}
+          />
+        )}
+      </div>
 
       <div className={styles["fields-container"]}>
         {fields.map((field) => {

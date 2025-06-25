@@ -4,6 +4,8 @@
 @use "../../styles/border" as *;
 @use "../../styles/flex" as *;
 
+//TODO falta hover para todos los disruptive
+
 .button {
   @include Padding($x: xl);
   @include Font($family: text, $weight: bold);
@@ -11,6 +13,24 @@
   @include Flex($align: center, $gap: xs, $justify: center, $shrink: none);
   letter-spacing: 0.2px;
   cursor: pointer;
+}
+
+.size-small {
+  @include Font($size: xxs);
+  @include Border($radius: full);
+  height: 2rem;
+}
+
+.size-medium {
+  @include Font($size: xs);
+  @include Border($radius: full);
+  height: 3rem;
+}
+
+.size-large {
+  @include Font($size: sm);
+  @include Border($radius: full);
+  height: 3.5rem;
 }
 
 .variant-primary {
@@ -31,6 +51,14 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.variant-text {
+  @include Color($bg: transparent, $font: primary);
+  @include Border($style: none);
+  @include Padding($x: none, $y: xxs);
+  height: unset;
+  transition: color 0.3s ease, color 0.3s ease;
+}
+
 .disruptive-variant-primary {
   @include Color($bg: secondary, $font: white);
 }
@@ -45,22 +73,9 @@
   @include Color($bg: transparent, $font: secondary);
 }
 
-.size-small {
-  @include Font($size: xxs);
-  @include Border($radius: full);
-  height: 2rem;
-}
-
-.size-medium {
-  @include Font($size: xs);
-  @include Border($radius: full);
-  height: 3rem;
-}
-
-.size-large {
-  @include Font($size: sm);
-  @include Border($radius: full);
-  height: 3.5rem;
+.disruptive-variant-text {
+  @include Border($style: none);
+  @include Color($bg: transparent, $font: secondary);
 }
 
 .full-width {

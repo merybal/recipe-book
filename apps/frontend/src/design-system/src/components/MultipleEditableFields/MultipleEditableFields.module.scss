@@ -1,16 +1,25 @@
 @use "../../styles/flex" as *;
 @use "../../styles/form" as *;
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/spacing" as *;
 
 .editable-fields-container {
   // .input-width {
   //   flex: 1;
   // }
-  .fields-container {
-    @include Flex($direction: column, $gap: sm);
+  .single-label-container {
+    @include Flex($justify: between, $align: center, $gap: sm);
+    @include Margin($bottom: sm);
+
+    .single-label {
+      @include Font($weight: bold, $size: sm);
+      @include Color($font: main-text);
+    }
   }
 
-  .single-label {
-    @include LabelText;
+  .fields-container {
+    @include Flex($direction: column, $gap: sm);
   }
 
   .button-container {

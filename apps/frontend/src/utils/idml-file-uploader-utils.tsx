@@ -517,3 +517,11 @@ export async function parseIdmlFile(
   console.log(recipeObject);
   return recipeObject;
 }
+
+export function parseIngredientsText(text: string) {
+  return text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line !== "")
+    .map(parseIngredientLine);
+}

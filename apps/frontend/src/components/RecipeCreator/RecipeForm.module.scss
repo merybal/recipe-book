@@ -1,0 +1,24 @@
+@use "../../design-system/src/styles/flex" as *;
+@use "../../design-system/src/styles/font" as *;
+@use "../../design-system/src/styles/color" as *;
+
+.recipe-form {
+  @include Flex($direction: column, $gap: xl);
+
+  .form-header {
+    @include Flex($justify: between, $align: center);
+
+    .step-indicator {
+      @include Font($family: text, $weight: medium, $size: xs);
+      @include Color($font: secondary-text);
+    }
+  }
+
+  .step {
+    @include Flex($direction: column, $gap: xl);
+  }
+
+  .form-navigation {
+    @include Flex($gap: sm);
+  }
+}
