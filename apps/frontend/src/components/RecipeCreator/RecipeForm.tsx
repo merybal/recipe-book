@@ -6,7 +6,10 @@ import MoldAndBakingInstructionsStep from "./MoldAndBakingInstructionsStep";
 import SubrecipesStep from "./SubrecipesStep";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { validateCoverStep } from "@/utils/form-validation-utils";
+import {
+  validateCoverStep,
+  validateBakingInstructions,
+} from "@/utils/form-validation-utils";
 
 import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
@@ -144,6 +147,11 @@ const RecipeForm = () => {
 
   const isMobile = useIsMobile();
 
+  // TODO borrar
+  useEffect(() => {
+    console.log("Errores actuales:", errors);
+  }, [errors]);
+
   useEffect(() => {
     if (isChecked) {
       // Cuando está dividido en subrecetas, armo el array desde subrecipeDrafts
@@ -168,12 +176,29 @@ const RecipeForm = () => {
     }
   }, [subrecipeDrafts, simpleRecipeDraft, isChecked]);
 
+  useEffect(() => {
+    if (subrecipeDrafts) {
+      console.log("subrecipeDrafts", subrecipeDrafts);
+    }
+  }, [subrecipeDrafts]);
+
+  useEffect(() => {
+    if (recipe) {
+      console.log("La receta cambió:", recipe);
+    }
+  }, [recipe]);
+
   const nextStep = () => {
     const stepErrors: Record<string, string> = {};
 
     if (currentStep === 0) {
       const { title } = validateCoverStep(recipe);
       if (title) stepErrors.title = title;
+    }
+
+    if (currentStep === 1) {
+      const bakingErrors = validateBakingInstructions(recipe);
+      Object.assign(stepErrors, bakingErrors);
     }
 
     // Acá podrías agregar validaciones de otros steps también.
@@ -191,17 +216,21 @@ const RecipeForm = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
 
-  useEffect(() => {
-    if (subrecipeDrafts) {
-      console.log("subrecipeDrafts", subrecipeDrafts);
+  const hasStepErrors = (): boolean => {
+    if (currentStep === 0) {
+      return !!errors.title;
     }
-  }, [subrecipeDrafts]);
 
-  useEffect(() => {
-    if (recipe) {
-      console.log("La receta cambió:", recipe);
+    if (currentStep === 1) {
+      return !!errors.temperature || !!errors.time;
     }
-  }, [recipe]);
+
+    if (currentStep === 2) {
+      return !!errors.subrecipes;
+    }
+
+    return false;
+  };
 
   //TODO falta autor
   //TODO falta food allergies
@@ -260,10 +289,19 @@ const RecipeForm = () => {
 
       <div className={styles["form-navigation"]}>
         {currentStep > 0 && (
-          <Button label="Anterior" variant="secondary" onClick={prevStep} />
+          <Button
+            label="Anterior"
+            variant="secondary"
+            onClick={prevStep}
+            disabled={hasStepErrors()}
+          />
         )}
         {currentStep < totalSteps - 1 ? (
-          <Button label="Siguiente" onClick={nextStep} />
+          <Button
+            label="Siguiente"
+            onClick={nextStep}
+            disabled={hasStepErrors()}
+          />
         ) : (
           <Button
             type="submit"
