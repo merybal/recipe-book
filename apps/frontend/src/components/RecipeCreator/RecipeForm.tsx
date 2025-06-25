@@ -6,6 +6,7 @@ import MoldAndBakingInstructionsStep from "./MoldAndBakingInstructionsStep";
 import SubrecipesStep from "./SubrecipesStep";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { validateCoverStep } from "@/utils/form-validation-utils";
 
 import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
@@ -137,6 +138,8 @@ const RecipeForm = () => {
 
   const [isChecked, setIsChecked] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const totalSteps = 4;
 
   const isMobile = useIsMobile();
@@ -166,7 +169,22 @@ const RecipeForm = () => {
   }, [subrecipeDrafts, simpleRecipeDraft, isChecked]);
 
   const nextStep = () => {
-    if (currentStep < totalSteps - 1) setCurrentStep(currentStep + 1);
+    const stepErrors: Record<string, string> = {};
+
+    if (currentStep === 0) {
+      const { title } = validateCoverStep(recipe);
+      if (title) stepErrors.title = title;
+    }
+
+    // Acá podrías agregar validaciones de otros steps también.
+
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors(stepErrors);
+      return; // 🚫 no avanza al siguiente paso
+    }
+
+    setErrors({}); // ✅ limpia errores si todo OK
+    if (currentStep < totalSteps - 1) setCurrentStep((prev) => prev + 1);
   };
 
   const prevStep = () => {
@@ -207,27 +225,36 @@ const RecipeForm = () => {
       </header>
       {currentStep === 0 && (
         <CoverStep
-          recipe={recipe}
-          setRecipe={setRecipe}
+          errors={errors}
           files={files}
+          recipe={recipe}
+          setErrors={setErrors}
           setFiles={setFiles}
+          setRecipe={setRecipe}
         />
       )}
 
       {currentStep === 1 && (
-        <MoldAndBakingInstructionsStep recipe={recipe} setRecipe={setRecipe} />
+        <MoldAndBakingInstructionsStep
+          errors={errors}
+          recipe={recipe}
+          setErrors={setErrors}
+          setRecipe={setRecipe}
+        />
       )}
 
       {currentStep === 2 && (
         <SubrecipesStep
+          errors={errors}
           recipe={recipe}
-          setRecipe={setRecipe}
           isChecked={isChecked}
           setIsChecked={setIsChecked}
-          subrecipeDrafts={subrecipeDrafts}
+          setRecipe={setRecipe}
+          setErrors={setErrors}
+          setSimpleRecipeDraft={setSimpleRecipeDraft}
           setSubrecipeDrafts={setSubrecipeDrafts}
           simpleRecipeDraft={simpleRecipeDraft}
-          setSimpleRecipeDraft={setSimpleRecipeDraft}
+          subrecipeDrafts={subrecipeDrafts}
         />
       )}
 

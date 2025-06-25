@@ -1,18 +1,27 @@
 import DragAndDrop from "@/design-system/src/components/DragAndDrop";
 import Input from "@/design-system/src/components/Input";
 
-import type { RecipeStateType } from "@/types";
+import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { validateTitle } from "@/utils/form-validation-utils";
 
 import styles from "./RecipeForm.module.scss";
 
 type CoverStepProps = {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
-} & RecipeStateType;
+} & RecipeStateType &
+  ErrorStateType;
 
-const CoverStep = ({ recipe, setRecipe, files, setFiles }: CoverStepProps) => {
+const CoverStep = ({
+  errors,
+  files,
+  recipe,
+  setErrors,
+  setFiles,
+  setRecipe,
+}: CoverStepProps) => {
   const isMobile = useIsMobile();
 
   const getBoxLabelInitial = isMobile
@@ -25,6 +34,31 @@ const CoverStep = ({ recipe, setRecipe, files, setFiles }: CoverStepProps) => {
 
   const handleFileChange = (newFiles: File[]) => {
     setFiles(newFiles);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    setRecipe((prev) => ({
+      ...prev,
+      title: value,
+    }));
+
+    const error = validateTitle(value);
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      if (error) newErrors.title = error;
+      else delete newErrors.title;
+      return newErrors;
+    });
+  };
+
+  const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setRecipe((prev) => ({
+      ...prev,
+      servings: value,
+    }));
   };
 
   return (
@@ -48,12 +82,8 @@ const CoverStep = ({ recipe, setRecipe, files, setFiles }: CoverStepProps) => {
         showLabel
         placeholder="Tarta de manzana"
         value={recipe.title}
-        onChange={(e) =>
-          setRecipe((prev) => ({
-            ...prev,
-            title: e.target.value,
-          }))
-        }
+        onChange={handleTitleChange}
+        {...(errors.title && { error: errors.title })}
       />
 
       <Input
@@ -62,12 +92,7 @@ const CoverStep = ({ recipe, setRecipe, files, setFiles }: CoverStepProps) => {
         showLabel
         placeholder="4 porciones"
         value={recipe.servings}
-        onChange={(e) =>
-          setRecipe((prev) => ({
-            ...prev,
-            servings: e.target.value,
-          }))
-        }
+        onChange={handleServingsChange}
       />
     </div>
   );
