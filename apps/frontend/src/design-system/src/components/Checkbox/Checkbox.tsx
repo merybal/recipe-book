@@ -1,16 +1,7 @@
 import clsx from "clsx";
 import styles from "./Checkbox.module.scss";
 
-import type { InputHTMLAttributes } from "react";
-
-type CheckboxProps = {
-  id: string;
-  label: string;
-  className?: string;
-  error?: string;
-  helper?: string;
-  disabled?: boolean;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "type">;
+import type { CheckboxProps } from "./Checkbox.types";
 
 const Checkbox = ({
   id,

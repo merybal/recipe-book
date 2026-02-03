@@ -1,6 +1,7 @@
 import type { ColumnType } from "../Table";
 
 export type EditableColumnType<T> = {
+  /** Input type for the cell when editing (text, number, or email). */
   inputType?: "text" | "number" | "email";
 } & ColumnType<T>;
 
@@ -10,6 +11,7 @@ export type EditableTableProps<T extends object> = {
    * @default "Agregar"
    */
   addButtonLabel?: string;
+  /** Extra CSS class applied to the table container. */
   className?: string;
   /**
    * Eg:

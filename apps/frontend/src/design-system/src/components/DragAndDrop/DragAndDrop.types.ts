@@ -12,12 +12,12 @@ export type DragAndDropProps = {
    */
   boxIcon?: IconName;
   /**
-   * Label shown in inital state (nothing uploaded)
+   * Label shown in initial state (nothing uploaded).
    * @default "Arrastrá un archivo acá o"
    */
   boxLabelInitial?: string;
   /**
-   * Label shown when file is being dragged into box
+   * Label shown when file is being dragged into box.
    * @default "Soltá el archivo acá"
    */
   boxLabelDragging?: string;
@@ -29,8 +29,11 @@ export type DragAndDropProps = {
   /**
    * Box button classname
    */
+  /** Extra CSS class for the inner button. */
   buttonClassName?: string;
+  /** Extra CSS class applied to the drop zone. */
   className?: string;
+  /** When true, the drop zone is disabled. */
   disabled?: boolean;
   /**
    * Error message passed from parent element, for submit event
@@ -45,27 +48,29 @@ export type DragAndDropProps = {
    */
   inline?: boolean;
   /**
-   * Maximun amount of files allowed
+   * Maximum amount of files allowed.
    */
   maxFileAmount?: number;
   /**
-   * Maximun file size in bytes //TODO pasar a megas?
+   * Maximum file size in bytes.
    */
   maxFileSize?: number;
   /**
-   * Displays a preview of the uploaded files below de the box
+   * When true, displays a preview of the uploaded files below the box.
    */
   showFilePreviews?: boolean;
   /**
-   * Displays the image preview in the box, only works if props maxFileAmount=1 and accept="image/*""
+   * When true, displays the image preview in the box. Only works if maxFileAmount=1 and accept includes "image/*".
    */
   showSingleImagePreview?: boolean;
   /**
-   * Files uploaded
+   * Current list of uploaded files.
    * @default []
    */
   value: File[];
+  /** Called when files change (new list). */
   onChange: (files: File[]) => void;
+  /** Called when validation fails (e.g. wrong type or size); receives error messages. */
   onValidationError?: (errors: string[]) => void;
 } & Pick<
   ButtonProps,
@@ -74,18 +79,12 @@ export type DragAndDropProps = {
   Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "value" | "onChange">;
 
 export type FilePreviewsProps = {
-  /**
-   * Is DragAndDropInline
-   */
+  /** When true, uses inline layout (fixed width). */
   inline?: boolean;
-  /**
-   * File previews
-   */
+  /** Preview URLs or labels for each file. */
   previews: string[];
-  /**
-   * Files uploaded
-   * @default []
-   */
+  /** Current list of uploaded files. */
   value: File[];
+  /** Called when the user removes a file at the given index. */
   handleRemoveFile: (index: number) => void;
 };
