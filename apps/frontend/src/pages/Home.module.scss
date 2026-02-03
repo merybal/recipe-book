@@ -1,5 +1,17 @@
-@use "../styles/spacing" as *;
+@use "../design-system/src/styles/spacing" as *;
 
 .home {
   @include Margin($x: lg);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .test {
+    @include Margin($bottom: lg);
+  }
+
+  .test1 {
+    // background-color: red;
+    width: 100%;
+  }
 }

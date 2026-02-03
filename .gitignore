@@ -32,3 +32,7 @@ Logo.psd
 /apps/backend/dist
 /apps/backend/tsconfig.build.tsbuildinfo
 /apps/backend/tsconfig.tsbuildinfo
+
+.cursor/rules/backend-nestjs-prisma.mdc
+.cursor/rules/frontend-react.mdc
+.cursor/rules/proyecto-general.mdc

@@ -97,7 +97,7 @@ const MoldAndBakingInstructionsStep = ({
   return (
     <div>
       <section aria-labelledby="mold-section" className={styles.step}>
-        <h2 id="mold-section">Molde</h2>
+        <h2 id="mold-section">Molde (opcional)</h2>
         <Input
           id="mold-type"
           label="Tipo"
@@ -123,7 +123,7 @@ const MoldAndBakingInstructionsStep = ({
         aria-labelledby="baking-instructions-section"
         className={styles.step}
       >
-        <h2 id="baking-instructions-section">Cocción</h2>
+        <h2 id="baking-instructions-section">Cocción (opcional)</h2>
         <Input
           id="temperature"
           inputMode="numeric"

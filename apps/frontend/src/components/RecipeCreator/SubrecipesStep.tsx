@@ -161,8 +161,8 @@ const SubrecipesStep = ({
       {isChecked ? (
         <>
           {subrecipeDrafts.map((draft, index) => (
-            <>
-              <div key={index} className={styles.step}>
+            <div key={index}>
+              <div className={styles.step}>
                 <Input
                   id={`subrecipe-title-${index}`}
                   label="Título de preparación"
@@ -213,7 +213,7 @@ const SubrecipesStep = ({
                 />
               </div>
               {index < subrecipeDrafts.length - 1 && <Separator />}
-            </>
+            </div>
           ))}
           <Button
             label="Agregar preparación"

@@ -13,6 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// TODO agregar are_steps_numbered a tabla Recipes
+
 model Recipes {
   id                    Int                   @id @default(autoincrement())
   title                 String                @db.VarChar(255)

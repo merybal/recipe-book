@@ -142,8 +142,7 @@ const TileGrid = ({
             imageUrl={recipe.imageUrl || DefaultRecipeImage}
             title={recipe.title}
             variant={grid === "single" ? "rectangle" : "square"}
-            // {...(recipe.source && { source: recipe.source })}
-            source={recipeArray[0].source}
+            source={recipe.source}
           />
         </ButtonUnstyled>
       ))}
