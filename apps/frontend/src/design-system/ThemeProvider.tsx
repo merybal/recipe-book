@@ -1,5 +1,5 @@
 import React from "react";
-import theme from "./src/styles/theme";
+import theme from "./styles/theme";
 
 type ThemeValue = string | number;
 type ThemeObject = {
@@ -11,7 +11,7 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   function flattenTheme(
     obj: ThemeObject,
-    prefix = "--"
+    prefix = "--",
   ): Record<string, string> {
     const result: Record<string, string> = {};
 

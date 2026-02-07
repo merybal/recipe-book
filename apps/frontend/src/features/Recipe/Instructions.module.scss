@@ -1,0 +1,38 @@
+@use "../../design-system/styles/font" as *;
+@use "../../design-system/styles/color" as *;
+@use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/border" as *;
+@use "../../design-system/styles/flex" as *;
+
+.instructions {
+  @include Flex($direction: column, $gap: lg);
+
+  .subrecipe {
+    @include Flex($direction: column, $gap: md);
+
+    .instructions-ul {
+      @include Flex($direction: column, $gap: sm);
+
+      .instructions-li {
+        @include Flex($gap: xs);
+
+        .step-number {
+          @include Color($bg: main-text, $font: white);
+          @include Border($radius: full);
+          @include Flex($justify: center, $align: center, $shrink: none);
+          height: 1.5rem;
+          width: 1.5rem;
+
+          p {
+            @include Font($size: xxs, $weight: bold);
+          }
+        }
+
+        .paragraph {
+          @include Font($align: justify);
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}

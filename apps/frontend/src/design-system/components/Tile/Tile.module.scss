@@ -1,0 +1,52 @@
+@use "../../styles/spacing" as *;
+@use "../../styles/font" as *;
+@use "../../styles/color" as *;
+@use "../../styles/border" as *;
+@use "../../styles/flex" as *;
+
+.tile {
+  .square-image {
+    //TODO sin terminar
+    @include Border($radius: 1rem);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .rectangle-image {
+    @include Margin($bottom: md);
+    @include Border($radius: 1rem);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+  }
+
+  .recipe-image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+  }
+
+  .text-container {
+    @include Flex($justify: space-between);
+
+    .title {
+      @include Margin($bottom: sm);
+      text-wrap: wrap;
+    }
+
+    .subtitle {
+      @include Font($size: xs);
+      @include Color($font: secondary-text);
+      text-wrap: wrap;
+    }
+
+    .allergies {
+      @include Flex($shrink: none);
+      @include Margin($left: sm);
+    }
+  }
+}

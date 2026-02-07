@@ -1,4 +1,4 @@
-@use "./design-system/src/styles/flex" as *;
+@use "./design-system/styles/flex" as *;
 
 .app {
   @include Flex($direction: column);

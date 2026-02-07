@@ -1,0 +1,11 @@
+@use "../../styles/spacing" as *;
+@use "../../styles/font" as *;
+
+.page-layout {
+  @include Padding($x: lg, $top: xl, $bottom: lg);
+
+  .preset-header {
+    @include Margin($bottom: lg);
+    @include Font($align: center);
+  }
+}

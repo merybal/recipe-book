@@ -1,0 +1,16 @@
+@use "../../design-system/styles/flex" as *;
+
+.tile-grid {
+  &.single {
+    @include Flex(
+      $direction: column,
+      $gap: 2.5rem
+    ); //TODO REVISAR SI SE USA VARIABLE
+  }
+
+  &.double {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 1rem; /* Espaciado entre columnas y filas */
+  }
+}

@@ -2,10 +2,10 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import ThemeProvider from "./design-system/ThemeProvider";
-import Recipe from "./pages/Recipe";
-import Home from "./pages/Home";
-import CreateRecipe from "./pages/CreateRecipe";
-import ComponentShowcase from "./pages/ComponentShowcase"; //TODO remover cuando se agregue storybook
+import Recipe from "./features/Recipe/RecipeView";
+import Home from "./features/Home/HomeView";
+import CreateRecipe from "./features/RecipeCreator/CreateRecipeView";
+import ComponentShowcase from "./features/ComponentShowcase/ComponentShowcaseView"; //TODO remover cuando se agregue storybook
 
 import styles from "./App.module.scss";
 

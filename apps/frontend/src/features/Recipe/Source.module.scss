@@ -1,0 +1,11 @@
+@use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/flex" as *;
+
+//TODO revisar cuando viene un solo autor
+.source-container {
+  @include Flex($justify: space-around);
+
+  .source {
+    @include Flex($align: center, $gap: xs);
+  }
+}
