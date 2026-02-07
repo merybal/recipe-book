@@ -1,0 +1,67 @@
+@use "../../styles/form" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/border" as *;
+@use "../../styles/color" as *;
+@use "../../styles/transition" as *;
+
+.radio-container {
+  @include Flex($direction: column);
+
+  .label {
+    @include Flex($align: center, $gap: sm);
+    cursor: pointer;
+
+    &.disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+
+    .label-text {
+      @include FieldText;
+      user-select: none;
+    }
+
+    .input {
+      display: none;
+    }
+
+    .custom-radio {
+      @include Border(
+        $width: medium,
+        $style: solid,
+        $color: outline,
+        $radius: full
+      );
+      @include Transition((border));
+      width: 1.75rem;
+      height: 1.75rem;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .input:checked + .custom-radio {
+      @include Border($width: medium, $style: solid, $color: primary);
+      @include Color($bg: white);
+    }
+
+    .input:checked + .custom-radio::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 0.75rem;
+      height: 0.75rem;
+      @include Border($radius: full);
+      @include Color($bg: primary);
+    }
+  }
+
+  .error-message {
+    @include ErrorMessage;
+  }
+
+  .helper-message {
+    @include HelperMessage;
+  }
+}

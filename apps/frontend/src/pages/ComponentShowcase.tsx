@@ -12,6 +12,7 @@ import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 import ButtonUnstyled from "@/design-system/src/components/ButtonUnstyled";
 import BottomSheet from "@/design-system/src/components/BottomSheet";
 import Checkbox from "@/design-system/src/components/Checkbox/Checkbox";
+import Radio from "@/design-system/src/components/Radio";
 import DragAndDrop from "@/design-system/src/components/DragAndDrop";
 import EditableInput from "@/design-system/src/components/EditableInput";
 import EditableTable from "@/design-system/src/components/EditableTable";
@@ -56,6 +57,7 @@ const ComponentShowcase = () => {
   const [textareaValue, setTextareaValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
   const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const [radioValue, setRadioValue] = useState("a");
   const [dragFiles, setDragFiles] = useState<File[]>([]);
   const [editableInputValue, setEditableInputValue] =
     useState("Texto editable");
@@ -264,6 +266,52 @@ const ComponentShowcase = () => {
           label="Con error"
           error="Debe aceptar"
         />
+      </Section>
+
+      <Section title="Radio">
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <Radio
+            id="showcase-radio-a"
+            name="showcase-radio"
+            value="a"
+            label="Opción A"
+            checked={radioValue === "a"}
+            onChange={(e) => setRadioValue(e.target.value)}
+          />
+          <Radio
+            id="showcase-radio-b"
+            name="showcase-radio"
+            value="b"
+            label="Opción B"
+            checked={radioValue === "b"}
+            onChange={(e) => setRadioValue(e.target.value)}
+          />
+          <Radio
+            id="showcase-radio-c"
+            name="showcase-radio"
+            value="c"
+            label="Opción C (deshabilitada)"
+            checked={radioValue === "c"}
+            onChange={(e) => setRadioValue(e.target.value)}
+            disabled
+          />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <Radio
+            id="showcase-radio-helper"
+            name="showcase-radio-helper"
+            value="x"
+            label="Con helper"
+            helper="Texto de ayuda"
+          />
+          <Radio
+            id="showcase-radio-error"
+            name="showcase-radio-error"
+            value="y"
+            label="Con error"
+            error="Seleccioná una opción"
+          />
+        </div>
       </Section>
 
       <Section title="Chip">

@@ -34,6 +34,16 @@ input {
   @include Font($family: text, $weight: medium);
 }
 
+button,
+a[href],
+label,
+select,
+[role="button"],
+[tabindex]:not([tabindex="-1"]) {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
 @media (max-width: 600px) {
   p,
   a {
