@@ -11,7 +11,7 @@ import type {
 
 import { parseIngredientsText } from "@/utils/idml-file-uploader-utils";
 
-import styles from "@/features/RecipeCreator/RecipeForm.module.scss";
+import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 type SimpleRecipeDraft = {
   ingredientsText: string;

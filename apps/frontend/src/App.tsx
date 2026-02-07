@@ -2,10 +2,10 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import ThemeProvider from "./design-system/ThemeProvider";
-import Recipe from "./features/Recipe/RecipeView";
-import Home from "./features/Home/HomeView";
-import CreateRecipe from "./features/RecipeCreator/CreateRecipeView";
-import ComponentShowcase from "./features/ComponentShowcase/ComponentShowcaseView"; //TODO remover cuando se agregue storybook
+import RecipeView from "./features/Recipe/RecipeView";
+import HomeView from "./features/Home/HomeView";
+import CreateRecipeView from "./features/RecipeCreator/CreateRecipeView";
+import ComponentShowcaseView from "./features/ComponentShowcase/ComponentShowcaseView"; //TODO remover cuando se agregue storybook
 
 import styles from "./App.module.scss";
 
@@ -15,10 +15,10 @@ function App() {
       <div className={styles.app}>
         <Suspense fallback={null}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/components" element={<ComponentShowcase />} />
-            <Route path="/recipes/:id" element={<Recipe />} />
-            <Route path="/create-recipe" element={<CreateRecipe />} />
+            <Route path="/" element={<HomeView />} />
+            <Route path="/components" element={<ComponentShowcaseView />} />
+            <Route path="/recipes/:id" element={<RecipeView />} />
+            <Route path="/create-recipe" element={<CreateRecipeView />} />
           </Routes>
         </Suspense>
       </div>

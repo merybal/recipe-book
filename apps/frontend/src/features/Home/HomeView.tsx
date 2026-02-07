@@ -12,7 +12,7 @@ import { EditableFieldType } from "@/design-system/components/MultipleEditableFi
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 import Button from "@/design-system/components/Button";
 
-const Home = () => {
+const HomeView = () => {
   const navigate = useNavigate();
   const [recipePreviews, setRecipePreviews] = useState<PreviewData[]>([]);
 
@@ -108,4 +108,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeView;

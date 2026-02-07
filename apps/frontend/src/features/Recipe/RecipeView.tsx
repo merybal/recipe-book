@@ -33,7 +33,7 @@ import styles from "./RecipeView.module.scss";
  * - desktop
  */
 
-const Recipe = () => {
+const RecipeView = () => {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState(true);
@@ -213,4 +213,4 @@ const Recipe = () => {
   );
 };
 
-export default Recipe;
+export default RecipeView;

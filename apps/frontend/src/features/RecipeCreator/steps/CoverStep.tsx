@@ -6,7 +6,7 @@ import type { RecipeStateType, ErrorStateType } from "@/types";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { validateTitle } from "@/utils/form-validation-utils";
 
-import styles from "@/features/RecipeCreator/RecipeForm.module.scss";
+import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 type StepCoverProps = {
   files: File[];

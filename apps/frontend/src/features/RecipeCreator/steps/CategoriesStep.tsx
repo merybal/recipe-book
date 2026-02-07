@@ -7,7 +7,7 @@ import Separator from "@/design-system/components/Separator";
 import type { RecipeStateType, ErrorStateType } from "@/types";
 import type { FoodAllergyType } from "@/types";
 
-import styles from "@/features/RecipeCreator/RecipeForm.module.scss";
+import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 const FOOD_ALLERGY_OPTIONS: { value: FoodAllergyType; label: string }[] = [
   { value: "glutenFree", label: "Sin gluten" },

@@ -3,7 +3,7 @@ import Separator from "@/design-system/components/Separator";
 
 import type { RecipeStateType, ErrorStateType } from "@/types";
 
-import styles from "@/features/RecipeCreator/RecipeForm.module.scss";
+import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 type StepMoldAndBakingInstructionsProps = RecipeStateType & ErrorStateType;
 

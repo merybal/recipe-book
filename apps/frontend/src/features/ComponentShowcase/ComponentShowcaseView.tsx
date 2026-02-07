@@ -53,7 +53,7 @@ const Section = ({
   </section>
 );
 
-const ComponentShowcase = () => {
+const ComponentShowcaseView = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
   const [textareaValue, setTextareaValue] = useState("");
@@ -532,4 +532,4 @@ const ComponentShowcase = () => {
   );
 };
 
-export default ComponentShowcase;
+export default ComponentShowcaseView;
