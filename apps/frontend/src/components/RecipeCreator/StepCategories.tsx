@@ -1,6 +1,8 @@
 import Select from "@/design-system/src/components/Select";
-import Checkbox from "@/design-system/src/components/Checkbox/Checkbox";
+import RadioGroup from "@/design-system/src/components/RadioGroup";
+import CheckboxGroup from "@/design-system/src/components/CheckboxGroup";
 import ChipInput from "@/design-system/src/components/ChipInput";
+import Separator from "@/design-system/src/components/Separator";
 
 import type { RecipeStateType, ErrorStateType } from "@/types";
 import type { FoodAllergyType } from "@/types";
@@ -77,59 +79,58 @@ const StepCategories = ({
 
   const foodAllergies = recipe.foodAllergies ?? [];
 
-  const handleFoodAllergyChange = (value: FoodAllergyType, checked: boolean) => {
-    setRecipe((prev) => {
-      const current = prev.foodAllergies ?? [];
-      const next = checked
-        ? [...current, value]
-        : current.filter((a) => a !== value);
-      return { ...prev, foodAllergies: next };
+  const handleFoodAllergiesChange = (selectedValues: string[]) => {
+    setRecipe((prev) => ({
+      ...prev,
+      foodAllergies: selectedValues as FoodAllergyType[],
+    }));
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.foodAllergies;
+      return next;
     });
   };
 
   return (
-    <div className={styles.step}>
-      <h2>Categoría</h2>
-      <Select
-        id="category"
-        label="Categoría de receta"
-        options={[...CATEGORY_OPTIONS]}
-        placeholder="Seleccionar categoría"
-        showLabel
-        value={recipe.category ?? ""}
-        onChange={handleCategoryChange}
-        {...(errors.category && { error: errors.category })}
+    <>
+      <section aria-labelledby="categories-section" className={styles.step}>
+        <h2 id="categories-section">Categoría</h2>
+        <RadioGroup
+          name="category"
+          label="Categoría de receta"
+          options={[...CATEGORY_OPTIONS]}
+          value={recipe.category ?? ""}
+          onChange={handleCategoryChange}
+          error={errors.category}
+          required
+        />
+
+        {subcategoryOptions.length > 0 && (
+          <Select
+            id="subcategory"
+            label="Subcategoría"
+            options={subcategoryOptions}
+            placeholder="Seleccionar subcategoría"
+            showLabel
+            value={recipe.subcategory ?? ""}
+            onChange={handleSubcategoryChange}
+            {...(errors.subcategory && { error: errors.subcategory })}
+          />
+        )}
+      </section>
+
+      <Separator />
+
+      <CheckboxGroup
+        name="foodAllergies"
+        label="Alergias alimentarias"
+        options={FOOD_ALLERGY_OPTIONS}
+        value={foodAllergies}
+        onChange={handleFoodAllergiesChange}
+        error={errors.foodAllergies}
       />
 
-      {subcategoryOptions.length > 0 && (
-        <Select
-          id="subcategory"
-          label="Subcategoría"
-          options={subcategoryOptions}
-          placeholder="Seleccionar subcategoría"
-          showLabel
-          value={recipe.subcategory ?? ""}
-          onChange={handleSubcategoryChange}
-          {...(errors.subcategory && { error: errors.subcategory })}
-        />
-      )}
-
-      <fieldset className={styles["fieldset-categories"]}>
-        <legend className={styles["legend-categories"]}>
-          Alergias alimentarias
-        </legend>
-        {FOOD_ALLERGY_OPTIONS.map(({ value, label }) => (
-          <Checkbox
-            key={value}
-            id={`food-allergy-${value}`}
-            label={label}
-            checked={foodAllergies.includes(value)}
-            onChange={(e) =>
-              handleFoodAllergyChange(value, e.target.checked)
-            }
-          />
-        ))}
-      </fieldset>
+      <Separator />
 
       <ChipInput
         id="tags"
@@ -139,7 +140,7 @@ const StepCategories = ({
         onChange={(tags) => setRecipe((prev) => ({ ...prev, tags }))}
         showLabel
       />
-    </div>
+    </>
   );
 };
 

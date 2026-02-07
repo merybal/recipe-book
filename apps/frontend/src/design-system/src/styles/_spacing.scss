@@ -17,6 +17,8 @@
     xxl
   {
     @return var(--spacing-#{$value});
+  } @else if $value == auto {
+    @return auto;
   } @else {
     @return $value;
   }

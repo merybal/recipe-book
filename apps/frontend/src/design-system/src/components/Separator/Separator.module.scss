@@ -7,7 +7,7 @@
 
 .horizontal {
   width: 100%;
-  @include Margin($y: lg);
+  @include Margin($y: xl);
 }
 
 .vertical {

@@ -96,7 +96,7 @@ const StepMoldAndBakingInstructions = ({
 
   return (
     <div>
-      <section aria-labelledby="mold-section" className={styles.step}>
+      <section aria-labelledby="mold-section">
         <h2 id="mold-section">Molde (opcional)</h2>
         <Input
           id="mold-type"

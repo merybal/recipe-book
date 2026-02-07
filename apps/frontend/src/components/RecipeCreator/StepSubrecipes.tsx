@@ -1,5 +1,4 @@
 import Input from "@/design-system/src/components/Input";
-import Checkbox from "@/design-system/src/components/Checkbox/Checkbox";
 import Textarea from "@/design-system/src/components/Textarea";
 import Separator from "@/design-system/src/components/Separator";
 import Button from "@/design-system/src/components/Button";
@@ -40,22 +39,34 @@ const StepSubrecipes = ({
   simpleRecipeDraft,
   setSimpleRecipeDraft,
 }: StepSubrecipesProps) => {
-  const handleCheckboxChange = () => {
-    setIsChecked((prev) => {
-      const next = !prev;
-      if (next && subrecipeDrafts.length === 0) {
-        setSubrecipeDrafts([
-          {
-            title: "",
-            ingredientsText: "",
-            ingredients: [],
-            instructionsText: "",
-            instructions: [],
-          },
-        ]);
-      }
-      return next;
+  const handleSeparateIntoPreparations = () => {
+    setIsChecked(true);
+    setSubrecipeDrafts([
+      {
+        title: "",
+        ingredientsText: simpleRecipeDraft.ingredientsText,
+        ingredients: simpleRecipeDraft.ingredients,
+        instructionsText: simpleRecipeDraft.instructionsText,
+        instructions: simpleRecipeDraft.instructions,
+      },
+    ]);
+  };
+
+  const handleUniteIntoOne = () => {
+    const partsIng = subrecipeDrafts
+      .map((d) => d.ingredientsText.trim())
+      .filter(Boolean);
+    const partsInstr = subrecipeDrafts
+      .map((d) => d.instructionsText.trim())
+      .filter(Boolean);
+    setSimpleRecipeDraft({
+      ingredientsText: partsIng.join("\n"),
+      ingredients: subrecipeDrafts.flatMap((d) => d.ingredients),
+      instructionsText: partsInstr.join("\n"),
+      instructions: subrecipeDrafts.flatMap((d) => d.instructions),
     });
+    setSubrecipeDrafts([]);
+    setIsChecked(false);
   };
 
   const handleSubrecipeChange = (
@@ -149,14 +160,25 @@ const StepSubrecipes = ({
   );
 
   return (
-    <>
-      <Checkbox
-        id="terms"
-        label="Dividir receta en preparaciones"
-        checked={isChecked}
-        onChange={handleCheckboxChange}
-        helper="Permite agregar una sección de ingredientes e instrucciones para cada preparación"
+    <section aria-labelledby="subrecipes-section" className={styles.step}>
+      <h2 id="subrecipes-section">Preparaciones</h2>
+
+      <Button
+        type="button"
+        label={
+          isChecked
+            ? "Volver a una sola preparación"
+            : "Separar receta en preparaciones"
+        }
+        variant="secondary"
+        onClick={isChecked ? handleUniteIntoOne : handleSeparateIntoPreparations}
       />
+      {!isChecked && (
+        <p className={styles["step-helper"]}>
+          Permite agregar una sección de ingredientes e instrucciones para cada
+          preparación.
+        </p>
+      )}
 
       {isChecked ? (
         <>
@@ -224,7 +246,7 @@ const StepSubrecipes = ({
       ) : (
         <>{subrecipeInputs}</>
       )}
-    </>
+    </section>
   );
 };
 
