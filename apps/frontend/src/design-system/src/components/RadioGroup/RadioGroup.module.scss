@@ -1,0 +1,15 @@
+@use "../../styles/form" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/border" as *;
+
+.radio-group {
+  @include Border($width: thin, $style: none, $color: none);
+  @include Padding($all: none);
+  @include Margin($all: none);
+  @include Flex($direction: column, $gap: sm);
+
+  .legend {
+    @include LabelText;
+  }
+}

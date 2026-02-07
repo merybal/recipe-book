@@ -12,7 +12,9 @@ import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 import ButtonUnstyled from "@/design-system/src/components/ButtonUnstyled";
 import BottomSheet from "@/design-system/src/components/BottomSheet";
 import Checkbox from "@/design-system/src/components/Checkbox/Checkbox";
+import CheckboxGroup from "@/design-system/src/components/CheckboxGroup";
 import Radio from "@/design-system/src/components/Radio";
+import RadioGroup from "@/design-system/src/components/RadioGroup";
 import DragAndDrop from "@/design-system/src/components/DragAndDrop";
 import EditableInput from "@/design-system/src/components/EditableInput";
 import EditableTable from "@/design-system/src/components/EditableTable";
@@ -57,7 +59,9 @@ const ComponentShowcase = () => {
   const [textareaValue, setTextareaValue] = useState("");
   const [selectValue, setSelectValue] = useState("");
   const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const [checkboxGroupValue, setCheckboxGroupValue] = useState<string[]>([]);
   const [radioValue, setRadioValue] = useState("a");
+  const [radioGroupValue, setRadioGroupValue] = useState("salado");
   const [dragFiles, setDragFiles] = useState<File[]>([]);
   const [editableInputValue, setEditableInputValue] =
     useState("Texto editable");
@@ -268,6 +272,43 @@ const ComponentShowcase = () => {
         />
       </Section>
 
+      <Section title="CheckboxGroup">
+        <CheckboxGroup
+          name="showcase-checkboxgroup"
+          label="Alergias alimentarias"
+          options={[
+            { value: "glutenFree", label: "Sin gluten" },
+            { value: "dairyFree", label: "Sin lactosa" },
+            { value: "vegetarian", label: "Vegetariano" },
+            { value: "vegan", label: "Vegano" },
+          ]}
+          value={checkboxGroupValue}
+          onChange={setCheckboxGroupValue}
+        />
+        <CheckboxGroup
+          name="showcase-checkboxgroup-helper"
+          label="Con helper"
+          options={[
+            { value: "a", label: "Opción A" },
+            { value: "b", label: "Opción B" },
+          ]}
+          value={[]}
+          onChange={() => {}}
+          helper="Podés elegir varias"
+        />
+        <CheckboxGroup
+          name="showcase-checkboxgroup-required"
+          label="Con required"
+          options={[
+            { value: "x", label: "Opción X" },
+            { value: "y", label: "Opción Y" },
+          ]}
+          value={[]}
+          onChange={() => {}}
+          required
+        />
+      </Section>
+
       <Section title="Radio">
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <Radio
@@ -312,6 +353,41 @@ const ComponentShowcase = () => {
             error="Seleccioná una opción"
           />
         </div>
+      </Section>
+
+      <Section title="RadioGroup">
+        <RadioGroup
+          name="showcase-radiogroup"
+          label="Categoría"
+          options={[
+            { value: "salado", label: "Salado" },
+            { value: "dulce", label: "Dulce" },
+          ]}
+          value={radioGroupValue}
+          onChange={(e) => setRadioGroupValue(e.target.value)}
+        />
+        <RadioGroup
+          name="showcase-radiogroup-helper"
+          label="Con helper"
+          options={[
+            { value: "a", label: "Opción A" },
+            { value: "b", label: "Opción B" },
+          ]}
+          value="a"
+          onChange={() => {}}
+          helper="Elegí una opción"
+        />
+        <RadioGroup
+          name="showcase-radiogroup-error"
+          label="Con error"
+          options={[
+            { value: "x", label: "Opción X" },
+            { value: "y", label: "Opción Y" },
+          ]}
+          value=""
+          onChange={() => {}}
+          error="Seleccioná una opción"
+        />
       </Section>
 
       <Section title="Chip">
