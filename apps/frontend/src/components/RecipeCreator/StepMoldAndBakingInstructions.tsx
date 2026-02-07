@@ -5,14 +5,14 @@ import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import styles from "./RecipeForm.module.scss";
 
-type MoldAndBakingInstructionsStepProps = RecipeStateType & ErrorStateType;
+type StepMoldAndBakingInstructionsProps = RecipeStateType & ErrorStateType;
 
-const MoldAndBakingInstructionsStep = ({
+const StepMoldAndBakingInstructions = ({
   errors,
   recipe,
   setErrors,
   setRecipe,
-}: MoldAndBakingInstructionsStepProps) => {
+}: StepMoldAndBakingInstructionsProps) => {
   const handleMoldTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRecipe((prev) => ({
       ...prev,
@@ -35,7 +35,7 @@ const MoldAndBakingInstructionsStep = ({
 
   const validateOptionalNumber = (
     input: string,
-    field: "temperature" | "time"
+    field: "temperature" | "time",
   ) => {
     const isValidNumber = /^[1-9]\d*$/.test(input); // números enteros > 0
 
@@ -162,4 +162,4 @@ const MoldAndBakingInstructionsStep = ({
   );
 };
 
-export default MoldAndBakingInstructionsStep;
+export default StepMoldAndBakingInstructions;

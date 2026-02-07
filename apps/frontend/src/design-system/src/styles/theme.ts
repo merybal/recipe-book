@@ -17,7 +17,7 @@ const theme = {
       md: "0.5rem", // 8px
       lg: "1rem", // 16px
       xl: "1.75rem", // 28px
-      full: "9999px",
+      full: "9999px", // 100%
     },
   },
   // TODO ver si se distinguen mejor secondary y disruptive, elegir otro secondary?

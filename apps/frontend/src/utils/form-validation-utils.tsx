@@ -5,7 +5,7 @@ export const validateTitle = (title: string): string | null => {
   return null;
 };
 
-export const validateCoverStep = (recipe: RecipeType): { title?: string } => {
+export const validateStepCover = (recipe: RecipeType): { title?: string } => {
   const errors: { title?: string } = {};
   if (!recipe.title.trim()) {
     errors.title = "El título es obligatorio";
@@ -14,7 +14,7 @@ export const validateCoverStep = (recipe: RecipeType): { title?: string } => {
 };
 
 export const validateBakingInstructions = (
-  recipe: RecipeType
+  recipe: RecipeType,
 ): Record<string, string> => {
   const errors: Record<string, string> = {};
   const temp = recipe.bakingInstructions?.temperature;

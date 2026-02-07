@@ -18,6 +18,18 @@
     @include Flex($direction: column, $gap: xl);
   }
 
+  .fieldset-categories {
+    @include Flex($direction: column, $gap: sm);
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .legend-categories {
+    @include Font($family: text, $weight: bold, $size: sm);
+    @include Color($font: main-text);
+  }
+
   .form-navigation {
     @include Flex($gap: sm);
   }

@@ -8,20 +8,20 @@ import { validateTitle } from "@/utils/form-validation-utils";
 
 import styles from "./RecipeForm.module.scss";
 
-type CoverStepProps = {
+type StepCoverProps = {
   files: File[];
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
 } & RecipeStateType &
   ErrorStateType;
 
-const CoverStep = ({
+const StepCover = ({
   errors,
   files,
   recipe,
   setErrors,
   setFiles,
   setRecipe,
-}: CoverStepProps) => {
+}: StepCoverProps) => {
   const isMobile = useIsMobile();
 
   const getBoxLabelInitial = isMobile
@@ -98,4 +98,4 @@ const CoverStep = ({
   );
 };
 
-export default CoverStep;
+export default StepCover;

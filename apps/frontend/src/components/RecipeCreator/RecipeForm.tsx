@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 
 import Button from "@/design-system/src/components/Button";
-import CoverStep from "@/components/RecipeCreator/CoverStep";
-import MoldAndBakingInstructionsStep from "./MoldAndBakingInstructionsStep";
-import SubrecipesStep from "./SubrecipesStep";
+import StepCover from "@/components/RecipeCreator/StepCover";
+import StepCategories from "@/components/RecipeCreator/StepCategories";
+import StepMoldAndBakingInstructions from "./StepMoldAndBakingInstructions";
+import StepSubrecipes from "./StepSubrecipes";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import {
-  validateCoverStep,
+  validateStepCover,
   validateBakingInstructions,
 } from "@/utils/form-validation-utils";
 
@@ -124,7 +125,7 @@ const RecipeForm = () => {
   });
 
   const [subrecipeDrafts, setSubrecipeDrafts] = useState<SubrecipeDraftType[]>(
-    []
+    [],
   );
 
   const [simpleRecipeDraft, setSimpleRecipeDraft] = useState<{
@@ -143,7 +144,7 @@ const RecipeForm = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const totalSteps = 4;
+  const totalSteps = 5;
 
   const isMobile = useIsMobile();
 
@@ -192,7 +193,7 @@ const RecipeForm = () => {
     const stepErrors: Record<string, string> = {};
 
     if (currentStep === 0) {
-      const { title } = validateCoverStep(recipe);
+      const { title } = validateStepCover(recipe);
       if (title) stepErrors.title = title;
     }
 
@@ -253,7 +254,7 @@ const RecipeForm = () => {
         </p>
       </header>
       {currentStep === 0 && (
-        <CoverStep
+        <StepCover
           errors={errors}
           files={files}
           recipe={recipe}
@@ -264,7 +265,7 @@ const RecipeForm = () => {
       )}
 
       {currentStep === 1 && (
-        <MoldAndBakingInstructionsStep
+        <StepMoldAndBakingInstructions
           errors={errors}
           recipe={recipe}
           setErrors={setErrors}
@@ -273,7 +274,7 @@ const RecipeForm = () => {
       )}
 
       {currentStep === 2 && (
-        <SubrecipesStep
+        <StepSubrecipes
           errors={errors}
           recipe={recipe}
           isChecked={isChecked}
@@ -287,14 +288,14 @@ const RecipeForm = () => {
         />
       )}
 
-      {/* {currentStep === 3 && (
-        <FoodAllergiesStep
+      {currentStep === 3 && (
+        <StepCategories
           errors={errors}
           recipe={recipe}
           setErrors={setErrors}
           setRecipe={setRecipe}
         />
-      )} */}
+      )}
 
       <div className={styles["form-navigation"]}>
         {currentStep > 0 && (

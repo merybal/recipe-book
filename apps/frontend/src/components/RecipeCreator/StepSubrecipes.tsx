@@ -21,7 +21,7 @@ type SimpleRecipeDraft = {
   instructions: string[];
 };
 
-type SubrecipesStepProps = {
+type StepSubrecipesProps = {
   isChecked: boolean;
   setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
   subrecipeDrafts: SubrecipeDraftType[];
@@ -32,14 +32,14 @@ type SubrecipesStepProps = {
   setSimpleRecipeDraft: React.Dispatch<React.SetStateAction<SimpleRecipeDraft>>;
 } & RecipeStateType;
 
-const SubrecipesStep = ({
+const StepSubrecipes = ({
   isChecked,
   setIsChecked,
   subrecipeDrafts,
   setSubrecipeDrafts,
   simpleRecipeDraft,
   setSimpleRecipeDraft,
-}: SubrecipesStepProps) => {
+}: StepSubrecipesProps) => {
   const handleCheckboxChange = () => {
     setIsChecked((prev) => {
       const next = !prev;
@@ -61,7 +61,7 @@ const SubrecipesStep = ({
   const handleSubrecipeChange = (
     index: number,
     field: keyof SubrecipeDraftType,
-    value: string
+    value: string,
   ) => {
     setSubrecipeDrafts((prev) =>
       prev.map((draft, i) => {
@@ -90,7 +90,7 @@ const SubrecipesStep = ({
           ...draft,
           [field]: value,
         };
-      })
+      }),
     );
   };
 
@@ -191,8 +191,8 @@ const SubrecipesStep = ({
                               ingredientsText: text,
                               ingredients: parsedIngredients,
                             }
-                          : draft
-                      )
+                          : draft,
+                      ),
                     );
                   }}
                 />
@@ -207,7 +207,7 @@ const SubrecipesStep = ({
                     handleSubrecipeChange(
                       index,
                       "instructionsText",
-                      e.target.value
+                      e.target.value,
                     )
                   }
                 />
@@ -228,4 +228,4 @@ const SubrecipesStep = ({
   );
 };
 
-export default SubrecipesStep;
+export default StepSubrecipes;

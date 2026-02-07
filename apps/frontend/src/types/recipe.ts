@@ -25,6 +25,9 @@ export type RecipeType = {
   id?: string; //when the recipe is created from the frontend it has no id
   title: string;
   imageUrl?: string;
+  category?: string; // e.g. "salado" | "dulce"
+  subcategory?: string; // depends on category, e.g. "tarta" | "muffin"
+  tags?: string[];
   subrecipes: SubrecipeType[];
   bakingInstructions?: BakingInstructionsType;
   mold?: MoldType;
