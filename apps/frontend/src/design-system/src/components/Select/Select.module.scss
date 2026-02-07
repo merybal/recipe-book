@@ -3,6 +3,7 @@
 @use "../../styles/color" as *;
 @use "../../styles/flex" as *;
 @use "../../styles/form" as *;
+@use "../../styles/transition" as *;
 
 .select-container {
   position: relative;
@@ -54,12 +55,12 @@
 
       .icon-left {
         @include Margin($right: xs);
-        transition: transform 0.2s ease;
+        @include Transition((transform), 0.2s);
       }
 
       .icon-right {
         @include Margin($left: auto);
-        transition: transform 0.2s ease;
+        @include Transition((transform), 0.2s);
       }
 
       .rotate-chevron {

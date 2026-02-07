@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import clsx from "clsx";
 import type { PreviewData } from "@/components/TileGrid";
@@ -9,8 +10,10 @@ import TileGrid from "@/components/TileGrid";
 import MultipleEditableFields from "@/design-system/src/components/MultipleEditableFields";
 import { EditableFieldType } from "@/design-system/src/components/MultipleEditableFields";
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
+import Button from "@/design-system/src/components/Button";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [recipePreviews, setRecipePreviews] = useState<PreviewData[]>([]);
 
   useEffect(() => {
@@ -86,6 +89,10 @@ const Home = () => {
 
   return (
     <div className={clsx(styles.home)}>
+      <Button
+        label="Agregar receta"
+        onClick={() => navigate("/create-recipe")}
+      />
       <TileGrid previewData={recipePreviews} />
 
       <MultipleEditableFields

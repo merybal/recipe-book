@@ -3,6 +3,7 @@
 @use "../../styles/color" as *;
 @use "../../styles/font" as *;
 @use "../../styles/form" as *;
+@use "../../styles/transition" as *;
 
 .input-container {
   width: 100%;
@@ -81,7 +82,7 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      transition: color 0.3s ease;
+      @include Transition((color));
     }
 
     .icon-right-space {

@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 import styles from "./Button.module.scss";
 
-//TODO agregar disruptive hover a todos los botones
+//TODO borrar text si no se termina usando
 
 const Button = ({
   className,

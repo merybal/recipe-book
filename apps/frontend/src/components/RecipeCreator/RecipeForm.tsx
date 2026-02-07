@@ -287,6 +287,15 @@ const RecipeForm = () => {
         />
       )}
 
+      {/* {currentStep === 3 && (
+        <FoodAllergiesStep
+          errors={errors}
+          recipe={recipe}
+          setErrors={setErrors}
+          setRecipe={setRecipe}
+        />
+      )} */}
+
       <div className={styles["form-navigation"]}>
         {currentStep > 0 && (
           <Button

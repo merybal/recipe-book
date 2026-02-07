@@ -3,6 +3,7 @@
 @use "../../styles/font" as *;
 @use "../../styles/border" as *;
 @use "../../styles/flex" as *;
+@use "../../styles/transition" as *;
 
 .drop-zone {
   @include Border($width: medium, $style: dashed, $color: outline, $radius: xl);
@@ -12,7 +13,7 @@
 
   min-height: 10rem;
   width: 20rem;
-  transition: background-color 0.3s ease;
+  @include Transition((background-color));
 
   &.single-image-preview {
     @include Padding($all: none);

@@ -8,7 +8,7 @@ import BottomSheet from "../design-system/src/components/BottomSheet";
 import FoodAllergies from "../components/FoodAllergies";
 // import Source from "../components/Source";
 import Separator from "../design-system/src/components/Separator/Separator";
-import Tag from "../design-system/src/components/Tag/Tag";
+import Chip from "../design-system/src/components/Chip/Chip";
 
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 
@@ -28,7 +28,7 @@ import styles from "./Recipe.module.scss";
 
 /**
  * //TODO
- * - revisar que pasa cuando no hay tags o autores. como se modifica el layout
+ * - revisar que pasa cuando no hay Chips o autores. como se modifica el layout
  * - hay que programar el volver a la pagina anterior?
  * - desktop
  */
@@ -158,27 +158,27 @@ const Recipe = () => {
         </div>
         <Separator />
         <div className={styles["recipe-info-container"]}>
-          <div className={styles["tag-container"]}>
+          <div className={styles["chip-container"]}>
             {recipe.bakingInstructions && (
-              <Tag>
+              <Chip>
                 {recipe.bakingInstructions.time && (
                   <p>{recipe.bakingInstructions.time}</p>
                 )}
                 {recipe.bakingInstructions.temperature && (
                   <p>{recipe.bakingInstructions.temperature}°C</p>
                 )}
-              </Tag>
+              </Chip>
             )}
             {recipe.mold && (
-              <Tag>
+              <Chip>
                 {recipe.mold.type && <p>{recipe.mold.type}</p>}
                 {recipe.mold.size && <p>{recipe.mold.size}</p>}
-              </Tag>
+              </Chip>
             )}
             {recipe.servings && (
-              <Tag>
+              <Chip>
                 <p>{recipe.servings}</p>
-              </Tag>
+              </Chip>
             )}
           </div>
           {/* {source && <Source source={source} />} */}

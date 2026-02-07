@@ -3,6 +3,7 @@
 @use "./font" as *;
 @use "./spacing" as *;
 @use "./flex" as *;
+@use "./transition" as *;
 
 @mixin FieldHeight {
   height: 3.5rem;
@@ -19,12 +20,12 @@
 
 @mixin FieldBorder {
   @include Border($width: medium, $style: solid, $color: outline, $radius: xl);
-  transition: border 0.3s ease;
+  @include Transition((border));
 }
 
 @mixin RemovesFieldBorder {
   @include Border($width: medium, $style: solid, $color: none, $radius: 0);
-  transition: border 0.3s ease;
+  @include Transition((border));
 }
 
 @mixin FieldBorderFocus {

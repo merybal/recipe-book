@@ -1,0 +1,11 @@
+@mixin Transition(
+  $properties: (all),
+  $duration: 0.3s,
+  $easing: ease
+) {
+  $list: ();
+  @each $p in $properties {
+    $list: append($list, $p $duration $easing, comma);
+  }
+  transition: $list;
+}

@@ -17,8 +17,10 @@ export type ButtonProps = {
   inline?: boolean;
   /** Button text. */
   label: string;
-  /** Visual size of the button and icons. */
-  size?: "small" | "medium" | "large";
+  /** Visual size of the button and icons.
+   * @default "medium"
+   */
+  size?: "medium" | "large";
   /** Native button type (button, submit, reset). */
   type?: "button" | "submit" | "reset";
   /** Visual style variant. */

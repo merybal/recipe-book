@@ -1,0 +1,69 @@
+@use "../../styles/form" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/border" as *;
+@use "../../styles/color" as *;
+
+.chip-input-container {
+  width: 100%;
+
+  &.inline {
+    @include Inline;
+  }
+
+  .label {
+    .label-text {
+      @include LabelText;
+      display: none;
+
+      &.show-label {
+        display: block;
+      }
+    }
+
+    .field {
+      @include FieldBorder;
+      @include FieldContainer;
+      @include Flex($direction: row, $align: center, $gap: xs, $wrap: wrap);
+      min-height: 3.5rem;
+
+      &:focus-within:not(.disabled) {
+        @include FieldBorderFocus;
+      }
+
+      &.error {
+        @include FieldBorderError;
+      }
+
+      &.disabled {
+        @include Disabled;
+      }
+    }
+
+    .chip-input {
+      @include FieldText;
+      @include Padding($y: xxs);
+      @include Border($width: thin, $style: none, $color: none);
+      @include Color($bg: none);
+      flex: 1;
+      min-width: 8rem;
+      outline: none;
+
+      &::placeholder {
+        @include Placeholder;
+      }
+
+      &:disabled {
+        cursor: unset;
+      }
+    }
+  }
+
+  .helper-message {
+    @include HelperMessage;
+  }
+
+  .error-message {
+    @include ErrorMessage;
+  }
+}

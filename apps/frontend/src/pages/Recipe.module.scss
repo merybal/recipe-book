@@ -28,7 +28,7 @@
     .recipe-info-container {
       @include Flex($direction: column, $gap: lg);
 
-      .tag-container {
+      .chip-container {
         @include Flex($gap: xxs);
       }
     }

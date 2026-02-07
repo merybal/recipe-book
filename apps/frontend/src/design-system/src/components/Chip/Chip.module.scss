@@ -1,0 +1,57 @@
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/border" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/spacing" as *;
+
+.chip {
+  @include Color($bg: secondary-light, $font: secondary-dark);
+  @include Border($radius: full);
+  @include Font($family: text, $size: xxs, $weight: medium);
+  @include Flex(
+    $direction: column,
+    $align: center,
+    $justify: center,
+    $gap: xxs
+  );
+  @include Padding($x: md);
+  height: 2rem;
+
+  &.removable {
+    @include Flex($direction: row, $gap: xxs);
+    @include Padding($right: none);
+
+    .content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .remove-button {
+      @include Flex($align: center, $justify: center, $shrink: 0);
+      @include Border($radius: full);
+      height: 2rem;
+      width: 2rem;
+      color: inherit;
+    }
+  }
+
+  &.clickable {
+    border: none;
+    cursor: pointer;
+    text-align: inherit;
+  }
+}
+
+// Hover only on the X when chip is removable
+@media (hover: hover) and (pointer: fine) {
+  .chip.removable .remove-button:hover {
+    @include Color($bg: secondary-dark, $font: white);
+  }
+}
+
+// Hover on whole chip when chip is clickable
+@media (hover: hover) and (pointer: fine) {
+  .chip.clickable:hover {
+    @include Color($bg: secondary-dark, $font: white);
+  }
+}

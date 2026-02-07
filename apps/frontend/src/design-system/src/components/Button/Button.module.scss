@@ -3,8 +3,7 @@
 @use "../../styles/font" as *;
 @use "../../styles/border" as *;
 @use "../../styles/flex" as *;
-
-//TODO falta hover para todos los disruptive
+@use "../../styles/transition" as *;
 
 .button {
   @include Padding($x: xl);
@@ -13,12 +12,6 @@
   @include Flex($align: center, $gap: xs, $justify: center, $shrink: none);
   letter-spacing: 0.2px;
   cursor: pointer;
-}
-
-.size-small {
-  @include Font($size: xxs);
-  @include Border($radius: full);
-  height: 2rem;
 }
 
 .size-medium {
@@ -36,19 +29,19 @@
 .variant-primary {
   @include Color($bg: primary, $font: white);
   @include Border($style: none);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  @include Transition((background-color, color));
 }
 
 .variant-secondary {
   @include Color($bg: transparent, $font: primary);
   @include Border($width: medium, $style: solid, $color: primary);
-  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+  @include Transition((background-color, color, border));
 }
 
 .variant-tertiary {
   @include Color($bg: transparent, $font: primary);
   @include Border($style: none);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  @include Transition((background-color, color));
 }
 
 .variant-text {
@@ -56,32 +49,33 @@
   @include Border($style: none);
   @include Padding($x: none, $y: xxs);
   height: unset;
-  transition: color 0.3s ease, color 0.3s ease;
+  @include Transition((color));
 }
 
 .disruptive-variant-primary {
-  @include Color($bg: secondary, $font: white);
+  @include Color($bg: disruptive, $font: white);
 }
 
 .disruptive-variant-secondary {
-  @include Color($bg: transparent, $font: secondary);
-  @include Border($width: medium, $style: solid, $color: secondary);
+  @include Color($bg: transparent, $font: disruptive);
+  @include Border($width: medium, $style: solid, $color: disruptive);
 }
 
 .disruptive-variant-tertiary {
   @include Border($style: none);
-  @include Color($bg: transparent, $font: secondary);
+  @include Color($bg: transparent, $font: disruptive);
 }
 
 .disruptive-variant-text {
   @include Border($style: none);
-  @include Color($bg: transparent, $font: secondary);
+  @include Color($bg: transparent, $font: disruptive);
 }
 
 .full-width {
   width: 100%;
 }
 
+//FOCUS STYLES
 .variant-primary:focus-visible,
 .variant-secondary:focus-visible,
 .variant-tertiary:focus-visible {
@@ -89,6 +83,7 @@
   outline-offset: 2px;
 }
 
+//DISABLED STYLES
 .variant-primary:disabled {
   @include Color($bg: disabled, $font: secondary-text);
   cursor: not-allowed;
@@ -105,17 +100,44 @@
   cursor: not-allowed;
 }
 
+//HOVER STYLES
 @media (hover: hover) and (pointer: fine) {
   .variant-primary:hover:not(:disabled):not(:focus) {
-    @include Color($bg: primary-hover);
+    @include Color($bg: primary-dark);
   }
 
   .variant-secondary:hover:not(:disabled):not(:focus) {
-    @include Color($bg: primary-hover, $font: white);
-    @include Border($width: medium, $style: solid, $color: primary-hover);
+    @include Border($width: medium, $style: solid, $color: primary-dark);
+    @include Color($bg: primary-dark, $font: white);
   }
 
   .variant-tertiary:hover:not(:disabled):not(:focus) {
-    @include Color($bg: primary-hover, $font: white);
+    @include Color($bg: primary-dark, $font: white);
+  }
+
+  .variant-text:hover:not(:disabled):not(:focus) {
+    @include Color($font: primary-dark);
+  }
+
+  // Compound selector so disruptive hover wins when both variant and disruptive-variant are applied
+  .variant-primary.disruptive-variant-primary:hover:not(:disabled):not(:focus) {
+    @include Color($bg: disruptive-dark);
+  }
+
+  .variant-secondary.disruptive-variant-secondary:hover:not(:disabled):not(
+      :focus
+    ) {
+    @include Color($bg: disruptive-dark, $font: white);
+    @include Border($width: medium, $style: solid, $color: disruptive-dark);
+  }
+
+  .variant-tertiary.disruptive-variant-tertiary:hover:not(:disabled):not(
+      :focus
+    ) {
+    @include Color($bg: disruptive-dark, $font: white);
+  }
+
+  .variant-text.disruptive-variant-text:hover:not(:disabled):not(:focus) {
+    @include Color($bg: transparent, $font: disruptive-dark);
   }
 }
