@@ -15,6 +15,7 @@ import {
 import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
 import styles from "./RecipeForm.module.scss";
+import RecipePreview from "./RecipePreview";
 
 const recipeExample = {
   title: "Dulce",
@@ -240,7 +241,10 @@ const RecipeForm = () => {
   //TODO hcaer ids dinamicos
 
   return (
-    <form className={styles["recipe-form"]}>
+    <form
+      className={styles["recipe-form"]}
+      onSubmit={(e) => e.preventDefault()}
+    >
       <header className={styles["form-header"]}>
         <Button
           disruptive
@@ -297,9 +301,19 @@ const RecipeForm = () => {
         />
       )}
 
+      {currentStep === 4 && (
+        <RecipePreview
+          recipeData={recipe}
+          onChange={setRecipe}
+          coverImageFiles={files}
+          onCoverImageChange={setFiles}
+        />
+      )}
+
       <div className={styles["form-navigation"]}>
         {currentStep > 0 && (
           <Button
+            type="button"
             label="Anterior"
             variant="secondary"
             onClick={prevStep}
@@ -308,6 +322,7 @@ const RecipeForm = () => {
         )}
         {currentStep < totalSteps - 1 ? (
           <Button
+            type="button"
             label="Siguiente"
             onClick={nextStep}
             disabled={hasStepErrors()}
@@ -316,7 +331,10 @@ const RecipeForm = () => {
           <Button
             type="submit"
             label="Guardar receta"
-            onClick={() => console.log("submiiiiit")}
+            onClick={(e) => {
+              e.preventDefault();
+              console.log("submiiiiit");
+            }}
           />
         )}
       </div>

@@ -8,6 +8,7 @@
   @include Flex($direction: column);
   flex: 1;
   min-height: 0;
+  min-width: 0;
 
   .form-header {
     @include Flex($justify: between, $align: center);
@@ -39,6 +40,8 @@
     @include Flex($gap: sm);
     @include Margin($top: auto);
     @include Padding($top: lg);
+    width: 100%;
+    min-width: 0;
   }
 
   .step-helper {

@@ -30,12 +30,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                         key={`ingredient-${j}`}
                         className={styles["ingredient-li"]}
                       >
-                        <Icon
-                          name="Check"
-                          color="primary"
-                          background="primary-light"
-                          size="xs"
-                        />
+                        <Icon name="Circle" color="primary" size="md" />
                         <p>{paragraph.name},</p>
                         <div className={styles["ingredient-amount"]}>
                           <p>{paragraph.amount}</p>

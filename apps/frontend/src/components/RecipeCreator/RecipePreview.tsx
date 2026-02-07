@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { RecipeType } from "@/types";
 
 import clsx from "clsx";
@@ -5,36 +6,65 @@ import styles from "./RecipePreview.module.scss";
 import EditableInput from "../../design-system/src/components/EditableInput/EditableInput";
 import MultipleEditableFields from "@/design-system/src/components/MultipleEditableFields";
 import EditableTextarea from "@/design-system/src/components/EditableTextarea";
+import Separator from "@/design-system/src/components/Separator";
+import ButtonIcon from "@/design-system/src/components/ButtonIcon";
 
 export type RecipePreviewProps = {
   className?: string;
   recipeData: RecipeType;
   onChange: (updatedRecipe: RecipeType) => void;
+  /** Imagen de portada cargada en el step 1 (para previsualizar/cambiar en el preview). */
+  coverImageFiles?: File[];
+  /** Se llama cuando el usuario cambia la imagen de portada desde el preview. */
+  onCoverImageChange?: (files: File[]) => void;
 };
 
 const RecipePreview = ({
   className,
   recipeData,
   onChange,
+  coverImageFiles = [],
+  onCoverImageChange,
 }: RecipePreviewProps) => {
-  console.log("recipeData", recipeData);
+  const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const file = coverImageFiles[0];
+    if (!file) {
+      setCoverPreviewUrl(null);
+      return () => {};
+    }
+    const url = URL.createObjectURL(file);
+    setCoverPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [coverImageFiles]);
+
+  // Solo la imagen cargada en el step 0 (portada), no recipeData.imageUrl
+  const coverImageSrc = coverPreviewUrl ?? undefined;
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
-      <EditableInput
-        id="title-input"
-        label="Titulo"
-        required
-        value={recipeData.title}
-        onChange={(newTitle) => onChange({ ...recipeData, title: newTitle })}
-      />
+      <div className={styles["step-cover"]}>
+        <div className={styles["step-cover-header"]}>
+          <h2>Portada</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar portada"
+            size="small"
+            onClick={() => {}}
+          />
+        </div>
+        {coverImageSrc && (
+          <div className={styles["recipe-image"]}>
+            <img src={coverImageSrc} alt={recipeData.title} />
+          </div>
+        )}
+        <h1 className={styles["recipe-title"]}>{recipeData.title}</h1>
+        <h3>Rinde</h3>
+        <p>{recipeData.servings ? recipeData.servings : "-"}</p>
+      </div>
 
-      <EditableInput
-        id="serves-input"
-        label="Rinde (porciones)"
-        value={recipeData.servings ?? ""}
-        onChange={(newValue) => onChange({ ...recipeData, servings: newValue })}
-      />
+      <Separator />
 
       <EditableInput
         id="mold-type-input"
@@ -92,7 +122,7 @@ const RecipePreview = ({
         }
       />
 
-      {recipeData.subrecipes.map((subrecipe, index) => {
+      {(recipeData.subrecipes ?? []).map((subrecipe, index) => {
         return (
           <div key={index}>
             {subrecipe.title && <h3>{subrecipe.title}</h3>}

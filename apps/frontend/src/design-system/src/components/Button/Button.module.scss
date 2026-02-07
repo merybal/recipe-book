@@ -9,7 +9,7 @@
   @include Padding($x: xl);
   @include Font($family: text, $weight: bold);
   @include Border($style: none);
-  @include Flex($align: center, $gap: xs, $justify: center, $shrink: none);
+  @include Flex($align: center, $gap: xs, $justify: center);
   letter-spacing: 0.2px;
   cursor: pointer;
 }

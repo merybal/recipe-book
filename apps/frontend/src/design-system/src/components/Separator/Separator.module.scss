@@ -3,16 +3,37 @@
 
 .separator {
   border-top: 0.0625rem solid resolve-color(outline);
+  width: 100%;
 }
 
-.horizontal {
-  width: 100%;
+.marginY-none {
+  @include Margin($y: none);
+}
+
+.marginY-xxs {
+  @include Margin($y: xxs);
+}
+
+.marginY-xs {
+  @include Margin($y: xs);
+}
+
+.marginY-sm {
+  @include Margin($y: sm);
+}
+
+.marginY-md {
+  @include Margin($y: md);
+}
+
+.marginY-lg {
+  @include Margin($y: lg);
+}
+
+.marginY-xl {
   @include Margin($y: xl);
 }
 
-.vertical {
-  height: 100%;
-}
-
-.leftText {
+.marginY-xxl {
+  @include Margin($y: xxl);
 }

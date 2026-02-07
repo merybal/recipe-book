@@ -1,5 +1,29 @@
 @use "../../design-system/src/styles/flex" as *;
+@use "../../design-system/src/styles/border" as *;
 
 .recipe-preview {
-  @include Flex($direction: column, $gap: md);
+  @include Flex($direction: column);
+
+  .step-cover {
+    @include Flex($direction: column, $gap: lg);
+
+    .step-cover-header {
+      @include Flex($justify: space-between, $align: center);
+    }
+
+    .recipe-image {
+      @include Border($radius: xl);
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+      }
+    }
+  }
 }

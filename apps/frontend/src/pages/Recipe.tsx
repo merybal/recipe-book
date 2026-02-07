@@ -51,7 +51,7 @@ const Recipe = () => {
         ingredient.units?.name &&
         normalizeUnit(
           ingredient.units.name,
-          ingredient.amount && ingredient.amount
+          ingredient.amount && ingredient.amount,
         );
 
       //TODO revisar types
@@ -121,7 +121,7 @@ const Recipe = () => {
           ...(recipeData.recipe_food_allergies?.length > 0 && {
             foodAllergies: recipeData.recipe_food_allergies
               .map((item: RecipeFoodAllergyRaw) =>
-                parseFoodAllergiesforFrontend(item.food_allergy.name)
+                parseFoodAllergiesforFrontend(item.food_allergy.name),
               )
               .filter(Boolean), // filtra los undefined en caso de valores no reconocidos
           }),
@@ -156,47 +156,56 @@ const Recipe = () => {
             <FoodAllergies allergies={recipe.foodAllergies} />
           )}
         </div>
-        <Separator />
+        <Separator marginY="lg" />
         <div className={styles["recipe-info-container"]}>
-          <div className={styles["chip-container"]}>
+          <div className={styles["baking-container"]}>
             {recipe.bakingInstructions && (
-              <Chip>
+              <div className={styles.item}>
+                <h3>Cocción</h3>
                 {recipe.bakingInstructions.time && (
-                  <p>{recipe.bakingInstructions.time}</p>
+                  <p>{recipe.bakingInstructions.time} minutos</p>
                 )}
+
                 {recipe.bakingInstructions.temperature && (
                   <p>{recipe.bakingInstructions.temperature}°C</p>
                 )}
-              </Chip>
+              </div>
             )}
             {recipe.mold && (
-              <Chip>
+              <div className={styles.item}>
+                <h3>Molde</h3>
                 {recipe.mold.type && <p>{recipe.mold.type}</p>}
                 {recipe.mold.size && <p>{recipe.mold.size}</p>}
-              </Chip>
+              </div>
             )}
-            {recipe.servings && (
-              <Chip>
-                <p>{recipe.servings}</p>
-              </Chip>
-            )}
+            {/* {recipe.servings && ( */}
+            <div className={styles.item}>
+              {/* <p>{recipe.servings}</p>*/}
+              <h3>Rinde</h3>
+              <p>4 porciones</p>
+            </div>
+            {/* )} */}
           </div>
           {/* {source && <Source source={source} />} */}
         </div>
       </header>
-      <Separator />
+      <Separator marginY="lg" />
       <IngredientList subrecipes={recipe.subrecipes} />
-      <Separator />
+      <Separator marginY="lg" />
       <Instructions isNumbered subrecipes={recipe.subrecipes} />
     </section>
   );
 
   return (
     <>
-      <div className={styles["image-Container"]}>
+      <div className={styles["image-container"]}>
         <img
           className={styles["recipe-image"]}
-          src="https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg"
+          src={
+            recipe.imageUrl ??
+            "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg"
+          }
+          alt={recipe.title}
         />
       </div>
       {isMobile ? <BottomSheet>{content}</BottomSheet> : <div>{content}</div>}

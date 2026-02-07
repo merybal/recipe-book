@@ -37,7 +37,7 @@ const Icon = ({
       )}
       style={{
         backgroundColor: resolvedBackground,
-        borderRadius: "var(--radius-full)",
+        borderRadius: "var(--border-radius-full)",
       }}
     >
       <LucideIcon size={pixelSize} color={resolvedColor ?? "currentColor"} />

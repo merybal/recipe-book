@@ -85,8 +85,8 @@ $flex-properties: (
   }
 
   @if $shrink != null {
-    @if $shrink == 0 {
-      flex-shrink: 0; // Interpretamos "none" como 0 para shrink
+    @if $shrink == 0 or $shrink == none {
+      flex-shrink: 0;
     } @else {
       flex-shrink: $shrink;
     }
