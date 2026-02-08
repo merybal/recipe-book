@@ -6,7 +6,7 @@
 @use "../../styles/transition" as *;
 
 .wrapper {
-  @include Flex($direction: column, $gap: md);
+  @include Flex($direction: column, $gap: lg);
 }
 
 .tabs {

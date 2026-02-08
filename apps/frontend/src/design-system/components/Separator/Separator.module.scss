@@ -6,34 +6,80 @@
   width: 100%;
 }
 
+// marginY (top + bottom)
 .marginY-none {
   @include Margin($y: none);
 }
-
 .marginY-xxs {
   @include Margin($y: xxs);
 }
-
 .marginY-xs {
   @include Margin($y: xs);
 }
-
 .marginY-sm {
   @include Margin($y: sm);
 }
-
 .marginY-md {
   @include Margin($y: md);
 }
-
 .marginY-lg {
   @include Margin($y: lg);
 }
-
 .marginY-xl {
   @include Margin($y: xl);
 }
-
 .marginY-xxl {
   @include Margin($y: xxl);
+}
+
+// marginTop only
+.marginTop-none {
+  @include Margin($top: none);
+}
+.marginTop-xxs {
+  @include Margin($top: xxs);
+}
+.marginTop-xs {
+  @include Margin($top: xs);
+}
+.marginTop-sm {
+  @include Margin($top: sm);
+}
+.marginTop-md {
+  @include Margin($top: md);
+}
+.marginTop-lg {
+  @include Margin($top: lg);
+}
+.marginTop-xl {
+  @include Margin($top: xl);
+}
+.marginTop-xxl {
+  @include Margin($top: xxl);
+}
+
+// marginBottom only
+.marginBottom-none {
+  @include Margin($bottom: none);
+}
+.marginBottom-xxs {
+  @include Margin($bottom: xxs);
+}
+.marginBottom-xs {
+  @include Margin($bottom: xs);
+}
+.marginBottom-sm {
+  @include Margin($bottom: sm);
+}
+.marginBottom-md {
+  @include Margin($bottom: md);
+}
+.marginBottom-lg {
+  @include Margin($bottom: lg);
+}
+.marginBottom-xl {
+  @include Margin($bottom: xl);
+}
+.marginBottom-xxl {
+  @include Margin($bottom: xxl);
 }

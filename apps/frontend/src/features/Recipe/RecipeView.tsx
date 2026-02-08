@@ -9,6 +9,7 @@ import FoodAllergies from "./FoodAllergies";
 import Separator from "../../design-system/components/Separator/Separator";
 import Source from "./Source";
 import ButtonIcon from "@/design-system/components/ButtonIcon/ButtonIcon";
+import Tabs, { Tab } from "@/design-system/components/Tabs";
 
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 
@@ -148,27 +149,18 @@ const RecipeView = () => {
   if (!recipe) return <div>No se encontró la receta</div>;
 
   const content = (
-    <section className={styles["recipe-container"]}>
+    <div className={styles["recipe-container"]}>
       <header>
-        <div className={styles["title-container"]}>
-          <h1 className={styles.title}>{recipe.title}</h1>
-          {recipe.foodAllergies && (
-            <FoodAllergies allergies={recipe.foodAllergies} />
-          )}
-        </div>
-
-        {/* <Separator marginY="lg" /> */}
-
-        <div className={styles["source-container"]}>
-          <Source
-            source={
-              recipe.source ?? {
-                name: ["Laura Bolomo"],
-                url: [
-                  "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-                ],
-              }
-            }
+        <h1 className={styles.title}>{recipe.title}</h1>
+        <div className={styles["button-container"]}>
+          <ButtonIcon
+            icon="Share2"
+            label="Compartir receta"
+            size="small"
+            variant="primary"
+            onClick={() => {
+              console.log("compartir receta");
+            }}
           />
           <ButtonIcon
             icon="Download"
@@ -180,49 +172,78 @@ const RecipeView = () => {
             }}
           />
         </div>
+      </header>
 
-        <Separator marginY="md" />
+      <Separator marginTop="lg" marginBottom="md" />
 
-        <div className={styles["recipe-info-container"]}>
-          <div className={styles["baking-container"]}>
-            {recipe.bakingInstructions && (
-              <div className={styles.item}>
-                <h3>Cocción</h3>
-                {recipe.bakingInstructions.time && (
-                  <p>{recipe.bakingInstructions.time} minutos</p>
-                )}
+      <div className={styles["source-container"]}>
+        <Source
+          source={
+            recipe.source ?? {
+              name: ["Laura Bolomo"],
+              url: [
+                "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
+              ],
+            }
+          }
+        />
+      </div>
 
-                {recipe.bakingInstructions.temperature && (
-                  <p>{recipe.bakingInstructions.temperature}°C</p>
-                )}
-              </div>
-            )}
-            {recipe.mold && (
-              <div className={styles.item}>
-                <h3>Molde</h3>
-                {recipe.mold.type && <p>{recipe.mold.type}</p>}
-                {recipe.mold.size && <p>{recipe.mold.size}</p>}
-              </div>
-            )}
-            {/* {recipe.servings && (
+      <Separator marginTop="md" marginBottom="lg" />
+
+      <Tabs defaultValue="Resumen">
+        <Tab value="Resumen" label="Resumen">
+          <div className={styles["recipe-info-container"]}>
+            <div className={styles["baking-container"]}>
+              {recipe.bakingInstructions && (
+                <div className={styles.item}>
+                  <h3>Cocción</h3>
+                  {recipe.bakingInstructions.time && (
+                    <p>{recipe.bakingInstructions.time} minutos</p>
+                  )}
+
+                  {recipe.bakingInstructions.temperature && (
+                    <p>{recipe.bakingInstructions.temperature}°C</p>
+                  )}
+                </div>
+              )}
+              {recipe.mold && (
+                <div className={styles.item}>
+                  <h3>Molde</h3>
+                  {recipe.mold.type && <p>{recipe.mold.type}</p>}
+                  {recipe.mold.size && <p>{recipe.mold.size}</p>}
+                </div>
+              )}
+              {/* {recipe.servings && (
               <div className={styles.item}>
                 <h3>Rinde</h3>
                 <p>{recipe.servings}</p>
               </div>
             )} */}
-            <div className={styles.item}>
-              <h3>Rinde</h3>
-              <p>4 porciones</p>
+              <div className={styles.item}>
+                <h3>Rinde</h3>
+                <p>4 porciones</p>
+              </div>
             </div>
+            {/* {recipe.source && <Source source={recipe.source} />} */}
+
+            {/* TODO agregar notas
+            TODO agregar categorias y subcategorias */}
           </div>
-          {/* {recipe.source && <Source source={recipe.source} />} */}
-        </div>
-      </header>
-      <Separator marginY="lg" />
-      <IngredientList subrecipes={recipe.subrecipes} />
-      <Separator marginY="lg" />
-      <Instructions isNumbered subrecipes={recipe.subrecipes} />
-    </section>
+
+          <Separator marginY="lg" />
+
+          {recipe.foodAllergies && (
+            <FoodAllergies allergies={recipe.foodAllergies} />
+          )}
+        </Tab>
+        <Tab value="Receta" label="Receta">
+          <IngredientList subrecipes={recipe.subrecipes} />
+          <Separator marginY="lg" />
+          <Instructions isNumbered subrecipes={recipe.subrecipes} />
+        </Tab>
+      </Tabs>
+    </div>
   );
 
   return (

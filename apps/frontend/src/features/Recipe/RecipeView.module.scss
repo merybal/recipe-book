@@ -21,34 +21,32 @@
   @include Flex($direction: column);
 
   header {
-    @include Flex($direction: column);
+    @include Flex($justify: space-between, $align: center);
 
-    .title-container {
-      @include Flex($align: center, $justify: space-between);
-      @include Margin($bottom: md);
+    .button-container {
+      @include Flex($gap: sm);
+    }
+  }
+  .source-container {
+    @include Flex($align: center, $gap: sm);
+    width: 100%;
+  }
+
+  .recipe-info-container {
+    @include Flex($direction: column, $gap: lg);
+
+    h3 {
+      @include Color($font: primary);
     }
 
-    .source-container {
-      @include Flex($align: center, $gap: sm);
-      width: 100%;
+    p {
+      @include Color($font: secondary-text);
     }
 
-    .recipe-info-container {
-      @include Flex($direction: column, $gap: lg);
-
-      h3 {
-        @include Color($font: primary);
-      }
-
-      p {
-        @include Color($font: secondary-text);
-      }
-
-      .baking-container {
-        @include Flex($gap: xxs, $justify: space-around);
-        .item {
-          @include Flex($direction: column, $gap: xs, $align: center);
-        }
+    .baking-container {
+      @include Flex($gap: xxs, $justify: space-around);
+      .item {
+        @include Flex($direction: column, $gap: xs, $align: center);
       }
     }
   }
