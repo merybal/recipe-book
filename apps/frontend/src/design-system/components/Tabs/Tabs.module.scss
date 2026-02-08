@@ -1,0 +1,50 @@
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/border" as *;
+@use "../../styles/flex" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/transition" as *;
+
+.wrapper {
+  @include Flex($direction: column, $gap: md);
+}
+
+.tabs {
+  @include Flex($align: center, $gap: xs);
+  @include Color($bg: disabled);
+  @include Padding($all: xxs);
+  @include Border($radius: full);
+}
+
+.panel {
+  min-height: 0;
+}
+
+.tab {
+  @include Font($family: text, $size: xs, $weight: medium);
+  @include Border($style: none, $radius: full);
+  @include Padding($x: lg, $y: sm);
+  @include Color($bg: none);
+  @include Transition((background-color, color));
+  cursor: pointer;
+  appearance: none;
+  width: 100%;
+
+  &.active {
+    @include Color($bg: primary, $font: white);
+  }
+
+  &.inactive {
+    @include Color($font: main-text);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tab.inactive:hover {
+    @include Color($bg: outline, $font: main-text);
+  }
+
+  .tab.active:hover {
+    @include Color($bg: primary-dark, $font: white);
+  }
+}

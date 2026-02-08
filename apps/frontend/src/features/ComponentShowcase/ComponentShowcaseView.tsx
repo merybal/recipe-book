@@ -27,6 +27,7 @@ import Separator from "@/design-system/components/Separator";
 import Table from "@/design-system/components/Table";
 import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
+import Tabs from "@/design-system/components/Tabs";
 import Textarea from "@/design-system/components/Textarea";
 
 import type { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
@@ -72,6 +73,7 @@ const ComponentShowcaseView = () => {
     { name: "Azúcar", amount: 100, unit: "g" },
   ]);
   const [chips, setChips] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState("overview");
 
   const [fields, setFields] = useState<EditableFieldType[]>([
     { key: "name", label: "Nombre", value: "Ejemplo", component: "input" },
@@ -415,17 +417,82 @@ const ComponentShowcaseView = () => {
         </div>
       </Section>
 
+      <Section title="Tabs">
+        <div style={{ width: "100%" }}>
+          <Tabs
+            id="showcase-tabs"
+            tabs={[
+              {
+                value: "overview",
+                label: "Overview",
+                children: (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      background: "var(--color-disabled)",
+                      borderRadius: "0.5rem",
+                      fontSize: "0.875rem",
+                      color: "var(--color-main-text)",
+                    }}
+                  >
+                    Yangnyeom is crispy fried chicken coated in a sweet and
+                    spicy sauce.
+                  </div>
+                ),
+              },
+              {
+                value: "ingredients",
+                label: "Ingredients",
+                children: (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      background: "var(--color-disabled)",
+                      borderRadius: "0.5rem",
+                      fontSize: "0.875rem",
+                      color: "var(--color-main-text)",
+                    }}
+                  >
+                    Chicken, gochujang, soy sauce, garlic, ginger, sesame oil,
+                    sugar.
+                  </div>
+                ),
+              },
+              {
+                value: "directions",
+                label: "Directions",
+                children: (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      background: "var(--color-disabled)",
+                      borderRadius: "0.5rem",
+                      fontSize: "0.875rem",
+                      color: "var(--color-main-text)",
+                    }}
+                  >
+                    1. Fry the chicken. 2. Mix the sauce. 3. Toss and serve.
+                  </div>
+                ),
+              },
+            ]}
+            activeTab={activeTab}
+            onChange={setActiveTab}
+          />
+        </div>
+      </Section>
+
       <Section title="Separator">
         <div style={{ width: "100%" }}>
           <Separator />
-          <Separator align="left" />
-          <Separator align="right" />
+          <Separator />
+          <Separator />
           <div
             style={{ display: "flex", height: "4rem", alignItems: "stretch" }}
           >
-            <Separator variant="vertical" />
+            <Separator />
             <span style={{ padding: "0 1rem" }}>Texto</span>
-            <Separator variant="vertical" />
+            <Separator />
           </div>
         </div>
       </Section>

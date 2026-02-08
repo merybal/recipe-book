@@ -25,6 +25,12 @@
 
     .title-container {
       @include Flex($align: center, $justify: space-between);
+      @include Margin($bottom: md);
+    }
+
+    .source-container {
+      @include Flex($align: center, $gap: sm);
+      width: 100%;
     }
 
     .recipe-info-container {
