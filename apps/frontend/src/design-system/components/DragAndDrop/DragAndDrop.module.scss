@@ -11,8 +11,10 @@
   @include Padding($all: xl);
   @include Color($font: main-text);
 
-  min-height: 10rem;
-  width: 20rem;
+  aspect-ratio: 4 / 3;
+  //TODO tamaño desktop
+  // min-height: 10rem;
+  // width: 20rem;
   @include Transition((background-color));
 
   &.single-image-preview {

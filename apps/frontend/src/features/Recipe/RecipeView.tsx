@@ -6,9 +6,9 @@ import Instructions from "@/features/Recipe/Instructions";
 import IngredientList from "@/features/Recipe/IngredientList";
 import BottomSheet from "../../design-system/components/BottomSheet";
 import FoodAllergies from "./FoodAllergies";
-// import Source from "../components/Source";
 import Separator from "../../design-system/components/Separator/Separator";
-import Chip from "../../design-system/components/Chip/Chip";
+import Source from "./Source";
+import ButtonIcon from "@/design-system/components/ButtonIcon/ButtonIcon";
 
 import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
 
@@ -156,7 +156,33 @@ const RecipeView = () => {
             <FoodAllergies allergies={recipe.foodAllergies} />
           )}
         </div>
-        <Separator marginY="lg" />
+
+        {/* <Separator marginY="lg" /> */}
+
+        <div className={styles["source-container"]}>
+          <Source
+            source={
+              recipe.source ?? {
+                name: ["Laura Bolomo"],
+                url: [
+                  "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
+                ],
+              }
+            }
+          />
+          <ButtonIcon
+            icon="Download"
+            label="Descargar receta como PDF"
+            size="small"
+            variant="primary"
+            onClick={() => {
+              console.log("descargar receta como PDF");
+            }}
+          />
+        </div>
+
+        <Separator marginY="md" />
+
         <div className={styles["recipe-info-container"]}>
           <div className={styles["baking-container"]}>
             {recipe.bakingInstructions && (
@@ -178,15 +204,18 @@ const RecipeView = () => {
                 {recipe.mold.size && <p>{recipe.mold.size}</p>}
               </div>
             )}
-            {/* {recipe.servings && ( */}
+            {/* {recipe.servings && (
+              <div className={styles.item}>
+                <h3>Rinde</h3>
+                <p>{recipe.servings}</p>
+              </div>
+            )} */}
             <div className={styles.item}>
-              {/* <p>{recipe.servings}</p>*/}
               <h3>Rinde</h3>
               <p>4 porciones</p>
             </div>
-            {/* )} */}
           </div>
-          {/* {source && <Source source={source} />} */}
+          {/* {recipe.source && <Source source={recipe.source} />} */}
         </div>
       </header>
       <Separator marginY="lg" />

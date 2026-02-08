@@ -3,9 +3,6 @@ import type { RecipeType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
-import EditableInput from "../../design-system/components/EditableInput/EditableInput";
-import MultipleEditableFields from "@/design-system/components/MultipleEditableFields";
-import EditableTextarea from "@/design-system/components/EditableTextarea";
 import Separator from "@/design-system/components/Separator";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 
@@ -17,6 +14,14 @@ export type RecipePreviewProps = {
   coverImageFiles?: File[];
   /** Se llama cuando el usuario cambia la imagen de portada desde el preview. */
   onCoverImageChange?: (files: File[]) => void;
+  /** Se llama al pulsar "Editar portada"; típicamente para ir al step 0 del formulario. */
+  onEditCover?: () => void;
+  /** Se llama al pulsar "Editar subrecetas"; típicamente para ir al step 4 del formulario. */
+  onEditSubrecipes?: () => void;
+  /** Se llama al pulsar "Editar cocción"; típicamente para ir al step 2 del formulario. */
+  onEditBakingInstructions?: () => void;
+  /** Se llama al pulsar "Editar molde"; típicamente para ir al step 1 del formulario. */
+  onEditMold?: () => void;
 };
 
 const RecipePreview = ({
@@ -24,7 +29,10 @@ const RecipePreview = ({
   recipeData,
   onChange,
   coverImageFiles = [],
-  onCoverImageChange,
+  onEditCover,
+  onEditSubrecipes,
+  onEditBakingInstructions,
+  onEditMold,
 }: RecipePreviewProps) => {
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
 
@@ -44,14 +52,14 @@ const RecipePreview = ({
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
-      <div className={styles["step-cover"]}>
-        <div className={styles["step-cover-header"]}>
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
           <h2>Portada</h2>
           <ButtonIcon
             icon="Pencil"
             label="Editar portada"
             size="small"
-            onClick={() => {}}
+            onClick={() => onEditCover?.()}
           />
         </div>
         {coverImageSrc && (
@@ -59,152 +67,111 @@ const RecipePreview = ({
             <img src={coverImageSrc} alt={recipeData.title} />
           </div>
         )}
-        <h1 className={styles["recipe-title"]}>{recipeData.title}</h1>
-        <h3>Rinde</h3>
-        <p>{recipeData.servings ? recipeData.servings : "-"}</p>
+        <div>
+          <h3>Título</h3>
+          <p>{recipeData.title}</p>
+        </div>
+        <div>
+          <h3>Rinde</h3>
+          <p>{recipeData.servings ? recipeData.servings : "-"}</p>
+        </div>
       </div>
 
       <Separator />
 
-      <EditableInput
-        id="mold-type-input"
-        label="Tipo de molde"
-        value={recipeData.mold?.type ?? ""}
-        onChange={(newValue) =>
-          onChange({
-            ...recipeData,
-            mold: { ...recipeData.mold, type: newValue },
-          })
-        }
-      />
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
+          <h2>Molde</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar molde"
+            size="small"
+            onClick={() => onEditMold?.()}
+          />
+        </div>
+        <div>
+          <h3>Tipo</h3>
+          <p>{recipeData.mold?.type ? recipeData.mold?.type : "-"}</p>
+        </div>
+        <div>
+          <h3>Tamaño</h3>
+          <p>{recipeData.mold?.size ? recipeData.mold?.size : "-"}</p>
+        </div>
+      </div>
 
-      <EditableInput
-        id="mold-size-input"
-        label="Tamaño del molde"
-        value={recipeData.mold?.size ?? ""}
-        onChange={(newValue) =>
-          onChange({
-            ...recipeData,
-            mold: { ...recipeData.mold, size: newValue },
-          })
-        }
-      />
+      <Separator />
 
-      <EditableInput
-        id="temperature-input"
-        label="Temperatura de horneado en Celcius (°C)"
-        type="number"
-        value={recipeData.bakingInstructions?.temperature?.toString() ?? ""}
-        onChange={(newValue) =>
-          onChange({
-            ...recipeData,
-            bakingInstructions: {
-              ...recipeData.bakingInstructions,
-              temperature: parseInt(newValue, 10),
-            },
-          })
-        }
-      />
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
+          <h2>Cocción</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar cocción"
+            size="small"
+            onClick={() => onEditBakingInstructions?.()}
+          />
+        </div>
+        <div>
+          <h3>Temperatura</h3>
+          <p>
+            {recipeData.bakingInstructions?.temperature
+              ? recipeData.bakingInstructions?.temperature
+              : "-"}
+          </p>
+        </div>
+        <div>
+          <h3>Tiempo</h3>
+          <p>
+            {recipeData.bakingInstructions?.time
+              ? recipeData.bakingInstructions?.time
+              : "-"}
+          </p>
+        </div>
+      </div>
 
-      <EditableInput
-        id="cooking-time-input"
-        label="Tiempo de horneado en minutos"
-        type="number"
-        value={recipeData.bakingInstructions?.time?.toString() ?? ""}
-        onChange={(newValue) =>
-          onChange({
-            ...recipeData,
-            bakingInstructions: {
-              ...recipeData.bakingInstructions,
-              time: parseInt(newValue, 10),
-            },
-          })
-        }
-      />
+      <Separator />
 
-      {(recipeData.subrecipes ?? []).map((subrecipe, index) => {
-        return (
-          <div key={index}>
-            {subrecipe.title && <h3>{subrecipe.title}</h3>}
-            {subrecipe.ingredients.map((ingredient, ingredientIndex) => (
-              <MultipleEditableFields
-                key={`ingredient-${ingredientIndex}`}
-                singleLabel={`Ingrediente ${ingredientIndex + 1}`}
-                fields={[
-                  {
-                    key: "name",
-                    label: "Ingrediente",
-                    value: ingredient.name ?? "",
-                    component: "input",
-                  },
-                  {
-                    key: "amount",
-                    label: "Cantidad",
-                    value: ingredient.amount?.toString() ?? "",
-                    component: "input",
-                    type: "number",
-                  },
-                  {
-                    key: "unit",
-                    label: "Unidad",
-                    value: ingredient.unit ?? "",
-                    component: "select",
-                    options: [
-                      { value: "g", label: "g" },
-                      { value: "kg", label: "kg" },
-                      { value: "cdas", label: "cdas" },
-                      { value: "cditas", label: "cditas" },
-                      { value: "ml", label: "ml" },
-                      { value: "unidades", label: "unidades" },
-                      { value: "c/n", label: "c/n" },
-                    ],
-                  },
-                ]}
-                onChange={(updatedFields) => {
-                  const updatedIngredients = [...subrecipe.ingredients];
-                  updatedIngredients[ingredientIndex] = {
-                    ...updatedIngredients[ingredientIndex],
-                    name: updatedFields.name ?? ingredient.name,
-                    amount:
-                      updatedFields.amount !== undefined
-                        ? parseFloat(updatedFields.amount)
-                        : ingredient.amount,
-                    unit: updatedFields.unit ?? ingredient.unit,
-                  };
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
+          <h2>Preparación</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar preparación"
+            size="small"
+            onClick={() => onEditSubrecipes?.()}
+          />
+        </div>
+        <div>
+          <h3>Título</h3>
+          <p>
+            {recipeData.subrecipes[0].title
+              ? recipeData.subrecipes[0].title
+              : "-"}
+          </p>
+        </div>
+        <div>
+          <h3>Ingredientes</h3>
+          <p>
+            {recipeData.subrecipes[0].ingredients
+              .map((ingredient) => ingredient.name)
+              .join(", ")
+              ? recipeData.subrecipes[0].ingredients
+                  .map((ingredient) => ingredient.name)
+                  .join(", ")
+              : "-"}
+          </p>
+        </div>
+        <div>
+          <h3>Instrucciones</h3>
+          <p>
+            {recipeData.subrecipes[0].instructions.join(", ")
+              ? recipeData.subrecipes[0].instructions.join(", ")
+              : "-"}
+          </p>
+        </div>
+      </div>
 
-                  const updatedSubrecipes = [...recipeData.subrecipes];
-                  updatedSubrecipes[index] = {
-                    ...subrecipe,
-                    ingredients: updatedIngredients,
-                  };
-
-                  onChange({ ...recipeData, subrecipes: updatedSubrecipes });
-                }}
-              />
-            ))}
-
-            <EditableTextarea
-              id={`instructions-${subrecipe.title || ""}`}
-              label={`Instrucciones: ${
-                subrecipe.title || `Subreceta ${index + 1}`
-              }`}
-              showLabel
-              value={subrecipe.instructions?.join("\n") ?? ""}
-              onChange={(newValue) => {
-                const updatedSubrecipes = [...recipeData.subrecipes];
-                updatedSubrecipes[index] = {
-                  ...subrecipe,
-                  instructions: newValue
-                    .split("\n")
-                    .map((line) => line.trim())
-                    .filter(Boolean),
-                };
-                onChange({ ...recipeData, subrecipes: updatedSubrecipes });
-              }}
-            />
-          </div>
-        );
-      })}
+      <Separator />
     </div>
   );
 };

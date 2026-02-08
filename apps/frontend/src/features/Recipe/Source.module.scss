@@ -3,9 +3,19 @@
 
 //TODO revisar cuando viene un solo autor
 .source-container {
-  @include Flex($justify: space-around);
+  width: 100%;
 
   .source {
-    @include Flex($align: center, $gap: xs);
+    @include Flex($align: center, $justify: space-between);
+
+    .name-container {
+      @include Flex($align: center, $gap: xs);
+    }
+  }
+
+  .external-link {
+    @include Flex($align: center, $justify: center);
+    height: 2rem;
+    width: 2rem;
   }
 }

@@ -161,14 +161,14 @@ const StepSubrecipes = ({
 
   return (
     <section aria-labelledby="subrecipes-section" className={styles.step}>
-      <h2 id="subrecipes-section">Preparaciones</h2>
+      <h2 id="subrecipes-section">Preparación</h2>
 
       <Button
         type="button"
         label={
           isChecked
             ? "Volver a una sola preparación"
-            : "Separar receta en preparaciones"
+            : "Separar receta en varias preparaciones"
         }
         variant="secondary"
         onClick={

@@ -15,18 +15,20 @@ const Source = ({ source }: SourceProps) => {
       {source?.name?.map((name, i) => {
         return (
           <div className={styles.source} key={i}>
-            <Icon
-              name="ChefHat"
-              color="primary"
-              background="primary-light"
-              size="sm"
-            />
-            <p>{name}</p>
+            <div className={styles["name-container"]}>
+              <Icon
+                name="ChefHat"
+                color="primary"
+                background="primary-light"
+                size="sm"
+              />
+              <p>{name}</p>
+            </div>
             {source?.url && source?.url[i] && (
               <a
+                className={styles["external-link"]}
                 href={source?.url[i]}
                 target="_blank"
-                className={styles.externalLink}
               >
                 <Icon name="ExternalLink" color="primary" size="sm" />
               </a>

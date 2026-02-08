@@ -1,13 +1,14 @@
 @use "../../design-system/styles/flex" as *;
 @use "../../design-system/styles/border" as *;
+@use "../../design-system/styles/spacing" as *;
 
 .recipe-preview {
   @include Flex($direction: column);
 
-  .step-cover {
+  .step {
     @include Flex($direction: column, $gap: lg);
 
-    .step-cover-header {
+    .step-header {
       @include Flex($justify: space-between, $align: center);
     }
 
@@ -24,6 +25,10 @@
         object-position: center;
         display: block;
       }
+    }
+
+    h3 {
+      @include Margin($bottom: sm);
     }
   }
 }

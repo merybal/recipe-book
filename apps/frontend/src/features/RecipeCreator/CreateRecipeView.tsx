@@ -117,8 +117,12 @@ const recipeExample = {
   },
 };
 
+const PREVIEW_STEP_INDEX = 4;
+
 const CreateRecipeView = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  /** True cuando el usuario fue al step 0 desde "Editar portada" en la preview. */
+  const [editingCoverFromPreview, setEditingCoverFromPreview] = useState(false);
 
   const [recipe, setRecipe] = useState<RecipeType>({
     title: "",
@@ -148,6 +152,9 @@ const CreateRecipeView = () => {
   const totalSteps = 5;
 
   const isMobile = useIsMobile();
+
+  const pageTitle =
+    currentStep === 4 ? "Revisá tu receta" : "Creá una nueva receta";
 
   // TODO borrar
   useEffect(() => {
@@ -215,6 +222,11 @@ const CreateRecipeView = () => {
   };
 
   const prevStep = () => {
+    if (currentStep === 0 && editingCoverFromPreview) {
+      setEditingCoverFromPreview(false);
+      setCurrentStep(PREVIEW_STEP_INDEX);
+      return;
+    }
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
 
@@ -234,6 +246,22 @@ const CreateRecipeView = () => {
     return false;
   };
 
+  /** Valida la portada y, si es válida, vuelve al step de preview. Usado desde "Editar portada". */
+  const saveCoverAndReturnToPreview = () => {
+    const { title } = validateStepCover(recipe);
+    if (title) {
+      setErrors((prev) => ({ ...prev, title }));
+      return;
+    }
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.title;
+      return next;
+    });
+    setEditingCoverFromPreview(false);
+    setCurrentStep(PREVIEW_STEP_INDEX);
+  };
+
   //TODO falta autor
   //TODO falta food allergies
 
@@ -241,10 +269,7 @@ const CreateRecipeView = () => {
   //TODO hcaer ids dinamicos
 
   return (
-    <PageLayout
-      className={styles["create-recipe-page"]}
-      title="Crear nueva receta"
-    >
+    <PageLayout className={styles["create-recipe-page"]} title={pageTitle}>
       <form
         className={styles["recipe-form"]}
         onSubmit={(e) => e.preventDefault()}
@@ -311,20 +336,31 @@ const CreateRecipeView = () => {
             onChange={setRecipe}
             coverImageFiles={files}
             onCoverImageChange={setFiles}
+            onEditCover={() => {
+              setEditingCoverFromPreview(true);
+              setCurrentStep(0);
+            }}
           />
         )}
 
         <div className={styles["form-navigation"]}>
-          {currentStep > 0 && (
+          {(currentStep > 0 || editingCoverFromPreview) && (
             <Button
               type="button"
-              label="Anterior"
+              label={editingCoverFromPreview ? "Cancelar edición" : "Anterior"}
               variant="secondary"
               onClick={prevStep}
               disabled={hasStepErrors()}
             />
           )}
-          {currentStep < totalSteps - 1 ? (
+          {currentStep === 0 && editingCoverFromPreview ? (
+            <Button
+              type="button"
+              label="Guardar cambios"
+              onClick={saveCoverAndReturnToPreview}
+              disabled={hasStepErrors()}
+            />
+          ) : currentStep < totalSteps - 1 ? (
             <Button
               type="button"
               label="Siguiente"
@@ -335,8 +371,7 @@ const CreateRecipeView = () => {
             <Button
               type="submit"
               label="Guardar receta"
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
                 console.log("submiiiiit");
               }}
             />
