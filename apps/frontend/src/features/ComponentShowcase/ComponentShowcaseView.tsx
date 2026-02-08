@@ -27,7 +27,7 @@ import Separator from "@/design-system/components/Separator";
 import Table from "@/design-system/components/Table";
 import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
-import Tabs from "@/design-system/components/Tabs";
+import Tabs, { Tab } from "@/design-system/components/Tabs";
 import Textarea from "@/design-system/components/Textarea";
 
 import type { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
@@ -73,7 +73,6 @@ const ComponentShowcaseView = () => {
     { name: "Azúcar", amount: 100, unit: "g" },
   ]);
   const [chips, setChips] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState("overview");
 
   const [fields, setFields] = useState<EditableFieldType[]>([
     { key: "name", label: "Nombre", value: "Ejemplo", component: "input" },
@@ -419,66 +418,49 @@ const ComponentShowcaseView = () => {
 
       <Section title="Tabs">
         <div style={{ width: "100%" }}>
-          <Tabs
-            id="showcase-tabs"
-            tabs={[
-              {
-                value: "overview",
-                label: "Overview",
-                children: (
-                  <div
-                    style={{
-                      padding: "1rem",
-                      background: "var(--color-disabled)",
-                      borderRadius: "0.5rem",
-                      fontSize: "0.875rem",
-                      color: "var(--color-main-text)",
-                    }}
-                  >
-                    Yangnyeom is crispy fried chicken coated in a sweet and
-                    spicy sauce.
-                  </div>
-                ),
-              },
-              {
-                value: "ingredients",
-                label: "Ingredients",
-                children: (
-                  <div
-                    style={{
-                      padding: "1rem",
-                      background: "var(--color-disabled)",
-                      borderRadius: "0.5rem",
-                      fontSize: "0.875rem",
-                      color: "var(--color-main-text)",
-                    }}
-                  >
-                    Chicken, gochujang, soy sauce, garlic, ginger, sesame oil,
-                    sugar.
-                  </div>
-                ),
-              },
-              {
-                value: "directions",
-                label: "Directions",
-                children: (
-                  <div
-                    style={{
-                      padding: "1rem",
-                      background: "var(--color-disabled)",
-                      borderRadius: "0.5rem",
-                      fontSize: "0.875rem",
-                      color: "var(--color-main-text)",
-                    }}
-                  >
-                    1. Fry the chicken. 2. Mix the sauce. 3. Toss and serve.
-                  </div>
-                ),
-              },
-            ]}
-            activeTab={activeTab}
-            onChange={setActiveTab}
-          />
+          <Tabs id="showcase-tabs" defaultValue="overview">
+            <Tab value="overview" label="Overview">
+              <div
+                style={{
+                  padding: "1rem",
+                  background: "var(--color-disabled)",
+                  borderRadius: "0.5rem",
+                  fontSize: "0.875rem",
+                  color: "var(--color-main-text)",
+                }}
+              >
+                Yangnyeom is crispy fried chicken coated in a sweet and spicy
+                sauce.
+              </div>
+            </Tab>
+            <Tab value="ingredients" label="Ingredients">
+              <div
+                style={{
+                  padding: "1rem",
+                  background: "var(--color-disabled)",
+                  borderRadius: "0.5rem",
+                  fontSize: "0.875rem",
+                  color: "var(--color-main-text)",
+                }}
+              >
+                Chicken, gochujang, soy sauce, garlic, ginger, sesame oil,
+                sugar.
+              </div>
+            </Tab>
+            <Tab value="directions" label="Directions">
+              <div
+                style={{
+                  padding: "1rem",
+                  background: "var(--color-disabled)",
+                  borderRadius: "0.5rem",
+                  fontSize: "0.875rem",
+                  color: "var(--color-main-text)",
+                }}
+              >
+                1. Fry the chicken. 2. Mix the sauce. 3. Toss and serve.
+              </div>
+            </Tab>
+          </Tabs>
         </div>
       </Section>
 

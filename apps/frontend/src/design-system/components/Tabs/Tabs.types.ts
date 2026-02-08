@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type TabItem = {
+export type TabProps = {
   /** Unique value that identifies the tab. */
   value: string;
   /** Visible label for the tab. */
@@ -10,12 +10,12 @@ export type TabItem = {
 };
 
 export type TabsProps = {
-  /** List of tabs (value, label). */
-  tabs: TabItem[];
-  /** Value of the currently active tab. */
-  activeTab: string;
-  /** Called when the user selects a different tab. */
-  onChange: (value: string) => void;
+  /** Tab components; each defines value, label, and panel content as children. */
+  children: ReactNode;
+  /** Initial active tab value. Defaults to the first tab if not set. */
+  defaultValue?: string;
+  /** Called when the user selects a different tab (optional). */
+  onChange?: (value: string) => void;
   /** Extra CSS class for the container. */
   className?: string;
   /** Id for the container (e.g. for aria-labelledby on the content panel). */
