@@ -35,14 +35,6 @@
   .recipe-info-container {
     @include Flex($direction: column, $gap: lg);
 
-    h3 {
-      @include Color($font: primary);
-    }
-
-    p {
-      @include Color($font: secondary-text);
-    }
-
     .baking-container {
       @include Flex($gap: xxs, $justify: space-around);
       .item {
@@ -50,8 +42,4 @@
       }
     }
   }
-}
-
-.preparation-title {
-  text-transform: uppercase;
 }

@@ -18,8 +18,8 @@ const Source = ({ source }: SourceProps) => {
             <div className={styles["name-container"]}>
               <Icon
                 name="ChefHat"
-                color="primary"
-                background="primary-light"
+                color="secondary"
+                background="secondary-light"
                 size="sm"
               />
               <p>{name}</p>
@@ -30,7 +30,7 @@ const Source = ({ source }: SourceProps) => {
                 href={source?.url[i]}
                 target="_blank"
               >
-                <Icon name="ExternalLink" color="primary" size="sm" />
+                <Icon name="ExternalLink" color="secondary" size="sm" />
               </a>
             )}
           </div>

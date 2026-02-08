@@ -12,11 +12,14 @@ export type FoodAllergiesProps = {
   className?: string;
 };
 
-const allergyToIconName: Record<FoodAllergyType, IconName> = {
-  glutenFree: "Wheat",
-  dairyFree: "Milk",
-  vegan: "Leaf",
-  vegetarian: "Carrot",
+const FOOD_ALLERGY_CONFIG: Record<
+  FoodAllergyType,
+  { iconName: IconName; label: string; color: string }
+> = {
+  glutenFree: { iconName: "Wheat", label: "Sin gluten", color: "ochre" },
+  dairyFree: { iconName: "Milk", label: "Sin lactosa", color: "dark-gray" },
+  vegan: { iconName: "Leaf", label: "Vegano", color: "green" },
+  vegetarian: { iconName: "Carrot", label: "Vegetariano", color: "orange" },
 };
 
 const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {
@@ -26,14 +29,15 @@ const FoodAllergies = ({ allergies, className }: FoodAllergiesProps) => {
 
   return (
     <div className={clsx(styles["food-allergies-container"], className)}>
-      {filteredAllergies?.map((allergy) => (
-        <Icon
-          key={allergy}
-          className={styles.allergyIcon}
-          name={allergyToIconName[allergy]}
-          size="sm"
-        />
-      ))}
+      {filteredAllergies?.map((allergy) => {
+        const config = FOOD_ALLERGY_CONFIG[allergy];
+        return (
+          <div className={styles["allergy-container"]} key={allergy}>
+            <Icon name={config.iconName} size="sm" color={config.color} />
+            <p>{config.label}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

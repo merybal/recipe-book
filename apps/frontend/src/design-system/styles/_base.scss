@@ -1,5 +1,6 @@
-@use "../design-system/styles/font" as *;
-@use "../design-system/styles/color" as *;
+@use "./_font" as *;
+@use "./_color" as *;
+@use "./_form" as form;
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 body {
@@ -54,6 +55,10 @@ select,
 table {
   @include Font($family: text, $weight: medium);
   @include Color($font: main-text);
+}
+
+.required-asterisk {
+  @include form.RequiredAsterisk;
 }
 
 @media (max-width: 768px) {

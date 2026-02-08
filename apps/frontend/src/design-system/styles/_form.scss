@@ -47,6 +47,10 @@
   @include Margin($bottom: sm);
 }
 
+@mixin RequiredAsterisk {
+  @include Color($font: disruptive);
+}
+
 @mixin Placeholder {
   @include Font($family: text, $weight: medium);
   @include Color($font: secondary-text);

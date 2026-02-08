@@ -29,7 +29,9 @@ import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
 import Tabs, { Tab } from "@/design-system/components/Tabs";
 import Textarea from "@/design-system/components/Textarea";
+import FoodAllergies from "@/features/Recipe/FoodAllergies";
 
+import type { FoodAllergyType } from "@/types";
 import type { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
 
 const Section = ({
@@ -414,6 +416,22 @@ const ComponentShowcaseView = () => {
             helper="Agregá chips con Enter o coma. Backspace vacío borra el último."
           />
         </div>
+      </Section>
+
+      <Section title="FoodAllergies">
+        <FoodAllergies
+          allergies={
+            [
+              "glutenFree",
+              "dairyFree",
+              "vegan",
+              "vegetarian",
+            ] as FoodAllergyType[]
+          }
+        />
+        <FoodAllergies
+          allergies={["vegetarian"] as FoodAllergyType[]}
+        />
       </Section>
 
       <Section title="Tabs">

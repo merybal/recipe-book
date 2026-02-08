@@ -32,7 +32,7 @@ const CheckboxGroup = ({
       aria-required={required}
     >
       <legend className={styles.legend}>
-        {label} {required && <span aria-hidden="true">*</span>}
+        {label} {required && <span className="required-asterisk" aria-hidden="true">*</span>}
       </legend>
       {options.map((option) => (
         <Checkbox

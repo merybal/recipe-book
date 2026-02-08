@@ -3,4 +3,8 @@
 
 .food-allergies-container {
   @include Flex($align: start, $gap: xs);
+
+  .allergy-container {
+    @include Flex($align: center, $gap: xs);
+  }
 }

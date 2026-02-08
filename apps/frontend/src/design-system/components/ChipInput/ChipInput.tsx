@@ -64,7 +64,7 @@ const ChipInput = ({
             showLabel && styles["show-label"],
           )}
         >
-          {label} {required && <span aria-hidden="true">*</span>}
+          {label} {required && <span className="required-asterisk" aria-hidden="true">*</span>}
         </p>
         <div
           className={clsx(

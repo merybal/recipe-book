@@ -73,7 +73,7 @@ const Input = ({
             [styles["show-label"]]: showLabel,
           })}
         >
-          {label} {required && <span aria-hidden="true">*</span>}
+          {label} {required && <span className="required-asterisk" aria-hidden="true">*</span>}
         </p>
         {iconLeft && (
           <Icon
