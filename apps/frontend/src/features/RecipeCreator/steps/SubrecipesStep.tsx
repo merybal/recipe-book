@@ -20,9 +20,9 @@ type SimpleRecipeDraft = {
   instructions: string[];
 };
 
-type StepSubrecipesProps = {
-  isChecked: boolean;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+type SubrecipesStepProps = {
+  isSelected: boolean;
+  setIsSelected: React.Dispatch<React.SetStateAction<boolean>>;
   subrecipeDrafts: SubrecipeDraftType[];
   setSubrecipeDrafts: React.Dispatch<
     React.SetStateAction<SubrecipeDraftType[]>
@@ -31,16 +31,16 @@ type StepSubrecipesProps = {
   setSimpleRecipeDraft: React.Dispatch<React.SetStateAction<SimpleRecipeDraft>>;
 } & RecipeStateType;
 
-const StepSubrecipes = ({
-  isChecked,
-  setIsChecked,
+const SubrecipesStep = ({
+  isSelected,
+  setIsSelected,
   subrecipeDrafts,
   setSubrecipeDrafts,
   simpleRecipeDraft,
   setSimpleRecipeDraft,
-}: StepSubrecipesProps) => {
+}: SubrecipesStepProps) => {
   const handleSeparateIntoPreparations = () => {
-    setIsChecked(true);
+    setIsSelected(true);
     setSubrecipeDrafts([
       {
         title: "",
@@ -66,7 +66,7 @@ const StepSubrecipes = ({
       instructions: subrecipeDrafts.flatMap((d) => d.instructions),
     });
     setSubrecipeDrafts([]);
-    setIsChecked(false);
+    setIsSelected(false);
   };
 
   const handleSubrecipeChange = (
@@ -163,26 +163,28 @@ const StepSubrecipes = ({
     <section aria-labelledby="subrecipes-section" className={styles.step}>
       <h2 id="subrecipes-section">Preparación</h2>
 
-      <Button
-        type="button"
-        label={
-          isChecked
-            ? "Volver a una sola preparación"
-            : "Separar receta en varias preparaciones"
-        }
-        variant="secondary"
-        onClick={
-          isChecked ? handleUniteIntoOne : handleSeparateIntoPreparations
-        }
-      />
-      {!isChecked && (
-        <p className={styles["step-helper"]}>
-          Permite agregar una sección de ingredientes e instrucciones para cada
-          preparación.
-        </p>
-      )}
+      <div>
+        <Button
+          type="button"
+          label={
+            isSelected
+              ? "Volver a una sola preparación"
+              : "Separar receta en varias preparaciones"
+          }
+          variant="secondary"
+          onClick={
+            isSelected ? handleUniteIntoOne : handleSeparateIntoPreparations
+          }
+        />
+        {!isSelected && (
+          <p className={styles["step-helper"]}>
+            Permite agregar una sección de ingredientes e instrucciones para
+            cada preparación.
+          </p>
+        )}
+      </div>
 
-      {isChecked ? (
+      {isSelected ? (
         <>
           {subrecipeDrafts.map((draft, index) => (
             <div key={index}>
@@ -252,4 +254,4 @@ const StepSubrecipes = ({
   );
 };
 
-export default StepSubrecipes;
+export default SubrecipesStep;

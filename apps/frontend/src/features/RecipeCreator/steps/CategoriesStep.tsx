@@ -1,7 +1,7 @@
-import Select from "@/design-system/components/Select";
-import RadioGroup from "@/design-system/components/RadioGroup";
-import CheckboxGroup from "@/design-system/components/CheckboxGroup";
+import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
+import RadioGroup from "@/design-system/components/RadioGroup";
+import Select from "@/design-system/components/Select";
 import Separator from "@/design-system/components/Separator";
 
 import type { RecipeStateType, ErrorStateType } from "@/types";
@@ -37,14 +37,14 @@ const SUBCATEGORY_OPTIONS_DULCE = [
   { value: "scon", label: "Scon" },
 ];
 
-type StepCategoriesProps = RecipeStateType & ErrorStateType;
+type CategoriesStepProps = RecipeStateType & ErrorStateType;
 
-const StepCategories = ({
+const CategoriesStep = ({
   errors,
   recipe,
   setErrors,
   setRecipe,
-}: StepCategoriesProps) => {
+}: CategoriesStepProps) => {
   const handleCategoryChange = (e: { target: { value: string } }) => {
     const value = e.target.value;
     setRecipe((prev) => ({
@@ -121,14 +121,38 @@ const StepCategories = ({
 
       <Separator />
 
-      <CheckboxGroup
-        name="foodAllergies"
-        label="Alergias alimentarias"
-        options={FOOD_ALLERGY_OPTIONS}
-        value={foodAllergies}
-        onChange={handleFoodAllergiesChange}
-        error={errors.foodAllergies}
-      />
+      <div className={styles["fieldset-categories"]}>
+        <label
+          className={styles["legend-categories"]}
+          id="food-allergies-label"
+        >
+          Alergias alimentarias
+        </label>
+        <div className={styles["chips-container"]}>
+          {FOOD_ALLERGY_OPTIONS.map((option) => {
+            const isSelected = foodAllergies.includes(option.value);
+            return (
+              <Chip
+                key={option.value}
+                selected={isSelected}
+                onClick={() => {
+                  const newValues = isSelected
+                    ? foodAllergies.filter((v) => v !== option.value)
+                    : [...foodAllergies, option.value];
+                  handleFoodAllergiesChange(newValues);
+                }}
+              >
+                {option.label}
+              </Chip>
+            );
+          })}
+        </div>
+        {errors.foodAllergies && (
+          <p className={styles["error-message"]} role="alert">
+            {errors.foodAllergies}
+          </p>
+        )}
+      </div>
 
       <Separator />
 
@@ -144,4 +168,4 @@ const StepCategories = ({
   );
 };
 
-export default StepCategories;
+export default CategoriesStep;

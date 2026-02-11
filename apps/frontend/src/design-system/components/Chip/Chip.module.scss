@@ -40,18 +40,26 @@
     cursor: pointer;
     text-align: inherit;
   }
+
+  &.selected {
+    @include Color($bg: secondary-dark, $font: white);
+  }
 }
 
 // Hover only on the X when chip is removable
 @media (hover: hover) and (pointer: fine) {
   .chip.removable .remove-button:hover {
-    @include Color($bg: secondary-dark, $font: white);
+    @include Color($bg: secondary-hover, $font: white);
   }
 }
 
 // Hover on whole chip when chip is clickable
 @media (hover: hover) and (pointer: fine) {
-  .chip.clickable:hover {
-    @include Color($bg: secondary-dark, $font: white);
+  .chip.clickable:hover:not(.selected) {
+    @include Color($bg: secondary-hover, $font: white);
+  }
+
+  .chip.clickable.selected:hover {
+    @include Color($bg: secondary-hover, $font: white);
   }
 }

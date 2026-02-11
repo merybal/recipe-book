@@ -10,6 +10,7 @@ const Chip = ({
   children,
   onClick,
   onRemove,
+  selected = false,
 }: ChipProps) => {
   const isRemovable = Boolean(onRemove);
   const isClickable = Boolean(onClick) && !isRemovable;
@@ -18,6 +19,7 @@ const Chip = ({
     styles.chip,
     isRemovable && styles.removable,
     isClickable && styles.clickable,
+    selected && styles.selected,
     className
   );
 

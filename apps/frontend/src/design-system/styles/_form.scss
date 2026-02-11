@@ -60,6 +60,7 @@
   @include Font($family: text, $weight: medium, $size: xs);
   @include Padding($top: sm, $left: lg);
   @include Color($font: secondary-text);
+  line-height: 1.5;
 }
 
 @mixin ErrorMessage {

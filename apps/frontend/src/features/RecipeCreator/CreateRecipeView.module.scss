@@ -36,6 +36,14 @@
     @include Color($font: main-text);
   }
 
+  .chips-container {
+    @include Flex($gap: xs, $wrap: wrap);
+  }
+
+  .error-message {
+    @include ErrorMessage;
+  }
+
   .form-navigation {
     @include Flex($gap: sm);
     @include Margin($top: auto);
@@ -45,7 +53,9 @@
   }
 
   .step-helper {
-    @include HelperMessage;
-    @include Margin($top: none, $bottom: none);
+    @include Font($family: text, $weight: medium, $size: xs);
+    @include Color($font: secondary-text);
+    @include Margin($top: md);
+    line-height: 1.5;
   }
 }

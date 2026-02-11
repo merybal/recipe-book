@@ -64,7 +64,6 @@ function RecipeInfoItem({
 
 /**
  * //TODO
- * - revisar que pasa cuando no hay Chips o autores. como se modifica el layout
  * - hay que programar el volver a la pagina anterior?
  * - desktop
  */
@@ -209,22 +208,25 @@ const RecipeView = () => {
         </div>
       </header>
 
-      <Separator marginTop="lg" marginBottom="md" />
+      <Separator marginTop="lg" marginBottom={recipe.source ? "md" : "lg"} />
 
-      <div className={styles["source-container"]}>
-        <Source
-          source={
-            recipe.source ?? {
-              name: ["Laura Bolomo"],
-              url: [
-                "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-              ],
-            }
-          }
-        />
-      </div>
-
-      <Separator marginTop="md" marginBottom="lg" />
+      {recipe.source && (
+        <>
+          <div className={styles["source-container"]}>
+            <Source
+              source={
+                recipe.source ?? {
+                  name: ["Laura Bolomo"],
+                  url: [
+                    "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
+                  ],
+                }
+              }
+            />
+          </div>
+          <Separator marginTop="md" marginBottom="lg" />
+        </>
+      )}
 
       <Tabs defaultValue="Información">
         <Tab value="Información" label="Información">

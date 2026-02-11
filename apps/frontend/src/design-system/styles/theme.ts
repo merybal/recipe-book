@@ -28,6 +28,7 @@ const theme = {
     secondary: "#ff8080",
     "secondary-light": "#ffcccc",
     "secondary-dark": "#e66666",
+    "secondary-hover": "#d95454",
     disruptive: "#ff0000",
     "disruptive-dark": "#cc0000",
     "main-text": "#3e5481",

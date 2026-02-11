@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 import Button from "@/design-system/components/Button";
-import StepCover from "@/features/RecipeCreator/steps/CoverStep";
-import StepCategories from "@/features/RecipeCreator/steps/CategoriesStep";
-import StepMoldAndBakingInstructions from "./steps/MoldAndBakingInstructionsStep";
-import StepSubrecipes from "./steps/SubrecipesStep";
+import CoverStep from "@/features/RecipeCreator/steps/CoverStep";
+import CategoriesStep from "@/features/RecipeCreator/steps/CategoriesStep";
+import InformationStep from "./steps/InformationStep";
+import SubrecipesStep from "./steps/SubrecipesStep";
 import PageLayout from "@/design-system/components/PageLayout/PageLayout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import {
@@ -145,7 +145,7 @@ const CreateRecipeView = () => {
     instructions: [],
   });
 
-  const [isChecked, setIsChecked] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -162,7 +162,7 @@ const CreateRecipeView = () => {
   }, [errors]);
 
   useEffect(() => {
-    if (isChecked) {
+    if (isSelected) {
       // Cuando está dividido en subrecetas, armo el array desde subrecipeDrafts
       const subrecipes = subrecipeDrafts.map((draft) => ({
         title: draft.title,
@@ -183,7 +183,7 @@ const CreateRecipeView = () => {
         ],
       }));
     }
-  }, [subrecipeDrafts, simpleRecipeDraft, isChecked]);
+  }, [subrecipeDrafts, simpleRecipeDraft, isSelected]);
 
   useEffect(() => {
     if (subrecipeDrafts) {
@@ -287,7 +287,7 @@ const CreateRecipeView = () => {
           </p>
         </header>
         {currentStep === 0 && (
-          <StepCover
+          <CoverStep
             errors={errors}
             files={files}
             recipe={recipe}
@@ -298,7 +298,7 @@ const CreateRecipeView = () => {
         )}
 
         {currentStep === 1 && (
-          <StepMoldAndBakingInstructions
+          <InformationStep
             errors={errors}
             recipe={recipe}
             setErrors={setErrors}
@@ -307,11 +307,11 @@ const CreateRecipeView = () => {
         )}
 
         {currentStep === 2 && (
-          <StepSubrecipes
+          <SubrecipesStep
             errors={errors}
             recipe={recipe}
-            isChecked={isChecked}
-            setIsChecked={setIsChecked}
+            isSelected={isSelected}
+            setIsSelected={setIsSelected}
             setRecipe={setRecipe}
             setErrors={setErrors}
             setSimpleRecipeDraft={setSimpleRecipeDraft}
@@ -322,7 +322,7 @@ const CreateRecipeView = () => {
         )}
 
         {currentStep === 3 && (
-          <StepCategories
+          <CategoriesStep
             errors={errors}
             recipe={recipe}
             setErrors={setErrors}

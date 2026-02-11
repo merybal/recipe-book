@@ -5,14 +5,22 @@ import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
-type StepMoldAndBakingInstructionsProps = RecipeStateType & ErrorStateType;
+type InformationStepProps = RecipeStateType & ErrorStateType;
 
-const StepMoldAndBakingInstructions = ({
+const InformationStep = ({
   errors,
   recipe,
   setErrors,
   setRecipe,
-}: StepMoldAndBakingInstructionsProps) => {
+}: InformationStepProps) => {
+  const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setRecipe((prev) => ({
+      ...prev,
+      servings: value,
+    }));
+  };
+
   const handleMoldTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRecipe((prev) => ({
       ...prev,
@@ -96,8 +104,17 @@ const StepMoldAndBakingInstructions = ({
 
   return (
     <div>
+      <Input
+        id="servings"
+        label="Rinde"
+        showLabel
+        placeholder="4 porciones"
+        value={recipe.servings ?? ""}
+        onChange={handleServingsChange}
+      />
+      <Separator />
       <section aria-labelledby="mold-section" className={styles.step}>
-        <h2 id="mold-section">Molde (opcional)</h2>
+        <h2 id="mold-section">Molde</h2>
         <Input
           id="mold-type"
           label="Tipo"
@@ -123,7 +140,7 @@ const StepMoldAndBakingInstructions = ({
         aria-labelledby="baking-instructions-section"
         className={styles.step}
       >
-        <h2 id="baking-instructions-section">Cocción (opcional)</h2>
+        <h2 id="baking-instructions-section">Cocción</h2>
         <Input
           id="temperature"
           inputMode="numeric"
@@ -162,4 +179,4 @@ const StepMoldAndBakingInstructions = ({
   );
 };
 
-export default StepMoldAndBakingInstructions;
+export default InformationStep;

@@ -17,4 +17,8 @@ export type ChipProps = {
    * When provided, shows a remove (X) button that calls this on click. Not compatible with onClick.
    */
   onRemove?: () => void;
+  /**
+   * When true, shows the selected state (same visual as clickable hover).
+   */
+  selected?: boolean;
 };

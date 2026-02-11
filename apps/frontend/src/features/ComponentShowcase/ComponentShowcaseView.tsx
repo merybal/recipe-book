@@ -75,6 +75,7 @@ const ComponentShowcaseView = () => {
     { name: "Azúcar", amount: 100, unit: "g" },
   ]);
   const [chips, setChips] = useState<string[]>([]);
+  const [selectedChips, setSelectedChips] = useState<string[]>([]);
 
   const [fields, setFields] = useState<EditableFieldType[]>([
     { key: "name", label: "Nombre", value: "Ejemplo", component: "input" },
@@ -402,6 +403,33 @@ const ComponentShowcaseView = () => {
         <Chip>Con texto</Chip>
         <Chip onRemove={() => {}}>Con X (removible)</Chip>
         <Chip onClick={() => {}}>Con click (clickable)</Chip>
+        <div style={{ width: "100%" }}>
+          <p style={{ fontSize: "0.875rem", fontWeight: 600, marginBottom: "0.5rem" }}>
+            Chips seleccionables (hover vs selected)
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+            {["Sin gluten", "Sin lactosa", "Vegetariano", "Vegano"].map(
+              (label) => {
+                const isSelected = selectedChips.includes(label);
+                return (
+                  <Chip
+                    key={label}
+                    selected={isSelected}
+                    onClick={() =>
+                      setSelectedChips((prev) =>
+                        isSelected
+                          ? prev.filter((x) => x !== label)
+                          : [...prev, label]
+                      )
+                    }
+                  >
+                    {label}
+                  </Chip>
+                );
+              }
+            )}
+          </div>
+        </div>
       </Section>
 
       <Section title="ChipInput">
