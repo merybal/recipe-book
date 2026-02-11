@@ -2,6 +2,7 @@
 @use "../../design-system/styles/spacing" as *;
 @use "../../design-system/styles/flex" as *;
 @use "../../design-system/styles/color" as *;
+@use "../../design-system/styles/border" as *;
 
 .image-container {
   width: 100%;
@@ -36,9 +37,25 @@
     @include Flex($direction: column, $gap: lg);
 
     .baking-container {
-      @include Flex($gap: xxs, $justify: space-around);
+      @include Flex($direction: column, $gap: sm, $justify: space-between);
+
       .item {
-        @include Flex($direction: column, $gap: xs, $align: center);
+        @include Flex($gap: xs, $align: center);
+        width: 100%;
+
+        .item-header {
+          @include Flex($gap: xs, $align: center);
+          @include Color($font: secondary-dark);
+        }
+
+        .info {
+          @include Flex($gap: xs, $align: center);
+          @include Color($font: secondary-text);
+
+          p {
+            @include Font($size: sm);
+          }
+        }
       }
     }
   }

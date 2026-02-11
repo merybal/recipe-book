@@ -21,7 +21,7 @@
 }
 
 .tab {
-  @include Font($family: text, $size: xs, $weight: medium);
+  @include Font($family: text, $size: sm, $weight: medium);
   @include Border($style: none, $radius: full);
   @include Padding($x: lg, $y: sm);
   @include Color($bg: none);

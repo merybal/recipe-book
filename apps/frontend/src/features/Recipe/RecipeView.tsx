@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 
 import Instructions from "@/features/Recipe/Instructions";
@@ -25,7 +25,42 @@ import type {
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { normalizeUnit } from "@/utils/idml-file-uploader-utils"; //TODO rename file
 
+import type { IconName } from "@/design-system/components/Icon";
+
 import styles from "./RecipeView.module.scss";
+import Icon from "@/design-system/components/Icon/Icon";
+
+function RecipeInfoItem({
+  icon,
+  title,
+  items,
+}: {
+  icon: IconName;
+  title: string;
+  /** Valores a mostrar; se filtran los vacíos y se separan con bullets. */
+  items: (string | undefined | null)[];
+}) {
+  const validItems = items.filter((x): x is string => x != null && x !== "");
+  if (validItems.length === 0) return null;
+
+  return (
+    <div className={styles.item}>
+      <div className={styles["item-header"]}>
+        <Icon name={icon} color="secondary-dark" size="sm" />
+        <p>{title}</p>
+      </div>
+      <div className={styles.info}>
+        <p>•</p>
+        {validItems.map((item, i) => (
+          <Fragment key={i}>
+            <p>{item}</p>
+            {i < validItems.length - 1 && <p>•</p>}
+          </Fragment>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 /**
  * //TODO
@@ -117,7 +152,7 @@ const RecipeView = () => {
               }
             : {}),
 
-          ...(recipeData.servings && { size: recipeData.servings }),
+          ...(recipeData.servings && { servings: recipeData.servings }),
 
           ...(recipeData.recipe_food_allergies?.length > 0 && {
             foodAllergies: recipeData.recipe_food_allergies
@@ -191,41 +226,39 @@ const RecipeView = () => {
 
       <Separator marginTop="md" marginBottom="lg" />
 
-      <Tabs defaultValue="Resumen">
-        <Tab value="Resumen" label="Resumen">
+      <Tabs defaultValue="Información">
+        <Tab value="Información" label="Información">
           <div className={styles["recipe-info-container"]}>
             <div className={styles["baking-container"]}>
               {recipe.bakingInstructions && (
-                <div className={styles.item}>
-                  <h3>Cocción</h3>
-                  {recipe.bakingInstructions.time && (
-                    <p>{recipe.bakingInstructions.time} minutos</p>
-                  )}
-
-                  {recipe.bakingInstructions.temperature && (
-                    <p>{recipe.bakingInstructions.temperature}°C</p>
-                  )}
-                </div>
+                <RecipeInfoItem
+                  icon="Clock"
+                  title="Cocción"
+                  items={[
+                    recipe.bakingInstructions.time
+                      ? `${recipe.bakingInstructions.time} minutos`
+                      : undefined,
+                    recipe.bakingInstructions.temperature
+                      ? `${recipe.bakingInstructions.temperature}°C`
+                      : undefined,
+                  ]}
+                />
               )}
               {recipe.mold && (
-                <div className={styles.item}>
-                  <h3>Molde</h3>
-                  {recipe.mold.type && <p>{recipe.mold.type}</p>}
-                  {recipe.mold.size && <p>{recipe.mold.size}</p>}
-                </div>
+                <RecipeInfoItem
+                  icon="Cylinder"
+                  title="Molde"
+                  items={[recipe.mold.type, recipe.mold.size]}
+                />
               )}
-              {/* {recipe.servings && (
-              <div className={styles.item}>
-                <h3>Rinde</h3>
-                <p>{recipe.servings}</p>
-              </div>
-            )} */}
-              <div className={styles.item}>
-                <h3>Rinde</h3>
-                <p>4 porciones</p>
-              </div>
+              {recipe.servings && (
+                <RecipeInfoItem
+                  icon="Utensils"
+                  title="Rinde"
+                  items={[recipe.servings]}
+                />
+              )}
             </div>
-            {/* {recipe.source && <Source source={recipe.source} />} */}
 
             {/* TODO agregar notas
             TODO agregar categorias y subcategorias */}
