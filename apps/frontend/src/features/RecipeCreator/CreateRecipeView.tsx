@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import Button from "@/design-system/components/Button";
 import CoverStep from "@/features/RecipeCreator/steps/CoverStep";
 import CategoriesStep from "@/features/RecipeCreator/steps/CategoriesStep";
-import InformationStep from "./steps/InformationStep";
+import BasicInformationStep from "./steps/BasicInformationStep";
 import SubrecipesStep from "./steps/SubrecipesStep";
+import AdditionalInformationStep from "./steps/AdditionalInformationStep";
 import PageLayout from "@/design-system/components/PageLayout/PageLayout";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import {
@@ -117,7 +118,7 @@ const recipeExample = {
   },
 };
 
-const PREVIEW_STEP_INDEX = 4;
+const PREVIEW_STEP_INDEX = 5;
 
 const CreateRecipeView = () => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -149,12 +150,12 @@ const CreateRecipeView = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const totalSteps = 5;
+  const totalSteps = 6;
 
   const isMobile = useIsMobile();
 
   const pageTitle =
-    currentStep === 4 ? "Revisá tu receta" : "Creá una nueva receta";
+    currentStep === 5 ? "Revisá tu receta" : "Creá una nueva receta";
 
   // TODO borrar
   useEffect(() => {
@@ -298,7 +299,7 @@ const CreateRecipeView = () => {
         )}
 
         {currentStep === 1 && (
-          <InformationStep
+          <BasicInformationStep
             errors={errors}
             recipe={recipe}
             setErrors={setErrors}
@@ -331,6 +332,15 @@ const CreateRecipeView = () => {
         )}
 
         {currentStep === 4 && (
+          <AdditionalInformationStep
+            errors={errors}
+            recipe={recipe}
+            setErrors={setErrors}
+            setRecipe={setRecipe}
+          />
+        )}
+
+        {currentStep === 5 && (
           <RecipePreview
             recipeData={recipe}
             onChange={setRecipe}

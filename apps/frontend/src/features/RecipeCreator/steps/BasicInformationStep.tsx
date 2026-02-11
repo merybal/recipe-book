@@ -5,14 +5,14 @@ import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
-type InformationStepProps = RecipeStateType & ErrorStateType;
+type BasicInformationStepProps = RecipeStateType & ErrorStateType;
 
-const InformationStep = ({
+const BasicInformationStep = ({
   errors,
   recipe,
   setErrors,
   setRecipe,
-}: InformationStepProps) => {
+}: BasicInformationStepProps) => {
   const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setRecipe((prev) => ({
@@ -104,15 +104,19 @@ const InformationStep = ({
 
   return (
     <div>
-      <Input
-        id="servings"
-        label="Rinde"
-        showLabel
-        placeholder="4 porciones"
-        value={recipe.servings ?? ""}
-        onChange={handleServingsChange}
-      />
+      <section aria-labelledby="servings-section" className={styles.step}>
+        <Input
+          id="servings"
+          label="Rinde"
+          showLabel
+          placeholder="4 porciones"
+          value={recipe.servings ?? ""}
+          onChange={handleServingsChange}
+        />
+      </section>
+
       <Separator />
+
       <section aria-labelledby="mold-section" className={styles.step}>
         <h2 id="mold-section">Molde</h2>
         <Input
@@ -179,4 +183,4 @@ const InformationStep = ({
   );
 };
 
-export default InformationStep;
+export default BasicInformationStep;

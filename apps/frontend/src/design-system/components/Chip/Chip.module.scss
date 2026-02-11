@@ -7,7 +7,7 @@
 .chip {
   @include Color($bg: secondary-light, $font: secondary-dark);
   @include Border($radius: full);
-  @include Font($family: text, $size: xxs, $weight: medium);
+  @include Font($family: text, $size: xs, $weight: medium);
   @include Flex(
     $direction: column,
     $align: center,

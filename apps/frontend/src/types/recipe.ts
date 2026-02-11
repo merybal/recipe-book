@@ -35,6 +35,8 @@ export type RecipeType = {
   notes?: string[]; //TODO falta en el back, agregar con type text al schema
   source?: Source; //TODO falta en el back
   foodAllergies?: FoodAllergyType[];
+  tips?: string[];
+  countryOfOrigin?: string;
 };
 
 export type RecipeRaw = {
