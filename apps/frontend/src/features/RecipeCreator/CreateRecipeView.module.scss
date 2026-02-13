@@ -47,15 +47,39 @@
   .form-navigation {
     @include Flex($gap: sm);
     @include Margin($top: auto);
-    @include Padding($top: lg);
+    @include Padding($top: xl);
     width: 100%;
     min-width: 0;
+  }
+
+  .subrecipe-step-title {
+    @include Margin($bottom: xl);
+  }
+
+  .subrecipe-button {
+    @include Margin($bottom: xl);
   }
 
   .step-helper {
     @include Font($family: text, $weight: medium, $size: xs);
     @include Color($font: secondary-text);
-    @include Margin($top: md);
+    @include Margin($top: sm, $bottom: xl);
     line-height: 1.5;
+  }
+
+  .tip-item,
+  .subrecipe-item {
+    position: relative;
+  }
+
+  .tip-remove-button {
+    @include Margin($top: -0.5rem);
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .add-subrecipe-button {
+    @include Margin($top: sm);
   }
 }

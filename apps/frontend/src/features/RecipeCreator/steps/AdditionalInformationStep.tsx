@@ -1,4 +1,5 @@
 import Button from "@/design-system/components/Button";
+import ButtonIcon from "@/design-system/components/ButtonIcon";
 import Select from "@/design-system/components/Select";
 import Separator from "@/design-system/components/Separator";
 import Textarea from "@/design-system/components/Textarea";
@@ -45,6 +46,13 @@ const AdditionalInformationStep = ({
     }));
   };
 
+  const handleRemoveTip = (index: number) => {
+    setRecipe((prev) => {
+      const nextTips = (prev.tips ?? []).filter((_, i) => i !== index);
+      return { ...prev, tips: nextTips };
+    });
+  };
+
   const handleCountryChange = (e: { target: { value: string } }) => {
     const value = e.target.value;
     setRecipe((prev) => ({
@@ -65,15 +73,27 @@ const AdditionalInformationStep = ({
       <section aria-labelledby="tips-section" className={styles.step}>
         <h2 id="tips-section">Tips</h2>
         {tipsToShow.map((tip, index) => (
-          <Textarea
-            key={index}
-            id={`tip-${index}`}
-            label={`Tip ${index + 1}`}
-            rows={3}
-            showLabel
-            value={tip}
-            onChange={(e) => handleTipChange(index, e.target.value)}
-          />
+          <div key={index} className={styles["tip-item"]}>
+            <Textarea
+              id={`tip-${index}`}
+              label={`Tip ${index + 1}`}
+              rows={3}
+              showLabel
+              value={tip}
+              onChange={(e) => handleTipChange(index, e.target.value)}
+            />
+            {tipsToShow.length > 1 && (
+              <ButtonIcon
+                icon="Trash2"
+                label="Eliminar tip"
+                size="small"
+                variant="tertiary"
+                disruptive
+                className={styles["tip-remove-button"]}
+                onClick={() => handleRemoveTip(index)}
+              />
+            )}
+          </div>
         ))}
         <Button
           type="button"

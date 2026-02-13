@@ -1,7 +1,18 @@
+/**
+ * Subrecipes step flow:
+ * - Initial state: "Separate recipe into preparations" button, helper text,
+ *   and one set of ingredients + instructions (no title).
+ * - On button click: title field is added to that set, "Add preparation" button
+ *   appears to add more sets, and trash button on each set (trash only visible
+ *   when there are 2+ sets).
+ * - When deleting all sets except one: returns to initial state (simple mode)
+ *   with "Separate..." button, helper text, and the set without title.
+ */
 import Input from "@/design-system/components/Input";
 import Textarea from "@/design-system/components/Textarea";
 import Separator from "@/design-system/components/Separator";
 import Button from "@/design-system/components/Button";
+import ButtonIcon from "@/design-system/components/ButtonIcon";
 
 import type {
   RecipeStateType,
@@ -118,6 +129,23 @@ const SubrecipesStep = ({
     ]);
   };
 
+  const handleRemoveSubrecipe = (index: number) => {
+    const next = subrecipeDrafts.filter((_, i) => i !== index);
+    if (next.length === 1) {
+      const remaining = next[0];
+      setSimpleRecipeDraft({
+        ingredientsText: remaining.ingredientsText,
+        ingredients: remaining.ingredients,
+        instructionsText: remaining.instructionsText,
+        instructions: remaining.instructions,
+      });
+      setSubrecipeDrafts([]);
+      setIsSelected(false);
+    } else {
+      setSubrecipeDrafts(next);
+    }
+  };
+
   const subrecipeInputs = (
     <div className={styles.step}>
       <Textarea
@@ -160,11 +188,14 @@ const SubrecipesStep = ({
   );
 
   return (
-    <section aria-labelledby="subrecipes-section" className={styles.step}>
-      <h2 id="subrecipes-section">Preparación</h2>
+    <section aria-labelledby="subrecipes-section">
+      <h2 id="subrecipes-section" className={styles["subrecipe-step-title"]}>
+        Preparación
+      </h2>
 
       <div>
         <Button
+          className={isSelected ? styles["subrecipe-button"] : ""}
           type="button"
           label={
             isSelected
@@ -188,60 +219,74 @@ const SubrecipesStep = ({
         <>
           {subrecipeDrafts.map((draft, index) => (
             <div key={index}>
-              <div className={styles.step}>
-                <Input
-                  id={`subrecipe-title-${index}`}
-                  label="Título de preparación"
-                  required
-                  showLabel
-                  value={draft.title}
-                  onChange={(e) =>
-                    handleSubrecipeChange(index, "title", e.target.value)
-                  }
-                />
-                <Textarea
-                  id={`subrecipe-${index}-ingredients`}
-                  label="Ingredientes"
-                  required
-                  rows={5}
-                  showLabel
-                  value={subrecipeDrafts[index].ingredientsText || ""}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    const parsedIngredients = parseIngredientsText(text);
-                    setSubrecipeDrafts((prev) =>
-                      prev.map((draft, i) =>
-                        i === index
-                          ? {
-                              ...draft,
-                              ingredientsText: text,
-                              ingredients: parsedIngredients,
-                            }
-                          : draft,
-                      ),
-                    );
-                  }}
-                />
-                <Textarea
-                  id={`instructions-subrecipe-${index}`}
-                  label="Instrucciones"
-                  required
-                  rows={5}
-                  showLabel
-                  value={subrecipeDrafts[index].instructionsText}
-                  onChange={(e) =>
-                    handleSubrecipeChange(
-                      index,
-                      "instructionsText",
-                      e.target.value,
-                    )
-                  }
-                />
+              <div className={styles["subrecipe-item"]}>
+                <div className={styles.step}>
+                  <Input
+                    id={`subrecipe-title-${index}`}
+                    label="Título de preparación"
+                    required
+                    showLabel
+                    value={draft.title}
+                    onChange={(e) =>
+                      handleSubrecipeChange(index, "title", e.target.value)
+                    }
+                  />
+                  <Textarea
+                    id={`subrecipe-${index}-ingredients`}
+                    label="Ingredientes"
+                    required
+                    rows={5}
+                    showLabel
+                    value={subrecipeDrafts[index].ingredientsText || ""}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      const parsedIngredients = parseIngredientsText(text);
+                      setSubrecipeDrafts((prev) =>
+                        prev.map((draft, i) =>
+                          i === index
+                            ? {
+                                ...draft,
+                                ingredientsText: text,
+                                ingredients: parsedIngredients,
+                              }
+                            : draft,
+                        ),
+                      );
+                    }}
+                  />
+                  <Textarea
+                    id={`instructions-subrecipe-${index}`}
+                    label="Instrucciones"
+                    required
+                    rows={5}
+                    showLabel
+                    value={subrecipeDrafts[index].instructionsText}
+                    onChange={(e) =>
+                      handleSubrecipeChange(
+                        index,
+                        "instructionsText",
+                        e.target.value,
+                      )
+                    }
+                  />
+                </div>
+                {subrecipeDrafts.length > 1 && (
+                  <ButtonIcon
+                    icon="Trash2"
+                    label="Eliminar preparación"
+                    size="small"
+                    variant="tertiary"
+                    disruptive
+                    className={styles["tip-remove-button"]}
+                    onClick={() => handleRemoveSubrecipe(index)}
+                  />
+                )}
               </div>
               {index < subrecipeDrafts.length - 1 && <Separator />}
             </div>
           ))}
           <Button
+            className={styles["add-subrecipe-button"]}
             label="Agregar preparación"
             iconLeft="Plus"
             onClick={handleAddSubrecipe}
