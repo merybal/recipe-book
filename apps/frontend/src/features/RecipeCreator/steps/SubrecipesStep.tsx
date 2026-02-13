@@ -209,8 +209,8 @@ const SubrecipesStep = ({
         />
         {!isSelected && (
           <p className={styles["step-helper"]}>
-            Permite agregar una sección de ingredientes e instrucciones para
-            cada preparación.
+            Podés agregar una sección de ingredientes e instrucciones para cada
+            preparación.
           </p>
         )}
       </div>
@@ -219,8 +219,8 @@ const SubrecipesStep = ({
         <>
           {subrecipeDrafts.map((draft, index) => (
             <div key={index}>
-              <div className={styles["subrecipe-item"]}>
-                <div className={styles.step}>
+              <div className={styles.step}>
+                <div className={styles["subrecipe-title-container"]}>
                   <Input
                     id={`subrecipe-title-${index}`}
                     label="Título de preparación"
@@ -231,56 +231,57 @@ const SubrecipesStep = ({
                       handleSubrecipeChange(index, "title", e.target.value)
                     }
                   />
-                  <Textarea
-                    id={`subrecipe-${index}-ingredients`}
-                    label="Ingredientes"
-                    required
-                    rows={5}
-                    showLabel
-                    value={subrecipeDrafts[index].ingredientsText || ""}
-                    onChange={(e) => {
-                      const text = e.target.value;
-                      const parsedIngredients = parseIngredientsText(text);
-                      setSubrecipeDrafts((prev) =>
-                        prev.map((draft, i) =>
-                          i === index
-                            ? {
-                                ...draft,
-                                ingredientsText: text,
-                                ingredients: parsedIngredients,
-                              }
-                            : draft,
-                        ),
-                      );
-                    }}
-                  />
-                  <Textarea
-                    id={`instructions-subrecipe-${index}`}
-                    label="Instrucciones"
-                    required
-                    rows={5}
-                    showLabel
-                    value={subrecipeDrafts[index].instructionsText}
-                    onChange={(e) =>
-                      handleSubrecipeChange(
-                        index,
-                        "instructionsText",
-                        e.target.value,
-                      )
-                    }
-                  />
+                  {subrecipeDrafts.length > 1 && (
+                    <ButtonIcon
+                      className={styles["subrecipe-remove-button"]}
+                      disruptive
+                      icon="Trash2"
+                      label="Eliminar preparación"
+                      size="small"
+                      variant="secondary"
+                      onClick={() => handleRemoveSubrecipe(index)}
+                    />
+                  )}
                 </div>
-                {subrecipeDrafts.length > 1 && (
-                  <ButtonIcon
-                    icon="Trash2"
-                    label="Eliminar preparación"
-                    size="small"
-                    variant="tertiary"
-                    disruptive
-                    className={styles["tip-remove-button"]}
-                    onClick={() => handleRemoveSubrecipe(index)}
-                  />
-                )}
+
+                <Textarea
+                  id={`subrecipe-${index}-ingredients`}
+                  label="Ingredientes"
+                  required
+                  rows={5}
+                  showLabel
+                  value={subrecipeDrafts[index].ingredientsText || ""}
+                  onChange={(e) => {
+                    const text = e.target.value;
+                    const parsedIngredients = parseIngredientsText(text);
+                    setSubrecipeDrafts((prev) =>
+                      prev.map((draft, i) =>
+                        i === index
+                          ? {
+                              ...draft,
+                              ingredientsText: text,
+                              ingredients: parsedIngredients,
+                            }
+                          : draft,
+                      ),
+                    );
+                  }}
+                />
+                <Textarea
+                  id={`instructions-subrecipe-${index}`}
+                  label="Instrucciones"
+                  required
+                  rows={5}
+                  showLabel
+                  value={subrecipeDrafts[index].instructionsText}
+                  onChange={(e) =>
+                    handleSubrecipeChange(
+                      index,
+                      "instructionsText",
+                      e.target.value,
+                    )
+                  }
+                />
               </div>
               {index < subrecipeDrafts.length - 1 && <Separator />}
             </div>

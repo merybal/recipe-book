@@ -26,7 +26,8 @@ export type RecipeType = {
   title: string;
   imageUrl?: string;
   category?: string; // e.g. "salado" | "dulce"
-  subcategory?: string; // depends on category, e.g. "tarta" | "muffin"
+  subcategory?: string; // deprecated, use subcategories
+  subcategories?: string[]; // up to 3, depends on category
   tags?: string[];
   subrecipes: SubrecipeType[];
   bakingInstructions?: BakingInstructionsType;

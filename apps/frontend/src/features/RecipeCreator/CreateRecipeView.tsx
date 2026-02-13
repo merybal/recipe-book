@@ -218,6 +218,25 @@ const CreateRecipeView = () => {
       return; // 🚫 no avanza al siguiente paso
     }
 
+    // Limpiar vacíos antes de avanzar
+    setRecipe((prev) => ({
+      ...prev,
+      subcategories: (prev.subcategories ?? [])
+        .map((s) => s.trim())
+        .filter(Boolean),
+      tips: (prev.tips ?? []).map((t) => t.trim()).filter(Boolean),
+    }));
+
+    if (isSelected) {
+      const filteredDrafts = subrecipeDrafts.filter(
+        (d) =>
+          (d.title ?? "").trim() !== "" ||
+          (d.ingredientsText ?? "").trim() !== "" ||
+          (d.instructionsText ?? "").trim() !== "",
+      );
+      setSubrecipeDrafts(filteredDrafts.length > 0 ? filteredDrafts : []);
+    }
+
     setErrors({}); // ✅ limpia errores si todo OK
     if (currentStep < totalSteps - 1) setCurrentStep((prev) => prev + 1);
   };
@@ -262,12 +281,6 @@ const CreateRecipeView = () => {
     setEditingCoverFromPreview(false);
     setCurrentStep(PREVIEW_STEP_INDEX);
   };
-
-  //TODO falta autor
-  //TODO falta food allergies
-
-  //TODO meter en un form
-  //TODO hcaer ids dinamicos
 
   return (
     <PageLayout className={styles["create-recipe-page"]} title={pageTitle}>

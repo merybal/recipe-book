@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import Button from "@/design-system/components/Button";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 import Select from "@/design-system/components/Select";
@@ -7,6 +9,8 @@ import Textarea from "@/design-system/components/Textarea";
 import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
+
+const MAX_TIPS = 6;
 
 const COUNTRY_OPTIONS = [
   { value: "", label: "Seleccionar país" },
@@ -40,10 +44,12 @@ const AdditionalInformationStep = ({
   };
 
   const handleAddTip = () => {
-    setRecipe((prev) => ({
-      ...prev,
-      tips: [...(prev.tips ?? []), ""],
-    }));
+    setRecipe((prev) => {
+      const current = prev.tips ?? [];
+      if (current.length >= MAX_TIPS) return prev;
+      const next = current.length === 0 ? ["", ""] : [...current, ""];
+      return { ...prev, tips: next };
+    });
   };
 
   const handleRemoveTip = (index: number) => {
@@ -70,38 +76,54 @@ const AdditionalInformationStep = ({
 
   return (
     <div>
-      <section aria-labelledby="tips-section" className={styles.step}>
-        <h2 id="tips-section">Tips</h2>
-        {tipsToShow.map((tip, index) => (
-          <div key={index} className={styles["tip-item"]}>
-            <Textarea
-              id={`tip-${index}`}
-              label={`Tip ${index + 1}`}
-              rows={3}
-              showLabel
-              value={tip}
-              onChange={(e) => handleTipChange(index, e.target.value)}
-            />
-            {tipsToShow.length > 1 && (
-              <ButtonIcon
-                icon="Trash2"
-                label="Eliminar tip"
-                size="small"
-                variant="tertiary"
-                disruptive
-                className={styles["tip-remove-button"]}
-                onClick={() => handleRemoveTip(index)}
+      <section aria-labelledby="tips-section">
+        <header>
+          <h2 id="tips-section">Notas</h2>
+          <p className={styles["tips-step-helper"]}>
+            Agregá acá las notas o tips que quieras (sobre cocción, reemplazo de
+            ingredientes, etc.) a la receta.
+          </p>
+        </header>
+        <div className={styles["tips-container"]}>
+          {tipsToShow.map((tip, index) => (
+            <div
+              key={index}
+              className={clsx(
+                styles["tip-item"],
+                index === 0 && styles["tip-item--first"],
+              )}
+            >
+              <Textarea
+                id={`tip-${index}`}
+                label={tipsToShow.length === 1 ? "Nota" : "Notas"}
+                rows={3}
+                showLabel={index === 0}
+                value={tip}
+                onChange={(e) => handleTipChange(index, e.target.value)}
               />
-            )}
-          </div>
-        ))}
-        <Button
-          type="button"
-          label="Agregar tip"
-          iconLeft="Plus"
-          variant="secondary"
-          onClick={handleAddTip}
-        />
+              {tipsToShow.length > 1 && (
+                <ButtonIcon
+                  className={styles["tip-remove-button"]}
+                  disruptive
+                  icon="Trash2"
+                  label="Eliminar nota"
+                  size="small"
+                  variant="secondary"
+                  onClick={() => handleRemoveTip(index)}
+                />
+              )}
+            </div>
+          ))}
+          {tips.length < MAX_TIPS && (
+            <Button
+              type="button"
+              label="Agregar nota"
+              iconLeft="Plus"
+              variant="secondary"
+              onClick={handleAddTip}
+            />
+          )}
+        </div>
       </section>
       <Separator />
       <section
@@ -111,7 +133,7 @@ const AdditionalInformationStep = ({
         <h2 id="country-of-origin-section">País de origen</h2>
         <Select
           id="country-of-origin"
-          label="País de origen"
+          label="País"
           showLabel
           placeholder="Seleccionar país"
           options={COUNTRY_OPTIONS}

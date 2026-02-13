@@ -4,6 +4,8 @@
 @use "../../design-system/styles/spacing" as *;
 @use "../../design-system/styles/form" as *;
 
+//TODO ordenar este chocolo
+
 .recipe-form {
   @include Flex($direction: column);
   flex: 1;
@@ -13,11 +15,11 @@
   .form-header {
     @include Flex($justify: between, $align: center);
     @include Margin($bottom: xl);
+  }
 
-    .step-indicator {
-      @include Font($family: text, $weight: medium, $size: xs);
-      @include Color($font: secondary-text);
-    }
+  .step-indicator {
+    @include Font($family: text, $weight: medium, $size: xs);
+    @include Color($font: secondary-text);
   }
 
   .step {
@@ -52,6 +54,19 @@
     min-width: 0;
   }
 
+  .step-helper,
+  .tips-step-helper {
+    @include Font($family: text, $weight: medium, $size: xs, $align: justify);
+    @include Color($font: secondary-text);
+    @include Margin($top: sm, $bottom: xl);
+    line-height: 1.5;
+  }
+
+  .tips-step-helper {
+    @include Margin($top: xl);
+  }
+
+  /* Subrecipes */
   .subrecipe-step-title {
     @include Margin($bottom: xl);
   }
@@ -60,26 +75,59 @@
     @include Margin($bottom: xl);
   }
 
-  .step-helper {
-    @include Font($family: text, $weight: medium, $size: xs);
-    @include Color($font: secondary-text);
-    @include Margin($top: sm, $bottom: xl);
-    line-height: 1.5;
-  }
-
-  .tip-item,
   .subrecipe-item {
-    position: relative;
+    @include Flex($align: end, $gap: sm);
+
+    > *:first-child {
+      flex: 1;
+      min-width: 0;
+    }
   }
 
-  .tip-remove-button {
-    @include Margin($top: -0.5rem);
-    position: absolute;
-    top: 0;
-    right: 0;
+  .subrecipe-remove-button {
+    @include Margin($top: 2.5rem);
+  }
+
+  .subrecipe-title-container {
+    @include Flex($gap: sm);
   }
 
   .add-subrecipe-button {
     @include Margin($top: sm);
+  }
+
+  /* Tips */
+  .tip-item {
+    @include Flex($align: start, $gap: sm);
+
+    > *:first-child {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .tip-remove-button {
+      @include Margin($top: 0);
+    }
+
+    &.tip-item--first .tip-remove-button {
+      @include Margin($top: 2rem);
+    }
+  }
+
+  .tips-container {
+    @include Flex($direction: column, $gap: md);
+  }
+
+  /* Categories */
+  .subcategory-container {
+    @include Flex($direction: column, $gap: md);
+  }
+
+  .subcategory-item {
+    @include Flex($align: end, $gap: sm);
+  }
+
+  .subcategory-remove-button {
+    @include Margin($bottom: sm);
   }
 }
