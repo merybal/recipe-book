@@ -92,8 +92,7 @@ const RecipePreview = ({
 
   const formatSubcategory = (value: string) =>
     SUBCATEGORY_LABELS[value] ?? value;
-  const formatCountry = (value: string) =>
-    COUNTRY_LABELS[value] ?? value;
+  const formatCountry = (value: string) => COUNTRY_LABELS[value] ?? value;
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>

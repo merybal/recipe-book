@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: 'http://localhost:5173',
-  }); // TODO ver si se hace solo para desarrollo
+  }); // TODO check if this should be development only
 
   app.useGlobalPipes(new ValidationPipe());
 

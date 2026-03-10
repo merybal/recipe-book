@@ -4,6 +4,13 @@ export class CreateRecipeDto {
   @IsString()
   title: string;
 
+  @IsString()
+  category: string;
+
+  @IsOptional()
+  @IsInt()
+  country_id?: number;
+
   @IsOptional()
   @IsInt()
   cooking_time?: number;

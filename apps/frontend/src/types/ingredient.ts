@@ -14,6 +14,6 @@ export type IngredientRaw = {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-  unit_id: number;
+  unit_id?: number | null;
   units?: UnitRaw;
 };

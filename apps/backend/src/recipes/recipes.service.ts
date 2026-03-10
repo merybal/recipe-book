@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '../generated/prisma';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 
 @Injectable()
@@ -17,6 +17,7 @@ export class RecipesService {
     return this.prisma.recipes.findFirst({
       where: { id, deleted_at: null },
       include: {
+        country: true,
         subrecipes: {
           where: { deleted_at: null },
           include: {
@@ -33,6 +34,23 @@ export class RecipesService {
           include: {
             food_allergy: true,
           },
+        },
+        recipe_notes: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_sources: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_subcategories: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+          include: { subcategory: true },
+        },
+        recipe_tags: {
+          where: { deleted_at: null },
+          include: { tag: true },
         },
       },
     });
@@ -43,6 +61,7 @@ export class RecipesService {
       where: { deleted_at: null },
       orderBy: { created_at: 'desc' },
       include: {
+        country: true,
         subrecipes: {
           where: { deleted_at: null },
           include: {
@@ -59,6 +78,23 @@ export class RecipesService {
           include: {
             food_allergy: true,
           },
+        },
+        recipe_notes: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_sources: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_subcategories: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+          include: { subcategory: true },
+        },
+        recipe_tags: {
+          where: { deleted_at: null },
+          include: { tag: true },
         },
       },
     });
@@ -76,10 +112,33 @@ export class RecipesService {
     });
   }
 
+  private async getOrCreateTagIds(tagNames: string[]): Promise<{ tag_id: number }[]> {
+    const result: { tag_id: number }[] = [];
+    for (const name of tagNames) {
+      if (!name?.trim()) continue;
+      let tag = await this.prisma.tags.findFirst({
+        where: { name: name.trim(), deleted_at: null },
+      });
+      if (!tag) {
+        tag = await this.prisma.tags.create({
+          data: { name: name.trim() },
+        });
+      }
+      result.push({ tag_id: tag.id });
+    }
+    return result;
+  }
+
   async createFullRecipe(dto: CreateRecipeWithRelationsDto) {
+    const tagIds = await this.getOrCreateTagIds(dto.tags ?? []);
+
     return this.prisma.recipes.create({
       data: {
         title: dto.title,
+        category: dto.category,
+        ...(dto.country_id != null && {
+          country: { connect: { id: dto.country_id } },
+        }),
         cooking_time: dto.cooking_time,
         cooking_temperature: dto.cooking_temperature,
         servings: dto.servings,
@@ -108,6 +167,32 @@ export class RecipesService {
             },
           })),
         },
+
+        recipe_notes: {
+          create: (dto.notes ?? []).map((content, index) => ({
+            content,
+            sort_order: index,
+          })),
+        },
+
+        recipe_sources: {
+          create: (dto.source ?? []).map((item, index) => ({
+            name: item.name,
+            url: item.url,
+            sort_order: index,
+          })),
+        },
+
+        recipe_subcategories: {
+          create: (dto.subcategory_ids ?? []).map((subcategoryId, index) => ({
+            subcategory: { connect: { id: subcategoryId } },
+            sort_order: index,
+          })),
+        },
+
+        recipe_tags: {
+          create: tagIds,
+        },
       },
       include: {
         subrecipes: {
@@ -119,6 +204,18 @@ export class RecipesService {
           include: {
             food_allergy: true,
           },
+        },
+        recipe_notes: {
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_sources: {
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_subcategories: {
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_tags: {
+          include: { tag: true },
         },
       },
     });

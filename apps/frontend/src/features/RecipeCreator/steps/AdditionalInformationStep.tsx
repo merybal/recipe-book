@@ -1,5 +1,8 @@
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import axios from "axios";
 
+import { useLocale } from "@/hooks/useLocale";
 import Button from "@/design-system/components/Button";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 import Select from "@/design-system/components/Select";
@@ -12,19 +15,7 @@ import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 const MAX_NOTES = 6;
 
-const COUNTRY_OPTIONS = [
-  { value: "", label: "Seleccionar país" },
-  { value: "argentina", label: "Argentina" },
-  { value: "españa", label: "España" },
-  { value: "mexico", label: "México" },
-  { value: "italia", label: "Italia" },
-  { value: "francia", label: "Francia" },
-  { value: "peru", label: "Perú" },
-  { value: "colombia", label: "Colombia" },
-  { value: "chile", label: "Chile" },
-  { value: "uruguay", label: "Uruguay" },
-  { value: "otro", label: "Otro" },
-];
+type CountryOption = { value: string; label: string };
 
 type AdditionalInformationStepProps = RecipeStateType & ErrorStateType;
 
@@ -33,6 +24,24 @@ const AdditionalInformationStep = ({
   setRecipe,
   setErrors,
 }: AdditionalInformationStepProps) => {
+  const locale = useLocale();
+  const [countryOptions, setCountryOptions] = useState<CountryOption[]>([
+    { value: "", label: "Seleccionar país" },
+  ]);
+
+  useEffect(() => {
+    axios
+      .get<{ id: number; name: string }[]>(`/api/countries?locale=${locale}`)
+      .then((res) => {
+        const options: CountryOption[] = [
+          { value: "", label: "Seleccionar país" },
+          ...res.data.map((c) => ({ value: String(c.id), label: c.name })),
+        ];
+        setCountryOptions(options);
+      })
+      .catch(() => {});
+  }, [locale]);
+
   const notes = recipe.notes ?? [];
 
   const handleNoteChange = (index: number, value: string) => {
@@ -61,9 +70,12 @@ const AdditionalInformationStep = ({
 
   const handleCountryChange = (e: { target: { value: string } }) => {
     const value = e.target.value;
+    const countryId = value ? Number(value) : undefined;
+    const selectedOption = countryOptions.find((o) => o.value === value);
     setRecipe((prev) => ({
       ...prev,
-      countryOfOrigin: value || undefined,
+      countryId,
+      countryOfOrigin: selectedOption?.label || undefined,
     }));
     setErrors((prev) => {
       const next = { ...prev };
@@ -136,8 +148,8 @@ const AdditionalInformationStep = ({
           label="País"
           showLabel
           placeholder="Seleccionar país"
-          options={COUNTRY_OPTIONS}
-          value={recipe.countryOfOrigin ?? ""}
+          options={countryOptions}
+          value={recipe.countryId ? String(recipe.countryId) : ""}
           onChange={handleCountryChange}
         />
       </section>

@@ -27,7 +27,7 @@ import type {
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { normalizeUnit } from "@/utils/idml-file-uploader-utils"; // TODO rename file
+import { useLocale } from "@/hooks/useLocale";
 
 import type { IconName } from "@/design-system/components/Icon";
 
@@ -79,6 +79,7 @@ const RecipeView = () => {
   const [error, setError] = useState<string | null>(null);
 
   const isMobile = useIsMobile();
+  const locale = useLocale();
 
   useEffect(() => {
     if (!id) return;
@@ -86,18 +87,17 @@ const RecipeView = () => {
     // TODO move to utils or hook
 
     function parseIngredient(ingredient: IngredientRaw): IngredientType {
+      const units = ingredient.units;
+      const amount = ingredient.amount;
       const parsedUnit =
-        ingredient.units?.name &&
-        normalizeUnit(
-          ingredient.units.name,
-          ingredient.amount && ingredient.amount,
-        );
-
-      // TODO check types
+        units &&
+        (amount && amount > 1 && units.abbreviation_plural
+          ? units.abbreviation_plural
+          : units.abbreviation_singular);
 
       const parsedIngredient: IngredientType = {
         name: ingredient.name,
-        ...(ingredient.amount && { amount: ingredient.amount }), // TODO review
+        ...(ingredient.amount && { amount: ingredient.amount }),
         ...(parsedUnit && { unit: parsedUnit }),
       };
 
@@ -132,8 +132,12 @@ const RecipeView = () => {
           title: recipeData.title,
           ...(recipeData.image_url && { imageUrl: recipeData.image_url }),
           ...(recipeData.category && { category: recipeData.category }),
-          ...(recipeData.country_of_origin && {
-            countryOfOrigin: recipeData.country_of_origin,
+          ...(recipeData.country && {
+            countryOfOrigin:
+              locale === "en"
+                ? recipeData.country.name_en
+                : recipeData.country.name_es,
+            countryId: recipeData.country.id,
           }),
           subrecipes: recipeData.subrecipes.map(parseSubrecipe),
 
@@ -191,7 +195,10 @@ const RecipeView = () => {
           ...(recipeData.recipe_subcategories?.length > 0 && {
             subcategories: recipeData.recipe_subcategories
               .sort((a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) => a.sort_order - b.sort_order)
-              .map((s: RecipeSubcategoryRaw) => s.value),
+              .map((s: RecipeSubcategoryRaw) => s.subcategory.name),
+            subcategoryIds: recipeData.recipe_subcategories
+              .sort((a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) => a.sort_order - b.sort_order)
+              .map((s: RecipeSubcategoryRaw) => s.subcategory_id),
           }),
         };
 

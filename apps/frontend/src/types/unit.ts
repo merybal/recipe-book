@@ -18,8 +18,10 @@ export type UnitAbbreviationsType = Singulars | Plurals;
 
 export type UnitRaw = {
   id: number;
+  abbreviation_singular: string;
+  abbreviation_plural?: string | null;
   name: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
+  name_en: string;
+  name_es: string;
+  synonyms: string[];
 };

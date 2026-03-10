@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// TODO add are_steps_numbered to Recipes table
+
+model Recipes {
+  id                    Int                   @id @default(autoincrement())
+  title                 String                @db.VarChar(255)
+  category              String                @db.VarChar(255)
+  country_id            Int?
+  country               Countries?            @relation(fields: [country_id], references: [id])
+  cooking_time          Int?                  @db.Integer
+  cooking_temperature   Int?                  @db.Integer
+  servings              String?               @db.VarChar(255)
+  mold_type             String?               @db.VarChar(255)
+  mold_size             String?               @db.VarChar(255)
+  image_url             String?               @db.VarChar(255)
+  is_test               Boolean               @default(false)
+  created_at            DateTime              @default(now())
+  updated_at            DateTime              @default(now()) @updatedAt
+  deleted_at            DateTime?
+  subrecipes            Subrecipes[]
+  recipe_food_allergies RecipeFoodAllergies[]
+  recipe_notes          RecipeNotes[]
+  recipe_sources        RecipeSources[]
+  recipe_tags           RecipeTags[]
+  recipe_subcategories  RecipeSubcategories[]
+}
+
+model Ingredients {
+  id           Int        @id @default(autoincrement())
+  subrecipe_id Int
+  name         String     @db.VarChar(255)
+  amount       Float?
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @default(now()) @updatedAt
+  deleted_at   DateTime?
+  subrecipe    Subrecipes @relation(fields: [subrecipe_id], references: [id])
+  units        Units?     @relation(fields: [unit_id], references: [id])
+  unit_id      Int?
+}
+
+model Subrecipes {
+  id           Int           @id @default(autoincrement())
+  recipe_id    Int
+  title        String?       @db.VarChar(255)
+  instructions String        @db.Text
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now()) @updatedAt
+  deleted_at   DateTime?
+  recipe       Recipes       @relation(fields: [recipe_id], references: [id])
+  ingredients  Ingredients[]
+}
+
+model FoodAllergies {
+  id                    Int                   @id @default(autoincrement())
+  name                  String                @db.VarChar(255)
+  created_at            DateTime              @default(now())
+  updated_at            DateTime              @default(now()) @updatedAt
+  deleted_at            DateTime?
+  recipe_food_allergies RecipeFoodAllergies[]
+}
+
+model Units {
+  id                    Int           @id @default(autoincrement())
+  abbreviation_singular String        @unique @db.VarChar(50)
+  abbreviation_plural   String?       @db.VarChar(50)
+  name_en               String        @db.VarChar(255)
+  name_es               String        @db.VarChar(255)
+  synonyms              Json          @db.JsonB // string[] for matching
+  created_at            DateTime      @default(now())
+  updated_at            DateTime      @default(now()) @updatedAt
+  deleted_at            DateTime?
+  ingredient            Ingredients[]
+}
+
+model RecipeFoodAllergies {
+  id              Int           @id @default(autoincrement())
+  recipe_id       Int
+  food_allergy_id Int
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @default(now()) @updatedAt
+  deleted_at      DateTime?
+  recipe          Recipes       @relation(fields: [recipe_id], references: [id])
+  food_allergy    FoodAllergies @relation(fields: [food_allergy_id], references: [id])
+}
+
+model RecipeNotes {
+  id         Int       @id @default(autoincrement())
+  recipe_id  Int
+  content    String    @db.Text
+  sort_order Int       @default(0)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+  recipe     Recipes   @relation(fields: [recipe_id], references: [id])
+}
+
+// TODO Tags: figure out how to manage them (free for now)
+model Tags {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique @db.VarChar(255)
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @default(now()) @updatedAt
+  deleted_at  DateTime?
+  recipe_tags RecipeTags[]
+}
+
+model RecipeTags {
+  id         Int       @id @default(autoincrement())
+  recipe_id  Int
+  tag_id     Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+  recipe     Recipes   @relation(fields: [recipe_id], references: [id])
+  tag        Tags      @relation(fields: [tag_id], references: [id])
+}
+
+model RecipeSources {
+  id         Int       @id @default(autoincrement())
+  recipe_id  Int
+  name       String?   @db.VarChar(255)
+  url        String?   @db.VarChar(500)
+  sort_order Int       @default(0)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+  recipe     Recipes   @relation(fields: [recipe_id], references: [id])
+}
+
+model Countries {
+  id         Int       @id @default(autoincrement())
+  name_en    String    @db.VarChar(255)
+  name_es    String    @db.VarChar(255)
+  code       String    @unique @db.VarChar(2) // ISO 3166-1 alpha-2 (e.g. ES, AR)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  deleted_at DateTime?
+  recipes    Recipes[]
+}
+
+model Subcategories {
+  id                   Int                   @id @default(autoincrement())
+  name                 String                @unique @db.VarChar(255)
+  created_at           DateTime              @default(now())
+  updated_at           DateTime              @default(now()) @updatedAt
+  deleted_at           DateTime?
+  recipe_subcategories RecipeSubcategories[]
+}
+
+model RecipeSubcategories {
+  id             Int           @id @default(autoincrement())
+  recipe_id      Int
+  subcategory_id Int
+  sort_order     Int           @default(0)
+  created_at     DateTime      @default(now())
+  updated_at     DateTime      @default(now()) @updatedAt
+  deleted_at     DateTime?
+  recipe         Recipes       @relation(fields: [recipe_id], references: [id])
+  subcategory    Subcategories @relation(fields: [subcategory_id], references: [id])
+}

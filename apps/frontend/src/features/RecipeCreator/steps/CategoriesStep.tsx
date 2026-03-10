@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
 import Button from "@/design-system/components/Button";
@@ -25,21 +27,7 @@ const CATEGORY_OPTIONS = [
   { value: "dulce", label: "Dulce" },
 ] as const;
 
-const SUBCATEGORY_OPTIONS_SALADO = [
-  { value: "tarta", label: "Tarta" },
-  { value: "arroz", label: "Arroz" },
-  { value: "carne", label: "Carne" },
-  { value: "pollo", label: "Pollo" },
-  { value: "cerdo", label: "Cerdo" },
-];
-
-const SUBCATEGORY_OPTIONS_DULCE = [
-  { value: "muffin", label: "Muffin" },
-  { value: "torta", label: "Torta" },
-  { value: "helado", label: "Helado" },
-  { value: "cookie", label: "Cookie" },
-  { value: "scon", label: "Scon" },
-];
+type SubcategoryOption = { value: string; label: string };
 
 type CategoriesStepProps = RecipeStateType & ErrorStateType;
 
@@ -49,12 +37,28 @@ const CategoriesStep = ({
   setErrors,
   setRecipe,
 }: CategoriesStepProps) => {
+  const [subcategoryOptions, setSubcategoryOptions] = useState<
+    SubcategoryOption[]
+  >([]);
+
+  useEffect(() => {
+    axios
+      .get<{ id: number; name: string }[]>("/api/subcategories")
+      .then((res) => {
+        setSubcategoryOptions(
+          res.data.map((s) => ({ value: String(s.id), label: s.name })),
+        );
+      })
+      .catch(() => {});
+  }, []);
+
   const handleCategoryChange = (e: { target: { value: string } }) => {
     const value = e.target.value;
     setRecipe((prev) => ({
       ...prev,
       category: value,
       subcategories: undefined,
+      subcategoryIds: undefined,
     }));
     setErrors((prev) => {
       const next = { ...prev };
@@ -64,13 +68,25 @@ const CategoriesStep = ({
     });
   };
 
-  const subcategories = recipe.subcategories ?? [];
+  const subcategoryIds = recipe.subcategoryIds ?? [];
 
   const handleSubcategoryChange = (index: number, value: string) => {
+    const id = value ? Number(value) : 0;
     setRecipe((prev) => {
-      const next = [...(prev.subcategories ?? [])];
-      next[index] = value;
-      return { ...prev, subcategories: next };
+      const next = [...(prev.subcategoryIds ?? [])];
+      next[index] = id;
+      const subcategoryNames = next
+        .filter((sid) => sid > 0)
+        .map(
+          (sid) =>
+            subcategoryOptions.find((o) => o.value === String(sid))?.label,
+        )
+        .filter(Boolean) as string[];
+      return {
+        ...prev,
+        subcategoryIds: next,
+        subcategories: subcategoryNames,
+      };
     });
     setErrors((prev) => {
       const next = { ...prev };
@@ -81,16 +97,24 @@ const CategoriesStep = ({
 
   const handleAddSubcategory = () => {
     setRecipe((prev) => {
-      const current = prev.subcategories ?? [];
-      const next = current.length === 0 ? ["", ""] : [...current, ""];
-      return { ...prev, subcategories: next };
+      const current = prev.subcategoryIds ?? [];
+      const next =
+        current.length === 0 ? [0, 0] : [...current, 0];
+      return { ...prev, subcategoryIds: next };
     });
   };
 
   const handleRemoveSubcategory = (index: number) => {
     setRecipe((prev) => {
-      const next = (prev.subcategories ?? []).filter((_, i) => i !== index);
-      return { ...prev, subcategories: next };
+      const next = (prev.subcategoryIds ?? []).filter((_, i) => i !== index);
+      const subcategoryNames = next
+        .filter((sid) => sid > 0)
+        .map(
+          (sid) =>
+            subcategoryOptions.find((o) => o.value === String(sid))?.label,
+        )
+        .filter(Boolean) as string[];
+      return { ...prev, subcategoryIds: next, subcategories: subcategoryNames };
     });
     setErrors((prev) => {
       const next = { ...prev };
@@ -99,15 +123,9 @@ const CategoriesStep = ({
     });
   };
 
-  const subcategoryOptions =
-    recipe.category === "salado"
-      ? SUBCATEGORY_OPTIONS_SALADO
-      : recipe.category === "dulce"
-        ? SUBCATEGORY_OPTIONS_DULCE
-        : [...SUBCATEGORY_OPTIONS_SALADO, ...SUBCATEGORY_OPTIONS_DULCE];
-
   const foodAllergies = recipe.foodAllergies ?? [];
-  const subcategoriesToShow = subcategories.length > 0 ? subcategories : [""];
+  const subcategoriesToShow =
+    subcategoryIds.length > 0 ? subcategoryIds : [0];
 
   const handleFoodAllergiesChange = (selectedValues: string[]) => {
     setRecipe((prev) => ({
@@ -136,13 +154,18 @@ const CategoriesStep = ({
         />
 
         <div className={styles["subcategory-container"]}>
-          {subcategoriesToShow.map((sub, index) => {
-            const otherSelected = subcategoriesToShow.filter(
-              (_, j) => j !== index,
-            );
-            const optionsForSelect = subcategoryOptions.filter(
-              (opt) => opt.value === sub || !otherSelected.includes(opt.value),
-            );
+          {subcategoriesToShow.map((subId, index) => {
+            const otherSelected = subcategoriesToShow
+              .filter((_, j) => j !== index)
+              .map((s) => String(s));
+            const optionsForSelect = [
+              { value: "", label: "Seleccionar subcategoría" },
+              ...subcategoryOptions.filter(
+                (opt) =>
+                  opt.value === String(subId) ||
+                  !otherSelected.includes(opt.value),
+              ),
+            ];
             return (
               <div key={index} className={styles["subcategory-item"]}>
                 <Select
@@ -155,7 +178,7 @@ const CategoriesStep = ({
                   options={optionsForSelect}
                   placeholder="Seleccionar subcategoría"
                   showLabel={index === 0}
-                  value={sub}
+                  value={subId ? String(subId) : ""}
                   disabled={!recipe.category}
                   onChange={(e) =>
                     handleSubcategoryChange(index, e.target.value)
@@ -178,7 +201,7 @@ const CategoriesStep = ({
               </div>
             );
           })}
-          {subcategories.length < MAX_SUBCATEGORIES && (
+          {subcategoryIds.length < MAX_SUBCATEGORIES && (
             <Button
               type="button"
               label="Agregar subcategoría"

@@ -1,5 +1,5 @@
-// TODO check if units from table are added with logic
-
+// Used for parseIngredientLine / normalizeUnit when parsing text (e.g. IDML).
+// Full unit data lives in DB; this is the client-side mapping for text parsing.
 import type { Unit } from "@/types";
 
 export const UNITS: Record<string, Unit> = {

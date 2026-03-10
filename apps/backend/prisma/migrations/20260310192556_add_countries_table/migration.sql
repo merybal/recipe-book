@@ -1,0 +1,20 @@
+-- AlterTable
+ALTER TABLE "Countries" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "RecipeNotes" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "RecipeSources" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "RecipeSubcategories" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "RecipeTags" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "Recipes" ALTER COLUMN "category" DROP DEFAULT;
+
+-- AlterTable
+ALTER TABLE "Tags" ALTER COLUMN "updated_at" SET DEFAULT CURRENT_TIMESTAMP;

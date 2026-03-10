@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'; // Ajusta la ruta a donde tengas el PrismaService
-import { FoodAllergies } from '@prisma/client';
+import { FoodAllergies } from '../generated/prisma';
 
 @Injectable()
 export class FoodAllergiesService {

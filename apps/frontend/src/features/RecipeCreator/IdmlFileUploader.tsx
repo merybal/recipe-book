@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+import { useLocale } from "@/hooks/useLocale";
 import DragAndDrop from "@/design-system/components/DragAndDrop";
 import Button from "@/design-system/components/Button";
 import RecipePreview from "./RecipePreview";
@@ -18,6 +19,7 @@ import type { RecipeType, FoodAllergyRaw, UnitRaw } from "@/types";
 // TODO create checkbox
 
 const IdmlFileUploader = () => {
+  const locale = useLocale();
   const [units, setUnits] = useState<UnitRaw[]>([]);
   const [allergies, setAllergies] = useState<FoodAllergyRaw[]>([]);
   const [recipe, setRecipe] = useState<RecipeType>();
@@ -39,7 +41,7 @@ const IdmlFileUploader = () => {
     const fetchData = async () => {
       try {
         const [unitsRes, allergiesRes] = await Promise.all([
-          axios.get("/api/units"),
+          axios.get(`/api/units?locale=${locale}`),
           axios.get("/api/food-allergies"),
         ]);
 
@@ -51,7 +53,7 @@ const IdmlFileUploader = () => {
     };
 
     fetchData();
-  }, []);
+  }, [locale]);
 
   const handleFileChange = async (newFiles: File[]) => {
     setFiles(newFiles);

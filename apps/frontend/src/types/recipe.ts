@@ -27,16 +27,18 @@ export type RecipeType = {
   imageUrl?: string;
   category?: string; // e.g. "salado" | "dulce"
   subcategory?: string; // deprecated, use subcategories
-  subcategories?: string[]; // up to 3, depends on category
+  subcategories?: string[]; // display names (from API)
+  subcategoryIds?: number[]; // for form submit
   tags?: string[];
   subrecipes: SubrecipeType[];
   bakingInstructions?: BakingInstructionsType;
   mold?: MoldType;
   servings?: string;
   notes?: string[];
-  source?: Source; // TODO missing in backend
+  source?: Source;
   foodAllergies?: FoodAllergyType[];
-  countryOfOrigin?: string;
+  countryOfOrigin?: string; // display name (from API)
+  countryId?: number; // for form submit
 };
 
 export type RecipeNoteRaw = {
@@ -67,15 +69,17 @@ export type RecipeTagRaw = {
 export type RecipeSubcategoryRaw = {
   id: number;
   recipe_id: number;
-  value: string;
+  subcategory_id: number;
   sort_order: number;
+  subcategory: { id: number; name: string };
 };
 
 export type RecipeRaw = {
   id: number;
   title: string;
   category: string | null;
-  country_of_origin: string | null;
+  country_id: number | null;
+  country?: { id: number; name_en: string; name_es: string } | null;
   cooking_time: number | null;
   cooking_temperature: number | null;
   servings: string | null;

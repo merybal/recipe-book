@@ -334,14 +334,12 @@ export function getUnitId(
   const normalized = normalizeUnit(unit);
   if (!normalized) return null;
 
-  const unitEntry = Object.values(UNITS).find((u) =>
-    u.synonyms.map((s) => s.toLowerCase()).includes(normalized.toLowerCase())
-  );
-
-  if (!unitEntry) return null;
-
+  const lower = normalized.toLowerCase();
   const match = units.find(
-    (u) => u.name.toLowerCase() === unitEntry.name.toLowerCase()
+    (u) =>
+      u.abbreviation_singular.toLowerCase() === lower ||
+      (u.abbreviation_plural?.toLowerCase() ?? "") === lower ||
+      u.synonyms.some((s) => s.toLowerCase() === lower)
   );
 
   return match?.id ?? null;
