@@ -209,7 +209,7 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
         const parts = uri.split(/[\\/]/);
         const name = parts[parts.length - 1];
 
-        // TODO revisar que pasa en recetas saladas
+        // TODO check what happens with savory recipes
         const foodAllergyImageNames = [
           "gluten",
           "dairy",
@@ -244,7 +244,7 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
   return allergyTags;
 }
 
-// TODO Pasar a un utils general? seguro se use en el form
+// TODO move to a general utils? likely used in the form
 export function normalizeUnit(
   unit: string,
   amount?: number
@@ -260,7 +260,7 @@ export function normalizeUnit(
     }
   }
 
-  //TODO ver si se ataja cuando la unidad no existe
+  // TODO check if it's handled when unit doesn't exist
   return unit;
 }
 
@@ -504,7 +504,7 @@ export async function parseIdmlFile(
             (sub) => sub.title === subrecipe.sectionTitle
           );
           if (match) {
-            // match.instructions = subrecipe.sectionBody.join("\n"); //TODO hacer solo en el post
+            // match.instructions = subrecipe.sectionBody.join("\n"); // TODO do only in the post
             match.instructions = subrecipe.sectionBody;
           }
         });

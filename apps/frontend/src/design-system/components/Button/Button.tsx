@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 import styles from "./Button.module.scss";
 
-//TODO borrar text si no se termina usando
+// TODO remove text if not used
 
 const Button = ({
   className,

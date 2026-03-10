@@ -104,7 +104,7 @@
 
     .option:hover,
     .highlighted {
-      @include Color($bg: primary-light); //TODO revisar color
+      @include Color($bg: primary-light); // TODO check color
     }
 
     .selected:not(:hover):not(.highlighted) {

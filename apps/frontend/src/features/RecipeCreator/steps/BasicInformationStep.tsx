@@ -45,7 +45,7 @@ const BasicInformationStep = ({
     input: string,
     field: "temperature" | "time",
   ) => {
-    const isValidNumber = /^[1-9]\d*$/.test(input); // números enteros > 0
+    const isValidNumber = /^[1-9]\d*$/.test(input); // integers > 0
 
     if (input === "") {
       setRecipe((prev) => {

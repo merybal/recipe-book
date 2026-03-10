@@ -2,12 +2,12 @@ import { ReactNode, isValidElement, Children } from "react";
 import clsx from "clsx";
 import styles from "./PageLayout.module.scss";
 
-//TODO hacer estilos mobile vs estilos desktop
+// TODO add mobile vs desktop styles
 
 export type PageLayoutProps = {
   children: ReactNode;
   className?: string;
-  hasBackButton?: boolean; //TODO
+  hasBackButton?: boolean; // TODO
   title?: string;
 };
 

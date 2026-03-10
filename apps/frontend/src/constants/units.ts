@@ -1,4 +1,4 @@
-//TODO ver si se agregan las unidades de la tabla con logica
+// TODO check if units from table are added with logic
 
 import type { Unit } from "@/types";
 

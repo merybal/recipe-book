@@ -82,7 +82,7 @@ const HomeView = () => {
   ]);
 
   const handleFieldsChange = (updatedValues: Record<string, string>) => {
-    // Actualizamos el estado fields con los nuevos valores
+    // Update fields state with new values
     setFields((prevFields) =>
       prevFields.map((field) => ({
         ...field,

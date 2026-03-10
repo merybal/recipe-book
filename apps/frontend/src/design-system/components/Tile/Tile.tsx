@@ -7,8 +7,8 @@ import type { FoodAllergyType } from "@/types";
 
 import FoodAllergies from "@/features/Recipe/FoodAllergies";
 
-// TODO definir si se hace agnostico con un children para el texto o props title y substitle
-// TODO se van a agregar food allergies?
+// TODO define if it should be agnostic with children for text or props title and subtitle
+// TODO will food allergies be added?
 
 type TileProps = {
   allergies?: FoodAllergyType[];

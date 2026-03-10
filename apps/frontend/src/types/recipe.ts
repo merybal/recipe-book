@@ -6,7 +6,7 @@ import type {
 } from "./index";
 
 export type Source = {
-  // TODO revisar si se cambia cuando se agregue al back
+  // TODO check if this changes when added to backend
   name?: string[];
   url?: string[];
 };
@@ -33,16 +33,49 @@ export type RecipeType = {
   bakingInstructions?: BakingInstructionsType;
   mold?: MoldType;
   servings?: string;
-  notes?: string[]; //TODO falta en el back, agregar con type text al schema
-  source?: Source; //TODO falta en el back
+  notes?: string[];
+  source?: Source; // TODO missing in backend
   foodAllergies?: FoodAllergyType[];
-  tips?: string[];
   countryOfOrigin?: string;
+};
+
+export type RecipeNoteRaw = {
+  id: number;
+  recipe_id: number;
+  content: string;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string | null;
+};
+
+export type RecipeSourceRaw = {
+  id: number;
+  recipe_id: number;
+  name: string | null;
+  url: string | null;
+  sort_order: number;
+};
+
+export type RecipeTagRaw = {
+  id: number;
+  recipe_id: number;
+  tag_id: number;
+  tag: { id: number; name: string };
+};
+
+export type RecipeSubcategoryRaw = {
+  id: number;
+  recipe_id: number;
+  value: string;
+  sort_order: number;
 };
 
 export type RecipeRaw = {
   id: number;
   title: string;
+  category: string | null;
+  country_of_origin: string | null;
   cooking_time: number | null;
   cooking_temperature: number | null;
   servings: string | null;
@@ -54,4 +87,8 @@ export type RecipeRaw = {
   deleted_at: string | null;
   subrecipes: SubrecipeRaw[];
   recipe_food_allergies: RecipeFoodAllergyRaw[];
+  recipe_notes?: RecipeNoteRaw[];
+  recipe_sources?: RecipeSourceRaw[];
+  recipe_tags?: RecipeTagRaw[];
+  recipe_subcategories?: RecipeSubcategoryRaw[];
 };

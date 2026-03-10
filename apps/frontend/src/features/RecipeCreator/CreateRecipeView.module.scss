@@ -4,7 +4,7 @@
 @use "../../design-system/styles/spacing" as *;
 @use "../../design-system/styles/form" as *;
 
-//TODO ordenar este chocolo
+// TODO organize this mess
 
 .recipe-form {
   @include Flex($direction: column);
@@ -55,15 +55,11 @@
   }
 
   .step-helper,
-  .tips-step-helper {
+  .notes-step-helper {
     @include Font($family: text, $weight: medium, $size: xs, $align: justify);
     @include Color($font: secondary-text);
     @include Margin($top: sm, $bottom: xl);
     line-height: 1.5;
-  }
-
-  .tips-step-helper {
-    @include Margin($top: xl);
   }
 
   /* Subrecipes */
@@ -96,8 +92,8 @@
     @include Margin($top: sm);
   }
 
-  /* Tips */
-  .tip-item {
+  /* Notes */
+  .note-item {
     @include Flex($align: start, $gap: sm);
 
     > *:first-child {
@@ -105,16 +101,16 @@
       min-width: 0;
     }
 
-    .tip-remove-button {
+    .note-remove-button {
       @include Margin($top: 0);
     }
 
-    &.tip-item--first .tip-remove-button {
+    &.note-item--first .note-remove-button {
       @include Margin($top: 2rem);
     }
   }
 
-  .tips-container {
+  .notes-container {
     @include Flex($direction: column, $gap: md);
   }
 

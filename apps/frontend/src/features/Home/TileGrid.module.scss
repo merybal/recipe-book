@@ -5,7 +5,7 @@
     @include Flex(
       $direction: column,
       $gap: 2.5rem
-    ); //TODO REVISAR SI SE USA VARIABLE
+    ); // TODO check if variable is used
   }
 
   &.double {

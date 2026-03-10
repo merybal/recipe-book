@@ -6,7 +6,7 @@ const theme = {
       thick: "0.25rem", // 4px
     },
     style: {
-      //TODO sacar
+      // TODO remove
       solid: "solid",
       dashed: "dashed",
       dotted: "dotted",
@@ -20,7 +20,7 @@ const theme = {
       full: "9999px", // 100%
     },
   },
-  // TODO ver si se distinguen mejor secondary y disruptive, elegir otro secondary?
+  // TODO check if secondary and disruptive are distinct enough, choose different secondary?
   color: {
     primary: "#1fcc79",
     "primary-light": "#e3fff8",

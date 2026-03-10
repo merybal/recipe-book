@@ -3,7 +3,7 @@ import type { UnitAbbreviationsType, UnitRaw } from "./index";
 export type IngredientType = {
   name: string;
   amount?: number;
-  unit?: UnitAbbreviationsType | string; //TODO por si viene un ingrediente que no existe de la receta del formulario??
+  unit?: UnitAbbreviationsType | string; // TODO in case an ingredient from form doesn't exist in recipe??
 };
 
 export type IngredientRaw = {

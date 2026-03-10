@@ -10,7 +10,7 @@ import type { RecipeStateType, ErrorStateType } from "@/types";
 
 import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
-const MAX_TIPS = 6;
+const MAX_NOTES = 6;
 
 const COUNTRY_OPTIONS = [
   { value: "", label: "Seleccionar país" },
@@ -33,29 +33,29 @@ const AdditionalInformationStep = ({
   setRecipe,
   setErrors,
 }: AdditionalInformationStepProps) => {
-  const tips = recipe.tips ?? [];
+  const notes = recipe.notes ?? [];
 
-  const handleTipChange = (index: number, value: string) => {
+  const handleNoteChange = (index: number, value: string) => {
     setRecipe((prev) => {
-      const nextTips = [...(prev.tips ?? [])];
-      nextTips[index] = value;
-      return { ...prev, tips: nextTips };
+      const nextNotes = [...(prev.notes ?? [])];
+      nextNotes[index] = value;
+      return { ...prev, notes: nextNotes };
     });
   };
 
-  const handleAddTip = () => {
+  const handleAddNote = () => {
     setRecipe((prev) => {
-      const current = prev.tips ?? [];
-      if (current.length >= MAX_TIPS) return prev;
+      const current = prev.notes ?? [];
+      if (current.length >= MAX_NOTES) return prev;
       const next = current.length === 0 ? ["", ""] : [...current, ""];
-      return { ...prev, tips: next };
+      return { ...prev, notes: next };
     });
   };
 
-  const handleRemoveTip = (index: number) => {
+  const handleRemoveNote = (index: number) => {
     setRecipe((prev) => {
-      const nextTips = (prev.tips ?? []).filter((_, i) => i !== index);
-      return { ...prev, tips: nextTips };
+      const nextNotes = (prev.notes ?? []).filter((_, i) => i !== index);
+      return { ...prev, notes: nextNotes };
     });
   };
 
@@ -72,55 +72,55 @@ const AdditionalInformationStep = ({
     });
   };
 
-  const tipsToShow = tips.length > 0 ? tips : [""];
+  const notesToShow = notes.length > 0 ? notes : [""];
 
   return (
     <div>
-      <section aria-labelledby="tips-section">
+      <section aria-labelledby="notes-section">
         <header>
-          <h2 id="tips-section">Notas</h2>
-          <p className={styles["tips-step-helper"]}>
-            Agregá acá las notas o tips que quieras (sobre cocción, reemplazo de
+          <h2 id="notes-section">Notas</h2>
+          <p className={styles["notes-step-helper"]}>
+            Agregá acá las notas que quieras (sobre cocción, reemplazo de
             ingredientes, etc.) a la receta.
           </p>
         </header>
-        <div className={styles["tips-container"]}>
-          {tipsToShow.map((tip, index) => (
+        <div className={styles["notes-container"]}>
+          {notesToShow.map((note, index) => (
             <div
               key={index}
               className={clsx(
-                styles["tip-item"],
-                index === 0 && styles["tip-item--first"],
+                styles["note-item"],
+                index === 0 && styles["note-item--first"],
               )}
             >
               <Textarea
-                id={`tip-${index}`}
-                label={tipsToShow.length === 1 ? "Nota" : "Notas"}
+                id={`note-${index}`}
+                label={notesToShow.length === 1 ? "Nota" : "Notas"}
                 rows={3}
                 showLabel={index === 0}
-                value={tip}
-                onChange={(e) => handleTipChange(index, e.target.value)}
+                value={note}
+                onChange={(e) => handleNoteChange(index, e.target.value)}
               />
-              {tipsToShow.length > 1 && (
+              {notesToShow.length > 1 && (
                 <ButtonIcon
-                  className={styles["tip-remove-button"]}
+                  className={styles["note-remove-button"]}
                   disruptive
                   icon="Trash2"
                   label="Eliminar nota"
                   size="small"
                   variant="secondary"
-                  onClick={() => handleRemoveTip(index)}
+                  onClick={() => handleRemoveNote(index)}
                 />
               )}
             </div>
           ))}
-          {tips.length < MAX_TIPS && (
+          {notes.length < MAX_NOTES && (
             <Button
               type="button"
               label="Agregar nota"
               iconLeft="Plus"
               variant="secondary"
-              onClick={handleAddTip}
+              onClick={handleAddNote}
             />
           )}
         </div>

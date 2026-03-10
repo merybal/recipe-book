@@ -1,27 +1,61 @@
 import { useEffect, useState } from "react";
-import type { RecipeType } from "@/types";
+import type { RecipeType, FoodAllergyType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
 import Separator from "@/design-system/components/Separator";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 
+const CATEGORY_LABELS: Record<string, string> = {
+  salado: "Salado",
+  dulce: "Dulce",
+};
+
+const FOOD_ALLERGY_LABELS: Record<FoodAllergyType, string> = {
+  glutenFree: "Sin gluten",
+  dairyFree: "Sin lactosa",
+  vegetarian: "Vegetariano",
+  vegan: "Vegano",
+};
+
+const COUNTRY_LABELS: Record<string, string> = {
+  argentina: "Argentina",
+  españa: "España",
+  mexico: "México",
+  italia: "Italia",
+  francia: "Francia",
+  peru: "Perú",
+  colombia: "Colombia",
+  chile: "Chile",
+  uruguay: "Uruguay",
+  otro: "Otro",
+};
+
+const SUBCATEGORY_LABELS: Record<string, string> = {
+  tarta: "Tarta",
+  arroz: "Arroz",
+  carne: "Carne",
+  pollo: "Pollo",
+  cerdo: "Cerdo",
+  muffin: "Muffin",
+  torta: "Torta",
+  helado: "Helado",
+  cookie: "Cookie",
+  scon: "Scon",
+};
+
 export type RecipePreviewProps = {
   className?: string;
   recipeData: RecipeType;
   onChange: (updatedRecipe: RecipeType) => void;
-  /** Imagen de portada cargada en el step 1 (para previsualizar/cambiar en el preview). */
   coverImageFiles?: File[];
-  /** Se llama cuando el usuario cambia la imagen de portada desde el preview. */
   onCoverImageChange?: (files: File[]) => void;
-  /** Se llama al pulsar "Editar portada"; típicamente para ir al step 0 del formulario. */
   onEditCover?: () => void;
-  /** Se llama al pulsar "Editar subrecetas"; típicamente para ir al step 4 del formulario. */
   onEditSubrecipes?: () => void;
-  /** Se llama al pulsar "Editar cocción"; típicamente para ir al step 2 del formulario. */
   onEditBakingInstructions?: () => void;
-  /** Se llama al pulsar "Editar molde"; típicamente para ir al step 1 del formulario. */
   onEditMold?: () => void;
+  onEditCategories?: () => void;
+  onEditAdditionalInfo?: () => void;
 };
 
 const RecipePreview = ({
@@ -33,6 +67,8 @@ const RecipePreview = ({
   onEditSubrecipes,
   onEditBakingInstructions,
   onEditMold,
+  onEditCategories,
+  onEditAdditionalInfo,
 }: RecipePreviewProps) => {
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
 
@@ -47,8 +83,17 @@ const RecipePreview = ({
     return () => URL.revokeObjectURL(url);
   }, [coverImageFiles]);
 
-  // Solo la imagen cargada en el step 0 (portada), no recipeData.imageUrl
   const coverImageSrc = coverPreviewUrl ?? undefined;
+  const subrecipes = recipeData.subrecipes ?? [];
+  const notes = recipeData.notes ?? [];
+  const subcategories = recipeData.subcategories ?? [];
+  const foodAllergies = recipeData.foodAllergies ?? [];
+  const tags = recipeData.tags ?? [];
+
+  const formatSubcategory = (value: string) =>
+    SUBCATEGORY_LABELS[value] ?? value;
+  const formatCountry = (value: string) =>
+    COUNTRY_LABELS[value] ?? value;
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
@@ -91,11 +136,11 @@ const RecipePreview = ({
         </div>
         <div>
           <h3>Tipo</h3>
-          <p>{recipeData.mold?.type ? recipeData.mold?.type : "-"}</p>
+          <p>{recipeData.mold?.type ? recipeData.mold.type : "-"}</p>
         </div>
         <div>
           <h3>Tamaño</h3>
-          <p>{recipeData.mold?.size ? recipeData.mold?.size : "-"}</p>
+          <p>{recipeData.mold?.size ? recipeData.mold.size : "-"}</p>
         </div>
       </div>
 
@@ -114,16 +159,16 @@ const RecipePreview = ({
         <div>
           <h3>Temperatura</h3>
           <p>
-            {recipeData.bakingInstructions?.temperature
-              ? recipeData.bakingInstructions?.temperature
+            {recipeData.bakingInstructions?.temperature != null
+              ? `${recipeData.bakingInstructions.temperature}°C`
               : "-"}
           </p>
         </div>
         <div>
           <h3>Tiempo</h3>
           <p>
-            {recipeData.bakingInstructions?.time
-              ? recipeData.bakingInstructions?.time
+            {recipeData.bakingInstructions?.time != null
+              ? `${recipeData.bakingInstructions.time} min`
               : "-"}
           </p>
         </div>
@@ -141,34 +186,115 @@ const RecipePreview = ({
             onClick={() => onEditSubrecipes?.()}
           />
         </div>
+        {subrecipes.length === 0 ? (
+          <p>-</p>
+        ) : (
+          subrecipes.map((sub, index) => (
+            <div key={index} className={styles["subrecipe-block"]}>
+              {subrecipes.length > 1 && sub.title && (
+                <div>
+                  <h3>Título</h3>
+                  <p>{sub.title}</p>
+                </div>
+              )}
+              <div>
+                <h3>Ingredientes</h3>
+                <p>
+                  {sub.ingredients?.length
+                    ? sub.ingredients.map((i) => i.name).join(", ")
+                    : "-"}
+                </p>
+              </div>
+              <div>
+                <h3>Instrucciones</h3>
+                {sub.instructions?.length ? (
+                  <ol className={styles["instructions-list"]}>
+                    {sub.instructions.map((inst, i) => (
+                      <li key={i}>{inst}</li>
+                    ))}
+                  </ol>
+                ) : (
+                  <p>-</p>
+                )}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <Separator />
+
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
+          <h2>Categoría</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar categoría"
+            size="small"
+            onClick={() => onEditCategories?.()}
+          />
+        </div>
         <div>
-          <h3>Título</h3>
+          <h3>Categoría</h3>
           <p>
-            {recipeData.subrecipes[0].title
-              ? recipeData.subrecipes[0].title
+            {recipeData.category
+              ? CATEGORY_LABELS[recipeData.category] ?? recipeData.category
               : "-"}
           </p>
         </div>
-        <div>
-          <h3>Ingredientes</h3>
-          <p>
-            {recipeData.subrecipes[0].ingredients
-              .map((ingredient) => ingredient.name)
-              .join(", ")
-              ? recipeData.subrecipes[0].ingredients
-                  .map((ingredient) => ingredient.name)
-                  .join(", ")
-              : "-"}
-          </p>
+        {subcategories.length > 0 && (
+          <div>
+            <h3>Subcategorías</h3>
+            <p>{subcategories.map(formatSubcategory).join(", ")}</p>
+          </div>
+        )}
+        {foodAllergies.length > 0 && (
+          <div>
+            <h3>Alergias alimentarias</h3>
+            <p>
+              {foodAllergies
+                .map((a) => FOOD_ALLERGY_LABELS[a] ?? a)
+                .join(", ")}
+            </p>
+          </div>
+        )}
+        {tags.length > 0 && (
+          <div>
+            <h3>Etiquetas</h3>
+            <p>{tags.join(", ")}</p>
+          </div>
+        )}
+      </div>
+
+      <Separator />
+
+      <div className={styles.step}>
+        <div className={styles["step-header"]}>
+          <h2>Información adicional</h2>
+          <ButtonIcon
+            icon="Pencil"
+            label="Editar información adicional"
+            size="small"
+            onClick={() => onEditAdditionalInfo?.()}
+          />
         </div>
-        <div>
-          <h3>Instrucciones</h3>
-          <p>
-            {recipeData.subrecipes[0].instructions.join(", ")
-              ? recipeData.subrecipes[0].instructions.join(", ")
-              : "-"}
-          </p>
-        </div>
+        {notes.length > 0 && (
+          <div>
+            <h3>Notas</h3>
+            <ul className={styles["notes-list"]}>
+              {notes.map((note, i) => (
+                <li key={i}>{note}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {recipeData.countryOfOrigin && (
+          <div>
+            <h3>País de origen</h3>
+            <p>{formatCountry(recipeData.countryOfOrigin)}</p>
+          </div>
+        )}
+        {notes.length === 0 && !recipeData.countryOfOrigin && <p>-</p>}
       </div>
 
       <Separator />

@@ -2,7 +2,7 @@
 
 .app {
   @include Flex($direction: column);
-  margin-left: auto; //TODO revisar si se pasa al pagelayout en modo desktop
+  margin-left: auto; // TODO check if it's passed to pagelayout in desktop mode
   margin-right: auto;
   max-width: 75rem; //1200px
 }

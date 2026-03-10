@@ -1,5 +1,5 @@
 // library: https://lucide.dev/
-// TODO ver como dar credito a lucide por los icons
+// TODO figure out how to credit lucide for the icons
 import type { IconProps } from "./Icon.types";
 import { sizeMap } from "./Icon.constants";
 
@@ -7,7 +7,7 @@ import { iconMap } from "./Icons.constants";
 import clsx from "clsx";
 import styles from "./Icon.module.scss";
 
-//TODO hacer accesible
+// TODO make accessible
 const Icon = ({
   background,
   className,

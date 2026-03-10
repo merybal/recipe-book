@@ -16,7 +16,7 @@ export class UnitsService {
   async getUnits() {
     return this.prisma.units.findMany({
       where: {
-        deleted_at: null, // por si estás usando borrado lógico
+        deleted_at: null, // in case you're using soft delete
       },
       orderBy: { name: 'asc' },
     });

@@ -20,10 +20,14 @@ import type {
   IngredientType,
   IngredientRaw,
   RecipeFoodAllergyRaw,
+  RecipeNoteRaw,
+  RecipeSourceRaw,
+  RecipeTagRaw,
+  RecipeSubcategoryRaw,
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { normalizeUnit } from "@/utils/idml-file-uploader-utils"; //TODO rename file
+import { normalizeUnit } from "@/utils/idml-file-uploader-utils"; // TODO rename file
 
 import type { IconName } from "@/design-system/components/Icon";
 
@@ -63,7 +67,7 @@ function RecipeInfoItem({
 }
 
 /**
- * //TODO
+ * // TODO
  * - hay que programar el volver a la pagina anterior?
  * - desktop
  */
@@ -79,7 +83,7 @@ const RecipeView = () => {
   useEffect(() => {
     if (!id) return;
 
-    //TODO pasar a utils o a hook
+    // TODO move to utils or hook
 
     function parseIngredient(ingredient: IngredientRaw): IngredientType {
       const parsedUnit =
@@ -89,11 +93,11 @@ const RecipeView = () => {
           ingredient.amount && ingredient.amount,
         );
 
-      //TODO revisar types
+      // TODO check types
 
       const parsedIngredient: IngredientType = {
         name: ingredient.name,
-        ...(ingredient.amount && { amount: ingredient.amount }), //TODO REVISAR
+        ...(ingredient.amount && { amount: ingredient.amount }), // TODO review
         ...(parsedUnit && { unit: parsedUnit }),
       };
 
@@ -108,7 +112,7 @@ const RecipeView = () => {
         instructions: subrecipe.instructions
           .split("\n")
           .map((i) => i.trim())
-          .filter(Boolean), //TODO cambiar para que se parsee separando parrafos con /n
+          .filter(Boolean), // TODO change to parse separating paragraphs with /n
         ingredients: subrecipe.ingredients.map(parseIngredient),
       };
 
@@ -126,7 +130,11 @@ const RecipeView = () => {
         const parsedRecipe: RecipeType = {
           id: id,
           title: recipeData.title,
-          ...(recipeData.imageUrl && { imageUrl: recipeData.image_url }),
+          ...(recipeData.image_url && { imageUrl: recipeData.image_url }),
+          ...(recipeData.category && { category: recipeData.category }),
+          ...(recipeData.country_of_origin && {
+            countryOfOrigin: recipeData.country_of_origin,
+          }),
           subrecipes: recipeData.subrecipes.map(parseSubrecipe),
 
           ...(recipeData.cooking_time || recipeData.cooking_temperature
@@ -160,8 +168,31 @@ const RecipeView = () => {
               )
               .filter(Boolean), // filtra los undefined en caso de valores no reconocidos
           }),
-          // notes?: recipeData.[],
-          // source?: Source,
+          ...(recipeData.recipe_notes?.length > 0 && {
+            notes: recipeData.recipe_notes
+              .sort((a: RecipeNoteRaw, b: RecipeNoteRaw) => a.sort_order - b.sort_order)
+              .map((n: RecipeNoteRaw) => n.content),
+          }),
+          ...(recipeData.recipe_sources?.length > 0 && {
+            source: {
+              name: recipeData.recipe_sources
+                .sort((a: RecipeSourceRaw, b: RecipeSourceRaw) => a.sort_order - b.sort_order)
+                .map((s: RecipeSourceRaw) => s.name)
+                .filter(Boolean) as string[],
+              url: recipeData.recipe_sources
+                .sort((a: RecipeSourceRaw, b: RecipeSourceRaw) => a.sort_order - b.sort_order)
+                .map((s: RecipeSourceRaw) => s.url)
+                .filter(Boolean) as string[],
+            },
+          }),
+          ...(recipeData.recipe_tags?.length > 0 && {
+            tags: recipeData.recipe_tags.map((rt: RecipeTagRaw) => rt.tag.name),
+          }),
+          ...(recipeData.recipe_subcategories?.length > 0 && {
+            subcategories: recipeData.recipe_subcategories
+              .sort((a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) => a.sort_order - b.sort_order)
+              .map((s: RecipeSubcategoryRaw) => s.value),
+          }),
         };
 
         console.log("parsed recipe", parsedRecipe);

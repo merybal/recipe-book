@@ -30,5 +30,19 @@
     h3 {
       @include Margin($bottom: sm);
     }
+
+    .subrecipe-block {
+      @include Flex($direction: column, $gap: lg);
+
+      &:not(:last-child) {
+        @include Margin($bottom: xl);
+      }
+    }
+
+    .notes-list,
+    .instructions-list {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
   }
 }

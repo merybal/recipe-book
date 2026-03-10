@@ -5,7 +5,7 @@ import ThemeProvider from "./design-system/ThemeProvider";
 import RecipeView from "./features/Recipe/RecipeView";
 import HomeView from "./features/Home/HomeView";
 import CreateRecipeView from "./features/RecipeCreator/CreateRecipeView";
-import ComponentShowcaseView from "./features/ComponentShowcase/ComponentShowcaseView"; //TODO remover cuando se agregue storybook
+import ComponentShowcaseView from "./features/ComponentShowcase/ComponentShowcaseView"; // TODO remove when storybook is added
 
 import styles from "./App.module.scss";
 

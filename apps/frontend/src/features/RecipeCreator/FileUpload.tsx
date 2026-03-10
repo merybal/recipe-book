@@ -3,7 +3,7 @@ import React, { useState } from "react";
 //https://lirantal.com/blog/how-to-read-and-parse-pdfs-pdfjs-create-pdfs-pdf-lib-nodejs
 import { GlobalWorkerOptions, getDocument } from "pdfjs-dist";
 
-//TODO matar componente y libreria
+// TODO remove component and library
 
 GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -49,7 +49,7 @@ const FileUpload = () => {
 
       extraerSeccionesConDuplicados(fullText);
 
-      // console.log("Texto extraído del PDF:", fullText);
+      // console.log("Text extracted from PDF:", fullText);
       // formatRecipe();
     };
 
@@ -77,11 +77,11 @@ const FileUpload = () => {
       servings: undefined as string | undefined,
     };
 
-    // Helper para cortar texto entre dos índices
+    // Helper to slice text between two indices
     const extract = (start: number, end: number | null) =>
       limpio.slice(start, end ?? undefined).trim();
 
-    // Determinar los cortes en orden
+    // Determine cuts in order
     const puntos = [
       { key: "preparation", index: indexPreparation, label: "preparación" },
       { key: "source", index: indexSource, label: "fuente:" },
@@ -93,14 +93,14 @@ const FileUpload = () => {
       .filter((p) => p.index !== -1)
       .sort((a, b) => a.index - b.index);
 
-    // Si hay alguna sección, lo que hay antes es el title
+    // If there are sections, what comes before is the title
     if (puntos.length > 0) {
       secciones.title = extract(0, puntos[0].index);
     } else {
       secciones.title = limpio;
     }
 
-    // Extraer secciones entre cada punto
+    // Extract sections between each point
     for (let i = 0; i < puntos.length; i++) {
       const { key, index, label } = puntos[i];
       const start = index + label.length;
@@ -110,7 +110,7 @@ const FileUpload = () => {
         .trim();
     }
 
-    // return secciones;
+    // return sections;
     console.log(secciones);
 
     setTitle(secciones.title);
@@ -135,7 +135,7 @@ const FileUpload = () => {
       { key: "source", label: "fuente:" },
     ];
 
-    // Buscar apariciones válidas
+    // Find valid occurrences
     const puntos = labels
       .map(({ key, label }) => {
         const regex =
@@ -176,7 +176,7 @@ const FileUpload = () => {
       source: undefined,
     };
 
-    // Título = antes de la primera sección
+    // Title = before the first section
     if (puntos.length > 0) {
       secciones.title = limpio.slice(0, puntos[0].index).trim();
     } else {
@@ -184,7 +184,7 @@ const FileUpload = () => {
       return secciones;
     }
 
-    // Extraer cada sección desde el final del match completo
+    // Extract each section from the end of the full match
     for (let i = 0; i < puntos.length; i++) {
       const { key, label, index, matchLength } = puntos[i];
       const start = index + matchLength;
@@ -192,14 +192,14 @@ const FileUpload = () => {
       const end = i + 1 < puntos.length ? puntos[i + 1].index : undefined;
       const contenido = limpio.slice(start, end).trim();
 
-      // Limpieza final (por si quedó algún duplicado más)
+      // Final cleanup (in case any duplicates remain)
       const limpioContenido = contenido
         .replace(new RegExp(`\\b${label}\\b`, "ig"), "")
         .trim();
       secciones[key] = limpioContenido;
     }
 
-    // return secciones;
+    // return sections;
     console.log(secciones);
     setTitle(secciones.title);
     if (secciones.ingredients) setIngredients(secciones.ingredients);

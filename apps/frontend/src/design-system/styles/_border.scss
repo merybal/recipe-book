@@ -7,7 +7,7 @@
   } @else if $value == thin or $value == medium or $value == thick {
     @return var(--border-width-#{$value});
   } @else {
-    // fallback: permite pasar valores directos como "1px" si querés
+    // fallback: allows passing direct values like "1px" if needed
     @return $value;
   }
 }

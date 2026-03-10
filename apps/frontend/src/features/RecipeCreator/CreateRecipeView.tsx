@@ -157,14 +157,14 @@ const CreateRecipeView = () => {
   const pageTitle =
     currentStep === 5 ? "Revisá tu receta" : "Creá una nueva receta";
 
-  // TODO borrar
+  // TODO remove
   useEffect(() => {
     console.log("Errores actuales:", errors);
   }, [errors]);
 
   useEffect(() => {
     if (isSelected) {
-      // Cuando está dividido en subrecetas, armo el array desde subrecipeDrafts
+      // When divided into subrecipes, build array from subrecipeDrafts
       const subrecipes = subrecipeDrafts.map((draft) => ({
         title: draft.title,
         ingredients: draft.ingredients,
@@ -172,12 +172,12 @@ const CreateRecipeView = () => {
       }));
       setRecipe((prev) => ({ ...prev, subrecipes }));
     } else {
-      // Cuando es simple (no dividido), solo una subreceta sin título
+      // When simple (not divided), single subrecipe without title
       setRecipe((prev) => ({
         ...prev,
         subrecipes: [
           {
-            title: "", // o null si preferís
+            title: "", // or null if preferred
             ingredients: simpleRecipeDraft.ingredients,
             instructions: simpleRecipeDraft.instructions,
           },
@@ -211,20 +211,20 @@ const CreateRecipeView = () => {
       Object.assign(stepErrors, bakingErrors);
     }
 
-    // Acá podrías agregar validaciones de otros steps también.
+    // You could add validations for other steps here too.
 
     if (Object.keys(stepErrors).length > 0) {
       setErrors(stepErrors);
       return; // 🚫 no avanza al siguiente paso
     }
 
-    // Limpiar vacíos antes de avanzar
+    // Clear empty values before advancing
     setRecipe((prev) => ({
       ...prev,
       subcategories: (prev.subcategories ?? [])
         .map((s) => s.trim())
         .filter(Boolean),
-      tips: (prev.tips ?? []).map((t) => t.trim()).filter(Boolean),
+      notes: (prev.notes ?? []).map((n) => n.trim()).filter(Boolean),
     }));
 
     if (isSelected) {
@@ -363,6 +363,11 @@ const CreateRecipeView = () => {
               setEditingCoverFromPreview(true);
               setCurrentStep(0);
             }}
+            onEditMold={() => setCurrentStep(1)}
+            onEditBakingInstructions={() => setCurrentStep(2)}
+            onEditSubrecipes={() => setCurrentStep(2)}
+            onEditCategories={() => setCurrentStep(3)}
+            onEditAdditionalInfo={() => setCurrentStep(4)}
           />
         )}
 
