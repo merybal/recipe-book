@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import clsx from "clsx";
 import type { PreviewData } from "@/features/Home/TileGrid";
-import type { FoodAllergyType } from "@/types";
+import type { DietaryRestrictionType } from "@/types";
 
 import styles from "./HomeView.module.scss";
 import TileGrid from "@/features/Home/TileGrid";
 import MultipleEditableFields from "@/design-system/components/MultipleEditableFields";
 import { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
-import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
+import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
 import Button from "@/design-system/components/Button";
 
 const HomeView = () => {
@@ -25,16 +25,22 @@ const HomeView = () => {
             id: number;
             title: string;
             image_url: string | null;
-            recipe_food_allergies?: Array<{ food_allergy: { name: string } }>;
+            recipe_dietary_restrictions?: Array<{
+              dietary_restriction: { name: string };
+            }>;
           }) => ({
             id: r.id,
             title: r.title,
             imageUrl: r.image_url ?? undefined,
-            foodAllergies: r.recipe_food_allergies
-              ?.map((rfa) =>
-                parseFoodAllergiesforFrontend(rfa.food_allergy.name),
+            dietaryRestrictions: r.recipe_dietary_restrictions
+              ?.map((rdr) =>
+                parseDietaryRestrictionsForFrontend(
+                  rdr.dietary_restriction.name,
+                ),
               )
-              .filter((a): a is FoodAllergyType => a !== undefined),
+              .filter(
+                (dr): dr is DietaryRestrictionType => dr !== undefined,
+              ),
           }),
         );
         setRecipePreviews(mappedData);

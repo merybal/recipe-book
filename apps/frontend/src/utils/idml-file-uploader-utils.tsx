@@ -5,14 +5,14 @@ import type {
   BakingInstructionsType,
   MoldType,
   SubrecipeIdmlType,
-  FoodAllergyType,
-  FoodAllergyRaw,
+  DietaryRestrictionType,
+  DietaryRestrictionRaw,
   Source,
   UnitRaw,
 } from "@/types";
 
 import type { UnitAbbreviationsType } from "@/types";
-import { UNITS } from "@/constants";
+import { DIETARY_RESTRICTIONS, UNITS } from "@/constants";
 
 export function getBakingInstructions(i: number, storyContentArray: Element[]) {
   const next = storyContentArray[i + 1];
@@ -224,16 +224,16 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
         for (const allergy of foundAllergies) {
           switch (allergy) {
             case "gluten":
-              allergyTags.push("glutenFree" as FoodAllergyType);
+              allergyTags.push("glutenFree" as DietaryRestrictionType);
               break;
             case "dairy":
-              allergyTags.push("dairyFree" as FoodAllergyType);
+              allergyTags.push("dairyFree" as DietaryRestrictionType);
               break;
             case "vegan":
-              allergyTags.push("vegan" as FoodAllergyType);
+              allergyTags.push("vegan" as DietaryRestrictionType);
               break;
             case "vegetarian":
-              allergyTags.push("vegetarian" as FoodAllergyType);
+              allergyTags.push("vegetarian" as DietaryRestrictionType);
               break;
           }
         }
@@ -348,7 +348,7 @@ export function getUnitId(
 export function transformRecipeForPost(
   recipe: RecipeType,
   units: UnitRaw[],
-  allergies: FoodAllergyRaw[]
+  dietaryRestrictions: DietaryRestrictionRaw[]
 ) {
   const formattedRecipe = {
     title: recipe.title,
@@ -375,11 +375,14 @@ export function transformRecipeForPost(
       })),
     },
 
-    recipe_food_allergies: {
-      create: (recipe.foodAllergies ?? [])
-        .map((name) => allergies.find((a) => a.name === name)?.id)
+    recipe_dietary_restrictions: {
+      create: (recipe.dietaryRestrictions ?? [])
+        .map((key) => {
+          const backendName = DIETARY_RESTRICTIONS[key];
+          return dietaryRestrictions.find((dr) => dr.name === backendName)?.id;
+        })
         .filter((id): id is number => !!id)
-        .map((id) => ({ food_allergy_id: id })),
+        .map((id) => ({ dietary_restriction_id: id })),
     },
   };
 
@@ -402,8 +405,10 @@ export async function parseIdmlFile(
   };
 
   if (allergyTags.length) {
-    recipeObject.foodAllergies = [];
-    recipeObject.foodAllergies.push(...(allergyTags as FoodAllergyType[]));
+    recipeObject.dietaryRestrictions = [];
+    recipeObject.dietaryRestrictions.push(
+      ...(allergyTags as DietaryRestrictionType[]),
+    );
   }
 
   const storyFiles = Object.keys(zip.files).filter((path) =>

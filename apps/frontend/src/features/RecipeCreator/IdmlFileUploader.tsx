@@ -13,7 +13,7 @@ import {
   transformRecipeForPost,
 } from "@/utils/idml-file-uploader-utils";
 
-import type { RecipeType, FoodAllergyRaw, UnitRaw } from "@/types";
+import type { RecipeType, DietaryRestrictionRaw, UnitRaw } from "@/types";
 
 // TODO create select input for use in ingredients table
 // TODO create checkbox
@@ -21,7 +21,9 @@ import type { RecipeType, FoodAllergyRaw, UnitRaw } from "@/types";
 const IdmlFileUploader = () => {
   const locale = useLocale();
   const [units, setUnits] = useState<UnitRaw[]>([]);
-  const [allergies, setAllergies] = useState<FoodAllergyRaw[]>([]);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState<
+    DietaryRestrictionRaw[]
+  >([]);
   const [recipe, setRecipe] = useState<RecipeType>();
   const [files, setFiles] = useState<File[]>([]);
 
@@ -40,13 +42,13 @@ const IdmlFileUploader = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [unitsRes, allergiesRes] = await Promise.all([
+        const [unitsRes, restrictionsRes] = await Promise.all([
           axios.get(`/api/units?locale=${locale}`),
-          axios.get("/api/food-allergies"),
+          axios.get("/api/dietary-restrictions"),
         ]);
 
         setUnits(unitsRes.data);
-        setAllergies(allergiesRes.data);
+        setDietaryRestrictions(restrictionsRes.data);
       } catch (error) {
         console.error("Error al cargar datos:", error);
       }
@@ -67,7 +69,11 @@ const IdmlFileUploader = () => {
   const handleUpload = async () => {
     if (!recipe) return;
 
-    const body = transformRecipeForPost(recipe, units, allergies);
+    const body = transformRecipeForPost(
+      recipe,
+      units,
+      dietaryRestrictions,
+    );
 
     try {
       const res = await axios.post("/api/recipes", body);

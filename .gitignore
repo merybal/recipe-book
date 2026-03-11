@@ -6,6 +6,7 @@
 /apps/backend/node_modules
 /.pnp
 .pnp.js
+.pnpm-store
 
 # testing
 /coverage
@@ -30,6 +31,7 @@ Logo.psd
 /apps/backend/.env
 .env
 /apps/backend/dist
+/apps/frontend/dist
 /apps/backend/tsconfig.build.tsbuildinfo
 /apps/backend/tsconfig.tsbuildinfo
 

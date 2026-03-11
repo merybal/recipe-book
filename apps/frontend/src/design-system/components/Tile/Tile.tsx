@@ -3,15 +3,12 @@ import clsx from "clsx";
 import styles from "./Tile.module.scss";
 
 import type { Source as SourceProps } from "@/types";
-import type { FoodAllergyType } from "@/types";
+import type { DietaryRestrictionType } from "@/types";
 
-import FoodAllergies from "@/features/Recipe/FoodAllergies";
-
-// TODO define if it should be agnostic with children for text or props title and subtitle
-// TODO will food allergies be added?
+import DietaryRestrictions from "@/features/Recipe/DietaryRestrictions";
 
 type TileProps = {
-  allergies?: FoodAllergyType[];
+  restrictions?: DietaryRestrictionType[];
   className?: string;
   imageUrl: string;
   source?: SourceProps;
@@ -20,7 +17,7 @@ type TileProps = {
 };
 
 const Tile = ({
-  allergies,
+  restrictions,
   className,
   imageUrl,
   source,
@@ -45,8 +42,11 @@ const Tile = ({
             <p className={styles.subtitle}>{source.name.join(" & ")}</p>
           )}
         </div>
-        {allergies && allergies.length > 0 && (
-          <FoodAllergies className={styles.allergies} allergies={allergies} />
+        {restrictions && restrictions.length > 0 && (
+          <DietaryRestrictions
+            className={styles.restrictions}
+            restrictions={restrictions}
+          />
         )}
       </div>
     </div>

@@ -29,20 +29,20 @@ export type Ingredients = $Result.DefaultSelection<Prisma.$IngredientsPayload>
  */
 export type Subrecipes = $Result.DefaultSelection<Prisma.$SubrecipesPayload>
 /**
- * Model FoodAllergies
+ * Model DietaryRestrictions
  * 
  */
-export type FoodAllergies = $Result.DefaultSelection<Prisma.$FoodAllergiesPayload>
+export type DietaryRestrictions = $Result.DefaultSelection<Prisma.$DietaryRestrictionsPayload>
 /**
  * Model Units
  * 
  */
 export type Units = $Result.DefaultSelection<Prisma.$UnitsPayload>
 /**
- * Model RecipeFoodAllergies
+ * Model RecipeDietaryRestrictions
  * 
  */
-export type RecipeFoodAllergies = $Result.DefaultSelection<Prisma.$RecipeFoodAllergiesPayload>
+export type RecipeDietaryRestrictions = $Result.DefaultSelection<Prisma.$RecipeDietaryRestrictionsPayload>
 /**
  * Model RecipeNotes
  * 
@@ -68,6 +68,16 @@ export type RecipeSources = $Result.DefaultSelection<Prisma.$RecipeSourcesPayloa
  * 
  */
 export type Countries = $Result.DefaultSelection<Prisma.$CountriesPayload>
+/**
+ * Model Categories
+ * 
+ */
+export type Categories = $Result.DefaultSelection<Prisma.$CategoriesPayload>
+/**
+ * Model CategorySubcategories
+ * 
+ */
+export type CategorySubcategories = $Result.DefaultSelection<Prisma.$CategorySubcategoriesPayload>
 /**
  * Model Subcategories
  * 
@@ -235,14 +245,14 @@ export class PrismaClient<
   get subrecipes(): Prisma.SubrecipesDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.foodAllergies`: Exposes CRUD operations for the **FoodAllergies** model.
+   * `prisma.dietaryRestrictions`: Exposes CRUD operations for the **DietaryRestrictions** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more FoodAllergies
-    * const foodAllergies = await prisma.foodAllergies.findMany()
+    * // Fetch zero or more DietaryRestrictions
+    * const dietaryRestrictions = await prisma.dietaryRestrictions.findMany()
     * ```
     */
-  get foodAllergies(): Prisma.FoodAllergiesDelegate<ExtArgs, ClientOptions>;
+  get dietaryRestrictions(): Prisma.DietaryRestrictionsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.units`: Exposes CRUD operations for the **Units** model.
@@ -255,14 +265,14 @@ export class PrismaClient<
   get units(): Prisma.UnitsDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.recipeFoodAllergies`: Exposes CRUD operations for the **RecipeFoodAllergies** model.
+   * `prisma.recipeDietaryRestrictions`: Exposes CRUD operations for the **RecipeDietaryRestrictions** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more RecipeFoodAllergies
-    * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findMany()
+    * // Fetch zero or more RecipeDietaryRestrictions
+    * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findMany()
     * ```
     */
-  get recipeFoodAllergies(): Prisma.RecipeFoodAllergiesDelegate<ExtArgs, ClientOptions>;
+  get recipeDietaryRestrictions(): Prisma.RecipeDietaryRestrictionsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.recipeNotes`: Exposes CRUD operations for the **RecipeNotes** model.
@@ -313,6 +323,26 @@ export class PrismaClient<
     * ```
     */
   get countries(): Prisma.CountriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.categories`: Exposes CRUD operations for the **Categories** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Categories
+    * const categories = await prisma.categories.findMany()
+    * ```
+    */
+  get categories(): Prisma.CategoriesDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.categorySubcategories`: Exposes CRUD operations for the **CategorySubcategories** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CategorySubcategories
+    * const categorySubcategories = await prisma.categorySubcategories.findMany()
+    * ```
+    */
+  get categorySubcategories(): Prisma.CategorySubcategoriesDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.subcategories`: Exposes CRUD operations for the **Subcategories** model.
@@ -776,14 +806,16 @@ export namespace Prisma {
     Recipes: 'Recipes',
     Ingredients: 'Ingredients',
     Subrecipes: 'Subrecipes',
-    FoodAllergies: 'FoodAllergies',
+    DietaryRestrictions: 'DietaryRestrictions',
     Units: 'Units',
-    RecipeFoodAllergies: 'RecipeFoodAllergies',
+    RecipeDietaryRestrictions: 'RecipeDietaryRestrictions',
     RecipeNotes: 'RecipeNotes',
     Tags: 'Tags',
     RecipeTags: 'RecipeTags',
     RecipeSources: 'RecipeSources',
     Countries: 'Countries',
+    Categories: 'Categories',
+    CategorySubcategories: 'CategorySubcategories',
     Subcategories: 'Subcategories',
     RecipeSubcategories: 'RecipeSubcategories'
   };
@@ -804,7 +836,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "recipes" | "ingredients" | "subrecipes" | "foodAllergies" | "units" | "recipeFoodAllergies" | "recipeNotes" | "tags" | "recipeTags" | "recipeSources" | "countries" | "subcategories" | "recipeSubcategories"
+      modelProps: "recipes" | "ingredients" | "subrecipes" | "dietaryRestrictions" | "units" | "recipeDietaryRestrictions" | "recipeNotes" | "tags" | "recipeTags" | "recipeSources" | "countries" | "categories" | "categorySubcategories" | "subcategories" | "recipeSubcategories"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1030,77 +1062,77 @@ export namespace Prisma {
           }
         }
       }
-      FoodAllergies: {
-        payload: Prisma.$FoodAllergiesPayload<ExtArgs>
-        fields: Prisma.FoodAllergiesFieldRefs
+      DietaryRestrictions: {
+        payload: Prisma.$DietaryRestrictionsPayload<ExtArgs>
+        fields: Prisma.DietaryRestrictionsFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.FoodAllergiesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload> | null
+            args: Prisma.DietaryRestrictionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.FoodAllergiesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           findFirst: {
-            args: Prisma.FoodAllergiesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload> | null
+            args: Prisma.DietaryRestrictionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.FoodAllergiesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           findMany: {
-            args: Prisma.FoodAllergiesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>[]
+            args: Prisma.DietaryRestrictionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>[]
           }
           create: {
-            args: Prisma.FoodAllergiesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           createMany: {
-            args: Prisma.FoodAllergiesCreateManyArgs<ExtArgs>
+            args: Prisma.DietaryRestrictionsCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.FoodAllergiesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>[]
+            args: Prisma.DietaryRestrictionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>[]
           }
           delete: {
-            args: Prisma.FoodAllergiesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           update: {
-            args: Prisma.FoodAllergiesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           deleteMany: {
-            args: Prisma.FoodAllergiesDeleteManyArgs<ExtArgs>
+            args: Prisma.DietaryRestrictionsDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.FoodAllergiesUpdateManyArgs<ExtArgs>
+            args: Prisma.DietaryRestrictionsUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.FoodAllergiesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>[]
+            args: Prisma.DietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>[]
           }
           upsert: {
-            args: Prisma.FoodAllergiesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$FoodAllergiesPayload>
+            args: Prisma.DietaryRestrictionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DietaryRestrictionsPayload>
           }
           aggregate: {
-            args: Prisma.FoodAllergiesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateFoodAllergies>
+            args: Prisma.DietaryRestrictionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDietaryRestrictions>
           }
           groupBy: {
-            args: Prisma.FoodAllergiesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<FoodAllergiesGroupByOutputType>[]
+            args: Prisma.DietaryRestrictionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DietaryRestrictionsGroupByOutputType>[]
           }
           count: {
-            args: Prisma.FoodAllergiesCountArgs<ExtArgs>
-            result: $Utils.Optional<FoodAllergiesCountAggregateOutputType> | number
+            args: Prisma.DietaryRestrictionsCountArgs<ExtArgs>
+            result: $Utils.Optional<DietaryRestrictionsCountAggregateOutputType> | number
           }
         }
       }
@@ -1178,77 +1210,77 @@ export namespace Prisma {
           }
         }
       }
-      RecipeFoodAllergies: {
-        payload: Prisma.$RecipeFoodAllergiesPayload<ExtArgs>
-        fields: Prisma.RecipeFoodAllergiesFieldRefs
+      RecipeDietaryRestrictions: {
+        payload: Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>
+        fields: Prisma.RecipeDietaryRestrictionsFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.RecipeFoodAllergiesFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload> | null
+            args: Prisma.RecipeDietaryRestrictionsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.RecipeFoodAllergiesFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           findFirst: {
-            args: Prisma.RecipeFoodAllergiesFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload> | null
+            args: Prisma.RecipeDietaryRestrictionsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.RecipeFoodAllergiesFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           findMany: {
-            args: Prisma.RecipeFoodAllergiesFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>[]
+            args: Prisma.RecipeDietaryRestrictionsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>[]
           }
           create: {
-            args: Prisma.RecipeFoodAllergiesCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           createMany: {
-            args: Prisma.RecipeFoodAllergiesCreateManyArgs<ExtArgs>
+            args: Prisma.RecipeDietaryRestrictionsCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.RecipeFoodAllergiesCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>[]
+            args: Prisma.RecipeDietaryRestrictionsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>[]
           }
           delete: {
-            args: Prisma.RecipeFoodAllergiesDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           update: {
-            args: Prisma.RecipeFoodAllergiesUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           deleteMany: {
-            args: Prisma.RecipeFoodAllergiesDeleteManyArgs<ExtArgs>
+            args: Prisma.RecipeDietaryRestrictionsDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.RecipeFoodAllergiesUpdateManyArgs<ExtArgs>
+            args: Prisma.RecipeDietaryRestrictionsUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.RecipeFoodAllergiesUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>[]
+            args: Prisma.RecipeDietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>[]
           }
           upsert: {
-            args: Prisma.RecipeFoodAllergiesUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RecipeFoodAllergiesPayload>
+            args: Prisma.RecipeDietaryRestrictionsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecipeDietaryRestrictionsPayload>
           }
           aggregate: {
-            args: Prisma.RecipeFoodAllergiesAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRecipeFoodAllergies>
+            args: Prisma.RecipeDietaryRestrictionsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRecipeDietaryRestrictions>
           }
           groupBy: {
-            args: Prisma.RecipeFoodAllergiesGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RecipeFoodAllergiesGroupByOutputType>[]
+            args: Prisma.RecipeDietaryRestrictionsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RecipeDietaryRestrictionsGroupByOutputType>[]
           }
           count: {
-            args: Prisma.RecipeFoodAllergiesCountArgs<ExtArgs>
-            result: $Utils.Optional<RecipeFoodAllergiesCountAggregateOutputType> | number
+            args: Prisma.RecipeDietaryRestrictionsCountArgs<ExtArgs>
+            result: $Utils.Optional<RecipeDietaryRestrictionsCountAggregateOutputType> | number
           }
         }
       }
@@ -1622,6 +1654,154 @@ export namespace Prisma {
           }
         }
       }
+      Categories: {
+        payload: Prisma.$CategoriesPayload<ExtArgs>
+        fields: Prisma.CategoriesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CategoriesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CategoriesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          findFirst: {
+            args: Prisma.CategoriesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CategoriesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          findMany: {
+            args: Prisma.CategoriesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>[]
+          }
+          create: {
+            args: Prisma.CategoriesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          createMany: {
+            args: Prisma.CategoriesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CategoriesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>[]
+          }
+          delete: {
+            args: Prisma.CategoriesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          update: {
+            args: Prisma.CategoriesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          deleteMany: {
+            args: Prisma.CategoriesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CategoriesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CategoriesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>[]
+          }
+          upsert: {
+            args: Prisma.CategoriesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategoriesPayload>
+          }
+          aggregate: {
+            args: Prisma.CategoriesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCategories>
+          }
+          groupBy: {
+            args: Prisma.CategoriesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CategoriesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CategoriesCountArgs<ExtArgs>
+            result: $Utils.Optional<CategoriesCountAggregateOutputType> | number
+          }
+        }
+      }
+      CategorySubcategories: {
+        payload: Prisma.$CategorySubcategoriesPayload<ExtArgs>
+        fields: Prisma.CategorySubcategoriesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CategorySubcategoriesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CategorySubcategoriesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          findFirst: {
+            args: Prisma.CategorySubcategoriesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CategorySubcategoriesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          findMany: {
+            args: Prisma.CategorySubcategoriesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>[]
+          }
+          create: {
+            args: Prisma.CategorySubcategoriesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          createMany: {
+            args: Prisma.CategorySubcategoriesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CategorySubcategoriesCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>[]
+          }
+          delete: {
+            args: Prisma.CategorySubcategoriesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          update: {
+            args: Prisma.CategorySubcategoriesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          deleteMany: {
+            args: Prisma.CategorySubcategoriesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CategorySubcategoriesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CategorySubcategoriesUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>[]
+          }
+          upsert: {
+            args: Prisma.CategorySubcategoriesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CategorySubcategoriesPayload>
+          }
+          aggregate: {
+            args: Prisma.CategorySubcategoriesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCategorySubcategories>
+          }
+          groupBy: {
+            args: Prisma.CategorySubcategoriesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CategorySubcategoriesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CategorySubcategoriesCountArgs<ExtArgs>
+            result: $Utils.Optional<CategorySubcategoriesCountAggregateOutputType> | number
+          }
+        }
+      }
       Subcategories: {
         payload: Prisma.$SubcategoriesPayload<ExtArgs>
         fields: Prisma.SubcategoriesFieldRefs
@@ -1857,14 +2037,16 @@ export namespace Prisma {
     recipes?: RecipesOmit
     ingredients?: IngredientsOmit
     subrecipes?: SubrecipesOmit
-    foodAllergies?: FoodAllergiesOmit
+    dietaryRestrictions?: DietaryRestrictionsOmit
     units?: UnitsOmit
-    recipeFoodAllergies?: RecipeFoodAllergiesOmit
+    recipeDietaryRestrictions?: RecipeDietaryRestrictionsOmit
     recipeNotes?: RecipeNotesOmit
     tags?: TagsOmit
     recipeTags?: RecipeTagsOmit
     recipeSources?: RecipeSourcesOmit
     countries?: CountriesOmit
+    categories?: CategoriesOmit
+    categorySubcategories?: CategorySubcategoriesOmit
     subcategories?: SubcategoriesOmit
     recipeSubcategories?: RecipeSubcategoriesOmit
   }
@@ -1962,7 +2144,7 @@ export namespace Prisma {
 
   export type RecipesCountOutputType = {
     subrecipes: number
-    recipe_food_allergies: number
+    recipe_dietary_restrictions: number
     recipe_notes: number
     recipe_sources: number
     recipe_tags: number
@@ -1971,7 +2153,7 @@ export namespace Prisma {
 
   export type RecipesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     subrecipes?: boolean | RecipesCountOutputTypeCountSubrecipesArgs
-    recipe_food_allergies?: boolean | RecipesCountOutputTypeCountRecipe_food_allergiesArgs
+    recipe_dietary_restrictions?: boolean | RecipesCountOutputTypeCountRecipe_dietary_restrictionsArgs
     recipe_notes?: boolean | RecipesCountOutputTypeCountRecipe_notesArgs
     recipe_sources?: boolean | RecipesCountOutputTypeCountRecipe_sourcesArgs
     recipe_tags?: boolean | RecipesCountOutputTypeCountRecipe_tagsArgs
@@ -1999,8 +2181,8 @@ export namespace Prisma {
   /**
    * RecipesCountOutputType without action
    */
-  export type RecipesCountOutputTypeCountRecipe_food_allergiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RecipeFoodAllergiesWhereInput
+  export type RecipesCountOutputTypeCountRecipe_dietary_restrictionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeDietaryRestrictionsWhereInput
   }
 
   /**
@@ -2064,33 +2246,33 @@ export namespace Prisma {
 
 
   /**
-   * Count Type FoodAllergiesCountOutputType
+   * Count Type DietaryRestrictionsCountOutputType
    */
 
-  export type FoodAllergiesCountOutputType = {
-    recipe_food_allergies: number
+  export type DietaryRestrictionsCountOutputType = {
+    recipe_dietary_restrictions: number
   }
 
-  export type FoodAllergiesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recipe_food_allergies?: boolean | FoodAllergiesCountOutputTypeCountRecipe_food_allergiesArgs
+  export type DietaryRestrictionsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipe_dietary_restrictions?: boolean | DietaryRestrictionsCountOutputTypeCountRecipe_dietary_restrictionsArgs
   }
 
   // Custom InputTypes
   /**
-   * FoodAllergiesCountOutputType without action
+   * DietaryRestrictionsCountOutputType without action
    */
-  export type FoodAllergiesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergiesCountOutputType
+     * Select specific fields to fetch from the DietaryRestrictionsCountOutputType
      */
-    select?: FoodAllergiesCountOutputTypeSelect<ExtArgs> | null
+    select?: DietaryRestrictionsCountOutputTypeSelect<ExtArgs> | null
   }
 
   /**
-   * FoodAllergiesCountOutputType without action
+   * DietaryRestrictionsCountOutputType without action
    */
-  export type FoodAllergiesCountOutputTypeCountRecipe_food_allergiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RecipeFoodAllergiesWhereInput
+  export type DietaryRestrictionsCountOutputTypeCountRecipe_dietary_restrictionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeDietaryRestrictionsWhereInput
   }
 
 
@@ -2188,15 +2370,57 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CategoriesCountOutputType
+   */
+
+  export type CategoriesCountOutputType = {
+    recipes: number
+    category_subcategories: number
+  }
+
+  export type CategoriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipes?: boolean | CategoriesCountOutputTypeCountRecipesArgs
+    category_subcategories?: boolean | CategoriesCountOutputTypeCountCategory_subcategoriesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CategoriesCountOutputType without action
+   */
+  export type CategoriesCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategoriesCountOutputType
+     */
+    select?: CategoriesCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CategoriesCountOutputType without action
+   */
+  export type CategoriesCountOutputTypeCountRecipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipesWhereInput
+  }
+
+  /**
+   * CategoriesCountOutputType without action
+   */
+  export type CategoriesCountOutputTypeCountCategory_subcategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategorySubcategoriesWhereInput
+  }
+
+
+  /**
    * Count Type SubcategoriesCountOutputType
    */
 
   export type SubcategoriesCountOutputType = {
     recipe_subcategories: number
+    category_subcategories: number
   }
 
   export type SubcategoriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe_subcategories?: boolean | SubcategoriesCountOutputTypeCountRecipe_subcategoriesArgs
+    category_subcategories?: boolean | SubcategoriesCountOutputTypeCountCategory_subcategoriesArgs
   }
 
   // Custom InputTypes
@@ -2215,6 +2439,13 @@ export namespace Prisma {
    */
   export type SubcategoriesCountOutputTypeCountRecipe_subcategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RecipeSubcategoriesWhereInput
+  }
+
+  /**
+   * SubcategoriesCountOutputType without action
+   */
+  export type SubcategoriesCountOutputTypeCountCategory_subcategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategorySubcategoriesWhereInput
   }
 
 
@@ -2236,6 +2467,7 @@ export namespace Prisma {
 
   export type RecipesAvgAggregateOutputType = {
     id: number | null
+    category_id: number | null
     country_id: number | null
     cooking_time: number | null
     cooking_temperature: number | null
@@ -2243,6 +2475,7 @@ export namespace Prisma {
 
   export type RecipesSumAggregateOutputType = {
     id: number | null
+    category_id: number | null
     country_id: number | null
     cooking_time: number | null
     cooking_temperature: number | null
@@ -2251,7 +2484,7 @@ export namespace Prisma {
   export type RecipesMinAggregateOutputType = {
     id: number | null
     title: string | null
-    category: string | null
+    category_id: number | null
     country_id: number | null
     cooking_time: number | null
     cooking_temperature: number | null
@@ -2268,7 +2501,7 @@ export namespace Prisma {
   export type RecipesMaxAggregateOutputType = {
     id: number | null
     title: string | null
-    category: string | null
+    category_id: number | null
     country_id: number | null
     cooking_time: number | null
     cooking_temperature: number | null
@@ -2285,7 +2518,7 @@ export namespace Prisma {
   export type RecipesCountAggregateOutputType = {
     id: number
     title: number
-    category: number
+    category_id: number
     country_id: number
     cooking_time: number
     cooking_temperature: number
@@ -2303,6 +2536,7 @@ export namespace Prisma {
 
   export type RecipesAvgAggregateInputType = {
     id?: true
+    category_id?: true
     country_id?: true
     cooking_time?: true
     cooking_temperature?: true
@@ -2310,6 +2544,7 @@ export namespace Prisma {
 
   export type RecipesSumAggregateInputType = {
     id?: true
+    category_id?: true
     country_id?: true
     cooking_time?: true
     cooking_temperature?: true
@@ -2318,7 +2553,7 @@ export namespace Prisma {
   export type RecipesMinAggregateInputType = {
     id?: true
     title?: true
-    category?: true
+    category_id?: true
     country_id?: true
     cooking_time?: true
     cooking_temperature?: true
@@ -2335,7 +2570,7 @@ export namespace Prisma {
   export type RecipesMaxAggregateInputType = {
     id?: true
     title?: true
-    category?: true
+    category_id?: true
     country_id?: true
     cooking_time?: true
     cooking_temperature?: true
@@ -2352,7 +2587,7 @@ export namespace Prisma {
   export type RecipesCountAggregateInputType = {
     id?: true
     title?: true
-    category?: true
+    category_id?: true
     country_id?: true
     cooking_time?: true
     cooking_temperature?: true
@@ -2456,7 +2691,7 @@ export namespace Prisma {
   export type RecipesGroupByOutputType = {
     id: number
     title: string
-    category: string
+    category_id: number
     country_id: number | null
     cooking_time: number | null
     cooking_temperature: number | null
@@ -2492,7 +2727,7 @@ export namespace Prisma {
   export type RecipesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    category?: boolean
+    category_id?: boolean
     country_id?: boolean
     cooking_time?: boolean
     cooking_temperature?: boolean
@@ -2504,9 +2739,10 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
     subrecipes?: boolean | Recipes$subrecipesArgs<ExtArgs>
-    recipe_food_allergies?: boolean | Recipes$recipe_food_allergiesArgs<ExtArgs>
+    recipe_dietary_restrictions?: boolean | Recipes$recipe_dietary_restrictionsArgs<ExtArgs>
     recipe_notes?: boolean | Recipes$recipe_notesArgs<ExtArgs>
     recipe_sources?: boolean | Recipes$recipe_sourcesArgs<ExtArgs>
     recipe_tags?: boolean | Recipes$recipe_tagsArgs<ExtArgs>
@@ -2517,7 +2753,7 @@ export namespace Prisma {
   export type RecipesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    category?: boolean
+    category_id?: boolean
     country_id?: boolean
     cooking_time?: boolean
     cooking_temperature?: boolean
@@ -2529,13 +2765,14 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
   }, ExtArgs["result"]["recipes"]>
 
   export type RecipesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
-    category?: boolean
+    category_id?: boolean
     country_id?: boolean
     cooking_time?: boolean
     cooking_temperature?: boolean
@@ -2547,13 +2784,14 @@ export namespace Prisma {
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
   }, ExtArgs["result"]["recipes"]>
 
   export type RecipesSelectScalar = {
     id?: boolean
     title?: boolean
-    category?: boolean
+    category_id?: boolean
     country_id?: boolean
     cooking_time?: boolean
     cooking_temperature?: boolean
@@ -2567,11 +2805,12 @@ export namespace Prisma {
     deleted_at?: boolean
   }
 
-  export type RecipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "category" | "country_id" | "cooking_time" | "cooking_temperature" | "servings" | "mold_type" | "mold_size" | "image_url" | "is_test" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipes"]>
+  export type RecipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "category_id" | "country_id" | "cooking_time" | "cooking_temperature" | "servings" | "mold_type" | "mold_size" | "image_url" | "is_test" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipes"]>
   export type RecipesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
     subrecipes?: boolean | Recipes$subrecipesArgs<ExtArgs>
-    recipe_food_allergies?: boolean | Recipes$recipe_food_allergiesArgs<ExtArgs>
+    recipe_dietary_restrictions?: boolean | Recipes$recipe_dietary_restrictionsArgs<ExtArgs>
     recipe_notes?: boolean | Recipes$recipe_notesArgs<ExtArgs>
     recipe_sources?: boolean | Recipes$recipe_sourcesArgs<ExtArgs>
     recipe_tags?: boolean | Recipes$recipe_tagsArgs<ExtArgs>
@@ -2579,18 +2818,21 @@ export namespace Prisma {
     _count?: boolean | RecipesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RecipesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
   }
   export type RecipesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
   }
 
   export type $RecipesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Recipes"
     objects: {
+      category: Prisma.$CategoriesPayload<ExtArgs>
       country: Prisma.$CountriesPayload<ExtArgs> | null
       subrecipes: Prisma.$SubrecipesPayload<ExtArgs>[]
-      recipe_food_allergies: Prisma.$RecipeFoodAllergiesPayload<ExtArgs>[]
+      recipe_dietary_restrictions: Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>[]
       recipe_notes: Prisma.$RecipeNotesPayload<ExtArgs>[]
       recipe_sources: Prisma.$RecipeSourcesPayload<ExtArgs>[]
       recipe_tags: Prisma.$RecipeTagsPayload<ExtArgs>[]
@@ -2599,7 +2841,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
-      category: string
+      category_id: number
       country_id: number | null
       cooking_time: number | null
       cooking_temperature: number | null
@@ -3005,9 +3247,10 @@ export namespace Prisma {
    */
   export interface Prisma__RecipesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends CategoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoriesDefaultArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     country<T extends Recipes$countryArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$countryArgs<ExtArgs>>): Prisma__CountriesClient<$Result.GetResult<Prisma.$CountriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     subrecipes<T extends Recipes$subrecipesArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$subrecipesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubrecipesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    recipe_food_allergies<T extends Recipes$recipe_food_allergiesArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$recipe_food_allergiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recipe_dietary_restrictions<T extends Recipes$recipe_dietary_restrictionsArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$recipe_dietary_restrictionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recipe_notes<T extends Recipes$recipe_notesArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$recipe_notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeNotesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recipe_sources<T extends Recipes$recipe_sourcesArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$recipe_sourcesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeSourcesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     recipe_tags<T extends Recipes$recipe_tagsArgs<ExtArgs> = {}>(args?: Subset<T, Recipes$recipe_tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeTagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3043,7 +3286,7 @@ export namespace Prisma {
   interface RecipesFieldRefs {
     readonly id: FieldRef<"Recipes", 'Int'>
     readonly title: FieldRef<"Recipes", 'String'>
-    readonly category: FieldRef<"Recipes", 'String'>
+    readonly category_id: FieldRef<"Recipes", 'Int'>
     readonly country_id: FieldRef<"Recipes", 'Int'>
     readonly cooking_time: FieldRef<"Recipes", 'Int'>
     readonly cooking_temperature: FieldRef<"Recipes", 'Int'>
@@ -3494,27 +3737,27 @@ export namespace Prisma {
   }
 
   /**
-   * Recipes.recipe_food_allergies
+   * Recipes.recipe_dietary_restrictions
    */
-  export type Recipes$recipe_food_allergiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Recipes$recipe_dietary_restrictionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
-    where?: RecipeFoodAllergiesWhereInput
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
+    where?: RecipeDietaryRestrictionsWhereInput
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RecipeFoodAllergiesScalarFieldEnum | RecipeFoodAllergiesScalarFieldEnum[]
+    distinct?: RecipeDietaryRestrictionsScalarFieldEnum | RecipeDietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
@@ -5955,34 +6198,26 @@ export namespace Prisma {
 
 
   /**
-   * Model FoodAllergies
+   * Model DietaryRestrictions
    */
 
-  export type AggregateFoodAllergies = {
-    _count: FoodAllergiesCountAggregateOutputType | null
-    _avg: FoodAllergiesAvgAggregateOutputType | null
-    _sum: FoodAllergiesSumAggregateOutputType | null
-    _min: FoodAllergiesMinAggregateOutputType | null
-    _max: FoodAllergiesMaxAggregateOutputType | null
+  export type AggregateDietaryRestrictions = {
+    _count: DietaryRestrictionsCountAggregateOutputType | null
+    _avg: DietaryRestrictionsAvgAggregateOutputType | null
+    _sum: DietaryRestrictionsSumAggregateOutputType | null
+    _min: DietaryRestrictionsMinAggregateOutputType | null
+    _max: DietaryRestrictionsMaxAggregateOutputType | null
   }
 
-  export type FoodAllergiesAvgAggregateOutputType = {
+  export type DietaryRestrictionsAvgAggregateOutputType = {
     id: number | null
   }
 
-  export type FoodAllergiesSumAggregateOutputType = {
+  export type DietaryRestrictionsSumAggregateOutputType = {
     id: number | null
   }
 
-  export type FoodAllergiesMinAggregateOutputType = {
-    id: number | null
-    name: string | null
-    created_at: Date | null
-    updated_at: Date | null
-    deleted_at: Date | null
-  }
-
-  export type FoodAllergiesMaxAggregateOutputType = {
+  export type DietaryRestrictionsMinAggregateOutputType = {
     id: number | null
     name: string | null
     created_at: Date | null
@@ -5990,7 +6225,15 @@ export namespace Prisma {
     deleted_at: Date | null
   }
 
-  export type FoodAllergiesCountAggregateOutputType = {
+  export type DietaryRestrictionsMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    deleted_at: Date | null
+  }
+
+  export type DietaryRestrictionsCountAggregateOutputType = {
     id: number
     name: number
     created_at: number
@@ -6000,23 +6243,15 @@ export namespace Prisma {
   }
 
 
-  export type FoodAllergiesAvgAggregateInputType = {
+  export type DietaryRestrictionsAvgAggregateInputType = {
     id?: true
   }
 
-  export type FoodAllergiesSumAggregateInputType = {
+  export type DietaryRestrictionsSumAggregateInputType = {
     id?: true
   }
 
-  export type FoodAllergiesMinAggregateInputType = {
-    id?: true
-    name?: true
-    created_at?: true
-    updated_at?: true
-    deleted_at?: true
-  }
-
-  export type FoodAllergiesMaxAggregateInputType = {
+  export type DietaryRestrictionsMinAggregateInputType = {
     id?: true
     name?: true
     created_at?: true
@@ -6024,7 +6259,15 @@ export namespace Prisma {
     deleted_at?: true
   }
 
-  export type FoodAllergiesCountAggregateInputType = {
+  export type DietaryRestrictionsMaxAggregateInputType = {
+    id?: true
+    name?: true
+    created_at?: true
+    updated_at?: true
+    deleted_at?: true
+  }
+
+  export type DietaryRestrictionsCountAggregateInputType = {
     id?: true
     name?: true
     created_at?: true
@@ -6033,146 +6276,146 @@ export namespace Prisma {
     _all?: true
   }
 
-  export type FoodAllergiesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which FoodAllergies to aggregate.
+     * Filter which DietaryRestrictions to aggregate.
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of FoodAllergies to fetch.
+     * Determine the order of DietaryRestrictions to fetch.
      */
-    orderBy?: FoodAllergiesOrderByWithRelationInput | FoodAllergiesOrderByWithRelationInput[]
+    orderBy?: DietaryRestrictionsOrderByWithRelationInput | DietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: FoodAllergiesWhereUniqueInput
+    cursor?: DietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` FoodAllergies from the position of the cursor.
+     * Take `±n` DietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` FoodAllergies.
+     * Skip the first `n` DietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned FoodAllergies
+     * Count returned DietaryRestrictions
     **/
-    _count?: true | FoodAllergiesCountAggregateInputType
+    _count?: true | DietaryRestrictionsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: FoodAllergiesAvgAggregateInputType
+    _avg?: DietaryRestrictionsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: FoodAllergiesSumAggregateInputType
+    _sum?: DietaryRestrictionsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: FoodAllergiesMinAggregateInputType
+    _min?: DietaryRestrictionsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: FoodAllergiesMaxAggregateInputType
+    _max?: DietaryRestrictionsMaxAggregateInputType
   }
 
-  export type GetFoodAllergiesAggregateType<T extends FoodAllergiesAggregateArgs> = {
-        [P in keyof T & keyof AggregateFoodAllergies]: P extends '_count' | 'count'
+  export type GetDietaryRestrictionsAggregateType<T extends DietaryRestrictionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDietaryRestrictions]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateFoodAllergies[P]>
-      : GetScalarType<T[P], AggregateFoodAllergies[P]>
+        : GetScalarType<T[P], AggregateDietaryRestrictions[P]>
+      : GetScalarType<T[P], AggregateDietaryRestrictions[P]>
   }
 
 
 
 
-  export type FoodAllergiesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: FoodAllergiesWhereInput
-    orderBy?: FoodAllergiesOrderByWithAggregationInput | FoodAllergiesOrderByWithAggregationInput[]
-    by: FoodAllergiesScalarFieldEnum[] | FoodAllergiesScalarFieldEnum
-    having?: FoodAllergiesScalarWhereWithAggregatesInput
+  export type DietaryRestrictionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DietaryRestrictionsWhereInput
+    orderBy?: DietaryRestrictionsOrderByWithAggregationInput | DietaryRestrictionsOrderByWithAggregationInput[]
+    by: DietaryRestrictionsScalarFieldEnum[] | DietaryRestrictionsScalarFieldEnum
+    having?: DietaryRestrictionsScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: FoodAllergiesCountAggregateInputType | true
-    _avg?: FoodAllergiesAvgAggregateInputType
-    _sum?: FoodAllergiesSumAggregateInputType
-    _min?: FoodAllergiesMinAggregateInputType
-    _max?: FoodAllergiesMaxAggregateInputType
+    _count?: DietaryRestrictionsCountAggregateInputType | true
+    _avg?: DietaryRestrictionsAvgAggregateInputType
+    _sum?: DietaryRestrictionsSumAggregateInputType
+    _min?: DietaryRestrictionsMinAggregateInputType
+    _max?: DietaryRestrictionsMaxAggregateInputType
   }
 
-  export type FoodAllergiesGroupByOutputType = {
+  export type DietaryRestrictionsGroupByOutputType = {
     id: number
     name: string
     created_at: Date
     updated_at: Date
     deleted_at: Date | null
-    _count: FoodAllergiesCountAggregateOutputType | null
-    _avg: FoodAllergiesAvgAggregateOutputType | null
-    _sum: FoodAllergiesSumAggregateOutputType | null
-    _min: FoodAllergiesMinAggregateOutputType | null
-    _max: FoodAllergiesMaxAggregateOutputType | null
+    _count: DietaryRestrictionsCountAggregateOutputType | null
+    _avg: DietaryRestrictionsAvgAggregateOutputType | null
+    _sum: DietaryRestrictionsSumAggregateOutputType | null
+    _min: DietaryRestrictionsMinAggregateOutputType | null
+    _max: DietaryRestrictionsMaxAggregateOutputType | null
   }
 
-  type GetFoodAllergiesGroupByPayload<T extends FoodAllergiesGroupByArgs> = Prisma.PrismaPromise<
+  type GetDietaryRestrictionsGroupByPayload<T extends DietaryRestrictionsGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<FoodAllergiesGroupByOutputType, T['by']> &
+      PickEnumerable<DietaryRestrictionsGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof FoodAllergiesGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof DietaryRestrictionsGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], FoodAllergiesGroupByOutputType[P]>
-            : GetScalarType<T[P], FoodAllergiesGroupByOutputType[P]>
+              : GetScalarType<T[P], DietaryRestrictionsGroupByOutputType[P]>
+            : GetScalarType<T[P], DietaryRestrictionsGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type FoodAllergiesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DietaryRestrictionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
-    recipe_food_allergies?: boolean | FoodAllergies$recipe_food_allergiesArgs<ExtArgs>
-    _count?: boolean | FoodAllergiesCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["foodAllergies"]>
+    recipe_dietary_restrictions?: boolean | DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs>
+    _count?: boolean | DietaryRestrictionsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dietaryRestrictions"]>
 
-  export type FoodAllergiesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DietaryRestrictionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
-  }, ExtArgs["result"]["foodAllergies"]>
+  }, ExtArgs["result"]["dietaryRestrictions"]>
 
-  export type FoodAllergiesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type DietaryRestrictionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
-  }, ExtArgs["result"]["foodAllergies"]>
+  }, ExtArgs["result"]["dietaryRestrictions"]>
 
-  export type FoodAllergiesSelectScalar = {
+  export type DietaryRestrictionsSelectScalar = {
     id?: boolean
     name?: boolean
     created_at?: boolean
@@ -6180,18 +6423,18 @@ export namespace Prisma {
     deleted_at?: boolean
   }
 
-  export type FoodAllergiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["foodAllergies"]>
-  export type FoodAllergiesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recipe_food_allergies?: boolean | FoodAllergies$recipe_food_allergiesArgs<ExtArgs>
-    _count?: boolean | FoodAllergiesCountOutputTypeDefaultArgs<ExtArgs>
+  export type DietaryRestrictionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["dietaryRestrictions"]>
+  export type DietaryRestrictionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipe_dietary_restrictions?: boolean | DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs>
+    _count?: boolean | DietaryRestrictionsCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type FoodAllergiesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type FoodAllergiesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DietaryRestrictionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type DietaryRestrictionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
-  export type $FoodAllergiesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "FoodAllergies"
+  export type $DietaryRestrictionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DietaryRestrictions"
     objects: {
-      recipe_food_allergies: Prisma.$RecipeFoodAllergiesPayload<ExtArgs>[]
+      recipe_dietary_restrictions: Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6199,136 +6442,136 @@ export namespace Prisma {
       created_at: Date
       updated_at: Date
       deleted_at: Date | null
-    }, ExtArgs["result"]["foodAllergies"]>
+    }, ExtArgs["result"]["dietaryRestrictions"]>
     composites: {}
   }
 
-  type FoodAllergiesGetPayload<S extends boolean | null | undefined | FoodAllergiesDefaultArgs> = $Result.GetResult<Prisma.$FoodAllergiesPayload, S>
+  type DietaryRestrictionsGetPayload<S extends boolean | null | undefined | DietaryRestrictionsDefaultArgs> = $Result.GetResult<Prisma.$DietaryRestrictionsPayload, S>
 
-  type FoodAllergiesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<FoodAllergiesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: FoodAllergiesCountAggregateInputType | true
+  type DietaryRestrictionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DietaryRestrictionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DietaryRestrictionsCountAggregateInputType | true
     }
 
-  export interface FoodAllergiesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FoodAllergies'], meta: { name: 'FoodAllergies' } }
+  export interface DietaryRestrictionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DietaryRestrictions'], meta: { name: 'DietaryRestrictions' } }
     /**
-     * Find zero or one FoodAllergies that matches the filter.
-     * @param {FoodAllergiesFindUniqueArgs} args - Arguments to find a FoodAllergies
+     * Find zero or one DietaryRestrictions that matches the filter.
+     * @param {DietaryRestrictionsFindUniqueArgs} args - Arguments to find a DietaryRestrictions
      * @example
-     * // Get one FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findUnique({
+     * // Get one DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends FoodAllergiesFindUniqueArgs>(args: SelectSubset<T, FoodAllergiesFindUniqueArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends DietaryRestrictionsFindUniqueArgs>(args: SelectSubset<T, DietaryRestrictionsFindUniqueArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one FoodAllergies that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DietaryRestrictions that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {FoodAllergiesFindUniqueOrThrowArgs} args - Arguments to find a FoodAllergies
+     * @param {DietaryRestrictionsFindUniqueOrThrowArgs} args - Arguments to find a DietaryRestrictions
      * @example
-     * // Get one FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findUniqueOrThrow({
+     * // Get one DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends FoodAllergiesFindUniqueOrThrowArgs>(args: SelectSubset<T, FoodAllergiesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends DietaryRestrictionsFindUniqueOrThrowArgs>(args: SelectSubset<T, DietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first FoodAllergies that matches the filter.
+     * Find the first DietaryRestrictions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesFindFirstArgs} args - Arguments to find a FoodAllergies
+     * @param {DietaryRestrictionsFindFirstArgs} args - Arguments to find a DietaryRestrictions
      * @example
-     * // Get one FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findFirst({
+     * // Get one DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends FoodAllergiesFindFirstArgs>(args?: SelectSubset<T, FoodAllergiesFindFirstArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends DietaryRestrictionsFindFirstArgs>(args?: SelectSubset<T, DietaryRestrictionsFindFirstArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first FoodAllergies that matches the filter or
+     * Find the first DietaryRestrictions that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesFindFirstOrThrowArgs} args - Arguments to find a FoodAllergies
+     * @param {DietaryRestrictionsFindFirstOrThrowArgs} args - Arguments to find a DietaryRestrictions
      * @example
-     * // Get one FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findFirstOrThrow({
+     * // Get one DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends FoodAllergiesFindFirstOrThrowArgs>(args?: SelectSubset<T, FoodAllergiesFindFirstOrThrowArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends DietaryRestrictionsFindFirstOrThrowArgs>(args?: SelectSubset<T, DietaryRestrictionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more FoodAllergies that matches the filter.
+     * Find zero or more DietaryRestrictions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {DietaryRestrictionsFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findMany()
+     * // Get all DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findMany()
      * 
-     * // Get first 10 FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.findMany({ take: 10 })
+     * // Get first 10 DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const foodAllergiesWithIdOnly = await prisma.foodAllergies.findMany({ select: { id: true } })
+     * const dietaryRestrictionsWithIdOnly = await prisma.dietaryRestrictions.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends FoodAllergiesFindManyArgs>(args?: SelectSubset<T, FoodAllergiesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends DietaryRestrictionsFindManyArgs>(args?: SelectSubset<T, DietaryRestrictionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a FoodAllergies.
-     * @param {FoodAllergiesCreateArgs} args - Arguments to create a FoodAllergies.
+     * Create a DietaryRestrictions.
+     * @param {DietaryRestrictionsCreateArgs} args - Arguments to create a DietaryRestrictions.
      * @example
-     * // Create one FoodAllergies
-     * const FoodAllergies = await prisma.foodAllergies.create({
+     * // Create one DietaryRestrictions
+     * const DietaryRestrictions = await prisma.dietaryRestrictions.create({
      *   data: {
-     *     // ... data to create a FoodAllergies
+     *     // ... data to create a DietaryRestrictions
      *   }
      * })
      * 
      */
-    create<T extends FoodAllergiesCreateArgs>(args: SelectSubset<T, FoodAllergiesCreateArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends DietaryRestrictionsCreateArgs>(args: SelectSubset<T, DietaryRestrictionsCreateArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many FoodAllergies.
-     * @param {FoodAllergiesCreateManyArgs} args - Arguments to create many FoodAllergies.
+     * Create many DietaryRestrictions.
+     * @param {DietaryRestrictionsCreateManyArgs} args - Arguments to create many DietaryRestrictions.
      * @example
-     * // Create many FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.createMany({
+     * // Create many DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends FoodAllergiesCreateManyArgs>(args?: SelectSubset<T, FoodAllergiesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends DietaryRestrictionsCreateManyArgs>(args?: SelectSubset<T, DietaryRestrictionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many FoodAllergies and returns the data saved in the database.
-     * @param {FoodAllergiesCreateManyAndReturnArgs} args - Arguments to create many FoodAllergies.
+     * Create many DietaryRestrictions and returns the data saved in the database.
+     * @param {DietaryRestrictionsCreateManyAndReturnArgs} args - Arguments to create many DietaryRestrictions.
      * @example
-     * // Create many FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.createManyAndReturn({
+     * // Create many DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many FoodAllergies and only return the `id`
-     * const foodAllergiesWithIdOnly = await prisma.foodAllergies.createManyAndReturn({
+     * // Create many DietaryRestrictions and only return the `id`
+     * const dietaryRestrictionsWithIdOnly = await prisma.dietaryRestrictions.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -6338,28 +6581,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends FoodAllergiesCreateManyAndReturnArgs>(args?: SelectSubset<T, FoodAllergiesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends DietaryRestrictionsCreateManyAndReturnArgs>(args?: SelectSubset<T, DietaryRestrictionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a FoodAllergies.
-     * @param {FoodAllergiesDeleteArgs} args - Arguments to delete one FoodAllergies.
+     * Delete a DietaryRestrictions.
+     * @param {DietaryRestrictionsDeleteArgs} args - Arguments to delete one DietaryRestrictions.
      * @example
-     * // Delete one FoodAllergies
-     * const FoodAllergies = await prisma.foodAllergies.delete({
+     * // Delete one DietaryRestrictions
+     * const DietaryRestrictions = await prisma.dietaryRestrictions.delete({
      *   where: {
-     *     // ... filter to delete one FoodAllergies
+     *     // ... filter to delete one DietaryRestrictions
      *   }
      * })
      * 
      */
-    delete<T extends FoodAllergiesDeleteArgs>(args: SelectSubset<T, FoodAllergiesDeleteArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends DietaryRestrictionsDeleteArgs>(args: SelectSubset<T, DietaryRestrictionsDeleteArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one FoodAllergies.
-     * @param {FoodAllergiesUpdateArgs} args - Arguments to update one FoodAllergies.
+     * Update one DietaryRestrictions.
+     * @param {DietaryRestrictionsUpdateArgs} args - Arguments to update one DietaryRestrictions.
      * @example
-     * // Update one FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.update({
+     * // Update one DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6369,30 +6612,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends FoodAllergiesUpdateArgs>(args: SelectSubset<T, FoodAllergiesUpdateArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends DietaryRestrictionsUpdateArgs>(args: SelectSubset<T, DietaryRestrictionsUpdateArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more FoodAllergies.
-     * @param {FoodAllergiesDeleteManyArgs} args - Arguments to filter FoodAllergies to delete.
+     * Delete zero or more DietaryRestrictions.
+     * @param {DietaryRestrictionsDeleteManyArgs} args - Arguments to filter DietaryRestrictions to delete.
      * @example
-     * // Delete a few FoodAllergies
-     * const { count } = await prisma.foodAllergies.deleteMany({
+     * // Delete a few DietaryRestrictions
+     * const { count } = await prisma.dietaryRestrictions.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends FoodAllergiesDeleteManyArgs>(args?: SelectSubset<T, FoodAllergiesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends DietaryRestrictionsDeleteManyArgs>(args?: SelectSubset<T, DietaryRestrictionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more FoodAllergies.
+     * Update zero or more DietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {DietaryRestrictionsUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.updateMany({
+     * // Update many DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6402,14 +6645,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends FoodAllergiesUpdateManyArgs>(args: SelectSubset<T, FoodAllergiesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends DietaryRestrictionsUpdateManyArgs>(args: SelectSubset<T, DietaryRestrictionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more FoodAllergies and returns the data updated in the database.
-     * @param {FoodAllergiesUpdateManyAndReturnArgs} args - Arguments to update many FoodAllergies.
+     * Update zero or more DietaryRestrictions and returns the data updated in the database.
+     * @param {DietaryRestrictionsUpdateManyAndReturnArgs} args - Arguments to update many DietaryRestrictions.
      * @example
-     * // Update many FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.updateManyAndReturn({
+     * // Update many DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6418,8 +6661,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more FoodAllergies and only return the `id`
-     * const foodAllergiesWithIdOnly = await prisma.foodAllergies.updateManyAndReturn({
+     * // Update zero or more DietaryRestrictions and only return the `id`
+     * const dietaryRestrictionsWithIdOnly = await prisma.dietaryRestrictions.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -6432,56 +6675,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends FoodAllergiesUpdateManyAndReturnArgs>(args: SelectSubset<T, FoodAllergiesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends DietaryRestrictionsUpdateManyAndReturnArgs>(args: SelectSubset<T, DietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one FoodAllergies.
-     * @param {FoodAllergiesUpsertArgs} args - Arguments to update or create a FoodAllergies.
+     * Create or update one DietaryRestrictions.
+     * @param {DietaryRestrictionsUpsertArgs} args - Arguments to update or create a DietaryRestrictions.
      * @example
-     * // Update or create a FoodAllergies
-     * const foodAllergies = await prisma.foodAllergies.upsert({
+     * // Update or create a DietaryRestrictions
+     * const dietaryRestrictions = await prisma.dietaryRestrictions.upsert({
      *   create: {
-     *     // ... data to create a FoodAllergies
+     *     // ... data to create a DietaryRestrictions
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the FoodAllergies we want to update
+     *     // ... the filter for the DietaryRestrictions we want to update
      *   }
      * })
      */
-    upsert<T extends FoodAllergiesUpsertArgs>(args: SelectSubset<T, FoodAllergiesUpsertArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends DietaryRestrictionsUpsertArgs>(args: SelectSubset<T, DietaryRestrictionsUpsertArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of FoodAllergies.
+     * Count the number of DietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesCountArgs} args - Arguments to filter FoodAllergies to count.
+     * @param {DietaryRestrictionsCountArgs} args - Arguments to filter DietaryRestrictions to count.
      * @example
-     * // Count the number of FoodAllergies
-     * const count = await prisma.foodAllergies.count({
+     * // Count the number of DietaryRestrictions
+     * const count = await prisma.dietaryRestrictions.count({
      *   where: {
-     *     // ... the filter for the FoodAllergies we want to count
+     *     // ... the filter for the DietaryRestrictions we want to count
      *   }
      * })
     **/
-    count<T extends FoodAllergiesCountArgs>(
-      args?: Subset<T, FoodAllergiesCountArgs>,
+    count<T extends DietaryRestrictionsCountArgs>(
+      args?: Subset<T, DietaryRestrictionsCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], FoodAllergiesCountAggregateOutputType>
+          : GetScalarType<T['select'], DietaryRestrictionsCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a FoodAllergies.
+     * Allows you to perform aggregations operations on a DietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {DietaryRestrictionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -6501,13 +6744,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends FoodAllergiesAggregateArgs>(args: Subset<T, FoodAllergiesAggregateArgs>): Prisma.PrismaPromise<GetFoodAllergiesAggregateType<T>>
+    aggregate<T extends DietaryRestrictionsAggregateArgs>(args: Subset<T, DietaryRestrictionsAggregateArgs>): Prisma.PrismaPromise<GetDietaryRestrictionsAggregateType<T>>
 
     /**
-     * Group by FoodAllergies.
+     * Group by DietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {FoodAllergiesGroupByArgs} args - Group by arguments.
+     * @param {DietaryRestrictionsGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -6522,14 +6765,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends FoodAllergiesGroupByArgs,
+      T extends DietaryRestrictionsGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: FoodAllergiesGroupByArgs['orderBy'] }
-        : { orderBy?: FoodAllergiesGroupByArgs['orderBy'] },
+        ? { orderBy: DietaryRestrictionsGroupByArgs['orderBy'] }
+        : { orderBy?: DietaryRestrictionsGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -6578,22 +6821,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, FoodAllergiesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFoodAllergiesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, DietaryRestrictionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDietaryRestrictionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the FoodAllergies model
+   * Fields of the DietaryRestrictions model
    */
-  readonly fields: FoodAllergiesFieldRefs;
+  readonly fields: DietaryRestrictionsFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for FoodAllergies.
+   * The delegate class that acts as a "Promise-like" for DietaryRestrictions.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__FoodAllergiesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__DietaryRestrictionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    recipe_food_allergies<T extends FoodAllergies$recipe_food_allergiesArgs<ExtArgs> = {}>(args?: Subset<T, FoodAllergies$recipe_food_allergiesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recipe_dietary_restrictions<T extends DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs> = {}>(args?: Subset<T, DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6620,441 +6863,441 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the FoodAllergies model
+   * Fields of the DietaryRestrictions model
    */
-  interface FoodAllergiesFieldRefs {
-    readonly id: FieldRef<"FoodAllergies", 'Int'>
-    readonly name: FieldRef<"FoodAllergies", 'String'>
-    readonly created_at: FieldRef<"FoodAllergies", 'DateTime'>
-    readonly updated_at: FieldRef<"FoodAllergies", 'DateTime'>
-    readonly deleted_at: FieldRef<"FoodAllergies", 'DateTime'>
+  interface DietaryRestrictionsFieldRefs {
+    readonly id: FieldRef<"DietaryRestrictions", 'Int'>
+    readonly name: FieldRef<"DietaryRestrictions", 'String'>
+    readonly created_at: FieldRef<"DietaryRestrictions", 'DateTime'>
+    readonly updated_at: FieldRef<"DietaryRestrictions", 'DateTime'>
+    readonly deleted_at: FieldRef<"DietaryRestrictions", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * FoodAllergies findUnique
+   * DietaryRestrictions findUnique
    */
-  export type FoodAllergiesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which FoodAllergies to fetch.
+     * Filter, which DietaryRestrictions to fetch.
      */
-    where: FoodAllergiesWhereUniqueInput
+    where: DietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * FoodAllergies findUniqueOrThrow
+   * DietaryRestrictions findUniqueOrThrow
    */
-  export type FoodAllergiesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which FoodAllergies to fetch.
+     * Filter, which DietaryRestrictions to fetch.
      */
-    where: FoodAllergiesWhereUniqueInput
+    where: DietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * FoodAllergies findFirst
+   * DietaryRestrictions findFirst
    */
-  export type FoodAllergiesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which FoodAllergies to fetch.
+     * Filter, which DietaryRestrictions to fetch.
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of FoodAllergies to fetch.
+     * Determine the order of DietaryRestrictions to fetch.
      */
-    orderBy?: FoodAllergiesOrderByWithRelationInput | FoodAllergiesOrderByWithRelationInput[]
+    orderBy?: DietaryRestrictionsOrderByWithRelationInput | DietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for FoodAllergies.
+     * Sets the position for searching for DietaryRestrictions.
      */
-    cursor?: FoodAllergiesWhereUniqueInput
+    cursor?: DietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` FoodAllergies from the position of the cursor.
+     * Take `±n` DietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` FoodAllergies.
+     * Skip the first `n` DietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of FoodAllergies.
+     * Filter by unique combinations of DietaryRestrictions.
      */
-    distinct?: FoodAllergiesScalarFieldEnum | FoodAllergiesScalarFieldEnum[]
+    distinct?: DietaryRestrictionsScalarFieldEnum | DietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * FoodAllergies findFirstOrThrow
+   * DietaryRestrictions findFirstOrThrow
    */
-  export type FoodAllergiesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which FoodAllergies to fetch.
+     * Filter, which DietaryRestrictions to fetch.
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of FoodAllergies to fetch.
+     * Determine the order of DietaryRestrictions to fetch.
      */
-    orderBy?: FoodAllergiesOrderByWithRelationInput | FoodAllergiesOrderByWithRelationInput[]
+    orderBy?: DietaryRestrictionsOrderByWithRelationInput | DietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for FoodAllergies.
+     * Sets the position for searching for DietaryRestrictions.
      */
-    cursor?: FoodAllergiesWhereUniqueInput
+    cursor?: DietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` FoodAllergies from the position of the cursor.
+     * Take `±n` DietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` FoodAllergies.
+     * Skip the first `n` DietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of FoodAllergies.
+     * Filter by unique combinations of DietaryRestrictions.
      */
-    distinct?: FoodAllergiesScalarFieldEnum | FoodAllergiesScalarFieldEnum[]
+    distinct?: DietaryRestrictionsScalarFieldEnum | DietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * FoodAllergies findMany
+   * DietaryRestrictions findMany
    */
-  export type FoodAllergiesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which FoodAllergies to fetch.
+     * Filter, which DietaryRestrictions to fetch.
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of FoodAllergies to fetch.
+     * Determine the order of DietaryRestrictions to fetch.
      */
-    orderBy?: FoodAllergiesOrderByWithRelationInput | FoodAllergiesOrderByWithRelationInput[]
+    orderBy?: DietaryRestrictionsOrderByWithRelationInput | DietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing FoodAllergies.
+     * Sets the position for listing DietaryRestrictions.
      */
-    cursor?: FoodAllergiesWhereUniqueInput
+    cursor?: DietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` FoodAllergies from the position of the cursor.
+     * Take `±n` DietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` FoodAllergies.
+     * Skip the first `n` DietaryRestrictions.
      */
     skip?: number
-    distinct?: FoodAllergiesScalarFieldEnum | FoodAllergiesScalarFieldEnum[]
+    distinct?: DietaryRestrictionsScalarFieldEnum | DietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * FoodAllergies create
+   * DietaryRestrictions create
    */
-  export type FoodAllergiesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The data needed to create a FoodAllergies.
+     * The data needed to create a DietaryRestrictions.
      */
-    data: XOR<FoodAllergiesCreateInput, FoodAllergiesUncheckedCreateInput>
+    data: XOR<DietaryRestrictionsCreateInput, DietaryRestrictionsUncheckedCreateInput>
   }
 
   /**
-   * FoodAllergies createMany
+   * DietaryRestrictions createMany
    */
-  export type FoodAllergiesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many FoodAllergies.
+     * The data used to create many DietaryRestrictions.
      */
-    data: FoodAllergiesCreateManyInput | FoodAllergiesCreateManyInput[]
+    data: DietaryRestrictionsCreateManyInput | DietaryRestrictionsCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * FoodAllergies createManyAndReturn
+   * DietaryRestrictions createManyAndReturn
    */
-  export type FoodAllergiesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelectCreateManyAndReturn<ExtArgs> | null
+    select?: DietaryRestrictionsSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
-     * The data used to create many FoodAllergies.
+     * The data used to create many DietaryRestrictions.
      */
-    data: FoodAllergiesCreateManyInput | FoodAllergiesCreateManyInput[]
+    data: DietaryRestrictionsCreateManyInput | DietaryRestrictionsCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * FoodAllergies update
+   * DietaryRestrictions update
    */
-  export type FoodAllergiesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The data needed to update a FoodAllergies.
+     * The data needed to update a DietaryRestrictions.
      */
-    data: XOR<FoodAllergiesUpdateInput, FoodAllergiesUncheckedUpdateInput>
+    data: XOR<DietaryRestrictionsUpdateInput, DietaryRestrictionsUncheckedUpdateInput>
     /**
-     * Choose, which FoodAllergies to update.
+     * Choose, which DietaryRestrictions to update.
      */
-    where: FoodAllergiesWhereUniqueInput
+    where: DietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * FoodAllergies updateMany
+   * DietaryRestrictions updateMany
    */
-  export type FoodAllergiesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update FoodAllergies.
+     * The data used to update DietaryRestrictions.
      */
-    data: XOR<FoodAllergiesUpdateManyMutationInput, FoodAllergiesUncheckedUpdateManyInput>
+    data: XOR<DietaryRestrictionsUpdateManyMutationInput, DietaryRestrictionsUncheckedUpdateManyInput>
     /**
-     * Filter which FoodAllergies to update
+     * Filter which DietaryRestrictions to update
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
-     * Limit how many FoodAllergies to update.
+     * Limit how many DietaryRestrictions to update.
      */
     limit?: number
   }
 
   /**
-   * FoodAllergies updateManyAndReturn
+   * DietaryRestrictions updateManyAndReturn
    */
-  export type FoodAllergiesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: DietaryRestrictionsSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
-     * The data used to update FoodAllergies.
+     * The data used to update DietaryRestrictions.
      */
-    data: XOR<FoodAllergiesUpdateManyMutationInput, FoodAllergiesUncheckedUpdateManyInput>
+    data: XOR<DietaryRestrictionsUpdateManyMutationInput, DietaryRestrictionsUncheckedUpdateManyInput>
     /**
-     * Filter which FoodAllergies to update
+     * Filter which DietaryRestrictions to update
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
-     * Limit how many FoodAllergies to update.
+     * Limit how many DietaryRestrictions to update.
      */
     limit?: number
   }
 
   /**
-   * FoodAllergies upsert
+   * DietaryRestrictions upsert
    */
-  export type FoodAllergiesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The filter to search for the FoodAllergies to update in case it exists.
+     * The filter to search for the DietaryRestrictions to update in case it exists.
      */
-    where: FoodAllergiesWhereUniqueInput
+    where: DietaryRestrictionsWhereUniqueInput
     /**
-     * In case the FoodAllergies found by the `where` argument doesn't exist, create a new FoodAllergies with this data.
+     * In case the DietaryRestrictions found by the `where` argument doesn't exist, create a new DietaryRestrictions with this data.
      */
-    create: XOR<FoodAllergiesCreateInput, FoodAllergiesUncheckedCreateInput>
+    create: XOR<DietaryRestrictionsCreateInput, DietaryRestrictionsUncheckedCreateInput>
     /**
-     * In case the FoodAllergies was found with the provided `where` argument, update it with this data.
+     * In case the DietaryRestrictions was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<FoodAllergiesUpdateInput, FoodAllergiesUncheckedUpdateInput>
+    update: XOR<DietaryRestrictionsUpdateInput, DietaryRestrictionsUncheckedUpdateInput>
   }
 
   /**
-   * FoodAllergies delete
+   * DietaryRestrictions delete
    */
-  export type FoodAllergiesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter which FoodAllergies to delete.
+     * Filter which DietaryRestrictions to delete.
      */
-    where: FoodAllergiesWhereUniqueInput
+    where: DietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * FoodAllergies deleteMany
+   * DietaryRestrictions deleteMany
    */
-  export type FoodAllergiesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which FoodAllergies to delete
+     * Filter which DietaryRestrictions to delete
      */
-    where?: FoodAllergiesWhereInput
+    where?: DietaryRestrictionsWhereInput
     /**
-     * Limit how many FoodAllergies to delete.
+     * Limit how many DietaryRestrictions to delete.
      */
     limit?: number
   }
 
   /**
-   * FoodAllergies.recipe_food_allergies
+   * DietaryRestrictions.recipe_dietary_restrictions
    */
-  export type FoodAllergies$recipe_food_allergiesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
-    where?: RecipeFoodAllergiesWhereInput
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
+    where?: RecipeDietaryRestrictionsWhereInput
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RecipeFoodAllergiesScalarFieldEnum | RecipeFoodAllergiesScalarFieldEnum[]
+    distinct?: RecipeDietaryRestrictionsScalarFieldEnum | RecipeDietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * FoodAllergies without action
+   * DietaryRestrictions without action
    */
-  export type FoodAllergiesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type DietaryRestrictionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the FoodAllergies
+     * Select specific fields to fetch from the DietaryRestrictions
      */
-    select?: FoodAllergiesSelect<ExtArgs> | null
+    select?: DietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the FoodAllergies
+     * Omit specific fields from the DietaryRestrictions
      */
-    omit?: FoodAllergiesOmit<ExtArgs> | null
+    omit?: DietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: FoodAllergiesInclude<ExtArgs> | null
+    include?: DietaryRestrictionsInclude<ExtArgs> | null
   }
 
 
@@ -8211,51 +8454,51 @@ export namespace Prisma {
 
 
   /**
-   * Model RecipeFoodAllergies
+   * Model RecipeDietaryRestrictions
    */
 
-  export type AggregateRecipeFoodAllergies = {
-    _count: RecipeFoodAllergiesCountAggregateOutputType | null
-    _avg: RecipeFoodAllergiesAvgAggregateOutputType | null
-    _sum: RecipeFoodAllergiesSumAggregateOutputType | null
-    _min: RecipeFoodAllergiesMinAggregateOutputType | null
-    _max: RecipeFoodAllergiesMaxAggregateOutputType | null
+  export type AggregateRecipeDietaryRestrictions = {
+    _count: RecipeDietaryRestrictionsCountAggregateOutputType | null
+    _avg: RecipeDietaryRestrictionsAvgAggregateOutputType | null
+    _sum: RecipeDietaryRestrictionsSumAggregateOutputType | null
+    _min: RecipeDietaryRestrictionsMinAggregateOutputType | null
+    _max: RecipeDietaryRestrictionsMaxAggregateOutputType | null
   }
 
-  export type RecipeFoodAllergiesAvgAggregateOutputType = {
+  export type RecipeDietaryRestrictionsAvgAggregateOutputType = {
     id: number | null
     recipe_id: number | null
-    food_allergy_id: number | null
+    dietary_restriction_id: number | null
   }
 
-  export type RecipeFoodAllergiesSumAggregateOutputType = {
+  export type RecipeDietaryRestrictionsSumAggregateOutputType = {
     id: number | null
     recipe_id: number | null
-    food_allergy_id: number | null
+    dietary_restriction_id: number | null
   }
 
-  export type RecipeFoodAllergiesMinAggregateOutputType = {
+  export type RecipeDietaryRestrictionsMinAggregateOutputType = {
     id: number | null
     recipe_id: number | null
-    food_allergy_id: number | null
+    dietary_restriction_id: number | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
   }
 
-  export type RecipeFoodAllergiesMaxAggregateOutputType = {
+  export type RecipeDietaryRestrictionsMaxAggregateOutputType = {
     id: number | null
     recipe_id: number | null
-    food_allergy_id: number | null
+    dietary_restriction_id: number | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
   }
 
-  export type RecipeFoodAllergiesCountAggregateOutputType = {
+  export type RecipeDietaryRestrictionsCountAggregateOutputType = {
     id: number
     recipe_id: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at: number
     updated_at: number
     deleted_at: number
@@ -8263,359 +8506,359 @@ export namespace Prisma {
   }
 
 
-  export type RecipeFoodAllergiesAvgAggregateInputType = {
+  export type RecipeDietaryRestrictionsAvgAggregateInputType = {
     id?: true
     recipe_id?: true
-    food_allergy_id?: true
+    dietary_restriction_id?: true
   }
 
-  export type RecipeFoodAllergiesSumAggregateInputType = {
+  export type RecipeDietaryRestrictionsSumAggregateInputType = {
     id?: true
     recipe_id?: true
-    food_allergy_id?: true
+    dietary_restriction_id?: true
   }
 
-  export type RecipeFoodAllergiesMinAggregateInputType = {
+  export type RecipeDietaryRestrictionsMinAggregateInputType = {
     id?: true
     recipe_id?: true
-    food_allergy_id?: true
+    dietary_restriction_id?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
   }
 
-  export type RecipeFoodAllergiesMaxAggregateInputType = {
+  export type RecipeDietaryRestrictionsMaxAggregateInputType = {
     id?: true
     recipe_id?: true
-    food_allergy_id?: true
+    dietary_restriction_id?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
   }
 
-  export type RecipeFoodAllergiesCountAggregateInputType = {
+  export type RecipeDietaryRestrictionsCountAggregateInputType = {
     id?: true
     recipe_id?: true
-    food_allergy_id?: true
+    dietary_restriction_id?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
     _all?: true
   }
 
-  export type RecipeFoodAllergiesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RecipeFoodAllergies to aggregate.
+     * Filter which RecipeDietaryRestrictions to aggregate.
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RecipeFoodAllergies to fetch.
+     * Determine the order of RecipeDietaryRestrictions to fetch.
      */
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RecipeFoodAllergies from the position of the cursor.
+     * Take `±n` RecipeDietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RecipeFoodAllergies.
+     * Skip the first `n` RecipeDietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned RecipeFoodAllergies
+     * Count returned RecipeDietaryRestrictions
     **/
-    _count?: true | RecipeFoodAllergiesCountAggregateInputType
+    _count?: true | RecipeDietaryRestrictionsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: RecipeFoodAllergiesAvgAggregateInputType
+    _avg?: RecipeDietaryRestrictionsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: RecipeFoodAllergiesSumAggregateInputType
+    _sum?: RecipeDietaryRestrictionsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: RecipeFoodAllergiesMinAggregateInputType
+    _min?: RecipeDietaryRestrictionsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: RecipeFoodAllergiesMaxAggregateInputType
+    _max?: RecipeDietaryRestrictionsMaxAggregateInputType
   }
 
-  export type GetRecipeFoodAllergiesAggregateType<T extends RecipeFoodAllergiesAggregateArgs> = {
-        [P in keyof T & keyof AggregateRecipeFoodAllergies]: P extends '_count' | 'count'
+  export type GetRecipeDietaryRestrictionsAggregateType<T extends RecipeDietaryRestrictionsAggregateArgs> = {
+        [P in keyof T & keyof AggregateRecipeDietaryRestrictions]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateRecipeFoodAllergies[P]>
-      : GetScalarType<T[P], AggregateRecipeFoodAllergies[P]>
+        : GetScalarType<T[P], AggregateRecipeDietaryRestrictions[P]>
+      : GetScalarType<T[P], AggregateRecipeDietaryRestrictions[P]>
   }
 
 
 
 
-  export type RecipeFoodAllergiesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RecipeFoodAllergiesWhereInput
-    orderBy?: RecipeFoodAllergiesOrderByWithAggregationInput | RecipeFoodAllergiesOrderByWithAggregationInput[]
-    by: RecipeFoodAllergiesScalarFieldEnum[] | RecipeFoodAllergiesScalarFieldEnum
-    having?: RecipeFoodAllergiesScalarWhereWithAggregatesInput
+  export type RecipeDietaryRestrictionsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecipeDietaryRestrictionsWhereInput
+    orderBy?: RecipeDietaryRestrictionsOrderByWithAggregationInput | RecipeDietaryRestrictionsOrderByWithAggregationInput[]
+    by: RecipeDietaryRestrictionsScalarFieldEnum[] | RecipeDietaryRestrictionsScalarFieldEnum
+    having?: RecipeDietaryRestrictionsScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: RecipeFoodAllergiesCountAggregateInputType | true
-    _avg?: RecipeFoodAllergiesAvgAggregateInputType
-    _sum?: RecipeFoodAllergiesSumAggregateInputType
-    _min?: RecipeFoodAllergiesMinAggregateInputType
-    _max?: RecipeFoodAllergiesMaxAggregateInputType
+    _count?: RecipeDietaryRestrictionsCountAggregateInputType | true
+    _avg?: RecipeDietaryRestrictionsAvgAggregateInputType
+    _sum?: RecipeDietaryRestrictionsSumAggregateInputType
+    _min?: RecipeDietaryRestrictionsMinAggregateInputType
+    _max?: RecipeDietaryRestrictionsMaxAggregateInputType
   }
 
-  export type RecipeFoodAllergiesGroupByOutputType = {
+  export type RecipeDietaryRestrictionsGroupByOutputType = {
     id: number
     recipe_id: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at: Date
     updated_at: Date
     deleted_at: Date | null
-    _count: RecipeFoodAllergiesCountAggregateOutputType | null
-    _avg: RecipeFoodAllergiesAvgAggregateOutputType | null
-    _sum: RecipeFoodAllergiesSumAggregateOutputType | null
-    _min: RecipeFoodAllergiesMinAggregateOutputType | null
-    _max: RecipeFoodAllergiesMaxAggregateOutputType | null
+    _count: RecipeDietaryRestrictionsCountAggregateOutputType | null
+    _avg: RecipeDietaryRestrictionsAvgAggregateOutputType | null
+    _sum: RecipeDietaryRestrictionsSumAggregateOutputType | null
+    _min: RecipeDietaryRestrictionsMinAggregateOutputType | null
+    _max: RecipeDietaryRestrictionsMaxAggregateOutputType | null
   }
 
-  type GetRecipeFoodAllergiesGroupByPayload<T extends RecipeFoodAllergiesGroupByArgs> = Prisma.PrismaPromise<
+  type GetRecipeDietaryRestrictionsGroupByPayload<T extends RecipeDietaryRestrictionsGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<RecipeFoodAllergiesGroupByOutputType, T['by']> &
+      PickEnumerable<RecipeDietaryRestrictionsGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof RecipeFoodAllergiesGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof RecipeDietaryRestrictionsGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], RecipeFoodAllergiesGroupByOutputType[P]>
-            : GetScalarType<T[P], RecipeFoodAllergiesGroupByOutputType[P]>
+              : GetScalarType<T[P], RecipeDietaryRestrictionsGroupByOutputType[P]>
+            : GetScalarType<T[P], RecipeDietaryRestrictionsGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type RecipeFoodAllergiesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type RecipeDietaryRestrictionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     recipe_id?: boolean
-    food_allergy_id?: boolean
+    dietary_restriction_id?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["recipeFoodAllergies"]>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipeDietaryRestrictions"]>
 
-  export type RecipeFoodAllergiesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type RecipeDietaryRestrictionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     recipe_id?: boolean
-    food_allergy_id?: boolean
+    dietary_restriction_id?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["recipeFoodAllergies"]>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipeDietaryRestrictions"]>
 
-  export type RecipeFoodAllergiesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type RecipeDietaryRestrictionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     recipe_id?: boolean
-    food_allergy_id?: boolean
+    dietary_restriction_id?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["recipeFoodAllergies"]>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recipeDietaryRestrictions"]>
 
-  export type RecipeFoodAllergiesSelectScalar = {
+  export type RecipeDietaryRestrictionsSelectScalar = {
     id?: boolean
     recipe_id?: boolean
-    food_allergy_id?: boolean
+    dietary_restriction_id?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
   }
 
-  export type RecipeFoodAllergiesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "recipe_id" | "food_allergy_id" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipeFoodAllergies"]>
-  export type RecipeFoodAllergiesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "recipe_id" | "dietary_restriction_id" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipeDietaryRestrictions"]>
+  export type RecipeDietaryRestrictionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
   }
-  export type RecipeFoodAllergiesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
   }
-  export type RecipeFoodAllergiesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe?: boolean | RecipesDefaultArgs<ExtArgs>
-    food_allergy?: boolean | FoodAllergiesDefaultArgs<ExtArgs>
+    dietary_restriction?: boolean | DietaryRestrictionsDefaultArgs<ExtArgs>
   }
 
-  export type $RecipeFoodAllergiesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "RecipeFoodAllergies"
+  export type $RecipeDietaryRestrictionsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RecipeDietaryRestrictions"
     objects: {
       recipe: Prisma.$RecipesPayload<ExtArgs>
-      food_allergy: Prisma.$FoodAllergiesPayload<ExtArgs>
+      dietary_restriction: Prisma.$DietaryRestrictionsPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       recipe_id: number
-      food_allergy_id: number
+      dietary_restriction_id: number
       created_at: Date
       updated_at: Date
       deleted_at: Date | null
-    }, ExtArgs["result"]["recipeFoodAllergies"]>
+    }, ExtArgs["result"]["recipeDietaryRestrictions"]>
     composites: {}
   }
 
-  type RecipeFoodAllergiesGetPayload<S extends boolean | null | undefined | RecipeFoodAllergiesDefaultArgs> = $Result.GetResult<Prisma.$RecipeFoodAllergiesPayload, S>
+  type RecipeDietaryRestrictionsGetPayload<S extends boolean | null | undefined | RecipeDietaryRestrictionsDefaultArgs> = $Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload, S>
 
-  type RecipeFoodAllergiesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RecipeFoodAllergiesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: RecipeFoodAllergiesCountAggregateInputType | true
+  type RecipeDietaryRestrictionsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RecipeDietaryRestrictionsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RecipeDietaryRestrictionsCountAggregateInputType | true
     }
 
-  export interface RecipeFoodAllergiesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RecipeFoodAllergies'], meta: { name: 'RecipeFoodAllergies' } }
+  export interface RecipeDietaryRestrictionsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RecipeDietaryRestrictions'], meta: { name: 'RecipeDietaryRestrictions' } }
     /**
-     * Find zero or one RecipeFoodAllergies that matches the filter.
-     * @param {RecipeFoodAllergiesFindUniqueArgs} args - Arguments to find a RecipeFoodAllergies
+     * Find zero or one RecipeDietaryRestrictions that matches the filter.
+     * @param {RecipeDietaryRestrictionsFindUniqueArgs} args - Arguments to find a RecipeDietaryRestrictions
      * @example
-     * // Get one RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findUnique({
+     * // Get one RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends RecipeFoodAllergiesFindUniqueArgs>(args: SelectSubset<T, RecipeFoodAllergiesFindUniqueArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends RecipeDietaryRestrictionsFindUniqueArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsFindUniqueArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one RecipeFoodAllergies that matches the filter or throw an error with `error.code='P2025'`
+     * Find one RecipeDietaryRestrictions that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {RecipeFoodAllergiesFindUniqueOrThrowArgs} args - Arguments to find a RecipeFoodAllergies
+     * @param {RecipeDietaryRestrictionsFindUniqueOrThrowArgs} args - Arguments to find a RecipeDietaryRestrictions
      * @example
-     * // Get one RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findUniqueOrThrow({
+     * // Get one RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends RecipeFoodAllergiesFindUniqueOrThrowArgs>(args: SelectSubset<T, RecipeFoodAllergiesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends RecipeDietaryRestrictionsFindUniqueOrThrowArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RecipeFoodAllergies that matches the filter.
+     * Find the first RecipeDietaryRestrictions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesFindFirstArgs} args - Arguments to find a RecipeFoodAllergies
+     * @param {RecipeDietaryRestrictionsFindFirstArgs} args - Arguments to find a RecipeDietaryRestrictions
      * @example
-     * // Get one RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findFirst({
+     * // Get one RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends RecipeFoodAllergiesFindFirstArgs>(args?: SelectSubset<T, RecipeFoodAllergiesFindFirstArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends RecipeDietaryRestrictionsFindFirstArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsFindFirstArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first RecipeFoodAllergies that matches the filter or
+     * Find the first RecipeDietaryRestrictions that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesFindFirstOrThrowArgs} args - Arguments to find a RecipeFoodAllergies
+     * @param {RecipeDietaryRestrictionsFindFirstOrThrowArgs} args - Arguments to find a RecipeDietaryRestrictions
      * @example
-     * // Get one RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findFirstOrThrow({
+     * // Get one RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends RecipeFoodAllergiesFindFirstOrThrowArgs>(args?: SelectSubset<T, RecipeFoodAllergiesFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends RecipeDietaryRestrictionsFindFirstOrThrowArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more RecipeFoodAllergies that matches the filter.
+     * Find zero or more RecipeDietaryRestrictions that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {RecipeDietaryRestrictionsFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findMany()
+     * // Get all RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findMany()
      * 
-     * // Get first 10 RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.findMany({ take: 10 })
+     * // Get first 10 RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const recipeFoodAllergiesWithIdOnly = await prisma.recipeFoodAllergies.findMany({ select: { id: true } })
+     * const recipeDietaryRestrictionsWithIdOnly = await prisma.recipeDietaryRestrictions.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends RecipeFoodAllergiesFindManyArgs>(args?: SelectSubset<T, RecipeFoodAllergiesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends RecipeDietaryRestrictionsFindManyArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesCreateArgs} args - Arguments to create a RecipeFoodAllergies.
+     * Create a RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsCreateArgs} args - Arguments to create a RecipeDietaryRestrictions.
      * @example
-     * // Create one RecipeFoodAllergies
-     * const RecipeFoodAllergies = await prisma.recipeFoodAllergies.create({
+     * // Create one RecipeDietaryRestrictions
+     * const RecipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.create({
      *   data: {
-     *     // ... data to create a RecipeFoodAllergies
+     *     // ... data to create a RecipeDietaryRestrictions
      *   }
      * })
      * 
      */
-    create<T extends RecipeFoodAllergiesCreateArgs>(args: SelectSubset<T, RecipeFoodAllergiesCreateArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends RecipeDietaryRestrictionsCreateArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsCreateArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesCreateManyArgs} args - Arguments to create many RecipeFoodAllergies.
+     * Create many RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsCreateManyArgs} args - Arguments to create many RecipeDietaryRestrictions.
      * @example
-     * // Create many RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.createMany({
+     * // Create many RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends RecipeFoodAllergiesCreateManyArgs>(args?: SelectSubset<T, RecipeFoodAllergiesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends RecipeDietaryRestrictionsCreateManyArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many RecipeFoodAllergies and returns the data saved in the database.
-     * @param {RecipeFoodAllergiesCreateManyAndReturnArgs} args - Arguments to create many RecipeFoodAllergies.
+     * Create many RecipeDietaryRestrictions and returns the data saved in the database.
+     * @param {RecipeDietaryRestrictionsCreateManyAndReturnArgs} args - Arguments to create many RecipeDietaryRestrictions.
      * @example
-     * // Create many RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.createManyAndReturn({
+     * // Create many RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many RecipeFoodAllergies and only return the `id`
-     * const recipeFoodAllergiesWithIdOnly = await prisma.recipeFoodAllergies.createManyAndReturn({
+     * // Create many RecipeDietaryRestrictions and only return the `id`
+     * const recipeDietaryRestrictionsWithIdOnly = await prisma.recipeDietaryRestrictions.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -8625,28 +8868,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends RecipeFoodAllergiesCreateManyAndReturnArgs>(args?: SelectSubset<T, RecipeFoodAllergiesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends RecipeDietaryRestrictionsCreateManyAndReturnArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesDeleteArgs} args - Arguments to delete one RecipeFoodAllergies.
+     * Delete a RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsDeleteArgs} args - Arguments to delete one RecipeDietaryRestrictions.
      * @example
-     * // Delete one RecipeFoodAllergies
-     * const RecipeFoodAllergies = await prisma.recipeFoodAllergies.delete({
+     * // Delete one RecipeDietaryRestrictions
+     * const RecipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.delete({
      *   where: {
-     *     // ... filter to delete one RecipeFoodAllergies
+     *     // ... filter to delete one RecipeDietaryRestrictions
      *   }
      * })
      * 
      */
-    delete<T extends RecipeFoodAllergiesDeleteArgs>(args: SelectSubset<T, RecipeFoodAllergiesDeleteArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends RecipeDietaryRestrictionsDeleteArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsDeleteArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesUpdateArgs} args - Arguments to update one RecipeFoodAllergies.
+     * Update one RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsUpdateArgs} args - Arguments to update one RecipeDietaryRestrictions.
      * @example
-     * // Update one RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.update({
+     * // Update one RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8656,30 +8899,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends RecipeFoodAllergiesUpdateArgs>(args: SelectSubset<T, RecipeFoodAllergiesUpdateArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends RecipeDietaryRestrictionsUpdateArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsUpdateArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesDeleteManyArgs} args - Arguments to filter RecipeFoodAllergies to delete.
+     * Delete zero or more RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsDeleteManyArgs} args - Arguments to filter RecipeDietaryRestrictions to delete.
      * @example
-     * // Delete a few RecipeFoodAllergies
-     * const { count } = await prisma.recipeFoodAllergies.deleteMany({
+     * // Delete a few RecipeDietaryRestrictions
+     * const { count } = await prisma.recipeDietaryRestrictions.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends RecipeFoodAllergiesDeleteManyArgs>(args?: SelectSubset<T, RecipeFoodAllergiesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends RecipeDietaryRestrictionsDeleteManyArgs>(args?: SelectSubset<T, RecipeDietaryRestrictionsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RecipeFoodAllergies.
+     * Update zero or more RecipeDietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {RecipeDietaryRestrictionsUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.updateMany({
+     * // Update many RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8689,14 +8932,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends RecipeFoodAllergiesUpdateManyArgs>(args: SelectSubset<T, RecipeFoodAllergiesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends RecipeDietaryRestrictionsUpdateManyArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more RecipeFoodAllergies and returns the data updated in the database.
-     * @param {RecipeFoodAllergiesUpdateManyAndReturnArgs} args - Arguments to update many RecipeFoodAllergies.
+     * Update zero or more RecipeDietaryRestrictions and returns the data updated in the database.
+     * @param {RecipeDietaryRestrictionsUpdateManyAndReturnArgs} args - Arguments to update many RecipeDietaryRestrictions.
      * @example
-     * // Update many RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.updateManyAndReturn({
+     * // Update many RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8705,8 +8948,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more RecipeFoodAllergies and only return the `id`
-     * const recipeFoodAllergiesWithIdOnly = await prisma.recipeFoodAllergies.updateManyAndReturn({
+     * // Update zero or more RecipeDietaryRestrictions and only return the `id`
+     * const recipeDietaryRestrictionsWithIdOnly = await prisma.recipeDietaryRestrictions.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -8719,56 +8962,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends RecipeFoodAllergiesUpdateManyAndReturnArgs>(args: SelectSubset<T, RecipeFoodAllergiesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends RecipeDietaryRestrictionsUpdateManyAndReturnArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one RecipeFoodAllergies.
-     * @param {RecipeFoodAllergiesUpsertArgs} args - Arguments to update or create a RecipeFoodAllergies.
+     * Create or update one RecipeDietaryRestrictions.
+     * @param {RecipeDietaryRestrictionsUpsertArgs} args - Arguments to update or create a RecipeDietaryRestrictions.
      * @example
-     * // Update or create a RecipeFoodAllergies
-     * const recipeFoodAllergies = await prisma.recipeFoodAllergies.upsert({
+     * // Update or create a RecipeDietaryRestrictions
+     * const recipeDietaryRestrictions = await prisma.recipeDietaryRestrictions.upsert({
      *   create: {
-     *     // ... data to create a RecipeFoodAllergies
+     *     // ... data to create a RecipeDietaryRestrictions
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the RecipeFoodAllergies we want to update
+     *     // ... the filter for the RecipeDietaryRestrictions we want to update
      *   }
      * })
      */
-    upsert<T extends RecipeFoodAllergiesUpsertArgs>(args: SelectSubset<T, RecipeFoodAllergiesUpsertArgs<ExtArgs>>): Prisma__RecipeFoodAllergiesClient<$Result.GetResult<Prisma.$RecipeFoodAllergiesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends RecipeDietaryRestrictionsUpsertArgs>(args: SelectSubset<T, RecipeDietaryRestrictionsUpsertArgs<ExtArgs>>): Prisma__RecipeDietaryRestrictionsClient<$Result.GetResult<Prisma.$RecipeDietaryRestrictionsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of RecipeFoodAllergies.
+     * Count the number of RecipeDietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesCountArgs} args - Arguments to filter RecipeFoodAllergies to count.
+     * @param {RecipeDietaryRestrictionsCountArgs} args - Arguments to filter RecipeDietaryRestrictions to count.
      * @example
-     * // Count the number of RecipeFoodAllergies
-     * const count = await prisma.recipeFoodAllergies.count({
+     * // Count the number of RecipeDietaryRestrictions
+     * const count = await prisma.recipeDietaryRestrictions.count({
      *   where: {
-     *     // ... the filter for the RecipeFoodAllergies we want to count
+     *     // ... the filter for the RecipeDietaryRestrictions we want to count
      *   }
      * })
     **/
-    count<T extends RecipeFoodAllergiesCountArgs>(
-      args?: Subset<T, RecipeFoodAllergiesCountArgs>,
+    count<T extends RecipeDietaryRestrictionsCountArgs>(
+      args?: Subset<T, RecipeDietaryRestrictionsCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], RecipeFoodAllergiesCountAggregateOutputType>
+          : GetScalarType<T['select'], RecipeDietaryRestrictionsCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a RecipeFoodAllergies.
+     * Allows you to perform aggregations operations on a RecipeDietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {RecipeDietaryRestrictionsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -8788,13 +9031,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends RecipeFoodAllergiesAggregateArgs>(args: Subset<T, RecipeFoodAllergiesAggregateArgs>): Prisma.PrismaPromise<GetRecipeFoodAllergiesAggregateType<T>>
+    aggregate<T extends RecipeDietaryRestrictionsAggregateArgs>(args: Subset<T, RecipeDietaryRestrictionsAggregateArgs>): Prisma.PrismaPromise<GetRecipeDietaryRestrictionsAggregateType<T>>
 
     /**
-     * Group by RecipeFoodAllergies.
+     * Group by RecipeDietaryRestrictions.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {RecipeFoodAllergiesGroupByArgs} args - Group by arguments.
+     * @param {RecipeDietaryRestrictionsGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -8809,14 +9052,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends RecipeFoodAllergiesGroupByArgs,
+      T extends RecipeDietaryRestrictionsGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RecipeFoodAllergiesGroupByArgs['orderBy'] }
-        : { orderBy?: RecipeFoodAllergiesGroupByArgs['orderBy'] },
+        ? { orderBy: RecipeDietaryRestrictionsGroupByArgs['orderBy'] }
+        : { orderBy?: RecipeDietaryRestrictionsGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -8865,23 +9108,23 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, RecipeFoodAllergiesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecipeFoodAllergiesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, RecipeDietaryRestrictionsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecipeDietaryRestrictionsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the RecipeFoodAllergies model
+   * Fields of the RecipeDietaryRestrictions model
    */
-  readonly fields: RecipeFoodAllergiesFieldRefs;
+  readonly fields: RecipeDietaryRestrictionsFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for RecipeFoodAllergies.
+   * The delegate class that acts as a "Promise-like" for RecipeDietaryRestrictions.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__RecipeFoodAllergiesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__RecipeDietaryRestrictionsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     recipe<T extends RecipesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecipesDefaultArgs<ExtArgs>>): Prisma__RecipesClient<$Result.GetResult<Prisma.$RecipesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    food_allergy<T extends FoodAllergiesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FoodAllergiesDefaultArgs<ExtArgs>>): Prisma__FoodAllergiesClient<$Result.GetResult<Prisma.$FoodAllergiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dietary_restriction<T extends DietaryRestrictionsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DietaryRestrictionsDefaultArgs<ExtArgs>>): Prisma__DietaryRestrictionsClient<$Result.GetResult<Prisma.$DietaryRestrictionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8908,426 +9151,426 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the RecipeFoodAllergies model
+   * Fields of the RecipeDietaryRestrictions model
    */
-  interface RecipeFoodAllergiesFieldRefs {
-    readonly id: FieldRef<"RecipeFoodAllergies", 'Int'>
-    readonly recipe_id: FieldRef<"RecipeFoodAllergies", 'Int'>
-    readonly food_allergy_id: FieldRef<"RecipeFoodAllergies", 'Int'>
-    readonly created_at: FieldRef<"RecipeFoodAllergies", 'DateTime'>
-    readonly updated_at: FieldRef<"RecipeFoodAllergies", 'DateTime'>
-    readonly deleted_at: FieldRef<"RecipeFoodAllergies", 'DateTime'>
+  interface RecipeDietaryRestrictionsFieldRefs {
+    readonly id: FieldRef<"RecipeDietaryRestrictions", 'Int'>
+    readonly recipe_id: FieldRef<"RecipeDietaryRestrictions", 'Int'>
+    readonly dietary_restriction_id: FieldRef<"RecipeDietaryRestrictions", 'Int'>
+    readonly created_at: FieldRef<"RecipeDietaryRestrictions", 'DateTime'>
+    readonly updated_at: FieldRef<"RecipeDietaryRestrictions", 'DateTime'>
+    readonly deleted_at: FieldRef<"RecipeDietaryRestrictions", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * RecipeFoodAllergies findUnique
+   * RecipeDietaryRestrictions findUnique
    */
-  export type RecipeFoodAllergiesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which RecipeFoodAllergies to fetch.
+     * Filter, which RecipeDietaryRestrictions to fetch.
      */
-    where: RecipeFoodAllergiesWhereUniqueInput
+    where: RecipeDietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * RecipeFoodAllergies findUniqueOrThrow
+   * RecipeDietaryRestrictions findUniqueOrThrow
    */
-  export type RecipeFoodAllergiesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which RecipeFoodAllergies to fetch.
+     * Filter, which RecipeDietaryRestrictions to fetch.
      */
-    where: RecipeFoodAllergiesWhereUniqueInput
+    where: RecipeDietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * RecipeFoodAllergies findFirst
+   * RecipeDietaryRestrictions findFirst
    */
-  export type RecipeFoodAllergiesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which RecipeFoodAllergies to fetch.
+     * Filter, which RecipeDietaryRestrictions to fetch.
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RecipeFoodAllergies to fetch.
+     * Determine the order of RecipeDietaryRestrictions to fetch.
      */
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RecipeFoodAllergies.
+     * Sets the position for searching for RecipeDietaryRestrictions.
      */
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RecipeFoodAllergies from the position of the cursor.
+     * Take `±n` RecipeDietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RecipeFoodAllergies.
+     * Skip the first `n` RecipeDietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RecipeFoodAllergies.
+     * Filter by unique combinations of RecipeDietaryRestrictions.
      */
-    distinct?: RecipeFoodAllergiesScalarFieldEnum | RecipeFoodAllergiesScalarFieldEnum[]
+    distinct?: RecipeDietaryRestrictionsScalarFieldEnum | RecipeDietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * RecipeFoodAllergies findFirstOrThrow
+   * RecipeDietaryRestrictions findFirstOrThrow
    */
-  export type RecipeFoodAllergiesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which RecipeFoodAllergies to fetch.
+     * Filter, which RecipeDietaryRestrictions to fetch.
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RecipeFoodAllergies to fetch.
+     * Determine the order of RecipeDietaryRestrictions to fetch.
      */
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for RecipeFoodAllergies.
+     * Sets the position for searching for RecipeDietaryRestrictions.
      */
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RecipeFoodAllergies from the position of the cursor.
+     * Take `±n` RecipeDietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RecipeFoodAllergies.
+     * Skip the first `n` RecipeDietaryRestrictions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of RecipeFoodAllergies.
+     * Filter by unique combinations of RecipeDietaryRestrictions.
      */
-    distinct?: RecipeFoodAllergiesScalarFieldEnum | RecipeFoodAllergiesScalarFieldEnum[]
+    distinct?: RecipeDietaryRestrictionsScalarFieldEnum | RecipeDietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * RecipeFoodAllergies findMany
+   * RecipeDietaryRestrictions findMany
    */
-  export type RecipeFoodAllergiesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter, which RecipeFoodAllergies to fetch.
+     * Filter, which RecipeDietaryRestrictions to fetch.
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of RecipeFoodAllergies to fetch.
+     * Determine the order of RecipeDietaryRestrictions to fetch.
      */
-    orderBy?: RecipeFoodAllergiesOrderByWithRelationInput | RecipeFoodAllergiesOrderByWithRelationInput[]
+    orderBy?: RecipeDietaryRestrictionsOrderByWithRelationInput | RecipeDietaryRestrictionsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing RecipeFoodAllergies.
+     * Sets the position for listing RecipeDietaryRestrictions.
      */
-    cursor?: RecipeFoodAllergiesWhereUniqueInput
+    cursor?: RecipeDietaryRestrictionsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` RecipeFoodAllergies from the position of the cursor.
+     * Take `±n` RecipeDietaryRestrictions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` RecipeFoodAllergies.
+     * Skip the first `n` RecipeDietaryRestrictions.
      */
     skip?: number
-    distinct?: RecipeFoodAllergiesScalarFieldEnum | RecipeFoodAllergiesScalarFieldEnum[]
+    distinct?: RecipeDietaryRestrictionsScalarFieldEnum | RecipeDietaryRestrictionsScalarFieldEnum[]
   }
 
   /**
-   * RecipeFoodAllergies create
+   * RecipeDietaryRestrictions create
    */
-  export type RecipeFoodAllergiesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The data needed to create a RecipeFoodAllergies.
+     * The data needed to create a RecipeDietaryRestrictions.
      */
-    data: XOR<RecipeFoodAllergiesCreateInput, RecipeFoodAllergiesUncheckedCreateInput>
+    data: XOR<RecipeDietaryRestrictionsCreateInput, RecipeDietaryRestrictionsUncheckedCreateInput>
   }
 
   /**
-   * RecipeFoodAllergies createMany
+   * RecipeDietaryRestrictions createMany
    */
-  export type RecipeFoodAllergiesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many RecipeFoodAllergies.
+     * The data used to create many RecipeDietaryRestrictions.
      */
-    data: RecipeFoodAllergiesCreateManyInput | RecipeFoodAllergiesCreateManyInput[]
+    data: RecipeDietaryRestrictionsCreateManyInput | RecipeDietaryRestrictionsCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * RecipeFoodAllergies createManyAndReturn
+   * RecipeDietaryRestrictions createManyAndReturn
    */
-  export type RecipeFoodAllergiesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelectCreateManyAndReturn<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
-     * The data used to create many RecipeFoodAllergies.
+     * The data used to create many RecipeDietaryRestrictions.
      */
-    data: RecipeFoodAllergiesCreateManyInput | RecipeFoodAllergiesCreateManyInput[]
+    data: RecipeDietaryRestrictionsCreateManyInput | RecipeDietaryRestrictionsCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RecipeFoodAllergies update
+   * RecipeDietaryRestrictions update
    */
-  export type RecipeFoodAllergiesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The data needed to update a RecipeFoodAllergies.
+     * The data needed to update a RecipeDietaryRestrictions.
      */
-    data: XOR<RecipeFoodAllergiesUpdateInput, RecipeFoodAllergiesUncheckedUpdateInput>
+    data: XOR<RecipeDietaryRestrictionsUpdateInput, RecipeDietaryRestrictionsUncheckedUpdateInput>
     /**
-     * Choose, which RecipeFoodAllergies to update.
+     * Choose, which RecipeDietaryRestrictions to update.
      */
-    where: RecipeFoodAllergiesWhereUniqueInput
+    where: RecipeDietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * RecipeFoodAllergies updateMany
+   * RecipeDietaryRestrictions updateMany
    */
-  export type RecipeFoodAllergiesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update RecipeFoodAllergies.
+     * The data used to update RecipeDietaryRestrictions.
      */
-    data: XOR<RecipeFoodAllergiesUpdateManyMutationInput, RecipeFoodAllergiesUncheckedUpdateManyInput>
+    data: XOR<RecipeDietaryRestrictionsUpdateManyMutationInput, RecipeDietaryRestrictionsUncheckedUpdateManyInput>
     /**
-     * Filter which RecipeFoodAllergies to update
+     * Filter which RecipeDietaryRestrictions to update
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
-     * Limit how many RecipeFoodAllergies to update.
+     * Limit how many RecipeDietaryRestrictions to update.
      */
     limit?: number
   }
 
   /**
-   * RecipeFoodAllergies updateManyAndReturn
+   * RecipeDietaryRestrictions updateManyAndReturn
    */
-  export type RecipeFoodAllergiesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
-     * The data used to update RecipeFoodAllergies.
+     * The data used to update RecipeDietaryRestrictions.
      */
-    data: XOR<RecipeFoodAllergiesUpdateManyMutationInput, RecipeFoodAllergiesUncheckedUpdateManyInput>
+    data: XOR<RecipeDietaryRestrictionsUpdateManyMutationInput, RecipeDietaryRestrictionsUncheckedUpdateManyInput>
     /**
-     * Filter which RecipeFoodAllergies to update
+     * Filter which RecipeDietaryRestrictions to update
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
-     * Limit how many RecipeFoodAllergies to update.
+     * Limit how many RecipeDietaryRestrictions to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * RecipeFoodAllergies upsert
+   * RecipeDietaryRestrictions upsert
    */
-  export type RecipeFoodAllergiesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * The filter to search for the RecipeFoodAllergies to update in case it exists.
+     * The filter to search for the RecipeDietaryRestrictions to update in case it exists.
      */
-    where: RecipeFoodAllergiesWhereUniqueInput
+    where: RecipeDietaryRestrictionsWhereUniqueInput
     /**
-     * In case the RecipeFoodAllergies found by the `where` argument doesn't exist, create a new RecipeFoodAllergies with this data.
+     * In case the RecipeDietaryRestrictions found by the `where` argument doesn't exist, create a new RecipeDietaryRestrictions with this data.
      */
-    create: XOR<RecipeFoodAllergiesCreateInput, RecipeFoodAllergiesUncheckedCreateInput>
+    create: XOR<RecipeDietaryRestrictionsCreateInput, RecipeDietaryRestrictionsUncheckedCreateInput>
     /**
-     * In case the RecipeFoodAllergies was found with the provided `where` argument, update it with this data.
+     * In case the RecipeDietaryRestrictions was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<RecipeFoodAllergiesUpdateInput, RecipeFoodAllergiesUncheckedUpdateInput>
+    update: XOR<RecipeDietaryRestrictionsUpdateInput, RecipeDietaryRestrictionsUncheckedUpdateInput>
   }
 
   /**
-   * RecipeFoodAllergies delete
+   * RecipeDietaryRestrictions delete
    */
-  export type RecipeFoodAllergiesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
     /**
-     * Filter which RecipeFoodAllergies to delete.
+     * Filter which RecipeDietaryRestrictions to delete.
      */
-    where: RecipeFoodAllergiesWhereUniqueInput
+    where: RecipeDietaryRestrictionsWhereUniqueInput
   }
 
   /**
-   * RecipeFoodAllergies deleteMany
+   * RecipeDietaryRestrictions deleteMany
    */
-  export type RecipeFoodAllergiesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which RecipeFoodAllergies to delete
+     * Filter which RecipeDietaryRestrictions to delete
      */
-    where?: RecipeFoodAllergiesWhereInput
+    where?: RecipeDietaryRestrictionsWhereInput
     /**
-     * Limit how many RecipeFoodAllergies to delete.
+     * Limit how many RecipeDietaryRestrictions to delete.
      */
     limit?: number
   }
 
   /**
-   * RecipeFoodAllergies without action
+   * RecipeDietaryRestrictions without action
    */
-  export type RecipeFoodAllergiesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type RecipeDietaryRestrictionsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RecipeFoodAllergies
+     * Select specific fields to fetch from the RecipeDietaryRestrictions
      */
-    select?: RecipeFoodAllergiesSelect<ExtArgs> | null
+    select?: RecipeDietaryRestrictionsSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the RecipeFoodAllergies
+     * Omit specific fields from the RecipeDietaryRestrictions
      */
-    omit?: RecipeFoodAllergiesOmit<ExtArgs> | null
+    omit?: RecipeDietaryRestrictionsOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RecipeFoodAllergiesInclude<ExtArgs> | null
+    include?: RecipeDietaryRestrictionsInclude<ExtArgs> | null
   }
 
 
@@ -14952,6 +15195,2246 @@ export namespace Prisma {
 
 
   /**
+   * Model Categories
+   */
+
+  export type AggregateCategories = {
+    _count: CategoriesCountAggregateOutputType | null
+    _avg: CategoriesAvgAggregateOutputType | null
+    _sum: CategoriesSumAggregateOutputType | null
+    _min: CategoriesMinAggregateOutputType | null
+    _max: CategoriesMaxAggregateOutputType | null
+  }
+
+  export type CategoriesAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CategoriesSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type CategoriesMinAggregateOutputType = {
+    id: number | null
+    name_en: string | null
+    name_es: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    deleted_at: Date | null
+  }
+
+  export type CategoriesMaxAggregateOutputType = {
+    id: number | null
+    name_en: string | null
+    name_es: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    deleted_at: Date | null
+  }
+
+  export type CategoriesCountAggregateOutputType = {
+    id: number
+    name_en: number
+    name_es: number
+    created_at: number
+    updated_at: number
+    deleted_at: number
+    _all: number
+  }
+
+
+  export type CategoriesAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type CategoriesSumAggregateInputType = {
+    id?: true
+  }
+
+  export type CategoriesMinAggregateInputType = {
+    id?: true
+    name_en?: true
+    name_es?: true
+    created_at?: true
+    updated_at?: true
+    deleted_at?: true
+  }
+
+  export type CategoriesMaxAggregateInputType = {
+    id?: true
+    name_en?: true
+    name_es?: true
+    created_at?: true
+    updated_at?: true
+    deleted_at?: true
+  }
+
+  export type CategoriesCountAggregateInputType = {
+    id?: true
+    name_en?: true
+    name_es?: true
+    created_at?: true
+    updated_at?: true
+    deleted_at?: true
+    _all?: true
+  }
+
+  export type CategoriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Categories to aggregate.
+     */
+    where?: CategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoriesOrderByWithRelationInput | CategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Categories
+    **/
+    _count?: true | CategoriesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CategoriesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CategoriesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CategoriesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CategoriesMaxAggregateInputType
+  }
+
+  export type GetCategoriesAggregateType<T extends CategoriesAggregateArgs> = {
+        [P in keyof T & keyof AggregateCategories]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCategories[P]>
+      : GetScalarType<T[P], AggregateCategories[P]>
+  }
+
+
+
+
+  export type CategoriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategoriesWhereInput
+    orderBy?: CategoriesOrderByWithAggregationInput | CategoriesOrderByWithAggregationInput[]
+    by: CategoriesScalarFieldEnum[] | CategoriesScalarFieldEnum
+    having?: CategoriesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CategoriesCountAggregateInputType | true
+    _avg?: CategoriesAvgAggregateInputType
+    _sum?: CategoriesSumAggregateInputType
+    _min?: CategoriesMinAggregateInputType
+    _max?: CategoriesMaxAggregateInputType
+  }
+
+  export type CategoriesGroupByOutputType = {
+    id: number
+    name_en: string
+    name_es: string
+    created_at: Date
+    updated_at: Date
+    deleted_at: Date | null
+    _count: CategoriesCountAggregateOutputType | null
+    _avg: CategoriesAvgAggregateOutputType | null
+    _sum: CategoriesSumAggregateOutputType | null
+    _min: CategoriesMinAggregateOutputType | null
+    _max: CategoriesMaxAggregateOutputType | null
+  }
+
+  type GetCategoriesGroupByPayload<T extends CategoriesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CategoriesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CategoriesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CategoriesGroupByOutputType[P]>
+            : GetScalarType<T[P], CategoriesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CategoriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name_en?: boolean
+    name_es?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted_at?: boolean
+    recipes?: boolean | Categories$recipesArgs<ExtArgs>
+    category_subcategories?: boolean | Categories$category_subcategoriesArgs<ExtArgs>
+    _count?: boolean | CategoriesCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["categories"]>
+
+  export type CategoriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name_en?: boolean
+    name_es?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted_at?: boolean
+  }, ExtArgs["result"]["categories"]>
+
+  export type CategoriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name_en?: boolean
+    name_es?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted_at?: boolean
+  }, ExtArgs["result"]["categories"]>
+
+  export type CategoriesSelectScalar = {
+    id?: boolean
+    name_en?: boolean
+    name_es?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    deleted_at?: boolean
+  }
+
+  export type CategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name_en" | "name_es" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["categories"]>
+  export type CategoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    recipes?: boolean | Categories$recipesArgs<ExtArgs>
+    category_subcategories?: boolean | Categories$category_subcategoriesArgs<ExtArgs>
+    _count?: boolean | CategoriesCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type CategoriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CategoriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $CategoriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Categories"
+    objects: {
+      recipes: Prisma.$RecipesPayload<ExtArgs>[]
+      category_subcategories: Prisma.$CategorySubcategoriesPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name_en: string
+      name_es: string
+      created_at: Date
+      updated_at: Date
+      deleted_at: Date | null
+    }, ExtArgs["result"]["categories"]>
+    composites: {}
+  }
+
+  type CategoriesGetPayload<S extends boolean | null | undefined | CategoriesDefaultArgs> = $Result.GetResult<Prisma.$CategoriesPayload, S>
+
+  type CategoriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CategoriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CategoriesCountAggregateInputType | true
+    }
+
+  export interface CategoriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Categories'], meta: { name: 'Categories' } }
+    /**
+     * Find zero or one Categories that matches the filter.
+     * @param {CategoriesFindUniqueArgs} args - Arguments to find a Categories
+     * @example
+     * // Get one Categories
+     * const categories = await prisma.categories.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CategoriesFindUniqueArgs>(args: SelectSubset<T, CategoriesFindUniqueArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Categories that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CategoriesFindUniqueOrThrowArgs} args - Arguments to find a Categories
+     * @example
+     * // Get one Categories
+     * const categories = await prisma.categories.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CategoriesFindUniqueOrThrowArgs>(args: SelectSubset<T, CategoriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Categories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesFindFirstArgs} args - Arguments to find a Categories
+     * @example
+     * // Get one Categories
+     * const categories = await prisma.categories.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CategoriesFindFirstArgs>(args?: SelectSubset<T, CategoriesFindFirstArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Categories that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesFindFirstOrThrowArgs} args - Arguments to find a Categories
+     * @example
+     * // Get one Categories
+     * const categories = await prisma.categories.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CategoriesFindFirstOrThrowArgs>(args?: SelectSubset<T, CategoriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Categories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Categories
+     * const categories = await prisma.categories.findMany()
+     * 
+     * // Get first 10 Categories
+     * const categories = await prisma.categories.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const categoriesWithIdOnly = await prisma.categories.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CategoriesFindManyArgs>(args?: SelectSubset<T, CategoriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Categories.
+     * @param {CategoriesCreateArgs} args - Arguments to create a Categories.
+     * @example
+     * // Create one Categories
+     * const Categories = await prisma.categories.create({
+     *   data: {
+     *     // ... data to create a Categories
+     *   }
+     * })
+     * 
+     */
+    create<T extends CategoriesCreateArgs>(args: SelectSubset<T, CategoriesCreateArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Categories.
+     * @param {CategoriesCreateManyArgs} args - Arguments to create many Categories.
+     * @example
+     * // Create many Categories
+     * const categories = await prisma.categories.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CategoriesCreateManyArgs>(args?: SelectSubset<T, CategoriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Categories and returns the data saved in the database.
+     * @param {CategoriesCreateManyAndReturnArgs} args - Arguments to create many Categories.
+     * @example
+     * // Create many Categories
+     * const categories = await prisma.categories.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Categories and only return the `id`
+     * const categoriesWithIdOnly = await prisma.categories.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CategoriesCreateManyAndReturnArgs>(args?: SelectSubset<T, CategoriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Categories.
+     * @param {CategoriesDeleteArgs} args - Arguments to delete one Categories.
+     * @example
+     * // Delete one Categories
+     * const Categories = await prisma.categories.delete({
+     *   where: {
+     *     // ... filter to delete one Categories
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CategoriesDeleteArgs>(args: SelectSubset<T, CategoriesDeleteArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Categories.
+     * @param {CategoriesUpdateArgs} args - Arguments to update one Categories.
+     * @example
+     * // Update one Categories
+     * const categories = await prisma.categories.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CategoriesUpdateArgs>(args: SelectSubset<T, CategoriesUpdateArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Categories.
+     * @param {CategoriesDeleteManyArgs} args - Arguments to filter Categories to delete.
+     * @example
+     * // Delete a few Categories
+     * const { count } = await prisma.categories.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CategoriesDeleteManyArgs>(args?: SelectSubset<T, CategoriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Categories
+     * const categories = await prisma.categories.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CategoriesUpdateManyArgs>(args: SelectSubset<T, CategoriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Categories and returns the data updated in the database.
+     * @param {CategoriesUpdateManyAndReturnArgs} args - Arguments to update many Categories.
+     * @example
+     * // Update many Categories
+     * const categories = await prisma.categories.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Categories and only return the `id`
+     * const categoriesWithIdOnly = await prisma.categories.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CategoriesUpdateManyAndReturnArgs>(args: SelectSubset<T, CategoriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Categories.
+     * @param {CategoriesUpsertArgs} args - Arguments to update or create a Categories.
+     * @example
+     * // Update or create a Categories
+     * const categories = await prisma.categories.upsert({
+     *   create: {
+     *     // ... data to create a Categories
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Categories we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CategoriesUpsertArgs>(args: SelectSubset<T, CategoriesUpsertArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesCountArgs} args - Arguments to filter Categories to count.
+     * @example
+     * // Count the number of Categories
+     * const count = await prisma.categories.count({
+     *   where: {
+     *     // ... the filter for the Categories we want to count
+     *   }
+     * })
+    **/
+    count<T extends CategoriesCountArgs>(
+      args?: Subset<T, CategoriesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CategoriesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CategoriesAggregateArgs>(args: Subset<T, CategoriesAggregateArgs>): Prisma.PrismaPromise<GetCategoriesAggregateType<T>>
+
+    /**
+     * Group by Categories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategoriesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CategoriesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CategoriesGroupByArgs['orderBy'] }
+        : { orderBy?: CategoriesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CategoriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategoriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Categories model
+   */
+  readonly fields: CategoriesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Categories.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CategoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    recipes<T extends Categories$recipesArgs<ExtArgs> = {}>(args?: Subset<T, Categories$recipesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    category_subcategories<T extends Categories$category_subcategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Categories$category_subcategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Categories model
+   */
+  interface CategoriesFieldRefs {
+    readonly id: FieldRef<"Categories", 'Int'>
+    readonly name_en: FieldRef<"Categories", 'String'>
+    readonly name_es: FieldRef<"Categories", 'String'>
+    readonly created_at: FieldRef<"Categories", 'DateTime'>
+    readonly updated_at: FieldRef<"Categories", 'DateTime'>
+    readonly deleted_at: FieldRef<"Categories", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Categories findUnique
+   */
+  export type CategoriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where: CategoriesWhereUniqueInput
+  }
+
+  /**
+   * Categories findUniqueOrThrow
+   */
+  export type CategoriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where: CategoriesWhereUniqueInput
+  }
+
+  /**
+   * Categories findFirst
+   */
+  export type CategoriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where?: CategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoriesOrderByWithRelationInput | CategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categories.
+     */
+    cursor?: CategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categories.
+     */
+    distinct?: CategoriesScalarFieldEnum | CategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * Categories findFirstOrThrow
+   */
+  export type CategoriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where?: CategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoriesOrderByWithRelationInput | CategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Categories.
+     */
+    cursor?: CategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Categories.
+     */
+    distinct?: CategoriesScalarFieldEnum | CategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * Categories findMany
+   */
+  export type CategoriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which Categories to fetch.
+     */
+    where?: CategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Categories to fetch.
+     */
+    orderBy?: CategoriesOrderByWithRelationInput | CategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Categories.
+     */
+    cursor?: CategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Categories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Categories.
+     */
+    skip?: number
+    distinct?: CategoriesScalarFieldEnum | CategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * Categories create
+   */
+  export type CategoriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Categories.
+     */
+    data: XOR<CategoriesCreateInput, CategoriesUncheckedCreateInput>
+  }
+
+  /**
+   * Categories createMany
+   */
+  export type CategoriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Categories.
+     */
+    data: CategoriesCreateManyInput | CategoriesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Categories createManyAndReturn
+   */
+  export type CategoriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * The data used to create many Categories.
+     */
+    data: CategoriesCreateManyInput | CategoriesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Categories update
+   */
+  export type CategoriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Categories.
+     */
+    data: XOR<CategoriesUpdateInput, CategoriesUncheckedUpdateInput>
+    /**
+     * Choose, which Categories to update.
+     */
+    where: CategoriesWhereUniqueInput
+  }
+
+  /**
+   * Categories updateMany
+   */
+  export type CategoriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Categories.
+     */
+    data: XOR<CategoriesUpdateManyMutationInput, CategoriesUncheckedUpdateManyInput>
+    /**
+     * Filter which Categories to update
+     */
+    where?: CategoriesWhereInput
+    /**
+     * Limit how many Categories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categories updateManyAndReturn
+   */
+  export type CategoriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * The data used to update Categories.
+     */
+    data: XOR<CategoriesUpdateManyMutationInput, CategoriesUncheckedUpdateManyInput>
+    /**
+     * Filter which Categories to update
+     */
+    where?: CategoriesWhereInput
+    /**
+     * Limit how many Categories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categories upsert
+   */
+  export type CategoriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Categories to update in case it exists.
+     */
+    where: CategoriesWhereUniqueInput
+    /**
+     * In case the Categories found by the `where` argument doesn't exist, create a new Categories with this data.
+     */
+    create: XOR<CategoriesCreateInput, CategoriesUncheckedCreateInput>
+    /**
+     * In case the Categories was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CategoriesUpdateInput, CategoriesUncheckedUpdateInput>
+  }
+
+  /**
+   * Categories delete
+   */
+  export type CategoriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+    /**
+     * Filter which Categories to delete.
+     */
+    where: CategoriesWhereUniqueInput
+  }
+
+  /**
+   * Categories deleteMany
+   */
+  export type CategoriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Categories to delete
+     */
+    where?: CategoriesWhereInput
+    /**
+     * Limit how many Categories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Categories.recipes
+   */
+  export type Categories$recipesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Recipes
+     */
+    select?: RecipesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Recipes
+     */
+    omit?: RecipesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecipesInclude<ExtArgs> | null
+    where?: RecipesWhereInput
+    orderBy?: RecipesOrderByWithRelationInput | RecipesOrderByWithRelationInput[]
+    cursor?: RecipesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecipesScalarFieldEnum | RecipesScalarFieldEnum[]
+  }
+
+  /**
+   * Categories.category_subcategories
+   */
+  export type Categories$category_subcategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    where?: CategorySubcategoriesWhereInput
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CategorySubcategoriesScalarFieldEnum | CategorySubcategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * Categories without action
+   */
+  export type CategoriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Categories
+     */
+    select?: CategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Categories
+     */
+    omit?: CategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategoriesInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CategorySubcategories
+   */
+
+  export type AggregateCategorySubcategories = {
+    _count: CategorySubcategoriesCountAggregateOutputType | null
+    _avg: CategorySubcategoriesAvgAggregateOutputType | null
+    _sum: CategorySubcategoriesSumAggregateOutputType | null
+    _min: CategorySubcategoriesMinAggregateOutputType | null
+    _max: CategorySubcategoriesMaxAggregateOutputType | null
+  }
+
+  export type CategorySubcategoriesAvgAggregateOutputType = {
+    id: number | null
+    category_id: number | null
+    subcategory_id: number | null
+  }
+
+  export type CategorySubcategoriesSumAggregateOutputType = {
+    id: number | null
+    category_id: number | null
+    subcategory_id: number | null
+  }
+
+  export type CategorySubcategoriesMinAggregateOutputType = {
+    id: number | null
+    category_id: number | null
+    subcategory_id: number | null
+    created_at: Date | null
+  }
+
+  export type CategorySubcategoriesMaxAggregateOutputType = {
+    id: number | null
+    category_id: number | null
+    subcategory_id: number | null
+    created_at: Date | null
+  }
+
+  export type CategorySubcategoriesCountAggregateOutputType = {
+    id: number
+    category_id: number
+    subcategory_id: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type CategorySubcategoriesAvgAggregateInputType = {
+    id?: true
+    category_id?: true
+    subcategory_id?: true
+  }
+
+  export type CategorySubcategoriesSumAggregateInputType = {
+    id?: true
+    category_id?: true
+    subcategory_id?: true
+  }
+
+  export type CategorySubcategoriesMinAggregateInputType = {
+    id?: true
+    category_id?: true
+    subcategory_id?: true
+    created_at?: true
+  }
+
+  export type CategorySubcategoriesMaxAggregateInputType = {
+    id?: true
+    category_id?: true
+    subcategory_id?: true
+    created_at?: true
+  }
+
+  export type CategorySubcategoriesCountAggregateInputType = {
+    id?: true
+    category_id?: true
+    subcategory_id?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type CategorySubcategoriesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CategorySubcategories to aggregate.
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CategorySubcategories to fetch.
+     */
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CategorySubcategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CategorySubcategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CategorySubcategories
+    **/
+    _count?: true | CategorySubcategoriesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CategorySubcategoriesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CategorySubcategoriesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CategorySubcategoriesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CategorySubcategoriesMaxAggregateInputType
+  }
+
+  export type GetCategorySubcategoriesAggregateType<T extends CategorySubcategoriesAggregateArgs> = {
+        [P in keyof T & keyof AggregateCategorySubcategories]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCategorySubcategories[P]>
+      : GetScalarType<T[P], AggregateCategorySubcategories[P]>
+  }
+
+
+
+
+  export type CategorySubcategoriesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CategorySubcategoriesWhereInput
+    orderBy?: CategorySubcategoriesOrderByWithAggregationInput | CategorySubcategoriesOrderByWithAggregationInput[]
+    by: CategorySubcategoriesScalarFieldEnum[] | CategorySubcategoriesScalarFieldEnum
+    having?: CategorySubcategoriesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CategorySubcategoriesCountAggregateInputType | true
+    _avg?: CategorySubcategoriesAvgAggregateInputType
+    _sum?: CategorySubcategoriesSumAggregateInputType
+    _min?: CategorySubcategoriesMinAggregateInputType
+    _max?: CategorySubcategoriesMaxAggregateInputType
+  }
+
+  export type CategorySubcategoriesGroupByOutputType = {
+    id: number
+    category_id: number
+    subcategory_id: number
+    created_at: Date
+    _count: CategorySubcategoriesCountAggregateOutputType | null
+    _avg: CategorySubcategoriesAvgAggregateOutputType | null
+    _sum: CategorySubcategoriesSumAggregateOutputType | null
+    _min: CategorySubcategoriesMinAggregateOutputType | null
+    _max: CategorySubcategoriesMaxAggregateOutputType | null
+  }
+
+  type GetCategorySubcategoriesGroupByPayload<T extends CategorySubcategoriesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CategorySubcategoriesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CategorySubcategoriesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CategorySubcategoriesGroupByOutputType[P]>
+            : GetScalarType<T[P], CategorySubcategoriesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CategorySubcategoriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    category_id?: boolean
+    subcategory_id?: boolean
+    created_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["categorySubcategories"]>
+
+  export type CategorySubcategoriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    category_id?: boolean
+    subcategory_id?: boolean
+    created_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["categorySubcategories"]>
+
+  export type CategorySubcategoriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    category_id?: boolean
+    subcategory_id?: boolean
+    created_at?: boolean
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["categorySubcategories"]>
+
+  export type CategorySubcategoriesSelectScalar = {
+    id?: boolean
+    category_id?: boolean
+    subcategory_id?: boolean
+    created_at?: boolean
+  }
+
+  export type CategorySubcategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "category_id" | "subcategory_id" | "created_at", ExtArgs["result"]["categorySubcategories"]>
+  export type CategorySubcategoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }
+  export type CategorySubcategoriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }
+  export type CategorySubcategoriesIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | CategoriesDefaultArgs<ExtArgs>
+    subcategory?: boolean | SubcategoriesDefaultArgs<ExtArgs>
+  }
+
+  export type $CategorySubcategoriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CategorySubcategories"
+    objects: {
+      category: Prisma.$CategoriesPayload<ExtArgs>
+      subcategory: Prisma.$SubcategoriesPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      category_id: number
+      subcategory_id: number
+      created_at: Date
+    }, ExtArgs["result"]["categorySubcategories"]>
+    composites: {}
+  }
+
+  type CategorySubcategoriesGetPayload<S extends boolean | null | undefined | CategorySubcategoriesDefaultArgs> = $Result.GetResult<Prisma.$CategorySubcategoriesPayload, S>
+
+  type CategorySubcategoriesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CategorySubcategoriesFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CategorySubcategoriesCountAggregateInputType | true
+    }
+
+  export interface CategorySubcategoriesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CategorySubcategories'], meta: { name: 'CategorySubcategories' } }
+    /**
+     * Find zero or one CategorySubcategories that matches the filter.
+     * @param {CategorySubcategoriesFindUniqueArgs} args - Arguments to find a CategorySubcategories
+     * @example
+     * // Get one CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CategorySubcategoriesFindUniqueArgs>(args: SelectSubset<T, CategorySubcategoriesFindUniqueArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CategorySubcategories that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CategorySubcategoriesFindUniqueOrThrowArgs} args - Arguments to find a CategorySubcategories
+     * @example
+     * // Get one CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CategorySubcategoriesFindUniqueOrThrowArgs>(args: SelectSubset<T, CategorySubcategoriesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CategorySubcategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesFindFirstArgs} args - Arguments to find a CategorySubcategories
+     * @example
+     * // Get one CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CategorySubcategoriesFindFirstArgs>(args?: SelectSubset<T, CategorySubcategoriesFindFirstArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CategorySubcategories that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesFindFirstOrThrowArgs} args - Arguments to find a CategorySubcategories
+     * @example
+     * // Get one CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CategorySubcategoriesFindFirstOrThrowArgs>(args?: SelectSubset<T, CategorySubcategoriesFindFirstOrThrowArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CategorySubcategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findMany()
+     * 
+     * // Get first 10 CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const categorySubcategoriesWithIdOnly = await prisma.categorySubcategories.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CategorySubcategoriesFindManyArgs>(args?: SelectSubset<T, CategorySubcategoriesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CategorySubcategories.
+     * @param {CategorySubcategoriesCreateArgs} args - Arguments to create a CategorySubcategories.
+     * @example
+     * // Create one CategorySubcategories
+     * const CategorySubcategories = await prisma.categorySubcategories.create({
+     *   data: {
+     *     // ... data to create a CategorySubcategories
+     *   }
+     * })
+     * 
+     */
+    create<T extends CategorySubcategoriesCreateArgs>(args: SelectSubset<T, CategorySubcategoriesCreateArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CategorySubcategories.
+     * @param {CategorySubcategoriesCreateManyArgs} args - Arguments to create many CategorySubcategories.
+     * @example
+     * // Create many CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CategorySubcategoriesCreateManyArgs>(args?: SelectSubset<T, CategorySubcategoriesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CategorySubcategories and returns the data saved in the database.
+     * @param {CategorySubcategoriesCreateManyAndReturnArgs} args - Arguments to create many CategorySubcategories.
+     * @example
+     * // Create many CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CategorySubcategories and only return the `id`
+     * const categorySubcategoriesWithIdOnly = await prisma.categorySubcategories.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CategorySubcategoriesCreateManyAndReturnArgs>(args?: SelectSubset<T, CategorySubcategoriesCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CategorySubcategories.
+     * @param {CategorySubcategoriesDeleteArgs} args - Arguments to delete one CategorySubcategories.
+     * @example
+     * // Delete one CategorySubcategories
+     * const CategorySubcategories = await prisma.categorySubcategories.delete({
+     *   where: {
+     *     // ... filter to delete one CategorySubcategories
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CategorySubcategoriesDeleteArgs>(args: SelectSubset<T, CategorySubcategoriesDeleteArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CategorySubcategories.
+     * @param {CategorySubcategoriesUpdateArgs} args - Arguments to update one CategorySubcategories.
+     * @example
+     * // Update one CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CategorySubcategoriesUpdateArgs>(args: SelectSubset<T, CategorySubcategoriesUpdateArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CategorySubcategories.
+     * @param {CategorySubcategoriesDeleteManyArgs} args - Arguments to filter CategorySubcategories to delete.
+     * @example
+     * // Delete a few CategorySubcategories
+     * const { count } = await prisma.categorySubcategories.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CategorySubcategoriesDeleteManyArgs>(args?: SelectSubset<T, CategorySubcategoriesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CategorySubcategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CategorySubcategoriesUpdateManyArgs>(args: SelectSubset<T, CategorySubcategoriesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CategorySubcategories and returns the data updated in the database.
+     * @param {CategorySubcategoriesUpdateManyAndReturnArgs} args - Arguments to update many CategorySubcategories.
+     * @example
+     * // Update many CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CategorySubcategories and only return the `id`
+     * const categorySubcategoriesWithIdOnly = await prisma.categorySubcategories.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CategorySubcategoriesUpdateManyAndReturnArgs>(args: SelectSubset<T, CategorySubcategoriesUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CategorySubcategories.
+     * @param {CategorySubcategoriesUpsertArgs} args - Arguments to update or create a CategorySubcategories.
+     * @example
+     * // Update or create a CategorySubcategories
+     * const categorySubcategories = await prisma.categorySubcategories.upsert({
+     *   create: {
+     *     // ... data to create a CategorySubcategories
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CategorySubcategories we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CategorySubcategoriesUpsertArgs>(args: SelectSubset<T, CategorySubcategoriesUpsertArgs<ExtArgs>>): Prisma__CategorySubcategoriesClient<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CategorySubcategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesCountArgs} args - Arguments to filter CategorySubcategories to count.
+     * @example
+     * // Count the number of CategorySubcategories
+     * const count = await prisma.categorySubcategories.count({
+     *   where: {
+     *     // ... the filter for the CategorySubcategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends CategorySubcategoriesCountArgs>(
+      args?: Subset<T, CategorySubcategoriesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CategorySubcategoriesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CategorySubcategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CategorySubcategoriesAggregateArgs>(args: Subset<T, CategorySubcategoriesAggregateArgs>): Prisma.PrismaPromise<GetCategorySubcategoriesAggregateType<T>>
+
+    /**
+     * Group by CategorySubcategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CategorySubcategoriesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CategorySubcategoriesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CategorySubcategoriesGroupByArgs['orderBy'] }
+        : { orderBy?: CategorySubcategoriesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CategorySubcategoriesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCategorySubcategoriesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CategorySubcategories model
+   */
+  readonly fields: CategorySubcategoriesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CategorySubcategories.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CategorySubcategoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends CategoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoriesDefaultArgs<ExtArgs>>): Prisma__CategoriesClient<$Result.GetResult<Prisma.$CategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    subcategory<T extends SubcategoriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SubcategoriesDefaultArgs<ExtArgs>>): Prisma__SubcategoriesClient<$Result.GetResult<Prisma.$SubcategoriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CategorySubcategories model
+   */
+  interface CategorySubcategoriesFieldRefs {
+    readonly id: FieldRef<"CategorySubcategories", 'Int'>
+    readonly category_id: FieldRef<"CategorySubcategories", 'Int'>
+    readonly subcategory_id: FieldRef<"CategorySubcategories", 'Int'>
+    readonly created_at: FieldRef<"CategorySubcategories", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CategorySubcategories findUnique
+   */
+  export type CategorySubcategoriesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which CategorySubcategories to fetch.
+     */
+    where: CategorySubcategoriesWhereUniqueInput
+  }
+
+  /**
+   * CategorySubcategories findUniqueOrThrow
+   */
+  export type CategorySubcategoriesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which CategorySubcategories to fetch.
+     */
+    where: CategorySubcategoriesWhereUniqueInput
+  }
+
+  /**
+   * CategorySubcategories findFirst
+   */
+  export type CategorySubcategoriesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which CategorySubcategories to fetch.
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CategorySubcategories to fetch.
+     */
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CategorySubcategories.
+     */
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CategorySubcategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CategorySubcategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CategorySubcategories.
+     */
+    distinct?: CategorySubcategoriesScalarFieldEnum | CategorySubcategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * CategorySubcategories findFirstOrThrow
+   */
+  export type CategorySubcategoriesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which CategorySubcategories to fetch.
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CategorySubcategories to fetch.
+     */
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CategorySubcategories.
+     */
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CategorySubcategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CategorySubcategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CategorySubcategories.
+     */
+    distinct?: CategorySubcategoriesScalarFieldEnum | CategorySubcategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * CategorySubcategories findMany
+   */
+  export type CategorySubcategoriesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter, which CategorySubcategories to fetch.
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CategorySubcategories to fetch.
+     */
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CategorySubcategories.
+     */
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CategorySubcategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CategorySubcategories.
+     */
+    skip?: number
+    distinct?: CategorySubcategoriesScalarFieldEnum | CategorySubcategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * CategorySubcategories create
+   */
+  export type CategorySubcategoriesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CategorySubcategories.
+     */
+    data: XOR<CategorySubcategoriesCreateInput, CategorySubcategoriesUncheckedCreateInput>
+  }
+
+  /**
+   * CategorySubcategories createMany
+   */
+  export type CategorySubcategoriesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CategorySubcategories.
+     */
+    data: CategorySubcategoriesCreateManyInput | CategorySubcategoriesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CategorySubcategories createManyAndReturn
+   */
+  export type CategorySubcategoriesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * The data used to create many CategorySubcategories.
+     */
+    data: CategorySubcategoriesCreateManyInput | CategorySubcategoriesCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CategorySubcategories update
+   */
+  export type CategorySubcategoriesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CategorySubcategories.
+     */
+    data: XOR<CategorySubcategoriesUpdateInput, CategorySubcategoriesUncheckedUpdateInput>
+    /**
+     * Choose, which CategorySubcategories to update.
+     */
+    where: CategorySubcategoriesWhereUniqueInput
+  }
+
+  /**
+   * CategorySubcategories updateMany
+   */
+  export type CategorySubcategoriesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CategorySubcategories.
+     */
+    data: XOR<CategorySubcategoriesUpdateManyMutationInput, CategorySubcategoriesUncheckedUpdateManyInput>
+    /**
+     * Filter which CategorySubcategories to update
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * Limit how many CategorySubcategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CategorySubcategories updateManyAndReturn
+   */
+  export type CategorySubcategoriesUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * The data used to update CategorySubcategories.
+     */
+    data: XOR<CategorySubcategoriesUpdateManyMutationInput, CategorySubcategoriesUncheckedUpdateManyInput>
+    /**
+     * Filter which CategorySubcategories to update
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * Limit how many CategorySubcategories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * CategorySubcategories upsert
+   */
+  export type CategorySubcategoriesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CategorySubcategories to update in case it exists.
+     */
+    where: CategorySubcategoriesWhereUniqueInput
+    /**
+     * In case the CategorySubcategories found by the `where` argument doesn't exist, create a new CategorySubcategories with this data.
+     */
+    create: XOR<CategorySubcategoriesCreateInput, CategorySubcategoriesUncheckedCreateInput>
+    /**
+     * In case the CategorySubcategories was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CategorySubcategoriesUpdateInput, CategorySubcategoriesUncheckedUpdateInput>
+  }
+
+  /**
+   * CategorySubcategories delete
+   */
+  export type CategorySubcategoriesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    /**
+     * Filter which CategorySubcategories to delete.
+     */
+    where: CategorySubcategoriesWhereUniqueInput
+  }
+
+  /**
+   * CategorySubcategories deleteMany
+   */
+  export type CategorySubcategoriesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CategorySubcategories to delete
+     */
+    where?: CategorySubcategoriesWhereInput
+    /**
+     * Limit how many CategorySubcategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CategorySubcategories without action
+   */
+  export type CategorySubcategoriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Subcategories
    */
 
@@ -14973,7 +17456,8 @@ export namespace Prisma {
 
   export type SubcategoriesMinAggregateOutputType = {
     id: number | null
-    name: string | null
+    name_en: string | null
+    name_es: string | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
@@ -14981,7 +17465,8 @@ export namespace Prisma {
 
   export type SubcategoriesMaxAggregateOutputType = {
     id: number | null
-    name: string | null
+    name_en: string | null
+    name_es: string | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
@@ -14989,7 +17474,8 @@ export namespace Prisma {
 
   export type SubcategoriesCountAggregateOutputType = {
     id: number
-    name: number
+    name_en: number
+    name_es: number
     created_at: number
     updated_at: number
     deleted_at: number
@@ -15007,7 +17493,8 @@ export namespace Prisma {
 
   export type SubcategoriesMinAggregateInputType = {
     id?: true
-    name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -15015,7 +17502,8 @@ export namespace Prisma {
 
   export type SubcategoriesMaxAggregateInputType = {
     id?: true
-    name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -15023,7 +17511,8 @@ export namespace Prisma {
 
   export type SubcategoriesCountAggregateInputType = {
     id?: true
-    name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -15118,7 +17607,8 @@ export namespace Prisma {
 
   export type SubcategoriesGroupByOutputType = {
     id: number
-    name: string
+    name_en: string
+    name_es: string
     created_at: Date
     updated_at: Date
     deleted_at: Date | null
@@ -15145,17 +17635,20 @@ export namespace Prisma {
 
   export type SubcategoriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
     recipe_subcategories?: boolean | Subcategories$recipe_subcategoriesArgs<ExtArgs>
+    category_subcategories?: boolean | Subcategories$category_subcategoriesArgs<ExtArgs>
     _count?: boolean | SubcategoriesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["subcategories"]>
 
   export type SubcategoriesSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
@@ -15163,7 +17656,8 @@ export namespace Prisma {
 
   export type SubcategoriesSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
@@ -15171,15 +17665,17 @@ export namespace Prisma {
 
   export type SubcategoriesSelectScalar = {
     id?: boolean
-    name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
   }
 
-  export type SubcategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["subcategories"]>
+  export type SubcategoriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name_en" | "name_es" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["subcategories"]>
   export type SubcategoriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe_subcategories?: boolean | Subcategories$recipe_subcategoriesArgs<ExtArgs>
+    category_subcategories?: boolean | Subcategories$category_subcategoriesArgs<ExtArgs>
     _count?: boolean | SubcategoriesCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SubcategoriesIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -15189,10 +17685,12 @@ export namespace Prisma {
     name: "Subcategories"
     objects: {
       recipe_subcategories: Prisma.$RecipeSubcategoriesPayload<ExtArgs>[]
+      category_subcategories: Prisma.$CategorySubcategoriesPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      name: string
+      name_en: string
+      name_es: string
       created_at: Date
       updated_at: Date
       deleted_at: Date | null
@@ -15591,6 +18089,7 @@ export namespace Prisma {
   export interface Prisma__SubcategoriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     recipe_subcategories<T extends Subcategories$recipe_subcategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Subcategories$recipe_subcategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecipeSubcategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    category_subcategories<T extends Subcategories$category_subcategoriesArgs<ExtArgs> = {}>(args?: Subset<T, Subcategories$category_subcategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CategorySubcategoriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15621,7 +18120,8 @@ export namespace Prisma {
    */
   interface SubcategoriesFieldRefs {
     readonly id: FieldRef<"Subcategories", 'Int'>
-    readonly name: FieldRef<"Subcategories", 'String'>
+    readonly name_en: FieldRef<"Subcategories", 'String'>
+    readonly name_es: FieldRef<"Subcategories", 'String'>
     readonly created_at: FieldRef<"Subcategories", 'DateTime'>
     readonly updated_at: FieldRef<"Subcategories", 'DateTime'>
     readonly deleted_at: FieldRef<"Subcategories", 'DateTime'>
@@ -16034,6 +18534,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: RecipeSubcategoriesScalarFieldEnum | RecipeSubcategoriesScalarFieldEnum[]
+  }
+
+  /**
+   * Subcategories.category_subcategories
+   */
+  export type Subcategories$category_subcategoriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CategorySubcategories
+     */
+    select?: CategorySubcategoriesSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CategorySubcategories
+     */
+    omit?: CategorySubcategoriesOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CategorySubcategoriesInclude<ExtArgs> | null
+    where?: CategorySubcategoriesWhereInput
+    orderBy?: CategorySubcategoriesOrderByWithRelationInput | CategorySubcategoriesOrderByWithRelationInput[]
+    cursor?: CategorySubcategoriesWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CategorySubcategoriesScalarFieldEnum | CategorySubcategoriesScalarFieldEnum[]
   }
 
   /**
@@ -17210,7 +19734,7 @@ export namespace Prisma {
   export const RecipesScalarFieldEnum: {
     id: 'id',
     title: 'title',
-    category: 'category',
+    category_id: 'category_id',
     country_id: 'country_id',
     cooking_time: 'cooking_time',
     cooking_temperature: 'cooking_temperature',
@@ -17254,7 +19778,7 @@ export namespace Prisma {
   export type SubrecipesScalarFieldEnum = (typeof SubrecipesScalarFieldEnum)[keyof typeof SubrecipesScalarFieldEnum]
 
 
-  export const FoodAllergiesScalarFieldEnum: {
+  export const DietaryRestrictionsScalarFieldEnum: {
     id: 'id',
     name: 'name',
     created_at: 'created_at',
@@ -17262,7 +19786,7 @@ export namespace Prisma {
     deleted_at: 'deleted_at'
   };
 
-  export type FoodAllergiesScalarFieldEnum = (typeof FoodAllergiesScalarFieldEnum)[keyof typeof FoodAllergiesScalarFieldEnum]
+  export type DietaryRestrictionsScalarFieldEnum = (typeof DietaryRestrictionsScalarFieldEnum)[keyof typeof DietaryRestrictionsScalarFieldEnum]
 
 
   export const UnitsScalarFieldEnum: {
@@ -17280,16 +19804,16 @@ export namespace Prisma {
   export type UnitsScalarFieldEnum = (typeof UnitsScalarFieldEnum)[keyof typeof UnitsScalarFieldEnum]
 
 
-  export const RecipeFoodAllergiesScalarFieldEnum: {
+  export const RecipeDietaryRestrictionsScalarFieldEnum: {
     id: 'id',
     recipe_id: 'recipe_id',
-    food_allergy_id: 'food_allergy_id',
+    dietary_restriction_id: 'dietary_restriction_id',
     created_at: 'created_at',
     updated_at: 'updated_at',
     deleted_at: 'deleted_at'
   };
 
-  export type RecipeFoodAllergiesScalarFieldEnum = (typeof RecipeFoodAllergiesScalarFieldEnum)[keyof typeof RecipeFoodAllergiesScalarFieldEnum]
+  export type RecipeDietaryRestrictionsScalarFieldEnum = (typeof RecipeDietaryRestrictionsScalarFieldEnum)[keyof typeof RecipeDietaryRestrictionsScalarFieldEnum]
 
 
   export const RecipeNotesScalarFieldEnum: {
@@ -17355,9 +19879,32 @@ export namespace Prisma {
   export type CountriesScalarFieldEnum = (typeof CountriesScalarFieldEnum)[keyof typeof CountriesScalarFieldEnum]
 
 
+  export const CategoriesScalarFieldEnum: {
+    id: 'id',
+    name_en: 'name_en',
+    name_es: 'name_es',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    deleted_at: 'deleted_at'
+  };
+
+  export type CategoriesScalarFieldEnum = (typeof CategoriesScalarFieldEnum)[keyof typeof CategoriesScalarFieldEnum]
+
+
+  export const CategorySubcategoriesScalarFieldEnum: {
+    id: 'id',
+    category_id: 'category_id',
+    subcategory_id: 'subcategory_id',
+    created_at: 'created_at'
+  };
+
+  export type CategorySubcategoriesScalarFieldEnum = (typeof CategorySubcategoriesScalarFieldEnum)[keyof typeof CategorySubcategoriesScalarFieldEnum]
+
+
   export const SubcategoriesScalarFieldEnum: {
     id: 'id',
-    name: 'name',
+    name_en: 'name_en',
+    name_es: 'name_es',
     created_at: 'created_at',
     updated_at: 'updated_at',
     deleted_at: 'deleted_at'
@@ -17510,7 +20057,7 @@ export namespace Prisma {
     NOT?: RecipesWhereInput | RecipesWhereInput[]
     id?: IntFilter<"Recipes"> | number
     title?: StringFilter<"Recipes"> | string
-    category?: StringFilter<"Recipes"> | string
+    category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
     cooking_time?: IntNullableFilter<"Recipes"> | number | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
@@ -17522,9 +20069,10 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
     deleted_at?: DateTimeNullableFilter<"Recipes"> | Date | string | null
+    category?: XOR<CategoriesScalarRelationFilter, CategoriesWhereInput>
     country?: XOR<CountriesNullableScalarRelationFilter, CountriesWhereInput> | null
     subrecipes?: SubrecipesListRelationFilter
-    recipe_food_allergies?: RecipeFoodAllergiesListRelationFilter
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsListRelationFilter
     recipe_notes?: RecipeNotesListRelationFilter
     recipe_sources?: RecipeSourcesListRelationFilter
     recipe_tags?: RecipeTagsListRelationFilter
@@ -17534,7 +20082,7 @@ export namespace Prisma {
   export type RecipesOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    category?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrderInput | SortOrder
     cooking_time?: SortOrderInput | SortOrder
     cooking_temperature?: SortOrderInput | SortOrder
@@ -17546,9 +20094,10 @@ export namespace Prisma {
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
+    category?: CategoriesOrderByWithRelationInput
     country?: CountriesOrderByWithRelationInput
     subrecipes?: SubrecipesOrderByRelationAggregateInput
-    recipe_food_allergies?: RecipeFoodAllergiesOrderByRelationAggregateInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsOrderByRelationAggregateInput
     recipe_notes?: RecipeNotesOrderByRelationAggregateInput
     recipe_sources?: RecipeSourcesOrderByRelationAggregateInput
     recipe_tags?: RecipeTagsOrderByRelationAggregateInput
@@ -17561,7 +20110,7 @@ export namespace Prisma {
     OR?: RecipesWhereInput[]
     NOT?: RecipesWhereInput | RecipesWhereInput[]
     title?: StringFilter<"Recipes"> | string
-    category?: StringFilter<"Recipes"> | string
+    category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
     cooking_time?: IntNullableFilter<"Recipes"> | number | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
@@ -17573,9 +20122,10 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
     deleted_at?: DateTimeNullableFilter<"Recipes"> | Date | string | null
+    category?: XOR<CategoriesScalarRelationFilter, CategoriesWhereInput>
     country?: XOR<CountriesNullableScalarRelationFilter, CountriesWhereInput> | null
     subrecipes?: SubrecipesListRelationFilter
-    recipe_food_allergies?: RecipeFoodAllergiesListRelationFilter
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsListRelationFilter
     recipe_notes?: RecipeNotesListRelationFilter
     recipe_sources?: RecipeSourcesListRelationFilter
     recipe_tags?: RecipeTagsListRelationFilter
@@ -17585,7 +20135,7 @@ export namespace Prisma {
   export type RecipesOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    category?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrderInput | SortOrder
     cooking_time?: SortOrderInput | SortOrder
     cooking_temperature?: SortOrderInput | SortOrder
@@ -17610,7 +20160,7 @@ export namespace Prisma {
     NOT?: RecipesScalarWhereWithAggregatesInput | RecipesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Recipes"> | number
     title?: StringWithAggregatesFilter<"Recipes"> | string
-    category?: StringWithAggregatesFilter<"Recipes"> | string
+    category_id?: IntWithAggregatesFilter<"Recipes"> | number
     country_id?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
     cooking_time?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
     cooking_temperature?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
@@ -17769,61 +20319,61 @@ export namespace Prisma {
     deleted_at?: DateTimeNullableWithAggregatesFilter<"Subrecipes"> | Date | string | null
   }
 
-  export type FoodAllergiesWhereInput = {
-    AND?: FoodAllergiesWhereInput | FoodAllergiesWhereInput[]
-    OR?: FoodAllergiesWhereInput[]
-    NOT?: FoodAllergiesWhereInput | FoodAllergiesWhereInput[]
-    id?: IntFilter<"FoodAllergies"> | number
-    name?: StringFilter<"FoodAllergies"> | string
-    created_at?: DateTimeFilter<"FoodAllergies"> | Date | string
-    updated_at?: DateTimeFilter<"FoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableFilter<"FoodAllergies"> | Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesListRelationFilter
+  export type DietaryRestrictionsWhereInput = {
+    AND?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
+    OR?: DietaryRestrictionsWhereInput[]
+    NOT?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
+    id?: IntFilter<"DietaryRestrictions"> | number
+    name?: StringFilter<"DietaryRestrictions"> | string
+    created_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
+    updated_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"DietaryRestrictions"> | Date | string | null
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsListRelationFilter
   }
 
-  export type FoodAllergiesOrderByWithRelationInput = {
+  export type DietaryRestrictionsOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
-    recipe_food_allergies?: RecipeFoodAllergiesOrderByRelationAggregateInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsOrderByRelationAggregateInput
   }
 
-  export type FoodAllergiesWhereUniqueInput = Prisma.AtLeast<{
+  export type DietaryRestrictionsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: FoodAllergiesWhereInput | FoodAllergiesWhereInput[]
-    OR?: FoodAllergiesWhereInput[]
-    NOT?: FoodAllergiesWhereInput | FoodAllergiesWhereInput[]
-    name?: StringFilter<"FoodAllergies"> | string
-    created_at?: DateTimeFilter<"FoodAllergies"> | Date | string
-    updated_at?: DateTimeFilter<"FoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableFilter<"FoodAllergies"> | Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesListRelationFilter
-  }, "id">
+    name?: string
+    AND?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
+    OR?: DietaryRestrictionsWhereInput[]
+    NOT?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
+    created_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
+    updated_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"DietaryRestrictions"> | Date | string | null
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsListRelationFilter
+  }, "id" | "name">
 
-  export type FoodAllergiesOrderByWithAggregationInput = {
+  export type DietaryRestrictionsOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
-    _count?: FoodAllergiesCountOrderByAggregateInput
-    _avg?: FoodAllergiesAvgOrderByAggregateInput
-    _max?: FoodAllergiesMaxOrderByAggregateInput
-    _min?: FoodAllergiesMinOrderByAggregateInput
-    _sum?: FoodAllergiesSumOrderByAggregateInput
+    _count?: DietaryRestrictionsCountOrderByAggregateInput
+    _avg?: DietaryRestrictionsAvgOrderByAggregateInput
+    _max?: DietaryRestrictionsMaxOrderByAggregateInput
+    _min?: DietaryRestrictionsMinOrderByAggregateInput
+    _sum?: DietaryRestrictionsSumOrderByAggregateInput
   }
 
-  export type FoodAllergiesScalarWhereWithAggregatesInput = {
-    AND?: FoodAllergiesScalarWhereWithAggregatesInput | FoodAllergiesScalarWhereWithAggregatesInput[]
-    OR?: FoodAllergiesScalarWhereWithAggregatesInput[]
-    NOT?: FoodAllergiesScalarWhereWithAggregatesInput | FoodAllergiesScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"FoodAllergies"> | number
-    name?: StringWithAggregatesFilter<"FoodAllergies"> | string
-    created_at?: DateTimeWithAggregatesFilter<"FoodAllergies"> | Date | string
-    updated_at?: DateTimeWithAggregatesFilter<"FoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableWithAggregatesFilter<"FoodAllergies"> | Date | string | null
+  export type DietaryRestrictionsScalarWhereWithAggregatesInput = {
+    AND?: DietaryRestrictionsScalarWhereWithAggregatesInput | DietaryRestrictionsScalarWhereWithAggregatesInput[]
+    OR?: DietaryRestrictionsScalarWhereWithAggregatesInput[]
+    NOT?: DietaryRestrictionsScalarWhereWithAggregatesInput | DietaryRestrictionsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DietaryRestrictions"> | number
+    name?: StringWithAggregatesFilter<"DietaryRestrictions"> | string
+    created_at?: DateTimeWithAggregatesFilter<"DietaryRestrictions"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"DietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableWithAggregatesFilter<"DietaryRestrictions"> | Date | string | null
   }
 
   export type UnitsWhereInput = {
@@ -17903,69 +20453,69 @@ export namespace Prisma {
     deleted_at?: DateTimeNullableWithAggregatesFilter<"Units"> | Date | string | null
   }
 
-  export type RecipeFoodAllergiesWhereInput = {
-    AND?: RecipeFoodAllergiesWhereInput | RecipeFoodAllergiesWhereInput[]
-    OR?: RecipeFoodAllergiesWhereInput[]
-    NOT?: RecipeFoodAllergiesWhereInput | RecipeFoodAllergiesWhereInput[]
-    id?: IntFilter<"RecipeFoodAllergies"> | number
-    recipe_id?: IntFilter<"RecipeFoodAllergies"> | number
-    food_allergy_id?: IntFilter<"RecipeFoodAllergies"> | number
-    created_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    updated_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableFilter<"RecipeFoodAllergies"> | Date | string | null
+  export type RecipeDietaryRestrictionsWhereInput = {
+    AND?: RecipeDietaryRestrictionsWhereInput | RecipeDietaryRestrictionsWhereInput[]
+    OR?: RecipeDietaryRestrictionsWhereInput[]
+    NOT?: RecipeDietaryRestrictionsWhereInput | RecipeDietaryRestrictionsWhereInput[]
+    id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    recipe_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    dietary_restriction_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    created_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    updated_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"RecipeDietaryRestrictions"> | Date | string | null
     recipe?: XOR<RecipesScalarRelationFilter, RecipesWhereInput>
-    food_allergy?: XOR<FoodAllergiesScalarRelationFilter, FoodAllergiesWhereInput>
+    dietary_restriction?: XOR<DietaryRestrictionsScalarRelationFilter, DietaryRestrictionsWhereInput>
   }
 
-  export type RecipeFoodAllergiesOrderByWithRelationInput = {
+  export type RecipeDietaryRestrictionsOrderByWithRelationInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
     recipe?: RecipesOrderByWithRelationInput
-    food_allergy?: FoodAllergiesOrderByWithRelationInput
+    dietary_restriction?: DietaryRestrictionsOrderByWithRelationInput
   }
 
-  export type RecipeFoodAllergiesWhereUniqueInput = Prisma.AtLeast<{
+  export type RecipeDietaryRestrictionsWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: RecipeFoodAllergiesWhereInput | RecipeFoodAllergiesWhereInput[]
-    OR?: RecipeFoodAllergiesWhereInput[]
-    NOT?: RecipeFoodAllergiesWhereInput | RecipeFoodAllergiesWhereInput[]
-    recipe_id?: IntFilter<"RecipeFoodAllergies"> | number
-    food_allergy_id?: IntFilter<"RecipeFoodAllergies"> | number
-    created_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    updated_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableFilter<"RecipeFoodAllergies"> | Date | string | null
+    AND?: RecipeDietaryRestrictionsWhereInput | RecipeDietaryRestrictionsWhereInput[]
+    OR?: RecipeDietaryRestrictionsWhereInput[]
+    NOT?: RecipeDietaryRestrictionsWhereInput | RecipeDietaryRestrictionsWhereInput[]
+    recipe_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    dietary_restriction_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    created_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    updated_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"RecipeDietaryRestrictions"> | Date | string | null
     recipe?: XOR<RecipesScalarRelationFilter, RecipesWhereInput>
-    food_allergy?: XOR<FoodAllergiesScalarRelationFilter, FoodAllergiesWhereInput>
+    dietary_restriction?: XOR<DietaryRestrictionsScalarRelationFilter, DietaryRestrictionsWhereInput>
   }, "id">
 
-  export type RecipeFoodAllergiesOrderByWithAggregationInput = {
+  export type RecipeDietaryRestrictionsOrderByWithAggregationInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
-    _count?: RecipeFoodAllergiesCountOrderByAggregateInput
-    _avg?: RecipeFoodAllergiesAvgOrderByAggregateInput
-    _max?: RecipeFoodAllergiesMaxOrderByAggregateInput
-    _min?: RecipeFoodAllergiesMinOrderByAggregateInput
-    _sum?: RecipeFoodAllergiesSumOrderByAggregateInput
+    _count?: RecipeDietaryRestrictionsCountOrderByAggregateInput
+    _avg?: RecipeDietaryRestrictionsAvgOrderByAggregateInput
+    _max?: RecipeDietaryRestrictionsMaxOrderByAggregateInput
+    _min?: RecipeDietaryRestrictionsMinOrderByAggregateInput
+    _sum?: RecipeDietaryRestrictionsSumOrderByAggregateInput
   }
 
-  export type RecipeFoodAllergiesScalarWhereWithAggregatesInput = {
-    AND?: RecipeFoodAllergiesScalarWhereWithAggregatesInput | RecipeFoodAllergiesScalarWhereWithAggregatesInput[]
-    OR?: RecipeFoodAllergiesScalarWhereWithAggregatesInput[]
-    NOT?: RecipeFoodAllergiesScalarWhereWithAggregatesInput | RecipeFoodAllergiesScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"RecipeFoodAllergies"> | number
-    recipe_id?: IntWithAggregatesFilter<"RecipeFoodAllergies"> | number
-    food_allergy_id?: IntWithAggregatesFilter<"RecipeFoodAllergies"> | number
-    created_at?: DateTimeWithAggregatesFilter<"RecipeFoodAllergies"> | Date | string
-    updated_at?: DateTimeWithAggregatesFilter<"RecipeFoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableWithAggregatesFilter<"RecipeFoodAllergies"> | Date | string | null
+  export type RecipeDietaryRestrictionsScalarWhereWithAggregatesInput = {
+    AND?: RecipeDietaryRestrictionsScalarWhereWithAggregatesInput | RecipeDietaryRestrictionsScalarWhereWithAggregatesInput[]
+    OR?: RecipeDietaryRestrictionsScalarWhereWithAggregatesInput[]
+    NOT?: RecipeDietaryRestrictionsScalarWhereWithAggregatesInput | RecipeDietaryRestrictionsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"RecipeDietaryRestrictions"> | number
+    recipe_id?: IntWithAggregatesFilter<"RecipeDietaryRestrictions"> | number
+    dietary_restriction_id?: IntWithAggregatesFilter<"RecipeDietaryRestrictions"> | number
+    created_at?: DateTimeWithAggregatesFilter<"RecipeDietaryRestrictions"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"RecipeDietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableWithAggregatesFilter<"RecipeDietaryRestrictions"> | Date | string | null
   }
 
   export type RecipeNotesWhereInput = {
@@ -18296,42 +20846,170 @@ export namespace Prisma {
     deleted_at?: DateTimeNullableWithAggregatesFilter<"Countries"> | Date | string | null
   }
 
+  export type CategoriesWhereInput = {
+    AND?: CategoriesWhereInput | CategoriesWhereInput[]
+    OR?: CategoriesWhereInput[]
+    NOT?: CategoriesWhereInput | CategoriesWhereInput[]
+    id?: IntFilter<"Categories"> | number
+    name_en?: StringFilter<"Categories"> | string
+    name_es?: StringFilter<"Categories"> | string
+    created_at?: DateTimeFilter<"Categories"> | Date | string
+    updated_at?: DateTimeFilter<"Categories"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"Categories"> | Date | string | null
+    recipes?: RecipesListRelationFilter
+    category_subcategories?: CategorySubcategoriesListRelationFilter
+  }
+
+  export type CategoriesOrderByWithRelationInput = {
+    id?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
+    recipes?: RecipesOrderByRelationAggregateInput
+    category_subcategories?: CategorySubcategoriesOrderByRelationAggregateInput
+  }
+
+  export type CategoriesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name_en?: string
+    AND?: CategoriesWhereInput | CategoriesWhereInput[]
+    OR?: CategoriesWhereInput[]
+    NOT?: CategoriesWhereInput | CategoriesWhereInput[]
+    name_es?: StringFilter<"Categories"> | string
+    created_at?: DateTimeFilter<"Categories"> | Date | string
+    updated_at?: DateTimeFilter<"Categories"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"Categories"> | Date | string | null
+    recipes?: RecipesListRelationFilter
+    category_subcategories?: CategorySubcategoriesListRelationFilter
+  }, "id" | "name_en">
+
+  export type CategoriesOrderByWithAggregationInput = {
+    id?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
+    _count?: CategoriesCountOrderByAggregateInput
+    _avg?: CategoriesAvgOrderByAggregateInput
+    _max?: CategoriesMaxOrderByAggregateInput
+    _min?: CategoriesMinOrderByAggregateInput
+    _sum?: CategoriesSumOrderByAggregateInput
+  }
+
+  export type CategoriesScalarWhereWithAggregatesInput = {
+    AND?: CategoriesScalarWhereWithAggregatesInput | CategoriesScalarWhereWithAggregatesInput[]
+    OR?: CategoriesScalarWhereWithAggregatesInput[]
+    NOT?: CategoriesScalarWhereWithAggregatesInput | CategoriesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Categories"> | number
+    name_en?: StringWithAggregatesFilter<"Categories"> | string
+    name_es?: StringWithAggregatesFilter<"Categories"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Categories"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Categories"> | Date | string
+    deleted_at?: DateTimeNullableWithAggregatesFilter<"Categories"> | Date | string | null
+  }
+
+  export type CategorySubcategoriesWhereInput = {
+    AND?: CategorySubcategoriesWhereInput | CategorySubcategoriesWhereInput[]
+    OR?: CategorySubcategoriesWhereInput[]
+    NOT?: CategorySubcategoriesWhereInput | CategorySubcategoriesWhereInput[]
+    id?: IntFilter<"CategorySubcategories"> | number
+    category_id?: IntFilter<"CategorySubcategories"> | number
+    subcategory_id?: IntFilter<"CategorySubcategories"> | number
+    created_at?: DateTimeFilter<"CategorySubcategories"> | Date | string
+    category?: XOR<CategoriesScalarRelationFilter, CategoriesWhereInput>
+    subcategory?: XOR<SubcategoriesScalarRelationFilter, SubcategoriesWhereInput>
+  }
+
+  export type CategorySubcategoriesOrderByWithRelationInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+    created_at?: SortOrder
+    category?: CategoriesOrderByWithRelationInput
+    subcategory?: SubcategoriesOrderByWithRelationInput
+  }
+
+  export type CategorySubcategoriesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    category_id_subcategory_id?: CategorySubcategoriesCategory_idSubcategory_idCompoundUniqueInput
+    AND?: CategorySubcategoriesWhereInput | CategorySubcategoriesWhereInput[]
+    OR?: CategorySubcategoriesWhereInput[]
+    NOT?: CategorySubcategoriesWhereInput | CategorySubcategoriesWhereInput[]
+    category_id?: IntFilter<"CategorySubcategories"> | number
+    subcategory_id?: IntFilter<"CategorySubcategories"> | number
+    created_at?: DateTimeFilter<"CategorySubcategories"> | Date | string
+    category?: XOR<CategoriesScalarRelationFilter, CategoriesWhereInput>
+    subcategory?: XOR<SubcategoriesScalarRelationFilter, SubcategoriesWhereInput>
+  }, "id" | "category_id_subcategory_id">
+
+  export type CategorySubcategoriesOrderByWithAggregationInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+    created_at?: SortOrder
+    _count?: CategorySubcategoriesCountOrderByAggregateInput
+    _avg?: CategorySubcategoriesAvgOrderByAggregateInput
+    _max?: CategorySubcategoriesMaxOrderByAggregateInput
+    _min?: CategorySubcategoriesMinOrderByAggregateInput
+    _sum?: CategorySubcategoriesSumOrderByAggregateInput
+  }
+
+  export type CategorySubcategoriesScalarWhereWithAggregatesInput = {
+    AND?: CategorySubcategoriesScalarWhereWithAggregatesInput | CategorySubcategoriesScalarWhereWithAggregatesInput[]
+    OR?: CategorySubcategoriesScalarWhereWithAggregatesInput[]
+    NOT?: CategorySubcategoriesScalarWhereWithAggregatesInput | CategorySubcategoriesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"CategorySubcategories"> | number
+    category_id?: IntWithAggregatesFilter<"CategorySubcategories"> | number
+    subcategory_id?: IntWithAggregatesFilter<"CategorySubcategories"> | number
+    created_at?: DateTimeWithAggregatesFilter<"CategorySubcategories"> | Date | string
+  }
+
   export type SubcategoriesWhereInput = {
     AND?: SubcategoriesWhereInput | SubcategoriesWhereInput[]
     OR?: SubcategoriesWhereInput[]
     NOT?: SubcategoriesWhereInput | SubcategoriesWhereInput[]
     id?: IntFilter<"Subcategories"> | number
-    name?: StringFilter<"Subcategories"> | string
+    name_en?: StringFilter<"Subcategories"> | string
+    name_es?: StringFilter<"Subcategories"> | string
     created_at?: DateTimeFilter<"Subcategories"> | Date | string
     updated_at?: DateTimeFilter<"Subcategories"> | Date | string
     deleted_at?: DateTimeNullableFilter<"Subcategories"> | Date | string | null
     recipe_subcategories?: RecipeSubcategoriesListRelationFilter
+    category_subcategories?: CategorySubcategoriesListRelationFilter
   }
 
   export type SubcategoriesOrderByWithRelationInput = {
     id?: SortOrder
-    name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
     recipe_subcategories?: RecipeSubcategoriesOrderByRelationAggregateInput
+    category_subcategories?: CategorySubcategoriesOrderByRelationAggregateInput
   }
 
   export type SubcategoriesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    name?: string
+    name_en?: string
     AND?: SubcategoriesWhereInput | SubcategoriesWhereInput[]
     OR?: SubcategoriesWhereInput[]
     NOT?: SubcategoriesWhereInput | SubcategoriesWhereInput[]
+    name_es?: StringFilter<"Subcategories"> | string
     created_at?: DateTimeFilter<"Subcategories"> | Date | string
     updated_at?: DateTimeFilter<"Subcategories"> | Date | string
     deleted_at?: DateTimeNullableFilter<"Subcategories"> | Date | string | null
     recipe_subcategories?: RecipeSubcategoriesListRelationFilter
-  }, "id" | "name">
+    category_subcategories?: CategorySubcategoriesListRelationFilter
+  }, "id" | "name_en">
 
   export type SubcategoriesOrderByWithAggregationInput = {
     id?: SortOrder
-    name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
@@ -18347,7 +21025,8 @@ export namespace Prisma {
     OR?: SubcategoriesScalarWhereWithAggregatesInput[]
     NOT?: SubcategoriesScalarWhereWithAggregatesInput | SubcategoriesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Subcategories"> | number
-    name?: StringWithAggregatesFilter<"Subcategories"> | string
+    name_en?: StringWithAggregatesFilter<"Subcategories"> | string
+    name_es?: StringWithAggregatesFilter<"Subcategories"> | string
     created_at?: DateTimeWithAggregatesFilter<"Subcategories"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Subcategories"> | Date | string
     deleted_at?: DateTimeNullableWithAggregatesFilter<"Subcategories"> | Date | string | null
@@ -18425,7 +21104,6 @@ export namespace Prisma {
 
   export type RecipesCreateInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -18436,9 +21114,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
@@ -18448,7 +21127,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -18461,7 +21140,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
@@ -18470,7 +21149,6 @@ export namespace Prisma {
 
   export type RecipesUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18481,9 +21159,10 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
@@ -18493,7 +21172,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -18506,7 +21185,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
@@ -18516,7 +21195,7 @@ export namespace Prisma {
   export type RecipesCreateManyInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -18532,7 +21211,6 @@ export namespace Prisma {
 
   export type RecipesUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18548,7 +21226,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -18704,41 +21382,41 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type FoodAllergiesCreateInput = {
+  export type DietaryRestrictionsCreateInput = {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutFood_allergyInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutDietary_restrictionInput
   }
 
-  export type FoodAllergiesUncheckedCreateInput = {
+  export type DietaryRestrictionsUncheckedCreateInput = {
     id?: number
     name: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutFood_allergyInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutDietary_restrictionInput
   }
 
-  export type FoodAllergiesUpdateInput = {
+  export type DietaryRestrictionsUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutFood_allergyNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutDietary_restrictionNestedInput
   }
 
-  export type FoodAllergiesUncheckedUpdateInput = {
+  export type DietaryRestrictionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutFood_allergyNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutDietary_restrictionNestedInput
   }
 
-  export type FoodAllergiesCreateManyInput = {
+  export type DietaryRestrictionsCreateManyInput = {
     id?: number
     name: string
     created_at?: Date | string
@@ -18746,14 +21424,14 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
-  export type FoodAllergiesUpdateManyMutationInput = {
+  export type DietaryRestrictionsUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type FoodAllergiesUncheckedUpdateManyInput = {
+  export type DietaryRestrictionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18846,59 +21524,59 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesCreateInput = {
+  export type RecipeDietaryRestrictionsCreateInput = {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    recipe: RecipesCreateNestedOneWithoutRecipe_food_allergiesInput
-    food_allergy: FoodAllergiesCreateNestedOneWithoutRecipe_food_allergiesInput
+    recipe: RecipesCreateNestedOneWithoutRecipe_dietary_restrictionsInput
+    dietary_restriction: DietaryRestrictionsCreateNestedOneWithoutRecipe_dietary_restrictionsInput
   }
 
-  export type RecipeFoodAllergiesUncheckedCreateInput = {
+  export type RecipeDietaryRestrictionsUncheckedCreateInput = {
     id?: number
     recipe_id: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesUpdateInput = {
+  export type RecipeDietaryRestrictionsUpdateInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recipe?: RecipesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput
-    food_allergy?: FoodAllergiesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput
+    recipe?: RecipesUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput
+    dietary_restriction?: DietaryRestrictionsUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     recipe_id?: IntFieldUpdateOperationsInput | number
-    food_allergy_id?: IntFieldUpdateOperationsInput | number
+    dietary_restriction_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesCreateManyInput = {
+  export type RecipeDietaryRestrictionsCreateManyInput = {
     id?: number
     recipe_id: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesUpdateManyMutationInput = {
+  export type RecipeDietaryRestrictionsUpdateManyMutationInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateManyInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     recipe_id?: IntFieldUpdateOperationsInput | number
-    food_allergy_id?: IntFieldUpdateOperationsInput | number
+    dietary_restriction_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19229,50 +21907,172 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type CategoriesCreateInput = {
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipes?: RecipesCreateNestedManyWithoutCategoryInput
+    category_subcategories?: CategorySubcategoriesCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesUncheckedCreateInput = {
+    id?: number
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipes?: RecipesUncheckedCreateNestedManyWithoutCategoryInput
+    category_subcategories?: CategorySubcategoriesUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesUpdateInput = {
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipes?: RecipesUpdateManyWithoutCategoryNestedInput
+    category_subcategories?: CategorySubcategoriesUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoriesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipes?: RecipesUncheckedUpdateManyWithoutCategoryNestedInput
+    category_subcategories?: CategorySubcategoriesUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoriesCreateManyInput = {
+    id?: number
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+  }
+
+  export type CategoriesUpdateManyMutationInput = {
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CategoriesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CategorySubcategoriesCreateInput = {
+    created_at?: Date | string
+    category: CategoriesCreateNestedOneWithoutCategory_subcategoriesInput
+    subcategory: SubcategoriesCreateNestedOneWithoutCategory_subcategoriesInput
+  }
+
+  export type CategorySubcategoriesUncheckedCreateInput = {
+    id?: number
+    category_id: number
+    subcategory_id: number
+    created_at?: Date | string
+  }
+
+  export type CategorySubcategoriesUpdateInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput
+    subcategory?: SubcategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category_id?: IntFieldUpdateOperationsInput | number
+    subcategory_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategorySubcategoriesCreateManyInput = {
+    id?: number
+    category_id: number
+    subcategory_id: number
+    created_at?: Date | string
+  }
+
+  export type CategorySubcategoriesUpdateManyMutationInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category_id?: IntFieldUpdateOperationsInput | number
+    subcategory_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SubcategoriesCreateInput = {
-    name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
     recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutSubcategoryInput
+    category_subcategories?: CategorySubcategoriesCreateNestedManyWithoutSubcategoryInput
   }
 
   export type SubcategoriesUncheckedCreateInput = {
     id?: number
-    name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
     recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput
+    category_subcategories?: CategorySubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput
   }
 
   export type SubcategoriesUpdateInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutSubcategoryNestedInput
+    category_subcategories?: CategorySubcategoriesUpdateManyWithoutSubcategoryNestedInput
   }
 
   export type SubcategoriesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput
+    category_subcategories?: CategorySubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput
   }
 
   export type SubcategoriesCreateManyInput = {
     id?: number
-    name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
   }
 
   export type SubcategoriesUpdateManyMutationInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19280,7 +22080,8 @@ export namespace Prisma {
 
   export type SubcategoriesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -19430,6 +22231,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type CategoriesScalarRelationFilter = {
+    is?: CategoriesWhereInput
+    isNot?: CategoriesWhereInput
+  }
+
   export type CountriesNullableScalarRelationFilter = {
     is?: CountriesWhereInput | null
     isNot?: CountriesWhereInput | null
@@ -19441,10 +22247,10 @@ export namespace Prisma {
     none?: SubrecipesWhereInput
   }
 
-  export type RecipeFoodAllergiesListRelationFilter = {
-    every?: RecipeFoodAllergiesWhereInput
-    some?: RecipeFoodAllergiesWhereInput
-    none?: RecipeFoodAllergiesWhereInput
+  export type RecipeDietaryRestrictionsListRelationFilter = {
+    every?: RecipeDietaryRestrictionsWhereInput
+    some?: RecipeDietaryRestrictionsWhereInput
+    none?: RecipeDietaryRestrictionsWhereInput
   }
 
   export type RecipeNotesListRelationFilter = {
@@ -19480,7 +22286,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type RecipeFoodAllergiesOrderByRelationAggregateInput = {
+  export type RecipeDietaryRestrictionsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -19503,7 +22309,7 @@ export namespace Prisma {
   export type RecipesCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    category?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrder
     cooking_time?: SortOrder
     cooking_temperature?: SortOrder
@@ -19519,6 +22325,7 @@ export namespace Prisma {
 
   export type RecipesAvgOrderByAggregateInput = {
     id?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrder
     cooking_time?: SortOrder
     cooking_temperature?: SortOrder
@@ -19527,7 +22334,7 @@ export namespace Prisma {
   export type RecipesMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    category?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrder
     cooking_time?: SortOrder
     cooking_temperature?: SortOrder
@@ -19544,7 +22351,7 @@ export namespace Prisma {
   export type RecipesMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
-    category?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrder
     cooking_time?: SortOrder
     cooking_temperature?: SortOrder
@@ -19560,6 +22367,7 @@ export namespace Prisma {
 
   export type RecipesSumOrderByAggregateInput = {
     id?: SortOrder
+    category_id?: SortOrder
     country_id?: SortOrder
     cooking_time?: SortOrder
     cooking_temperature?: SortOrder
@@ -19808,7 +22616,7 @@ export namespace Prisma {
     recipe_id?: SortOrder
   }
 
-  export type FoodAllergiesCountOrderByAggregateInput = {
+  export type DietaryRestrictionsCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     created_at?: SortOrder
@@ -19816,19 +22624,11 @@ export namespace Prisma {
     deleted_at?: SortOrder
   }
 
-  export type FoodAllergiesAvgOrderByAggregateInput = {
+  export type DietaryRestrictionsAvgOrderByAggregateInput = {
     id?: SortOrder
   }
 
-  export type FoodAllergiesMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    created_at?: SortOrder
-    updated_at?: SortOrder
-    deleted_at?: SortOrder
-  }
-
-  export type FoodAllergiesMinOrderByAggregateInput = {
+  export type DietaryRestrictionsMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     created_at?: SortOrder
@@ -19836,7 +22636,15 @@ export namespace Prisma {
     deleted_at?: SortOrder
   }
 
-  export type FoodAllergiesSumOrderByAggregateInput = {
+  export type DietaryRestrictionsMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrder
+  }
+
+  export type DietaryRestrictionsSumOrderByAggregateInput = {
     id?: SortOrder
   }
   export type JsonFilter<$PrismaModel = never> =
@@ -19931,48 +22739,48 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
-  export type FoodAllergiesScalarRelationFilter = {
-    is?: FoodAllergiesWhereInput
-    isNot?: FoodAllergiesWhereInput
+  export type DietaryRestrictionsScalarRelationFilter = {
+    is?: DietaryRestrictionsWhereInput
+    isNot?: DietaryRestrictionsWhereInput
   }
 
-  export type RecipeFoodAllergiesCountOrderByAggregateInput = {
+  export type RecipeDietaryRestrictionsCountOrderByAggregateInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
   }
 
-  export type RecipeFoodAllergiesAvgOrderByAggregateInput = {
+  export type RecipeDietaryRestrictionsAvgOrderByAggregateInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
   }
 
-  export type RecipeFoodAllergiesMaxOrderByAggregateInput = {
+  export type RecipeDietaryRestrictionsMaxOrderByAggregateInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
   }
 
-  export type RecipeFoodAllergiesMinOrderByAggregateInput = {
+  export type RecipeDietaryRestrictionsMinOrderByAggregateInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
   }
 
-  export type RecipeFoodAllergiesSumOrderByAggregateInput = {
+  export type RecipeDietaryRestrictionsSumOrderByAggregateInput = {
     id?: SortOrder
     recipe_id?: SortOrder
-    food_allergy_id?: SortOrder
+    dietary_restriction_id?: SortOrder
   }
 
   export type RecipeNotesCountOrderByAggregateInput = {
@@ -20186,9 +22994,98 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type CategorySubcategoriesListRelationFilter = {
+    every?: CategorySubcategoriesWhereInput
+    some?: CategorySubcategoriesWhereInput
+    none?: CategorySubcategoriesWhereInput
+  }
+
+  export type CategorySubcategoriesOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CategoriesCountOrderByAggregateInput = {
+    id?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrder
+  }
+
+  export type CategoriesAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type CategoriesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrder
+  }
+
+  export type CategoriesMinOrderByAggregateInput = {
+    id?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    deleted_at?: SortOrder
+  }
+
+  export type CategoriesSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type SubcategoriesScalarRelationFilter = {
+    is?: SubcategoriesWhereInput
+    isNot?: SubcategoriesWhereInput
+  }
+
+  export type CategorySubcategoriesCategory_idSubcategory_idCompoundUniqueInput = {
+    category_id: number
+    subcategory_id: number
+  }
+
+  export type CategorySubcategoriesCountOrderByAggregateInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type CategorySubcategoriesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+  }
+
+  export type CategorySubcategoriesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type CategorySubcategoriesMinOrderByAggregateInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type CategorySubcategoriesSumOrderByAggregateInput = {
+    id?: SortOrder
+    category_id?: SortOrder
+    subcategory_id?: SortOrder
+  }
+
   export type SubcategoriesCountOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -20200,7 +23097,8 @@ export namespace Prisma {
 
   export type SubcategoriesMaxOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -20208,7 +23106,8 @@ export namespace Prisma {
 
   export type SubcategoriesMinOrderByAggregateInput = {
     id?: SortOrder
-    name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -20216,11 +23115,6 @@ export namespace Prisma {
 
   export type SubcategoriesSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type SubcategoriesScalarRelationFilter = {
-    is?: SubcategoriesWhereInput
-    isNot?: SubcategoriesWhereInput
   }
 
   export type RecipeSubcategoriesCountOrderByAggregateInput = {
@@ -20267,6 +23161,12 @@ export namespace Prisma {
     sort_order?: SortOrder
   }
 
+  export type CategoriesCreateNestedOneWithoutRecipesInput = {
+    create?: XOR<CategoriesCreateWithoutRecipesInput, CategoriesUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: CategoriesCreateOrConnectWithoutRecipesInput
+    connect?: CategoriesWhereUniqueInput
+  }
+
   export type CountriesCreateNestedOneWithoutRecipesInput = {
     create?: XOR<CountriesCreateWithoutRecipesInput, CountriesUncheckedCreateWithoutRecipesInput>
     connectOrCreate?: CountriesCreateOrConnectWithoutRecipesInput
@@ -20280,11 +23180,11 @@ export namespace Prisma {
     connect?: SubrecipesWhereUniqueInput | SubrecipesWhereUniqueInput[]
   }
 
-  export type RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput> | RecipeFoodAllergiesCreateWithoutRecipeInput[] | RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput | RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput[]
-    createMany?: RecipeFoodAllergiesCreateManyRecipeInputEnvelope
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
+  export type RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput> | RecipeDietaryRestrictionsCreateWithoutRecipeInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput | RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyRecipeInputEnvelope
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
   }
 
   export type RecipeNotesCreateNestedManyWithoutRecipeInput = {
@@ -20322,11 +23222,11 @@ export namespace Prisma {
     connect?: SubrecipesWhereUniqueInput | SubrecipesWhereUniqueInput[]
   }
 
-  export type RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput> | RecipeFoodAllergiesCreateWithoutRecipeInput[] | RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput | RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput[]
-    createMany?: RecipeFoodAllergiesCreateManyRecipeInputEnvelope
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
+  export type RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput> | RecipeDietaryRestrictionsCreateWithoutRecipeInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput | RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyRecipeInputEnvelope
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
   }
 
   export type RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput = {
@@ -20385,6 +23285,14 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type CategoriesUpdateOneRequiredWithoutRecipesNestedInput = {
+    create?: XOR<CategoriesCreateWithoutRecipesInput, CategoriesUncheckedCreateWithoutRecipesInput>
+    connectOrCreate?: CategoriesCreateOrConnectWithoutRecipesInput
+    upsert?: CategoriesUpsertWithoutRecipesInput
+    connect?: CategoriesWhereUniqueInput
+    update?: XOR<XOR<CategoriesUpdateToOneWithWhereWithoutRecipesInput, CategoriesUpdateWithoutRecipesInput>, CategoriesUncheckedUpdateWithoutRecipesInput>
+  }
+
   export type CountriesUpdateOneWithoutRecipesNestedInput = {
     create?: XOR<CountriesCreateWithoutRecipesInput, CountriesUncheckedCreateWithoutRecipesInput>
     connectOrCreate?: CountriesCreateOrConnectWithoutRecipesInput
@@ -20409,18 +23317,18 @@ export namespace Prisma {
     deleteMany?: SubrecipesScalarWhereInput | SubrecipesScalarWhereInput[]
   }
 
-  export type RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput> | RecipeFoodAllergiesCreateWithoutRecipeInput[] | RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput | RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput[]
-    upsert?: RecipeFoodAllergiesUpsertWithWhereUniqueWithoutRecipeInput | RecipeFoodAllergiesUpsertWithWhereUniqueWithoutRecipeInput[]
-    createMany?: RecipeFoodAllergiesCreateManyRecipeInputEnvelope
-    set?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    disconnect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    delete?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    update?: RecipeFoodAllergiesUpdateWithWhereUniqueWithoutRecipeInput | RecipeFoodAllergiesUpdateWithWhereUniqueWithoutRecipeInput[]
-    updateMany?: RecipeFoodAllergiesUpdateManyWithWhereWithoutRecipeInput | RecipeFoodAllergiesUpdateManyWithWhereWithoutRecipeInput[]
-    deleteMany?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
+  export type RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput> | RecipeDietaryRestrictionsCreateWithoutRecipeInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput | RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput[]
+    upsert?: RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutRecipeInput | RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutRecipeInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyRecipeInputEnvelope
+    set?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    disconnect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    delete?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    update?: RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutRecipeInput | RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutRecipeInput[]
+    updateMany?: RecipeDietaryRestrictionsUpdateManyWithWhereWithoutRecipeInput | RecipeDietaryRestrictionsUpdateManyWithWhereWithoutRecipeInput[]
+    deleteMany?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
   }
 
   export type RecipeNotesUpdateManyWithoutRecipeNestedInput = {
@@ -20501,18 +23409,18 @@ export namespace Prisma {
     deleteMany?: SubrecipesScalarWhereInput | SubrecipesScalarWhereInput[]
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput> | RecipeFoodAllergiesCreateWithoutRecipeInput[] | RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput | RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput[]
-    upsert?: RecipeFoodAllergiesUpsertWithWhereUniqueWithoutRecipeInput | RecipeFoodAllergiesUpsertWithWhereUniqueWithoutRecipeInput[]
-    createMany?: RecipeFoodAllergiesCreateManyRecipeInputEnvelope
-    set?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    disconnect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    delete?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    update?: RecipeFoodAllergiesUpdateWithWhereUniqueWithoutRecipeInput | RecipeFoodAllergiesUpdateWithWhereUniqueWithoutRecipeInput[]
-    updateMany?: RecipeFoodAllergiesUpdateManyWithWhereWithoutRecipeInput | RecipeFoodAllergiesUpdateManyWithWhereWithoutRecipeInput[]
-    deleteMany?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
+  export type RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput> | RecipeDietaryRestrictionsCreateWithoutRecipeInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput | RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput[]
+    upsert?: RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutRecipeInput | RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutRecipeInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyRecipeInputEnvelope
+    set?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    disconnect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    delete?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    update?: RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutRecipeInput | RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutRecipeInput[]
+    updateMany?: RecipeDietaryRestrictionsUpdateManyWithWhereWithoutRecipeInput | RecipeDietaryRestrictionsUpdateManyWithWhereWithoutRecipeInput[]
+    deleteMany?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
   }
 
   export type RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput = {
@@ -20665,46 +23573,46 @@ export namespace Prisma {
     deleteMany?: IngredientsScalarWhereInput | IngredientsScalarWhereInput[]
   }
 
-  export type RecipeFoodAllergiesCreateNestedManyWithoutFood_allergyInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput> | RecipeFoodAllergiesCreateWithoutFood_allergyInput[] | RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput | RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput[]
-    createMany?: RecipeFoodAllergiesCreateManyFood_allergyInputEnvelope
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
+  export type RecipeDietaryRestrictionsCreateNestedManyWithoutDietary_restrictionInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput> | RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput | RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyDietary_restrictionInputEnvelope
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
   }
 
-  export type RecipeFoodAllergiesUncheckedCreateNestedManyWithoutFood_allergyInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput> | RecipeFoodAllergiesCreateWithoutFood_allergyInput[] | RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput | RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput[]
-    createMany?: RecipeFoodAllergiesCreateManyFood_allergyInputEnvelope
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
+  export type RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutDietary_restrictionInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput> | RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput | RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyDietary_restrictionInputEnvelope
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
   }
 
-  export type RecipeFoodAllergiesUpdateManyWithoutFood_allergyNestedInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput> | RecipeFoodAllergiesCreateWithoutFood_allergyInput[] | RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput | RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput[]
-    upsert?: RecipeFoodAllergiesUpsertWithWhereUniqueWithoutFood_allergyInput | RecipeFoodAllergiesUpsertWithWhereUniqueWithoutFood_allergyInput[]
-    createMany?: RecipeFoodAllergiesCreateManyFood_allergyInputEnvelope
-    set?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    disconnect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    delete?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    update?: RecipeFoodAllergiesUpdateWithWhereUniqueWithoutFood_allergyInput | RecipeFoodAllergiesUpdateWithWhereUniqueWithoutFood_allergyInput[]
-    updateMany?: RecipeFoodAllergiesUpdateManyWithWhereWithoutFood_allergyInput | RecipeFoodAllergiesUpdateManyWithWhereWithoutFood_allergyInput[]
-    deleteMany?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
+  export type RecipeDietaryRestrictionsUpdateManyWithoutDietary_restrictionNestedInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput> | RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput | RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput[]
+    upsert?: RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutDietary_restrictionInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyDietary_restrictionInputEnvelope
+    set?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    disconnect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    delete?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    update?: RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutDietary_restrictionInput[]
+    updateMany?: RecipeDietaryRestrictionsUpdateManyWithWhereWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpdateManyWithWhereWithoutDietary_restrictionInput[]
+    deleteMany?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateManyWithoutFood_allergyNestedInput = {
-    create?: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput> | RecipeFoodAllergiesCreateWithoutFood_allergyInput[] | RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput[]
-    connectOrCreate?: RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput | RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput[]
-    upsert?: RecipeFoodAllergiesUpsertWithWhereUniqueWithoutFood_allergyInput | RecipeFoodAllergiesUpsertWithWhereUniqueWithoutFood_allergyInput[]
-    createMany?: RecipeFoodAllergiesCreateManyFood_allergyInputEnvelope
-    set?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    disconnect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    delete?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    connect?: RecipeFoodAllergiesWhereUniqueInput | RecipeFoodAllergiesWhereUniqueInput[]
-    update?: RecipeFoodAllergiesUpdateWithWhereUniqueWithoutFood_allergyInput | RecipeFoodAllergiesUpdateWithWhereUniqueWithoutFood_allergyInput[]
-    updateMany?: RecipeFoodAllergiesUpdateManyWithWhereWithoutFood_allergyInput | RecipeFoodAllergiesUpdateManyWithWhereWithoutFood_allergyInput[]
-    deleteMany?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
+  export type RecipeDietaryRestrictionsUncheckedUpdateManyWithoutDietary_restrictionNestedInput = {
+    create?: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput> | RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput[] | RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput[]
+    connectOrCreate?: RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput | RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput[]
+    upsert?: RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutDietary_restrictionInput[]
+    createMany?: RecipeDietaryRestrictionsCreateManyDietary_restrictionInputEnvelope
+    set?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    disconnect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    delete?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    connect?: RecipeDietaryRestrictionsWhereUniqueInput | RecipeDietaryRestrictionsWhereUniqueInput[]
+    update?: RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutDietary_restrictionInput[]
+    updateMany?: RecipeDietaryRestrictionsUpdateManyWithWhereWithoutDietary_restrictionInput | RecipeDietaryRestrictionsUpdateManyWithWhereWithoutDietary_restrictionInput[]
+    deleteMany?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
   }
 
   export type IngredientsCreateNestedManyWithoutUnitsInput = {
@@ -20749,32 +23657,32 @@ export namespace Prisma {
     deleteMany?: IngredientsScalarWhereInput | IngredientsScalarWhereInput[]
   }
 
-  export type RecipesCreateNestedOneWithoutRecipe_food_allergiesInput = {
-    create?: XOR<RecipesCreateWithoutRecipe_food_allergiesInput, RecipesUncheckedCreateWithoutRecipe_food_allergiesInput>
-    connectOrCreate?: RecipesCreateOrConnectWithoutRecipe_food_allergiesInput
+  export type RecipesCreateNestedOneWithoutRecipe_dietary_restrictionsInput = {
+    create?: XOR<RecipesCreateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
+    connectOrCreate?: RecipesCreateOrConnectWithoutRecipe_dietary_restrictionsInput
     connect?: RecipesWhereUniqueInput
   }
 
-  export type FoodAllergiesCreateNestedOneWithoutRecipe_food_allergiesInput = {
-    create?: XOR<FoodAllergiesCreateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedCreateWithoutRecipe_food_allergiesInput>
-    connectOrCreate?: FoodAllergiesCreateOrConnectWithoutRecipe_food_allergiesInput
-    connect?: FoodAllergiesWhereUniqueInput
+  export type DietaryRestrictionsCreateNestedOneWithoutRecipe_dietary_restrictionsInput = {
+    create?: XOR<DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
+    connectOrCreate?: DietaryRestrictionsCreateOrConnectWithoutRecipe_dietary_restrictionsInput
+    connect?: DietaryRestrictionsWhereUniqueInput
   }
 
-  export type RecipesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput = {
-    create?: XOR<RecipesCreateWithoutRecipe_food_allergiesInput, RecipesUncheckedCreateWithoutRecipe_food_allergiesInput>
-    connectOrCreate?: RecipesCreateOrConnectWithoutRecipe_food_allergiesInput
-    upsert?: RecipesUpsertWithoutRecipe_food_allergiesInput
+  export type RecipesUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput = {
+    create?: XOR<RecipesCreateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
+    connectOrCreate?: RecipesCreateOrConnectWithoutRecipe_dietary_restrictionsInput
+    upsert?: RecipesUpsertWithoutRecipe_dietary_restrictionsInput
     connect?: RecipesWhereUniqueInput
-    update?: XOR<XOR<RecipesUpdateToOneWithWhereWithoutRecipe_food_allergiesInput, RecipesUpdateWithoutRecipe_food_allergiesInput>, RecipesUncheckedUpdateWithoutRecipe_food_allergiesInput>
+    update?: XOR<XOR<RecipesUpdateToOneWithWhereWithoutRecipe_dietary_restrictionsInput, RecipesUpdateWithoutRecipe_dietary_restrictionsInput>, RecipesUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
   }
 
-  export type FoodAllergiesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput = {
-    create?: XOR<FoodAllergiesCreateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedCreateWithoutRecipe_food_allergiesInput>
-    connectOrCreate?: FoodAllergiesCreateOrConnectWithoutRecipe_food_allergiesInput
-    upsert?: FoodAllergiesUpsertWithoutRecipe_food_allergiesInput
-    connect?: FoodAllergiesWhereUniqueInput
-    update?: XOR<XOR<FoodAllergiesUpdateToOneWithWhereWithoutRecipe_food_allergiesInput, FoodAllergiesUpdateWithoutRecipe_food_allergiesInput>, FoodAllergiesUncheckedUpdateWithoutRecipe_food_allergiesInput>
+  export type DietaryRestrictionsUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput = {
+    create?: XOR<DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
+    connectOrCreate?: DietaryRestrictionsCreateOrConnectWithoutRecipe_dietary_restrictionsInput
+    upsert?: DietaryRestrictionsUpsertWithoutRecipe_dietary_restrictionsInput
+    connect?: DietaryRestrictionsWhereUniqueInput
+    update?: XOR<XOR<DietaryRestrictionsUpdateToOneWithWhereWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUpdateWithoutRecipe_dietary_restrictionsInput>, DietaryRestrictionsUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
   }
 
   export type RecipesCreateNestedOneWithoutRecipe_notesInput = {
@@ -20917,6 +23825,118 @@ export namespace Prisma {
     deleteMany?: RecipesScalarWhereInput | RecipesScalarWhereInput[]
   }
 
+  export type RecipesCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput> | RecipesCreateWithoutCategoryInput[] | RecipesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecipesCreateOrConnectWithoutCategoryInput | RecipesCreateOrConnectWithoutCategoryInput[]
+    createMany?: RecipesCreateManyCategoryInputEnvelope
+    connect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+  }
+
+  export type CategorySubcategoriesCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput> | CategorySubcategoriesCreateWithoutCategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutCategoryInput | CategorySubcategoriesCreateOrConnectWithoutCategoryInput[]
+    createMany?: CategorySubcategoriesCreateManyCategoryInputEnvelope
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+  }
+
+  export type RecipesUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput> | RecipesCreateWithoutCategoryInput[] | RecipesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecipesCreateOrConnectWithoutCategoryInput | RecipesCreateOrConnectWithoutCategoryInput[]
+    createMany?: RecipesCreateManyCategoryInputEnvelope
+    connect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+  }
+
+  export type CategorySubcategoriesUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput> | CategorySubcategoriesCreateWithoutCategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutCategoryInput | CategorySubcategoriesCreateOrConnectWithoutCategoryInput[]
+    createMany?: CategorySubcategoriesCreateManyCategoryInputEnvelope
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+  }
+
+  export type RecipesUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput> | RecipesCreateWithoutCategoryInput[] | RecipesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecipesCreateOrConnectWithoutCategoryInput | RecipesCreateOrConnectWithoutCategoryInput[]
+    upsert?: RecipesUpsertWithWhereUniqueWithoutCategoryInput | RecipesUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: RecipesCreateManyCategoryInputEnvelope
+    set?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    disconnect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    delete?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    connect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    update?: RecipesUpdateWithWhereUniqueWithoutCategoryInput | RecipesUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: RecipesUpdateManyWithWhereWithoutCategoryInput | RecipesUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: RecipesScalarWhereInput | RecipesScalarWhereInput[]
+  }
+
+  export type CategorySubcategoriesUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput> | CategorySubcategoriesCreateWithoutCategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutCategoryInput | CategorySubcategoriesCreateOrConnectWithoutCategoryInput[]
+    upsert?: CategorySubcategoriesUpsertWithWhereUniqueWithoutCategoryInput | CategorySubcategoriesUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: CategorySubcategoriesCreateManyCategoryInputEnvelope
+    set?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    disconnect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    delete?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    update?: CategorySubcategoriesUpdateWithWhereUniqueWithoutCategoryInput | CategorySubcategoriesUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: CategorySubcategoriesUpdateManyWithWhereWithoutCategoryInput | CategorySubcategoriesUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
+  }
+
+  export type RecipesUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput> | RecipesCreateWithoutCategoryInput[] | RecipesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: RecipesCreateOrConnectWithoutCategoryInput | RecipesCreateOrConnectWithoutCategoryInput[]
+    upsert?: RecipesUpsertWithWhereUniqueWithoutCategoryInput | RecipesUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: RecipesCreateManyCategoryInputEnvelope
+    set?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    disconnect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    delete?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    connect?: RecipesWhereUniqueInput | RecipesWhereUniqueInput[]
+    update?: RecipesUpdateWithWhereUniqueWithoutCategoryInput | RecipesUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: RecipesUpdateManyWithWhereWithoutCategoryInput | RecipesUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: RecipesScalarWhereInput | RecipesScalarWhereInput[]
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput> | CategorySubcategoriesCreateWithoutCategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutCategoryInput | CategorySubcategoriesCreateOrConnectWithoutCategoryInput[]
+    upsert?: CategorySubcategoriesUpsertWithWhereUniqueWithoutCategoryInput | CategorySubcategoriesUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: CategorySubcategoriesCreateManyCategoryInputEnvelope
+    set?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    disconnect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    delete?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    update?: CategorySubcategoriesUpdateWithWhereUniqueWithoutCategoryInput | CategorySubcategoriesUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: CategorySubcategoriesUpdateManyWithWhereWithoutCategoryInput | CategorySubcategoriesUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
+  }
+
+  export type CategoriesCreateNestedOneWithoutCategory_subcategoriesInput = {
+    create?: XOR<CategoriesCreateWithoutCategory_subcategoriesInput, CategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    connectOrCreate?: CategoriesCreateOrConnectWithoutCategory_subcategoriesInput
+    connect?: CategoriesWhereUniqueInput
+  }
+
+  export type SubcategoriesCreateNestedOneWithoutCategory_subcategoriesInput = {
+    create?: XOR<SubcategoriesCreateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    connectOrCreate?: SubcategoriesCreateOrConnectWithoutCategory_subcategoriesInput
+    connect?: SubcategoriesWhereUniqueInput
+  }
+
+  export type CategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput = {
+    create?: XOR<CategoriesCreateWithoutCategory_subcategoriesInput, CategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    connectOrCreate?: CategoriesCreateOrConnectWithoutCategory_subcategoriesInput
+    upsert?: CategoriesUpsertWithoutCategory_subcategoriesInput
+    connect?: CategoriesWhereUniqueInput
+    update?: XOR<XOR<CategoriesUpdateToOneWithWhereWithoutCategory_subcategoriesInput, CategoriesUpdateWithoutCategory_subcategoriesInput>, CategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+  }
+
+  export type SubcategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput = {
+    create?: XOR<SubcategoriesCreateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    connectOrCreate?: SubcategoriesCreateOrConnectWithoutCategory_subcategoriesInput
+    upsert?: SubcategoriesUpsertWithoutCategory_subcategoriesInput
+    connect?: SubcategoriesWhereUniqueInput
+    update?: XOR<XOR<SubcategoriesUpdateToOneWithWhereWithoutCategory_subcategoriesInput, SubcategoriesUpdateWithoutCategory_subcategoriesInput>, SubcategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+  }
+
   export type RecipeSubcategoriesCreateNestedManyWithoutSubcategoryInput = {
     create?: XOR<RecipeSubcategoriesCreateWithoutSubcategoryInput, RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput> | RecipeSubcategoriesCreateWithoutSubcategoryInput[] | RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput[]
     connectOrCreate?: RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput | RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput[]
@@ -20924,11 +23944,25 @@ export namespace Prisma {
     connect?: RecipeSubcategoriesWhereUniqueInput | RecipeSubcategoriesWhereUniqueInput[]
   }
 
+  export type CategorySubcategoriesCreateNestedManyWithoutSubcategoryInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput> | CategorySubcategoriesCreateWithoutSubcategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput | CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput[]
+    createMany?: CategorySubcategoriesCreateManySubcategoryInputEnvelope
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+  }
+
   export type RecipeSubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput = {
     create?: XOR<RecipeSubcategoriesCreateWithoutSubcategoryInput, RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput> | RecipeSubcategoriesCreateWithoutSubcategoryInput[] | RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput[]
     connectOrCreate?: RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput | RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput[]
     createMany?: RecipeSubcategoriesCreateManySubcategoryInputEnvelope
     connect?: RecipeSubcategoriesWhereUniqueInput | RecipeSubcategoriesWhereUniqueInput[]
+  }
+
+  export type CategorySubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput> | CategorySubcategoriesCreateWithoutSubcategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput | CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput[]
+    createMany?: CategorySubcategoriesCreateManySubcategoryInputEnvelope
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
   }
 
   export type RecipeSubcategoriesUpdateManyWithoutSubcategoryNestedInput = {
@@ -20945,6 +23979,20 @@ export namespace Prisma {
     deleteMany?: RecipeSubcategoriesScalarWhereInput | RecipeSubcategoriesScalarWhereInput[]
   }
 
+  export type CategorySubcategoriesUpdateManyWithoutSubcategoryNestedInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput> | CategorySubcategoriesCreateWithoutSubcategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput | CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput[]
+    upsert?: CategorySubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput | CategorySubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput[]
+    createMany?: CategorySubcategoriesCreateManySubcategoryInputEnvelope
+    set?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    disconnect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    delete?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    update?: CategorySubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput | CategorySubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput[]
+    updateMany?: CategorySubcategoriesUpdateManyWithWhereWithoutSubcategoryInput | CategorySubcategoriesUpdateManyWithWhereWithoutSubcategoryInput[]
+    deleteMany?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
+  }
+
   export type RecipeSubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput = {
     create?: XOR<RecipeSubcategoriesCreateWithoutSubcategoryInput, RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput> | RecipeSubcategoriesCreateWithoutSubcategoryInput[] | RecipeSubcategoriesUncheckedCreateWithoutSubcategoryInput[]
     connectOrCreate?: RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput | RecipeSubcategoriesCreateOrConnectWithoutSubcategoryInput[]
@@ -20957,6 +24005,20 @@ export namespace Prisma {
     update?: RecipeSubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput | RecipeSubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput[]
     updateMany?: RecipeSubcategoriesUpdateManyWithWhereWithoutSubcategoryInput | RecipeSubcategoriesUpdateManyWithWhereWithoutSubcategoryInput[]
     deleteMany?: RecipeSubcategoriesScalarWhereInput | RecipeSubcategoriesScalarWhereInput[]
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput = {
+    create?: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput> | CategorySubcategoriesCreateWithoutSubcategoryInput[] | CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput[]
+    connectOrCreate?: CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput | CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput[]
+    upsert?: CategorySubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput | CategorySubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput[]
+    createMany?: CategorySubcategoriesCreateManySubcategoryInputEnvelope
+    set?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    disconnect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    delete?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    connect?: CategorySubcategoriesWhereUniqueInput | CategorySubcategoriesWhereUniqueInput[]
+    update?: CategorySubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput | CategorySubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput[]
+    updateMany?: CategorySubcategoriesUpdateManyWithWhereWithoutSubcategoryInput | CategorySubcategoriesUpdateManyWithWhereWithoutSubcategoryInput[]
+    deleteMany?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
   }
 
   export type RecipesCreateNestedOneWithoutRecipe_subcategoriesInput = {
@@ -21227,6 +24289,30 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type CategoriesCreateWithoutRecipesInput = {
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    category_subcategories?: CategorySubcategoriesCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesUncheckedCreateWithoutRecipesInput = {
+    id?: number
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    category_subcategories?: CategorySubcategoriesUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesCreateOrConnectWithoutRecipesInput = {
+    where: CategoriesWhereUniqueInput
+    create: XOR<CategoriesCreateWithoutRecipesInput, CategoriesUncheckedCreateWithoutRecipesInput>
+  }
+
   export type CountriesCreateWithoutRecipesInput = {
     name_en: string
     name_es: string
@@ -21280,28 +24366,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type RecipeFoodAllergiesCreateWithoutRecipeInput = {
+  export type RecipeDietaryRestrictionsCreateWithoutRecipeInput = {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    food_allergy: FoodAllergiesCreateNestedOneWithoutRecipe_food_allergiesInput
+    dietary_restriction: DietaryRestrictionsCreateNestedOneWithoutRecipe_dietary_restrictionsInput
   }
 
-  export type RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput = {
+  export type RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput = {
     id?: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesCreateOrConnectWithoutRecipeInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    create: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput>
+  export type RecipeDietaryRestrictionsCreateOrConnectWithoutRecipeInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    create: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput>
   }
 
-  export type RecipeFoodAllergiesCreateManyRecipeInputEnvelope = {
-    data: RecipeFoodAllergiesCreateManyRecipeInput | RecipeFoodAllergiesCreateManyRecipeInput[]
+  export type RecipeDietaryRestrictionsCreateManyRecipeInputEnvelope = {
+    data: RecipeDietaryRestrictionsCreateManyRecipeInput | RecipeDietaryRestrictionsCreateManyRecipeInput[]
     skipDuplicates?: boolean
   }
 
@@ -21413,6 +24499,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CategoriesUpsertWithoutRecipesInput = {
+    update: XOR<CategoriesUpdateWithoutRecipesInput, CategoriesUncheckedUpdateWithoutRecipesInput>
+    create: XOR<CategoriesCreateWithoutRecipesInput, CategoriesUncheckedCreateWithoutRecipesInput>
+    where?: CategoriesWhereInput
+  }
+
+  export type CategoriesUpdateToOneWithWhereWithoutRecipesInput = {
+    where?: CategoriesWhereInput
+    data: XOR<CategoriesUpdateWithoutRecipesInput, CategoriesUncheckedUpdateWithoutRecipesInput>
+  }
+
+  export type CategoriesUpdateWithoutRecipesInput = {
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_subcategories?: CategorySubcategoriesUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoriesUncheckedUpdateWithoutRecipesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_subcategories?: CategorySubcategoriesUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
   export type CountriesUpsertWithoutRecipesInput = {
     update: XOR<CountriesUpdateWithoutRecipesInput, CountriesUncheckedUpdateWithoutRecipesInput>
     create: XOR<CountriesCreateWithoutRecipesInput, CountriesUncheckedCreateWithoutRecipesInput>
@@ -21472,32 +24588,32 @@ export namespace Prisma {
     deleted_at?: DateTimeNullableFilter<"Subrecipes"> | Date | string | null
   }
 
-  export type RecipeFoodAllergiesUpsertWithWhereUniqueWithoutRecipeInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    update: XOR<RecipeFoodAllergiesUpdateWithoutRecipeInput, RecipeFoodAllergiesUncheckedUpdateWithoutRecipeInput>
-    create: XOR<RecipeFoodAllergiesCreateWithoutRecipeInput, RecipeFoodAllergiesUncheckedCreateWithoutRecipeInput>
+  export type RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutRecipeInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    update: XOR<RecipeDietaryRestrictionsUpdateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedUpdateWithoutRecipeInput>
+    create: XOR<RecipeDietaryRestrictionsCreateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedCreateWithoutRecipeInput>
   }
 
-  export type RecipeFoodAllergiesUpdateWithWhereUniqueWithoutRecipeInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    data: XOR<RecipeFoodAllergiesUpdateWithoutRecipeInput, RecipeFoodAllergiesUncheckedUpdateWithoutRecipeInput>
+  export type RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutRecipeInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    data: XOR<RecipeDietaryRestrictionsUpdateWithoutRecipeInput, RecipeDietaryRestrictionsUncheckedUpdateWithoutRecipeInput>
   }
 
-  export type RecipeFoodAllergiesUpdateManyWithWhereWithoutRecipeInput = {
-    where: RecipeFoodAllergiesScalarWhereInput
-    data: XOR<RecipeFoodAllergiesUpdateManyMutationInput, RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeInput>
+  export type RecipeDietaryRestrictionsUpdateManyWithWhereWithoutRecipeInput = {
+    where: RecipeDietaryRestrictionsScalarWhereInput
+    data: XOR<RecipeDietaryRestrictionsUpdateManyMutationInput, RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeInput>
   }
 
-  export type RecipeFoodAllergiesScalarWhereInput = {
-    AND?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
-    OR?: RecipeFoodAllergiesScalarWhereInput[]
-    NOT?: RecipeFoodAllergiesScalarWhereInput | RecipeFoodAllergiesScalarWhereInput[]
-    id?: IntFilter<"RecipeFoodAllergies"> | number
-    recipe_id?: IntFilter<"RecipeFoodAllergies"> | number
-    food_allergy_id?: IntFilter<"RecipeFoodAllergies"> | number
-    created_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    updated_at?: DateTimeFilter<"RecipeFoodAllergies"> | Date | string
-    deleted_at?: DateTimeNullableFilter<"RecipeFoodAllergies"> | Date | string | null
+  export type RecipeDietaryRestrictionsScalarWhereInput = {
+    AND?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
+    OR?: RecipeDietaryRestrictionsScalarWhereInput[]
+    NOT?: RecipeDietaryRestrictionsScalarWhereInput | RecipeDietaryRestrictionsScalarWhereInput[]
+    id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    recipe_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    dietary_restriction_id?: IntFilter<"RecipeDietaryRestrictions"> | number
+    created_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    updated_at?: DateTimeFilter<"RecipeDietaryRestrictions"> | Date | string
+    deleted_at?: DateTimeNullableFilter<"RecipeDietaryRestrictions"> | Date | string | null
   }
 
   export type RecipeNotesUpsertWithWhereUniqueWithoutRecipeInput = {
@@ -21734,7 +24850,6 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutSubrecipesInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -21745,8 +24860,9 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
@@ -21756,7 +24872,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutSubrecipesInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -21768,7 +24884,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
@@ -21822,7 +24938,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutSubrecipesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21833,8 +24948,9 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
@@ -21844,7 +24960,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutSubrecipesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -21856,7 +24972,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
@@ -21893,14 +25009,14 @@ export namespace Prisma {
     unit_id?: IntNullableFilter<"Ingredients"> | number | null
   }
 
-  export type RecipeFoodAllergiesCreateWithoutFood_allergyInput = {
+  export type RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput = {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
-    recipe: RecipesCreateNestedOneWithoutRecipe_food_allergiesInput
+    recipe: RecipesCreateNestedOneWithoutRecipe_dietary_restrictionsInput
   }
 
-  export type RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput = {
+  export type RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput = {
     id?: number
     recipe_id: number
     created_at?: Date | string
@@ -21908,30 +25024,30 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesCreateOrConnectWithoutFood_allergyInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    create: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput>
+  export type RecipeDietaryRestrictionsCreateOrConnectWithoutDietary_restrictionInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    create: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput>
   }
 
-  export type RecipeFoodAllergiesCreateManyFood_allergyInputEnvelope = {
-    data: RecipeFoodAllergiesCreateManyFood_allergyInput | RecipeFoodAllergiesCreateManyFood_allergyInput[]
+  export type RecipeDietaryRestrictionsCreateManyDietary_restrictionInputEnvelope = {
+    data: RecipeDietaryRestrictionsCreateManyDietary_restrictionInput | RecipeDietaryRestrictionsCreateManyDietary_restrictionInput[]
     skipDuplicates?: boolean
   }
 
-  export type RecipeFoodAllergiesUpsertWithWhereUniqueWithoutFood_allergyInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    update: XOR<RecipeFoodAllergiesUpdateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedUpdateWithoutFood_allergyInput>
-    create: XOR<RecipeFoodAllergiesCreateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedCreateWithoutFood_allergyInput>
+  export type RecipeDietaryRestrictionsUpsertWithWhereUniqueWithoutDietary_restrictionInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    update: XOR<RecipeDietaryRestrictionsUpdateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedUpdateWithoutDietary_restrictionInput>
+    create: XOR<RecipeDietaryRestrictionsCreateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedCreateWithoutDietary_restrictionInput>
   }
 
-  export type RecipeFoodAllergiesUpdateWithWhereUniqueWithoutFood_allergyInput = {
-    where: RecipeFoodAllergiesWhereUniqueInput
-    data: XOR<RecipeFoodAllergiesUpdateWithoutFood_allergyInput, RecipeFoodAllergiesUncheckedUpdateWithoutFood_allergyInput>
+  export type RecipeDietaryRestrictionsUpdateWithWhereUniqueWithoutDietary_restrictionInput = {
+    where: RecipeDietaryRestrictionsWhereUniqueInput
+    data: XOR<RecipeDietaryRestrictionsUpdateWithoutDietary_restrictionInput, RecipeDietaryRestrictionsUncheckedUpdateWithoutDietary_restrictionInput>
   }
 
-  export type RecipeFoodAllergiesUpdateManyWithWhereWithoutFood_allergyInput = {
-    where: RecipeFoodAllergiesScalarWhereInput
-    data: XOR<RecipeFoodAllergiesUpdateManyMutationInput, RecipeFoodAllergiesUncheckedUpdateManyWithoutFood_allergyInput>
+  export type RecipeDietaryRestrictionsUpdateManyWithWhereWithoutDietary_restrictionInput = {
+    where: RecipeDietaryRestrictionsScalarWhereInput
+    data: XOR<RecipeDietaryRestrictionsUpdateManyMutationInput, RecipeDietaryRestrictionsUncheckedUpdateManyWithoutDietary_restrictionInput>
   }
 
   export type IngredientsCreateWithoutUnitsInput = {
@@ -21979,9 +25095,8 @@ export namespace Prisma {
     data: XOR<IngredientsUpdateManyMutationInput, IngredientsUncheckedUpdateManyWithoutUnitsInput>
   }
 
-  export type RecipesCreateWithoutRecipe_food_allergiesInput = {
+  export type RecipesCreateWithoutRecipe_dietary_restrictionsInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -21992,6 +25107,7 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
@@ -22000,10 +25116,10 @@ export namespace Prisma {
     recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutRecipeInput
   }
 
-  export type RecipesUncheckedCreateWithoutRecipe_food_allergiesInput = {
+  export type RecipesUncheckedCreateWithoutRecipe_dietary_restrictionsInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -22022,19 +25138,19 @@ export namespace Prisma {
     recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutRecipeInput
   }
 
-  export type RecipesCreateOrConnectWithoutRecipe_food_allergiesInput = {
+  export type RecipesCreateOrConnectWithoutRecipe_dietary_restrictionsInput = {
     where: RecipesWhereUniqueInput
-    create: XOR<RecipesCreateWithoutRecipe_food_allergiesInput, RecipesUncheckedCreateWithoutRecipe_food_allergiesInput>
+    create: XOR<RecipesCreateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
   }
 
-  export type FoodAllergiesCreateWithoutRecipe_food_allergiesInput = {
+  export type DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput = {
     name: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
   }
 
-  export type FoodAllergiesUncheckedCreateWithoutRecipe_food_allergiesInput = {
+  export type DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput = {
     id?: number
     name: string
     created_at?: Date | string
@@ -22042,25 +25158,24 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
-  export type FoodAllergiesCreateOrConnectWithoutRecipe_food_allergiesInput = {
-    where: FoodAllergiesWhereUniqueInput
-    create: XOR<FoodAllergiesCreateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedCreateWithoutRecipe_food_allergiesInput>
+  export type DietaryRestrictionsCreateOrConnectWithoutRecipe_dietary_restrictionsInput = {
+    where: DietaryRestrictionsWhereUniqueInput
+    create: XOR<DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
   }
 
-  export type RecipesUpsertWithoutRecipe_food_allergiesInput = {
-    update: XOR<RecipesUpdateWithoutRecipe_food_allergiesInput, RecipesUncheckedUpdateWithoutRecipe_food_allergiesInput>
-    create: XOR<RecipesCreateWithoutRecipe_food_allergiesInput, RecipesUncheckedCreateWithoutRecipe_food_allergiesInput>
+  export type RecipesUpsertWithoutRecipe_dietary_restrictionsInput = {
+    update: XOR<RecipesUpdateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
+    create: XOR<RecipesCreateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
     where?: RecipesWhereInput
   }
 
-  export type RecipesUpdateToOneWithWhereWithoutRecipe_food_allergiesInput = {
+  export type RecipesUpdateToOneWithWhereWithoutRecipe_dietary_restrictionsInput = {
     where?: RecipesWhereInput
-    data: XOR<RecipesUpdateWithoutRecipe_food_allergiesInput, RecipesUncheckedUpdateWithoutRecipe_food_allergiesInput>
+    data: XOR<RecipesUpdateWithoutRecipe_dietary_restrictionsInput, RecipesUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
   }
 
-  export type RecipesUpdateWithoutRecipe_food_allergiesInput = {
+  export type RecipesUpdateWithoutRecipe_dietary_restrictionsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22071,6 +25186,7 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
@@ -22079,10 +25195,10 @@ export namespace Prisma {
     recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutRecipeNestedInput
   }
 
-  export type RecipesUncheckedUpdateWithoutRecipe_food_allergiesInput = {
+  export type RecipesUncheckedUpdateWithoutRecipe_dietary_restrictionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22101,25 +25217,25 @@ export namespace Prisma {
     recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutRecipeNestedInput
   }
 
-  export type FoodAllergiesUpsertWithoutRecipe_food_allergiesInput = {
-    update: XOR<FoodAllergiesUpdateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedUpdateWithoutRecipe_food_allergiesInput>
-    create: XOR<FoodAllergiesCreateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedCreateWithoutRecipe_food_allergiesInput>
-    where?: FoodAllergiesWhereInput
+  export type DietaryRestrictionsUpsertWithoutRecipe_dietary_restrictionsInput = {
+    update: XOR<DietaryRestrictionsUpdateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
+    create: XOR<DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput>
+    where?: DietaryRestrictionsWhereInput
   }
 
-  export type FoodAllergiesUpdateToOneWithWhereWithoutRecipe_food_allergiesInput = {
-    where?: FoodAllergiesWhereInput
-    data: XOR<FoodAllergiesUpdateWithoutRecipe_food_allergiesInput, FoodAllergiesUncheckedUpdateWithoutRecipe_food_allergiesInput>
+  export type DietaryRestrictionsUpdateToOneWithWhereWithoutRecipe_dietary_restrictionsInput = {
+    where?: DietaryRestrictionsWhereInput
+    data: XOR<DietaryRestrictionsUpdateWithoutRecipe_dietary_restrictionsInput, DietaryRestrictionsUncheckedUpdateWithoutRecipe_dietary_restrictionsInput>
   }
 
-  export type FoodAllergiesUpdateWithoutRecipe_food_allergiesInput = {
+  export type DietaryRestrictionsUpdateWithoutRecipe_dietary_restrictionsInput = {
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type FoodAllergiesUncheckedUpdateWithoutRecipe_food_allergiesInput = {
+  export type DietaryRestrictionsUncheckedUpdateWithoutRecipe_dietary_restrictionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22129,7 +25245,6 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_notesInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22140,9 +25255,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutRecipeInput
@@ -22151,7 +25267,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutRecipe_notesInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -22164,7 +25280,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutRecipeInput
@@ -22188,7 +25304,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_notesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22199,9 +25314,10 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutRecipeNestedInput
@@ -22210,7 +25326,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutRecipe_notesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22223,7 +25339,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutRecipeNestedInput
@@ -22272,7 +25388,6 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_tagsInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22283,9 +25398,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutRecipeInput
@@ -22294,7 +25410,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutRecipe_tagsInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -22307,7 +25423,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutRecipeInput
@@ -22351,7 +25467,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_tagsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22362,9 +25477,10 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutRecipeNestedInput
@@ -22373,7 +25489,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutRecipe_tagsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22386,7 +25502,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutRecipeNestedInput
@@ -22420,7 +25536,6 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_sourcesInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22431,9 +25546,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutRecipeInput
@@ -22442,7 +25558,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutRecipe_sourcesInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -22455,7 +25571,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutRecipeInput
@@ -22479,7 +25595,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_sourcesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22490,9 +25605,10 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutRecipeNestedInput
@@ -22501,7 +25617,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutRecipe_sourcesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22514,7 +25630,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutRecipeNestedInput
@@ -22522,7 +25638,6 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutCountryInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22533,8 +25648,9 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
@@ -22544,7 +25660,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutCountryInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22556,7 +25672,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
@@ -22595,7 +25711,7 @@ export namespace Prisma {
     NOT?: RecipesScalarWhereInput | RecipesScalarWhereInput[]
     id?: IntFilter<"Recipes"> | number
     title?: StringFilter<"Recipes"> | string
-    category?: StringFilter<"Recipes"> | string
+    category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
     cooking_time?: IntNullableFilter<"Recipes"> | number | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
@@ -22607,6 +25723,230 @@ export namespace Prisma {
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
     deleted_at?: DateTimeNullableFilter<"Recipes"> | Date | string | null
+  }
+
+  export type RecipesCreateWithoutCategoryInput = {
+    title: string
+    cooking_time?: number | null
+    cooking_temperature?: number | null
+    servings?: string | null
+    mold_type?: string | null
+    mold_size?: string | null
+    image_url?: string | null
+    is_test?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    country?: CountriesCreateNestedOneWithoutRecipesInput
+    subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
+    recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
+    recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
+    recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
+    recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutRecipeInput
+  }
+
+  export type RecipesUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    title: string
+    country_id?: number | null
+    cooking_time?: number | null
+    cooking_temperature?: number | null
+    servings?: string | null
+    mold_type?: string | null
+    mold_size?: string | null
+    image_url?: string | null
+    is_test?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutRecipeInput
+  }
+
+  export type RecipesCreateOrConnectWithoutCategoryInput = {
+    where: RecipesWhereUniqueInput
+    create: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type RecipesCreateManyCategoryInputEnvelope = {
+    data: RecipesCreateManyCategoryInput | RecipesCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CategorySubcategoriesCreateWithoutCategoryInput = {
+    created_at?: Date | string
+    subcategory: SubcategoriesCreateNestedOneWithoutCategory_subcategoriesInput
+  }
+
+  export type CategorySubcategoriesUncheckedCreateWithoutCategoryInput = {
+    id?: number
+    subcategory_id: number
+    created_at?: Date | string
+  }
+
+  export type CategorySubcategoriesCreateOrConnectWithoutCategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    create: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type CategorySubcategoriesCreateManyCategoryInputEnvelope = {
+    data: CategorySubcategoriesCreateManyCategoryInput | CategorySubcategoriesCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecipesUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: RecipesWhereUniqueInput
+    update: XOR<RecipesUpdateWithoutCategoryInput, RecipesUncheckedUpdateWithoutCategoryInput>
+    create: XOR<RecipesCreateWithoutCategoryInput, RecipesUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type RecipesUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: RecipesWhereUniqueInput
+    data: XOR<RecipesUpdateWithoutCategoryInput, RecipesUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type RecipesUpdateManyWithWhereWithoutCategoryInput = {
+    where: RecipesScalarWhereInput
+    data: XOR<RecipesUpdateManyMutationInput, RecipesUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type CategorySubcategoriesUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    update: XOR<CategorySubcategoriesUpdateWithoutCategoryInput, CategorySubcategoriesUncheckedUpdateWithoutCategoryInput>
+    create: XOR<CategorySubcategoriesCreateWithoutCategoryInput, CategorySubcategoriesUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type CategorySubcategoriesUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    data: XOR<CategorySubcategoriesUpdateWithoutCategoryInput, CategorySubcategoriesUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type CategorySubcategoriesUpdateManyWithWhereWithoutCategoryInput = {
+    where: CategorySubcategoriesScalarWhereInput
+    data: XOR<CategorySubcategoriesUpdateManyMutationInput, CategorySubcategoriesUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type CategorySubcategoriesScalarWhereInput = {
+    AND?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
+    OR?: CategorySubcategoriesScalarWhereInput[]
+    NOT?: CategorySubcategoriesScalarWhereInput | CategorySubcategoriesScalarWhereInput[]
+    id?: IntFilter<"CategorySubcategories"> | number
+    category_id?: IntFilter<"CategorySubcategories"> | number
+    subcategory_id?: IntFilter<"CategorySubcategories"> | number
+    created_at?: DateTimeFilter<"CategorySubcategories"> | Date | string
+  }
+
+  export type CategoriesCreateWithoutCategory_subcategoriesInput = {
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipes?: RecipesCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesUncheckedCreateWithoutCategory_subcategoriesInput = {
+    id?: number
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipes?: RecipesUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type CategoriesCreateOrConnectWithoutCategory_subcategoriesInput = {
+    where: CategoriesWhereUniqueInput
+    create: XOR<CategoriesCreateWithoutCategory_subcategoriesInput, CategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+  }
+
+  export type SubcategoriesCreateWithoutCategory_subcategoriesInput = {
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipe_subcategories?: RecipeSubcategoriesCreateNestedManyWithoutSubcategoryInput
+  }
+
+  export type SubcategoriesUncheckedCreateWithoutCategory_subcategoriesInput = {
+    id?: number
+    name_en: string
+    name_es: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+    recipe_subcategories?: RecipeSubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput
+  }
+
+  export type SubcategoriesCreateOrConnectWithoutCategory_subcategoriesInput = {
+    where: SubcategoriesWhereUniqueInput
+    create: XOR<SubcategoriesCreateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+  }
+
+  export type CategoriesUpsertWithoutCategory_subcategoriesInput = {
+    update: XOR<CategoriesUpdateWithoutCategory_subcategoriesInput, CategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+    create: XOR<CategoriesCreateWithoutCategory_subcategoriesInput, CategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    where?: CategoriesWhereInput
+  }
+
+  export type CategoriesUpdateToOneWithWhereWithoutCategory_subcategoriesInput = {
+    where?: CategoriesWhereInput
+    data: XOR<CategoriesUpdateWithoutCategory_subcategoriesInput, CategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+  }
+
+  export type CategoriesUpdateWithoutCategory_subcategoriesInput = {
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipes?: RecipesUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type CategoriesUncheckedUpdateWithoutCategory_subcategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipes?: RecipesUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type SubcategoriesUpsertWithoutCategory_subcategoriesInput = {
+    update: XOR<SubcategoriesUpdateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+    create: XOR<SubcategoriesCreateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedCreateWithoutCategory_subcategoriesInput>
+    where?: SubcategoriesWhereInput
+  }
+
+  export type SubcategoriesUpdateToOneWithWhereWithoutCategory_subcategoriesInput = {
+    where?: SubcategoriesWhereInput
+    data: XOR<SubcategoriesUpdateWithoutCategory_subcategoriesInput, SubcategoriesUncheckedUpdateWithoutCategory_subcategoriesInput>
+  }
+
+  export type SubcategoriesUpdateWithoutCategory_subcategoriesInput = {
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutSubcategoryNestedInput
+  }
+
+  export type SubcategoriesUncheckedUpdateWithoutCategory_subcategoriesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput
   }
 
   export type RecipeSubcategoriesCreateWithoutSubcategoryInput = {
@@ -22636,6 +25976,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CategorySubcategoriesCreateWithoutSubcategoryInput = {
+    created_at?: Date | string
+    category: CategoriesCreateNestedOneWithoutCategory_subcategoriesInput
+  }
+
+  export type CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput = {
+    id?: number
+    category_id: number
+    created_at?: Date | string
+  }
+
+  export type CategorySubcategoriesCreateOrConnectWithoutSubcategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    create: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput>
+  }
+
+  export type CategorySubcategoriesCreateManySubcategoryInputEnvelope = {
+    data: CategorySubcategoriesCreateManySubcategoryInput | CategorySubcategoriesCreateManySubcategoryInput[]
+    skipDuplicates?: boolean
+  }
+
   export type RecipeSubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput = {
     where: RecipeSubcategoriesWhereUniqueInput
     update: XOR<RecipeSubcategoriesUpdateWithoutSubcategoryInput, RecipeSubcategoriesUncheckedUpdateWithoutSubcategoryInput>
@@ -22652,9 +26013,24 @@ export namespace Prisma {
     data: XOR<RecipeSubcategoriesUpdateManyMutationInput, RecipeSubcategoriesUncheckedUpdateManyWithoutSubcategoryInput>
   }
 
+  export type CategorySubcategoriesUpsertWithWhereUniqueWithoutSubcategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    update: XOR<CategorySubcategoriesUpdateWithoutSubcategoryInput, CategorySubcategoriesUncheckedUpdateWithoutSubcategoryInput>
+    create: XOR<CategorySubcategoriesCreateWithoutSubcategoryInput, CategorySubcategoriesUncheckedCreateWithoutSubcategoryInput>
+  }
+
+  export type CategorySubcategoriesUpdateWithWhereUniqueWithoutSubcategoryInput = {
+    where: CategorySubcategoriesWhereUniqueInput
+    data: XOR<CategorySubcategoriesUpdateWithoutSubcategoryInput, CategorySubcategoriesUncheckedUpdateWithoutSubcategoryInput>
+  }
+
+  export type CategorySubcategoriesUpdateManyWithWhereWithoutSubcategoryInput = {
+    where: CategorySubcategoriesScalarWhereInput
+    data: XOR<CategorySubcategoriesUpdateManyMutationInput, CategorySubcategoriesUncheckedUpdateManyWithoutSubcategoryInput>
+  }
+
   export type RecipesCreateWithoutRecipe_subcategoriesInput = {
     title: string
-    category: string
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -22665,9 +26041,10 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category: CategoriesCreateNestedOneWithoutRecipesInput
     country?: CountriesCreateNestedOneWithoutRecipesInput
     subrecipes?: SubrecipesCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsCreateNestedManyWithoutRecipeInput
@@ -22676,7 +26053,7 @@ export namespace Prisma {
   export type RecipesUncheckedCreateWithoutRecipe_subcategoriesInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     country_id?: number | null
     cooking_time?: number | null
     cooking_temperature?: number | null
@@ -22689,7 +26066,7 @@ export namespace Prisma {
     updated_at?: Date | string
     deleted_at?: Date | string | null
     subrecipes?: SubrecipesUncheckedCreateNestedManyWithoutRecipeInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedCreateNestedManyWithoutRecipeInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedCreateNestedManyWithoutRecipeInput
     recipe_notes?: RecipeNotesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_sources?: RecipeSourcesUncheckedCreateNestedManyWithoutRecipeInput
     recipe_tags?: RecipeTagsUncheckedCreateNestedManyWithoutRecipeInput
@@ -22701,18 +26078,22 @@ export namespace Prisma {
   }
 
   export type SubcategoriesCreateWithoutRecipe_subcategoriesInput = {
-    name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category_subcategories?: CategorySubcategoriesCreateNestedManyWithoutSubcategoryInput
   }
 
   export type SubcategoriesUncheckedCreateWithoutRecipe_subcategoriesInput = {
     id?: number
-    name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+    category_subcategories?: CategorySubcategoriesUncheckedCreateNestedManyWithoutSubcategoryInput
   }
 
   export type SubcategoriesCreateOrConnectWithoutRecipe_subcategoriesInput = {
@@ -22733,7 +26114,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_subcategoriesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22744,9 +26124,10 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     country?: CountriesUpdateOneWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
@@ -22755,7 +26136,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutRecipe_subcategoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
@@ -22768,7 +26149,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
@@ -22786,18 +26167,22 @@ export namespace Prisma {
   }
 
   export type SubcategoriesUpdateWithoutRecipe_subcategoriesInput = {
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_subcategories?: CategorySubcategoriesUpdateManyWithoutSubcategoryNestedInput
   }
 
   export type SubcategoriesUncheckedUpdateWithoutRecipe_subcategoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category_subcategories?: CategorySubcategoriesUncheckedUpdateManyWithoutSubcategoryNestedInput
   }
 
   export type SubrecipesCreateManyRecipeInput = {
@@ -22809,9 +26194,9 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesCreateManyRecipeInput = {
+  export type RecipeDietaryRestrictionsCreateManyRecipeInput = {
     id?: number
-    food_allergy_id: number
+    dietary_restriction_id: number
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -22881,24 +26266,24 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesUpdateWithoutRecipeInput = {
+  export type RecipeDietaryRestrictionsUpdateWithoutRecipeInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    food_allergy?: FoodAllergiesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput
+    dietary_restriction?: DietaryRestrictionsUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateWithoutRecipeInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateWithoutRecipeInput = {
     id?: IntFieldUpdateOperationsInput | number
-    food_allergy_id?: IntFieldUpdateOperationsInput | number
+    dietary_restriction_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeInput = {
     id?: IntFieldUpdateOperationsInput | number
-    food_allergy_id?: IntFieldUpdateOperationsInput | number
+    dietary_restriction_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23047,7 +26432,7 @@ export namespace Prisma {
     unit_id?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type RecipeFoodAllergiesCreateManyFood_allergyInput = {
+  export type RecipeDietaryRestrictionsCreateManyDietary_restrictionInput = {
     id?: number
     recipe_id: number
     created_at?: Date | string
@@ -23055,14 +26440,14 @@ export namespace Prisma {
     deleted_at?: Date | string | null
   }
 
-  export type RecipeFoodAllergiesUpdateWithoutFood_allergyInput = {
+  export type RecipeDietaryRestrictionsUpdateWithoutDietary_restrictionInput = {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    recipe?: RecipesUpdateOneRequiredWithoutRecipe_food_allergiesNestedInput
+    recipe?: RecipesUpdateOneRequiredWithoutRecipe_dietary_restrictionsNestedInput
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateWithoutFood_allergyInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateWithoutDietary_restrictionInput = {
     id?: IntFieldUpdateOperationsInput | number
     recipe_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23070,7 +26455,7 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
-  export type RecipeFoodAllergiesUncheckedUpdateManyWithoutFood_allergyInput = {
+  export type RecipeDietaryRestrictionsUncheckedUpdateManyWithoutDietary_restrictionInput = {
     id?: IntFieldUpdateOperationsInput | number
     recipe_id?: IntFieldUpdateOperationsInput | number
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23151,7 +26536,7 @@ export namespace Prisma {
   export type RecipesCreateManyCountryInput = {
     id?: number
     title: string
-    category: string
+    category_id: number
     cooking_time?: number | null
     cooking_temperature?: number | null
     servings?: string | null
@@ -23166,7 +26551,6 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutCountryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23177,8 +26561,9 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    category?: CategoriesUpdateOneRequiredWithoutRecipesNestedInput
     subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
@@ -23188,7 +26573,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateWithoutCountryInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23200,7 +26585,7 @@ export namespace Prisma {
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
-    recipe_food_allergies?: RecipeFoodAllergiesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
     recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
@@ -23210,7 +26595,7 @@ export namespace Prisma {
   export type RecipesUncheckedUpdateManyWithoutCountryInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    category?: StringFieldUpdateOperationsInput | string
+    category_id?: IntFieldUpdateOperationsInput | number
     cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23223,6 +26608,104 @@ export namespace Prisma {
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type RecipesCreateManyCategoryInput = {
+    id?: number
+    title: string
+    country_id?: number | null
+    cooking_time?: number | null
+    cooking_temperature?: number | null
+    servings?: string | null
+    mold_type?: string | null
+    mold_size?: string | null
+    image_url?: string | null
+    is_test?: boolean
+    created_at?: Date | string
+    updated_at?: Date | string
+    deleted_at?: Date | string | null
+  }
+
+  export type CategorySubcategoriesCreateManyCategoryInput = {
+    id?: number
+    subcategory_id: number
+    created_at?: Date | string
+  }
+
+  export type RecipesUpdateWithoutCategoryInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
+    servings?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_type?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_size?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    is_test?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    country?: CountriesUpdateOneWithoutRecipesNestedInput
+    subrecipes?: SubrecipesUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUpdateManyWithoutRecipeNestedInput
+    recipe_notes?: RecipeNotesUpdateManyWithoutRecipeNestedInput
+    recipe_sources?: RecipeSourcesUpdateManyWithoutRecipeNestedInput
+    recipe_tags?: RecipeTagsUpdateManyWithoutRecipeNestedInput
+    recipe_subcategories?: RecipeSubcategoriesUpdateManyWithoutRecipeNestedInput
+  }
+
+  export type RecipesUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    country_id?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
+    servings?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_type?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_size?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    is_test?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    subrecipes?: SubrecipesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_dietary_restrictions?: RecipeDietaryRestrictionsUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_notes?: RecipeNotesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_sources?: RecipeSourcesUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_tags?: RecipeTagsUncheckedUpdateManyWithoutRecipeNestedInput
+    recipe_subcategories?: RecipeSubcategoriesUncheckedUpdateManyWithoutRecipeNestedInput
+  }
+
+  export type RecipesUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    country_id?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
+    servings?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_type?: NullableStringFieldUpdateOperationsInput | string | null
+    mold_size?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    is_test?: BoolFieldUpdateOperationsInput | boolean
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CategorySubcategoriesUpdateWithoutCategoryInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    subcategory?: SubcategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    subcategory_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateManyWithoutCategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    subcategory_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type RecipeSubcategoriesCreateManySubcategoryInput = {
     id?: number
     recipe_id: number
@@ -23230,6 +26713,12 @@ export namespace Prisma {
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
+  }
+
+  export type CategorySubcategoriesCreateManySubcategoryInput = {
+    id?: number
+    category_id: number
+    created_at?: Date | string
   }
 
   export type RecipeSubcategoriesUpdateWithoutSubcategoryInput = {
@@ -23256,6 +26745,23 @@ export namespace Prisma {
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type CategorySubcategoriesUpdateWithoutSubcategoryInput = {
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoriesUpdateOneRequiredWithoutCategory_subcategoriesNestedInput
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateWithoutSubcategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CategorySubcategoriesUncheckedUpdateManyWithoutSubcategoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    category_id?: IntFieldUpdateOperationsInput | number
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

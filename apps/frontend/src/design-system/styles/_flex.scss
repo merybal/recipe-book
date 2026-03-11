@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "./spacing" as *;
 
 $flex-properties: (
@@ -27,8 +28,8 @@ $flex-properties: (
 );
 
 @function resolve-flex($value) {
-  @if map-has-key($flex-properties, $value) {
-    @return map-get($flex-properties, $value);
+  @if map.has-key($flex-properties, $value) {
+    @return map.get($flex-properties, $value);
   } @else {
     @return $value;
   }

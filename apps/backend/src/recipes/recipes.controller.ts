@@ -10,18 +10,21 @@ import {
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
-import { AddFoodAllergiesDto } from '@/food-allergies/dto/add-food-allergies.dto';
+import { AddDietaryRestrictionsDto } from '@/dietary-restrictions/dto/add-dietary-restrictions.dto';
 
 @Controller('recipes')
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 
-  @Post(':id/food-allergies')
-  async addFoodAllergies(
+  @Post(':id/dietary-restrictions')
+  async addDietaryRestrictions(
     @Param('id', ParseIntPipe) recipeId: number,
-    @Body() dto: AddFoodAllergiesDto,
+    @Body() dto: AddDietaryRestrictionsDto,
   ) {
-    return this.recipesService.addFoodAllergies(recipeId, dto.foodAllergyIds);
+    return this.recipesService.addDietaryRestrictions(
+      recipeId,
+      dto.dietaryRestrictionIds,
+    );
   }
 
   @Get(':id')

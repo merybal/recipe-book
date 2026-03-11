@@ -1,4 +1,4 @@
-export * from "./food-allergies";
+export * from "./dietary-restrictions";
 export * from "./ingredient";
 export * from "./recipe";
 export * from "./subrecipe";

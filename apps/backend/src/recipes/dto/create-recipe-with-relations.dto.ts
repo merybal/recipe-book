@@ -28,7 +28,7 @@ export class CreateRecipeWithRelationsDto extends CreateRecipeDto {
 
   @IsArray()
   @IsInt({ each: true })
-  food_allergy_ids: number[];
+  dietary_restriction_ids: number[];
 
   @IsOptional()
   @IsArray()

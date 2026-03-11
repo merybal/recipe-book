@@ -44,7 +44,7 @@
       text-wrap: wrap;
     }
 
-    .allergies {
+    .restrictions {
       @include Flex($shrink: none);
       @include Margin($left: sm);
     }

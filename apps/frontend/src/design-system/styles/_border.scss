@@ -1,3 +1,4 @@
+@use "sass:list";
 @use "./color" as *;
 
 @function resolve-border($value) {
@@ -33,27 +34,27 @@
   }
 
   @if $top {
-    border-top: #{resolve-border(nth($top, 1))}
-      #{resolve-border(nth($top, 2))}
-      #{resolve-color(nth($top, 3))};
+    border-top: #{resolve-border(list.nth($top, 1))}
+      #{resolve-border(list.nth($top, 2))}
+      #{resolve-color(list.nth($top, 3))};
   }
 
   @if $right {
-    border-right: #{resolve-border(nth($right, 1))}
-      #{resolve-border(nth($right, 2))}
-      #{resolve-color(nth($right, 3))};
+    border-right: #{resolve-border(list.nth($right, 1))}
+      #{resolve-border(list.nth($right, 2))}
+      #{resolve-color(list.nth($right, 3))};
   }
 
   @if $bottom {
-    border-bottom: #{resolve-border(nth($bottom, 1))}
-      #{resolve-border(nth($bottom, 2))}
-      #{resolve-color(nth($bottom, 3))};
+    border-bottom: #{resolve-border(list.nth($bottom, 1))}
+      #{resolve-border(list.nth($bottom, 2))}
+      #{resolve-color(list.nth($bottom, 3))};
   }
 
   @if $left {
-    border-left: #{resolve-border(nth($left, 1))}
-      #{resolve-border(nth($left, 2))}
-      #{resolve-color(nth($left, 3))};
+    border-left: #{resolve-border(list.nth($left, 1))}
+      #{resolve-border(list.nth($left, 2))}
+      #{resolve-color(list.nth($left, 3))};
   }
 
   @if $radius {

@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import Button from "@/design-system/components/Button";
 import CoverStep from "@/features/RecipeCreator/steps/CoverStep";
@@ -11,7 +13,9 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import {
   validateStepCover,
   validateBakingInstructions,
+  validateCategories,
 } from "@/utils/form-validation-utils";
+import { buildRecipePayload } from "@/utils/recipe-submit-utils";
 
 import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
@@ -95,7 +99,7 @@ const recipeExample = {
       ],
     },
   ],
-  foodAllergies: ["dairyFree", "glutenFree", "vegan"],
+  dietaryRestrictions: ["dairyFree", "glutenFree", "vegan"],
   servings: "4 porciones",
   mold: {
     type: "Circular",
@@ -121,7 +125,10 @@ const recipeExample = {
 const PREVIEW_STEP_INDEX = 5;
 
 const CreateRecipeView = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   /** True cuando el usuario fue al step 0 desde "Editar portada" en la preview. */
   const [editingCoverFromPreview, setEditingCoverFromPreview] = useState(false);
 
@@ -211,6 +218,11 @@ const CreateRecipeView = () => {
       Object.assign(stepErrors, bakingErrors);
     }
 
+    if (currentStep === 3) {
+      const categoryErrors = validateCategories(recipe);
+      Object.assign(stepErrors, categoryErrors);
+    }
+
     // You could add validations for other steps here too.
 
     if (Object.keys(stepErrors).length > 0) {
@@ -263,7 +275,34 @@ const CreateRecipeView = () => {
       return !!errors.subrecipes;
     }
 
+    if (currentStep === 3) {
+      return !!errors.category || !!errors.subcategories;
+    }
+
     return false;
+  };
+
+  const handleSubmit = async () => {
+    const categoryErrors = validateCategories(recipe);
+    if (Object.keys(categoryErrors).length > 0) {
+      setErrors(categoryErrors);
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const payload = await buildRecipePayload(recipe);
+      const { data } = await axios.post("/api/recipes/full", payload);
+      navigate(`/recipes/${data.id}`);
+    } catch (err) {
+      const message =
+        axios.isAxiosError(err) && err.response?.data?.message
+          ? String(err.response.data.message)
+          : "Error al guardar la receta. Intentá de nuevo.";
+      setSubmitError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /** Valida la portada y, si es válida, vuelve al step de preview. Usado desde "Editar portada". */
@@ -396,13 +435,19 @@ const CreateRecipeView = () => {
               disabled={hasStepErrors()}
             />
           ) : (
-            <Button
-              type="submit"
-              label="Guardar receta"
-              onClick={() => {
-                console.log("submiiiiit");
-              }}
-            />
+            <div className={styles["submit-container"]}>
+              {submitError && (
+                <p className={styles["submit-error"]} role="alert">
+                  {submitError}
+                </p>
+              )}
+              <Button
+                type="submit"
+                label="Guardar receta"
+                disabled={isSubmitting}
+                onClick={handleSubmit}
+              />
+            </div>
           )}
         </div>
       </form>

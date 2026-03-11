@@ -4,8 +4,8 @@ export class CreateRecipeDto {
   @IsString()
   title: string;
 
-  @IsString()
-  category: string;
+  @IsInt()
+  category_id: number;
 
   @IsOptional()
   @IsInt()

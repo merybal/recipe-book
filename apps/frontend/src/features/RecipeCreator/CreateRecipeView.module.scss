@@ -46,6 +46,20 @@
     @include ErrorMessage;
   }
 
+  .loading-message {
+    @include Font($family: text, $weight: medium, $size: xs);
+    @include Color($font: secondary-text);
+  }
+
+  .submit-container {
+    @include Flex($direction: column, $gap: sm);
+    align-items: flex-start;
+  }
+
+  .submit-error {
+    @include ErrorMessage;
+  }
+
   .form-navigation {
     @include Flex($gap: sm);
     @include Margin($top: auto);

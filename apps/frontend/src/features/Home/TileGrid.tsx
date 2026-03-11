@@ -4,7 +4,7 @@ import ButtonUnstyled from "@/design-system/components/ButtonUnstyled";
 
 import { useNavigate } from "react-router-dom";
 
-import type { FoodAllergyType } from "@/types";
+import type { DietaryRestrictionType } from "@/types";
 
 import DefaultRecipeImage from "@/assets/savory-recipe-default.jpg";
 
@@ -104,7 +104,7 @@ export type PreviewData = {
     name: string[];
     url: string[];
   };
-  foodAllergies?: FoodAllergyType[];
+  dietaryRestrictions?: DietaryRestrictionType[];
 };
 
 type TileGridProps = {
@@ -137,7 +137,7 @@ const TileGrid = ({
           onClick={() => handleTileClick(recipe.id)}
         >
           <Tile
-            allergies={recipe.foodAllergies}
+            restrictions={recipe.dietaryRestrictions}
             className={styles.tile}
             imageUrl={recipe.imageUrl || DefaultRecipeImage}
             title={recipe.title}

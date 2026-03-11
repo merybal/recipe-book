@@ -29,9 +29,9 @@ import Chip from "@/design-system/components/Chip";
 import ChipInput from "@/design-system/components/ChipInput";
 import Tabs, { Tab } from "@/design-system/components/Tabs";
 import Textarea from "@/design-system/components/Textarea";
-import FoodAllergies from "@/features/Recipe/FoodAllergies";
+import DietaryRestrictions from "@/features/Recipe/DietaryRestrictions";
 
-import type { FoodAllergyType } from "@/types";
+import type { DietaryRestrictionType } from "@/types";
 import type { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
 
 const Section = ({
@@ -446,19 +446,19 @@ const ComponentShowcaseView = () => {
         </div>
       </Section>
 
-      <Section title="FoodAllergies">
-        <FoodAllergies
-          allergies={
+      <Section title="DietaryRestrictions">
+        <DietaryRestrictions
+          restrictions={
             [
               "glutenFree",
               "dairyFree",
               "vegan",
               "vegetarian",
-            ] as FoodAllergyType[]
+            ] as DietaryRestrictionType[]
           }
         />
-        <FoodAllergies
-          allergies={["vegetarian"] as FoodAllergyType[]}
+        <DietaryRestrictions
+          restrictions={["vegetarian"] as DietaryRestrictionType[]}
         />
       </Section>
 

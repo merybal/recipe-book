@@ -123,7 +123,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.RecipesScalarFieldEnum = {
   id: 'id',
   title: 'title',
-  category: 'category',
+  category_id: 'category_id',
   country_id: 'country_id',
   cooking_time: 'cooking_time',
   cooking_temperature: 'cooking_temperature',
@@ -158,7 +158,7 @@ exports.Prisma.SubrecipesScalarFieldEnum = {
   deleted_at: 'deleted_at'
 };
 
-exports.Prisma.FoodAllergiesScalarFieldEnum = {
+exports.Prisma.DietaryRestrictionsScalarFieldEnum = {
   id: 'id',
   name: 'name',
   created_at: 'created_at',
@@ -178,10 +178,10 @@ exports.Prisma.UnitsScalarFieldEnum = {
   deleted_at: 'deleted_at'
 };
 
-exports.Prisma.RecipeFoodAllergiesScalarFieldEnum = {
+exports.Prisma.RecipeDietaryRestrictionsScalarFieldEnum = {
   id: 'id',
   recipe_id: 'recipe_id',
-  food_allergy_id: 'food_allergy_id',
+  dietary_restriction_id: 'dietary_restriction_id',
   created_at: 'created_at',
   updated_at: 'updated_at',
   deleted_at: 'deleted_at'
@@ -235,9 +235,26 @@ exports.Prisma.CountriesScalarFieldEnum = {
   deleted_at: 'deleted_at'
 };
 
+exports.Prisma.CategoriesScalarFieldEnum = {
+  id: 'id',
+  name_en: 'name_en',
+  name_es: 'name_es',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  deleted_at: 'deleted_at'
+};
+
+exports.Prisma.CategorySubcategoriesScalarFieldEnum = {
+  id: 'id',
+  category_id: 'category_id',
+  subcategory_id: 'subcategory_id',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SubcategoriesScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  name_en: 'name_en',
+  name_es: 'name_es',
   created_at: 'created_at',
   updated_at: 'updated_at',
   deleted_at: 'deleted_at'
@@ -283,14 +300,16 @@ exports.Prisma.ModelName = {
   Recipes: 'Recipes',
   Ingredients: 'Ingredients',
   Subrecipes: 'Subrecipes',
-  FoodAllergies: 'FoodAllergies',
+  DietaryRestrictions: 'DietaryRestrictions',
   Units: 'Units',
-  RecipeFoodAllergies: 'RecipeFoodAllergies',
+  RecipeDietaryRestrictions: 'RecipeDietaryRestrictions',
   RecipeNotes: 'RecipeNotes',
   Tags: 'Tags',
   RecipeTags: 'RecipeTags',
   RecipeSources: 'RecipeSources',
   Countries: 'Countries',
+  Categories: 'Categories',
+  CategorySubcategories: 'CategorySubcategories',
   Subcategories: 'Subcategories',
   RecipeSubcategories: 'RecipeSubcategories'
 };

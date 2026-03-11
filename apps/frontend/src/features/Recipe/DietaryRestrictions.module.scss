@@ -1,10 +1,10 @@
 @use "../../design-system/styles/color" as *;
 @use "../../design-system/styles/flex" as *;
 
-.food-allergies-container {
+.dietary-restrictions-container {
   @include Flex($align: start, $gap: xs);
 
-  .allergy-container {
+  .restriction-container {
     @include Flex($align: center, $gap: xs);
   }
 }

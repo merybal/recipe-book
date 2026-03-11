@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
-import type { RecipeType, FoodAllergyType } from "@/types";
+import type { RecipeType, DietaryRestrictionType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
 import Separator from "@/design-system/components/Separator";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 
-const CATEGORY_LABELS: Record<string, string> = {
-  salado: "Salado",
-  dulce: "Dulce",
-};
-
-const FOOD_ALLERGY_LABELS: Record<FoodAllergyType, string> = {
+const DIETARY_RESTRICTION_LABELS: Record<DietaryRestrictionType, string> = {
   glutenFree: "Sin gluten",
   dairyFree: "Sin lactosa",
   vegetarian: "Vegetariano",
@@ -31,18 +26,6 @@ const COUNTRY_LABELS: Record<string, string> = {
   otro: "Otro",
 };
 
-const SUBCATEGORY_LABELS: Record<string, string> = {
-  tarta: "Tarta",
-  arroz: "Arroz",
-  carne: "Carne",
-  pollo: "Pollo",
-  cerdo: "Cerdo",
-  muffin: "Muffin",
-  torta: "Torta",
-  helado: "Helado",
-  cookie: "Cookie",
-  scon: "Scon",
-};
 
 export type RecipePreviewProps = {
   className?: string;
@@ -87,11 +70,9 @@ const RecipePreview = ({
   const subrecipes = recipeData.subrecipes ?? [];
   const notes = recipeData.notes ?? [];
   const subcategories = recipeData.subcategories ?? [];
-  const foodAllergies = recipeData.foodAllergies ?? [];
+  const dietaryRestrictions = recipeData.dietaryRestrictions ?? [];
   const tags = recipeData.tags ?? [];
 
-  const formatSubcategory = (value: string) =>
-    SUBCATEGORY_LABELS[value] ?? value;
   const formatCountry = (value: string) => COUNTRY_LABELS[value] ?? value;
 
   return (
@@ -198,11 +179,21 @@ const RecipePreview = ({
               )}
               <div>
                 <h3>Ingredientes</h3>
-                <p>
-                  {sub.ingredients?.length
-                    ? sub.ingredients.map((i) => i.name).join(", ")
-                    : "-"}
-                </p>
+                {sub.ingredients?.length ? (
+                  <ul className={styles["ingredients-list"]}>
+                    {sub.ingredients.map((i, idx) => (
+                      <li key={idx} className={styles["ingredient-li"]}>
+                        <p>{i.name},</p>
+                        <div className={styles["ingredient-amount"]}>
+                          {i.amount != null && <p>{i.amount}</p>}
+                          {i.unit && <p>{i.unit}</p>}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>-</p>
+                )}
               </div>
               <div>
                 <h3>Instrucciones</h3>
@@ -235,24 +226,20 @@ const RecipePreview = ({
         </div>
         <div>
           <h3>Categoría</h3>
-          <p>
-            {recipeData.category
-              ? CATEGORY_LABELS[recipeData.category] ?? recipeData.category
-              : "-"}
-          </p>
+          <p>{recipeData.category ?? "-"}</p>
         </div>
         {subcategories.length > 0 && (
           <div>
             <h3>Subcategorías</h3>
-            <p>{subcategories.map(formatSubcategory).join(", ")}</p>
+            <p>{subcategories.join(", ")}</p>
           </div>
         )}
-        {foodAllergies.length > 0 && (
+        {dietaryRestrictions.length > 0 && (
           <div>
-            <h3>Alergias alimentarias</h3>
+            <h3>Dietas y restricciones</h3>
             <p>
-              {foodAllergies
-                .map((a) => FOOD_ALLERGY_LABELS[a] ?? a)
+              {dietaryRestrictions
+                .map((r) => DIETARY_RESTRICTION_LABELS[r] ?? r)
                 .join(", ")}
             </p>
           </div>
@@ -277,23 +264,26 @@ const RecipePreview = ({
             onClick={() => onEditAdditionalInfo?.()}
           />
         </div>
-        {notes.length > 0 && (
-          <div>
-            <h3>Notas</h3>
+        <div>
+          <h3>Notas</h3>
+          {notes.length > 0 ? (
             <ul className={styles["notes-list"]}>
               {notes.map((note, i) => (
                 <li key={i}>{note}</li>
               ))}
             </ul>
-          </div>
-        )}
-        {recipeData.countryOfOrigin && (
-          <div>
-            <h3>País de origen</h3>
-            <p>{formatCountry(recipeData.countryOfOrigin)}</p>
-          </div>
-        )}
-        {notes.length === 0 && !recipeData.countryOfOrigin && <p>-</p>}
+          ) : (
+            <p>-</p>
+          )}
+        </div>
+        <div>
+          <h3>País de origen</h3>
+          <p>
+            {recipeData.countryOfOrigin
+              ? formatCountry(recipeData.countryOfOrigin)
+              : "-"}
+          </p>
+        </div>
       </div>
 
       <Separator />

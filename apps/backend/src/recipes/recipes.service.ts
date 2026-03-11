@@ -1,15 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma } from '../generated/prisma';
+import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 
 @Injectable()
 export class RecipesService {
   constructor(private prisma: PrismaService) {}
 
-  async createRecipe(data: Prisma.RecipesCreateInput) {
+  async createRecipe(dto: CreateRecipeDto) {
+    const { category_id, country_id, ...rest } = dto;
     return this.prisma.recipes.create({
-      data,
+      data: {
+        ...rest,
+        category: { connect: { id: category_id } },
+        ...(country_id != null && {
+          country: { connect: { id: country_id } },
+        }),
+      },
     });
   }
 
@@ -17,6 +24,7 @@ export class RecipesService {
     return this.prisma.recipes.findFirst({
       where: { id, deleted_at: null },
       include: {
+        category: true,
         country: true,
         subrecipes: {
           where: { deleted_at: null },
@@ -29,10 +37,10 @@ export class RecipesService {
             },
           },
         },
-        recipe_food_allergies: {
+        recipe_dietary_restrictions: {
           where: { deleted_at: null },
           include: {
-            food_allergy: true,
+            dietary_restriction: true,
           },
         },
         recipe_notes: {
@@ -61,6 +69,7 @@ export class RecipesService {
       where: { deleted_at: null },
       orderBy: { created_at: 'desc' },
       include: {
+        category: true,
         country: true,
         subrecipes: {
           where: { deleted_at: null },
@@ -73,10 +82,10 @@ export class RecipesService {
             },
           },
         },
-        recipe_food_allergies: {
+        recipe_dietary_restrictions: {
           where: { deleted_at: null },
           include: {
-            food_allergy: true,
+            dietary_restriction: true,
           },
         },
         recipe_notes: {
@@ -100,13 +109,16 @@ export class RecipesService {
     });
   }
 
-  async addFoodAllergies(recipeId: number, foodAllergyIds: number[]) {
-    const createManyInput = foodAllergyIds.map((foodAllergyId) => ({
+  async addDietaryRestrictions(
+    recipeId: number,
+    dietaryRestrictionIds: number[],
+  ) {
+    const createManyInput = dietaryRestrictionIds.map((dietaryRestrictionId) => ({
       recipe_id: recipeId,
-      food_allergy_id: foodAllergyId,
+      dietary_restriction_id: dietaryRestrictionId,
     }));
 
-    return this.prisma.recipeFoodAllergies.createMany({
+    return this.prisma.recipeDietaryRestrictions.createMany({
       data: createManyInput,
       skipDuplicates: true,
     });
@@ -135,7 +147,7 @@ export class RecipesService {
     return this.prisma.recipes.create({
       data: {
         title: dto.title,
-        category: dto.category,
+        category: { connect: { id: dto.category_id } },
         ...(dto.country_id != null && {
           country: { connect: { id: dto.country_id } },
         }),
@@ -160,9 +172,9 @@ export class RecipesService {
           })),
         },
 
-        recipe_food_allergies: {
-          create: dto.food_allergy_ids.map((id) => ({
-            food_allergy: {
+        recipe_dietary_restrictions: {
+          create: dto.dietary_restriction_ids.map((id) => ({
+            dietary_restriction: {
               connect: { id },
             },
           })),
@@ -200,9 +212,9 @@ export class RecipesService {
             ingredients: true,
           },
         },
-        recipe_food_allergies: {
+        recipe_dietary_restrictions: {
           include: {
-            food_allergy: true,
+            dietary_restriction: true,
           },
         },
         recipe_notes: {

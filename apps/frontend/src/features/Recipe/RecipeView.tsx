@@ -5,13 +5,14 @@ import axios from "axios";
 import Instructions from "@/features/Recipe/Instructions";
 import IngredientList from "@/features/Recipe/IngredientList";
 import BottomSheet from "../../design-system/components/BottomSheet";
-import FoodAllergies from "./FoodAllergies";
+import DietaryRestrictions from "./DietaryRestrictions";
 import Separator from "../../design-system/components/Separator/Separator";
 import Source from "./Source";
 import ButtonIcon from "@/design-system/components/ButtonIcon/ButtonIcon";
 import Tabs, { Tab } from "@/design-system/components/Tabs";
 
-import { parseFoodAllergiesforFrontend } from "@/utils/food-allergies-utils";
+import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
+import { exportRecipeToPdf } from "@/utils/exportRecipePdf";
 
 import type {
   RecipeType,
@@ -19,7 +20,7 @@ import type {
   SubrecipeRaw,
   IngredientType,
   IngredientRaw,
-  RecipeFoodAllergyRaw,
+  RecipeDietaryRestrictionRaw,
   RecipeNoteRaw,
   RecipeSourceRaw,
   RecipeTagRaw,
@@ -131,7 +132,13 @@ const RecipeView = () => {
           id: id,
           title: recipeData.title,
           ...(recipeData.image_url && { imageUrl: recipeData.image_url }),
-          ...(recipeData.category && { category: recipeData.category }),
+          ...(recipeData.category && {
+            category:
+              locale === "en"
+                ? recipeData.category.name_en
+                : recipeData.category.name_es,
+            categoryId: recipeData.category.id,
+          }),
           ...(recipeData.country && {
             countryOfOrigin:
               locale === "en"
@@ -165,26 +172,37 @@ const RecipeView = () => {
 
           ...(recipeData.servings && { servings: recipeData.servings }),
 
-          ...(recipeData.recipe_food_allergies?.length > 0 && {
-            foodAllergies: recipeData.recipe_food_allergies
-              .map((item: RecipeFoodAllergyRaw) =>
-                parseFoodAllergiesforFrontend(item.food_allergy.name),
+          ...(recipeData.recipe_dietary_restrictions?.length > 0 && {
+            dietaryRestrictions: recipeData.recipe_dietary_restrictions
+              .map((item: RecipeDietaryRestrictionRaw) =>
+                parseDietaryRestrictionsForFrontend(
+                  item.dietary_restriction.name,
+                ),
               )
               .filter(Boolean), // filtra los undefined en caso de valores no reconocidos
           }),
           ...(recipeData.recipe_notes?.length > 0 && {
             notes: recipeData.recipe_notes
-              .sort((a: RecipeNoteRaw, b: RecipeNoteRaw) => a.sort_order - b.sort_order)
+              .sort(
+                (a: RecipeNoteRaw, b: RecipeNoteRaw) =>
+                  a.sort_order - b.sort_order,
+              )
               .map((n: RecipeNoteRaw) => n.content),
           }),
           ...(recipeData.recipe_sources?.length > 0 && {
             source: {
               name: recipeData.recipe_sources
-                .sort((a: RecipeSourceRaw, b: RecipeSourceRaw) => a.sort_order - b.sort_order)
+                .sort(
+                  (a: RecipeSourceRaw, b: RecipeSourceRaw) =>
+                    a.sort_order - b.sort_order,
+                )
                 .map((s: RecipeSourceRaw) => s.name)
                 .filter(Boolean) as string[],
               url: recipeData.recipe_sources
-                .sort((a: RecipeSourceRaw, b: RecipeSourceRaw) => a.sort_order - b.sort_order)
+                .sort(
+                  (a: RecipeSourceRaw, b: RecipeSourceRaw) =>
+                    a.sort_order - b.sort_order,
+                )
                 .map((s: RecipeSourceRaw) => s.url)
                 .filter(Boolean) as string[],
             },
@@ -194,10 +212,18 @@ const RecipeView = () => {
           }),
           ...(recipeData.recipe_subcategories?.length > 0 && {
             subcategories: recipeData.recipe_subcategories
-              .sort((a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) => a.sort_order - b.sort_order)
-              .map((s: RecipeSubcategoryRaw) => s.subcategory.name),
+              .sort(
+                (a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) =>
+                  a.sort_order - b.sort_order,
+              )
+              .map((s: RecipeSubcategoryRaw) =>
+                locale === "en" ? s.subcategory.name_en : s.subcategory.name_es,
+              ),
             subcategoryIds: recipeData.recipe_subcategories
-              .sort((a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) => a.sort_order - b.sort_order)
+              .sort(
+                (a: RecipeSubcategoryRaw, b: RecipeSubcategoryRaw) =>
+                  a.sort_order - b.sort_order,
+              )
               .map((s: RecipeSubcategoryRaw) => s.subcategory_id),
           }),
         };
@@ -239,9 +265,7 @@ const RecipeView = () => {
             label="Descargar receta como PDF"
             size="small"
             variant="primary"
-            onClick={() => {
-              console.log("descargar receta como PDF");
-            }}
+            onClick={() => exportRecipeToPdf(recipe)}
           />
         </div>
       </header>
@@ -298,16 +322,22 @@ const RecipeView = () => {
                   items={[recipe.servings]}
                 />
               )}
+              {recipe.category && (
+                <RecipeInfoItem
+                  icon="ChefHat"
+                  title="Categoría"
+                  items={[recipe.category, ...(recipe.subcategories ?? [])]}
+                />
+              )}
             </div>
 
-            {/* TODO agregar notas
-            TODO agregar categorias y subcategorias */}
+            {/* TODO agregar notas */}
           </div>
 
           <Separator marginY="lg" />
 
-          {recipe.foodAllergies && (
-            <FoodAllergies allergies={recipe.foodAllergies} />
+          {recipe.dietaryRestrictions && (
+            <DietaryRestrictions restrictions={recipe.dietaryRestrictions} />
           )}
         </Tab>
         <Tab value="Receta" label="Receta">

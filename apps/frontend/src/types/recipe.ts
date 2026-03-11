@@ -1,8 +1,8 @@
 import type {
   SubrecipeType,
   SubrecipeRaw,
-  FoodAllergyType,
-  RecipeFoodAllergyRaw,
+  DietaryRestrictionType,
+  RecipeDietaryRestrictionRaw,
 } from "./index";
 
 export type Source = {
@@ -25,7 +25,8 @@ export type RecipeType = {
   id?: string; //when the recipe is created from the frontend it has no id
   title: string;
   imageUrl?: string;
-  category?: string; // e.g. "salado" | "dulce"
+  category?: string; // display name (from API)
+  categoryId?: number; // for form submit
   subcategory?: string; // deprecated, use subcategories
   subcategories?: string[]; // display names (from API)
   subcategoryIds?: number[]; // for form submit
@@ -36,7 +37,7 @@ export type RecipeType = {
   servings?: string;
   notes?: string[];
   source?: Source;
-  foodAllergies?: FoodAllergyType[];
+  dietaryRestrictions?: DietaryRestrictionType[];
   countryOfOrigin?: string; // display name (from API)
   countryId?: number; // for form submit
 };
@@ -71,13 +72,14 @@ export type RecipeSubcategoryRaw = {
   recipe_id: number;
   subcategory_id: number;
   sort_order: number;
-  subcategory: { id: number; name: string };
+  subcategory: { id: number; name_en: string; name_es: string };
 };
 
 export type RecipeRaw = {
   id: number;
   title: string;
-  category: string | null;
+  category_id: number;
+  category?: { id: number; name_en: string; name_es: string };
   country_id: number | null;
   country?: { id: number; name_en: string; name_es: string } | null;
   cooking_time: number | null;
@@ -90,7 +92,7 @@ export type RecipeRaw = {
   updated_at: string;
   deleted_at: string | null;
   subrecipes: SubrecipeRaw[];
-  recipe_food_allergies: RecipeFoodAllergyRaw[];
+  recipe_dietary_restrictions: RecipeDietaryRestrictionRaw[];
   recipe_notes?: RecipeNoteRaw[];
   recipe_sources?: RecipeSourceRaw[];
   recipe_tags?: RecipeTagRaw[];

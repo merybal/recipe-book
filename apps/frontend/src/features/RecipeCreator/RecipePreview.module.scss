@@ -1,6 +1,7 @@
 @use "../../design-system/styles/flex" as *;
 @use "../../design-system/styles/border" as *;
 @use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/font" as *;
 
 .recipe-preview {
   @include Flex($direction: column);
@@ -40,9 +41,31 @@
     }
 
     .notes-list,
-    .instructions-list {
-      margin: 0;
-      padding-left: 1.5rem;
+    .instructions-list,
+    .ingredients-list {
+      @include Font($family: text, $weight: medium);
+      @include Margin($all: none);
+      line-height: 1.5;
+
+      li {
+        @include Font($family: text, $weight: medium);
+      }
+    }
+
+    .instructions-list li {
+      @include Font($align: justify);
+    }
+
+    .ingredients-list {
+      @include Flex($direction: column);
+
+      .ingredient-li {
+        @include Flex($align: center, $gap: xs);
+
+        .ingredient-amount {
+          @include Flex($gap: xxs);
+        }
+      }
     }
   }
 }

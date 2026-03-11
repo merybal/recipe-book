@@ -101,7 +101,7 @@ const recipe: RecipeType = {
       "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
     ],
   },
-  foodAllergies: ["dairyFree", "glutenFree", "vegan", "vegetarian"],
+  dietaryRestrictions: ["dairyFree", "glutenFree", "vegan", "vegetarian"],
 };
 
 const recipes: Array<RecipeStructure> = [

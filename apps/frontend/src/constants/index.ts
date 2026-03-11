@@ -1,2 +1,2 @@
 export * from "./units";
-export * from "./food-allergies";
+export * from "./dietary-restrictions";

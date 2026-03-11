@@ -6,6 +6,13 @@ import { fileURLToPath, URL } from "url";
 export default defineConfig({
   plugins: [react()],
   resolve: { alias: { "@": fileURLToPath(new URL("./src", import.meta.url)) } },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
+  },
   optimizeDeps: {
     include: ["pdfjs-dist/build/pdf.worker.js"],
   },

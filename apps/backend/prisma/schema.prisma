@@ -19,7 +19,8 @@ datasource db {
 model Recipes {
   id                    Int                   @id @default(autoincrement())
   title                 String                @db.VarChar(255)
-  category              String                @db.VarChar(255)
+  category_id           Int
+  category              Categories            @relation(fields: [category_id], references: [id])
   country_id             Int?
   country                Countries?           @relation(fields: [country_id], references: [id])
   cooking_time          Int?                  @db.Integer
@@ -33,7 +34,7 @@ model Recipes {
   updated_at            DateTime              @default(now()) @updatedAt
   deleted_at            DateTime?
   subrecipes             Subrecipes[]
-  recipe_food_allergies  RecipeFoodAllergies[]
+  recipe_dietary_restrictions RecipeDietaryRestrictions[]
   recipe_notes          RecipeNotes[]
   recipe_sources        RecipeSources[]
   recipe_tags           RecipeTags[]
@@ -65,13 +66,13 @@ model Subrecipes {
   ingredients  Ingredients[]
 }
 
-model FoodAllergies {
-  id                    Int                   @id @default(autoincrement())
-  name                  String                @db.VarChar(255)
-  created_at            DateTime              @default(now())
-  updated_at            DateTime              @default(now()) @updatedAt
-  deleted_at            DateTime?
-  recipe_food_allergies RecipeFoodAllergies[]
+model DietaryRestrictions {
+  id                           Int                         @id @default(autoincrement())
+  name                         String                      @unique @db.VarChar(255)
+  created_at                   DateTime                    @default(now())
+  updated_at                   DateTime                    @default(now()) @updatedAt
+  deleted_at                   DateTime?
+  recipe_dietary_restrictions  RecipeDietaryRestrictions[]
 }
 
 model Units {
@@ -87,15 +88,15 @@ model Units {
   ingredient            Ingredients[]
 }
 
-model RecipeFoodAllergies {
-  id              Int           @id @default(autoincrement())
-  recipe_id       Int
-  food_allergy_id Int
-  created_at      DateTime      @default(now())
-  updated_at      DateTime      @default(now()) @updatedAt
-  deleted_at      DateTime?
-  recipe          Recipes       @relation(fields: [recipe_id], references: [id])
-  food_allergy    FoodAllergies @relation(fields: [food_allergy_id], references: [id])
+model RecipeDietaryRestrictions {
+  id                      Int                   @id @default(autoincrement())
+  recipe_id               Int
+  dietary_restriction_id  Int
+  created_at              DateTime              @default(now())
+  updated_at              DateTime              @default(now()) @updatedAt
+  deleted_at              DateTime?
+  recipe                  Recipes               @relation(fields: [recipe_id], references: [id])
+  dietary_restriction     DietaryRestrictions   @relation(fields: [dietary_restriction_id], references: [id])
 }
 
 model RecipeNotes {
@@ -153,13 +154,37 @@ model Countries {
   recipes    Recipes[]
 }
 
+model Categories {
+  id                     Int                    @id @default(autoincrement())
+  name_en                String                 @unique @db.VarChar(255)
+  name_es                String                 @db.VarChar(255)
+  created_at             DateTime               @default(now())
+  updated_at             DateTime               @default(now()) @updatedAt
+  deleted_at             DateTime?
+  recipes                Recipes[]
+  category_subcategories CategorySubcategories[]
+}
+
+model CategorySubcategories {
+  id             Int          @id @default(autoincrement())
+  category_id    Int
+  subcategory_id Int
+  created_at     DateTime     @default(now())
+  category       Categories   @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  subcategory    Subcategories @relation(fields: [subcategory_id], references: [id], onDelete: Cascade)
+
+  @@unique([category_id, subcategory_id])
+}
+
 model Subcategories {
-  id                    Int                   @id @default(autoincrement())
-  name                  String                @unique @db.VarChar(255)
-  created_at            DateTime              @default(now())
-  updated_at            DateTime              @default(now()) @updatedAt
-  deleted_at            DateTime?
-  recipe_subcategories  RecipeSubcategories[]
+  id                     Int                    @id @default(autoincrement())
+  name_en                String                 @unique @db.VarChar(255)
+  name_es                String                 @db.VarChar(255)
+  created_at             DateTime               @default(now())
+  updated_at             DateTime               @default(now()) @updatedAt
+  deleted_at             DateTime?
+  recipe_subcategories   RecipeSubcategories[]
+  category_subcategories CategorySubcategories[]
 }
 
 model RecipeSubcategories {

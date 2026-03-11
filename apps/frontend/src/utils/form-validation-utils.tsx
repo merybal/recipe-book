@@ -13,6 +13,21 @@ export const validateStepCover = (recipe: RecipeType): { title?: string } => {
   return errors;
 };
 
+export const validateCategories = (
+  recipe: RecipeType,
+): Record<string, string> => {
+  const errors: Record<string, string> = {};
+  if (!recipe.categoryId) {
+    errors.category = "La categoría es obligatoria";
+  }
+  const hasSubcategory =
+    (recipe.subcategoryIds ?? []).some((id) => id > 0);
+  if (recipe.categoryId && !hasSubcategory) {
+    errors.subcategories = "Debe seleccionar al menos una subcategoría";
+  }
+  return errors;
+};
+
 export const validateBakingInstructions = (
   recipe: RecipeType,
 ): Record<string, string> => {

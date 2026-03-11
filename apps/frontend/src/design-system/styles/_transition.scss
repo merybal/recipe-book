@@ -1,3 +1,5 @@
+@use "sass:list";
+
 @mixin Transition(
   $properties: (all),
   $duration: 0.3s,
@@ -5,7 +7,7 @@
 ) {
   $list: ();
   @each $p in $properties {
-    $list: append($list, $p $duration $easing, comma);
+    $list: list.append($list, $p $duration $easing, comma);
   }
   transition: $list;
 }

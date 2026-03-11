@@ -1,4 +1,4 @@
-export const FOOD_ALLERGIES = {
+export const DIETARY_RESTRICTIONS = {
   glutenFree: "gluten_free",
   dairyFree: "dairy_free",
   vegan: "vegan",

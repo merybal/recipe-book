@@ -1,8 +1,8 @@
 import { IsInt, IsArray, ArrayNotEmpty } from 'class-validator';
 
-export class AddFoodAllergiesDto {
+export class AddDietaryRestrictionsDto {
   @IsArray()
   @ArrayNotEmpty()
   @IsInt({ each: true })
-  foodAllergyIds: number[];
+  dietaryRestrictionIds: number[];
 }
