@@ -9,10 +9,8 @@ export class DietaryRestrictionsController {
   ) {}
 
   @Post()
-  create(@Body() createDietaryRestrictionDto: CreateDietaryRestrictionDto) {
-    return this.dietaryRestrictionsService.create(
-      createDietaryRestrictionDto.name,
-    );
+  create(@Body() dto: CreateDietaryRestrictionDto) {
+    return this.dietaryRestrictionsService.create(dto);
   }
 
   @Get()

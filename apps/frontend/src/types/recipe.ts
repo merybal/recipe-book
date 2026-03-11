@@ -38,6 +38,8 @@ export type RecipeType = {
   notes?: string[];
   source?: Source;
   dietaryRestrictions?: DietaryRestrictionType[];
+  /** Labels from API (name_es/name_en) - used for display when available */
+  dietaryRestrictionLabels?: Record<DietaryRestrictionType, string>;
   countryOfOrigin?: string; // display name (from API)
   countryId?: number; // for form submit
 };

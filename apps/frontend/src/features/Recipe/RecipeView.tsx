@@ -25,6 +25,7 @@ import type {
   RecipeSourceRaw,
   RecipeTagRaw,
   RecipeSubcategoryRaw,
+  DietaryRestrictionType,
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -172,15 +173,48 @@ const RecipeView = () => {
 
           ...(recipeData.servings && { servings: recipeData.servings }),
 
-          ...(recipeData.recipe_dietary_restrictions?.length > 0 && {
-            dietaryRestrictions: recipeData.recipe_dietary_restrictions
-              .map((item: RecipeDietaryRestrictionRaw) =>
-                parseDietaryRestrictionsForFrontend(
-                  item.dietary_restriction.name,
-                ),
-              )
-              .filter(Boolean), // filtra los undefined en caso de valores no reconocidos
-          }),
+          ...(recipeData.recipe_dietary_restrictions?.length
+            ? (() => {
+                const rdr = recipeData.recipe_dietary_restrictions!;
+                const types = rdr
+                  .map((item: RecipeDietaryRestrictionRaw) =>
+                    parseDietaryRestrictionsForFrontend(
+                      item.dietary_restriction.name,
+                    ),
+                  )
+                  .filter(
+                    (x: DietaryRestrictionType | undefined): x is DietaryRestrictionType =>
+                      x != null,
+                  );
+                const labels = rdr.reduce(
+                  (
+                    acc: Record<DietaryRestrictionType, string>,
+                    item: RecipeDietaryRestrictionRaw,
+                  ) => {
+                    const type = parseDietaryRestrictionsForFrontend(
+                      item.dietary_restriction.name,
+                    );
+                    if (type) {
+                      const dr = item.dietary_restriction as {
+                        name: string;
+                        name_en?: string;
+                        name_es?: string;
+                      };
+                      acc[type] =
+                        locale === "en"
+                          ? dr.name_en ?? dr.name
+                          : dr.name_es ?? dr.name;
+                    }
+                    return acc;
+                  },
+                  {} as Record<DietaryRestrictionType, string>,
+                );
+                return {
+                  dietaryRestrictions: types,
+                  dietaryRestrictionLabels: labels,
+                };
+              })()
+            : {}),
           ...(recipeData.recipe_notes?.length > 0 && {
             notes: recipeData.recipe_notes
               .sort(
@@ -337,7 +371,10 @@ const RecipeView = () => {
           <Separator marginY="lg" />
 
           {recipe.dietaryRestrictions && (
-            <DietaryRestrictions restrictions={recipe.dietaryRestrictions} />
+            <DietaryRestrictions
+              restrictions={recipe.dietaryRestrictions}
+              labels={recipe.dietaryRestrictionLabels}
+            />
           )}
         </Tab>
         <Tab value="Receta" label="Receta">

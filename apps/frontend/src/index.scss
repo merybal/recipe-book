@@ -1,5 +1,5 @@
-@import "./design-system/styles/reset.scss";
-@import "./design-system/styles/base.scss";
+@use "./design-system/styles/reset";
+@use "./design-system/styles/base";
 
 * {
   box-sizing: border-box;

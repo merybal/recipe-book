@@ -550,10 +550,10 @@ async function main() {
   }
 
   const DIETARY_RESTRICTIONS = [
-    { name: 'gluten_free' },
-    { name: 'dairy_free' },
-    { name: 'vegan' },
-    { name: 'vegetarian' },
+    { name: 'gluten_free', name_en: 'Gluten free', name_es: 'Sin gluten' },
+    { name: 'dairy_free', name_en: 'Dairy free', name_es: 'Sin lactosa' },
+    { name: 'vegan', name_en: 'Vegan', name_es: 'Vegano' },
+    { name: 'vegetarian', name_en: 'Vegetarian', name_es: 'Vegetariano' },
   ];
 
   await prisma.dietaryRestrictions.createMany({

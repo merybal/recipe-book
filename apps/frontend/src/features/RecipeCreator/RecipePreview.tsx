@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
-import type { RecipeType, DietaryRestrictionType } from "@/types";
+import type { RecipeType } from "@/types";
 
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
 import Separator from "@/design-system/components/Separator";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 
-const DIETARY_RESTRICTION_LABELS: Record<DietaryRestrictionType, string> = {
-  glutenFree: "Sin gluten",
-  dairyFree: "Sin lactosa",
-  vegetarian: "Vegetariano",
-  vegan: "Vegano",
-};
+import { useDietaryRestrictionLabels } from "@/hooks/useDietaryRestrictionLabels";
 
 const COUNTRY_LABELS: Record<string, string> = {
   argentina: "Argentina",
@@ -54,6 +49,7 @@ const RecipePreview = ({
   onEditAdditionalInfo,
 }: RecipePreviewProps) => {
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
+  const dietaryRestrictionLabels = useDietaryRestrictionLabels();
 
   useEffect(() => {
     const file = coverImageFiles[0];
@@ -234,16 +230,22 @@ const RecipePreview = ({
             <p>{subcategories.join(", ")}</p>
           </div>
         )}
-        {dietaryRestrictions.length > 0 && (
-          <div>
-            <h3>Dietas y restricciones</h3>
-            <p>
-              {dietaryRestrictions
-                .map((r) => DIETARY_RESTRICTION_LABELS[r] ?? r)
-                .join(", ")}
-            </p>
-          </div>
-        )}
+        {dietaryRestrictions.length > 0 && dietaryRestrictionLabels && (() => {
+          const withLabels = dietaryRestrictions.filter(
+            (r) => dietaryRestrictionLabels[r],
+          );
+          if (withLabels.length === 0) return null;
+          return (
+            <div>
+              <h3>Dietas y restricciones</h3>
+              <p>
+                {withLabels
+                  .map((r) => dietaryRestrictionLabels![r])
+                  .join(", ")}
+              </p>
+            </div>
+          );
+        })()}
         {tags.length > 0 && (
           <div>
             <h3>Etiquetas</h3>

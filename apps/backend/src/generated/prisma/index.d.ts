@@ -6220,6 +6220,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMinAggregateOutputType = {
     id: number | null
     name: string | null
+    name_en: string | null
+    name_es: string | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
@@ -6228,6 +6230,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMaxAggregateOutputType = {
     id: number | null
     name: string | null
+    name_en: string | null
+    name_es: string | null
     created_at: Date | null
     updated_at: Date | null
     deleted_at: Date | null
@@ -6236,6 +6240,8 @@ export namespace Prisma {
   export type DietaryRestrictionsCountAggregateOutputType = {
     id: number
     name: number
+    name_en: number
+    name_es: number
     created_at: number
     updated_at: number
     deleted_at: number
@@ -6254,6 +6260,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMinAggregateInputType = {
     id?: true
     name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -6262,6 +6270,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMaxAggregateInputType = {
     id?: true
     name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -6270,6 +6280,8 @@ export namespace Prisma {
   export type DietaryRestrictionsCountAggregateInputType = {
     id?: true
     name?: true
+    name_en?: true
+    name_es?: true
     created_at?: true
     updated_at?: true
     deleted_at?: true
@@ -6365,6 +6377,8 @@ export namespace Prisma {
   export type DietaryRestrictionsGroupByOutputType = {
     id: number
     name: string
+    name_en: string
+    name_es: string
     created_at: Date
     updated_at: Date
     deleted_at: Date | null
@@ -6392,6 +6406,8 @@ export namespace Prisma {
   export type DietaryRestrictionsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
@@ -6402,6 +6418,8 @@ export namespace Prisma {
   export type DietaryRestrictionsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
@@ -6410,6 +6428,8 @@ export namespace Prisma {
   export type DietaryRestrictionsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
@@ -6418,12 +6438,14 @@ export namespace Prisma {
   export type DietaryRestrictionsSelectScalar = {
     id?: boolean
     name?: boolean
+    name_en?: boolean
+    name_es?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
   }
 
-  export type DietaryRestrictionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["dietaryRestrictions"]>
+  export type DietaryRestrictionsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "name_en" | "name_es" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["dietaryRestrictions"]>
   export type DietaryRestrictionsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recipe_dietary_restrictions?: boolean | DietaryRestrictions$recipe_dietary_restrictionsArgs<ExtArgs>
     _count?: boolean | DietaryRestrictionsCountOutputTypeDefaultArgs<ExtArgs>
@@ -6439,6 +6461,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       name: string
+      name_en: string
+      name_es: string
       created_at: Date
       updated_at: Date
       deleted_at: Date | null
@@ -6868,6 +6892,8 @@ export namespace Prisma {
   interface DietaryRestrictionsFieldRefs {
     readonly id: FieldRef<"DietaryRestrictions", 'Int'>
     readonly name: FieldRef<"DietaryRestrictions", 'String'>
+    readonly name_en: FieldRef<"DietaryRestrictions", 'String'>
+    readonly name_es: FieldRef<"DietaryRestrictions", 'String'>
     readonly created_at: FieldRef<"DietaryRestrictions", 'DateTime'>
     readonly updated_at: FieldRef<"DietaryRestrictions", 'DateTime'>
     readonly deleted_at: FieldRef<"DietaryRestrictions", 'DateTime'>
@@ -19781,6 +19807,8 @@ export namespace Prisma {
   export const DietaryRestrictionsScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    name_en: 'name_en',
+    name_es: 'name_es',
     created_at: 'created_at',
     updated_at: 'updated_at',
     deleted_at: 'deleted_at'
@@ -20325,6 +20353,8 @@ export namespace Prisma {
     NOT?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
     id?: IntFilter<"DietaryRestrictions"> | number
     name?: StringFilter<"DietaryRestrictions"> | string
+    name_en?: StringFilter<"DietaryRestrictions"> | string
+    name_es?: StringFilter<"DietaryRestrictions"> | string
     created_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
     updated_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
     deleted_at?: DateTimeNullableFilter<"DietaryRestrictions"> | Date | string | null
@@ -20334,6 +20364,8 @@ export namespace Prisma {
   export type DietaryRestrictionsOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
@@ -20346,6 +20378,8 @@ export namespace Prisma {
     AND?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
     OR?: DietaryRestrictionsWhereInput[]
     NOT?: DietaryRestrictionsWhereInput | DietaryRestrictionsWhereInput[]
+    name_en?: StringFilter<"DietaryRestrictions"> | string
+    name_es?: StringFilter<"DietaryRestrictions"> | string
     created_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
     updated_at?: DateTimeFilter<"DietaryRestrictions"> | Date | string
     deleted_at?: DateTimeNullableFilter<"DietaryRestrictions"> | Date | string | null
@@ -20355,6 +20389,8 @@ export namespace Prisma {
   export type DietaryRestrictionsOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
@@ -20371,6 +20407,8 @@ export namespace Prisma {
     NOT?: DietaryRestrictionsScalarWhereWithAggregatesInput | DietaryRestrictionsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"DietaryRestrictions"> | number
     name?: StringWithAggregatesFilter<"DietaryRestrictions"> | string
+    name_en?: StringWithAggregatesFilter<"DietaryRestrictions"> | string
+    name_es?: StringWithAggregatesFilter<"DietaryRestrictions"> | string
     created_at?: DateTimeWithAggregatesFilter<"DietaryRestrictions"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"DietaryRestrictions"> | Date | string
     deleted_at?: DateTimeNullableWithAggregatesFilter<"DietaryRestrictions"> | Date | string | null
@@ -21384,6 +21422,8 @@ export namespace Prisma {
 
   export type DietaryRestrictionsCreateInput = {
     name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -21393,6 +21433,8 @@ export namespace Prisma {
   export type DietaryRestrictionsUncheckedCreateInput = {
     id?: number
     name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -21401,6 +21443,8 @@ export namespace Prisma {
 
   export type DietaryRestrictionsUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21410,6 +21454,8 @@ export namespace Prisma {
   export type DietaryRestrictionsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21419,6 +21465,8 @@ export namespace Prisma {
   export type DietaryRestrictionsCreateManyInput = {
     id?: number
     name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -21426,6 +21474,8 @@ export namespace Prisma {
 
   export type DietaryRestrictionsUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -21434,6 +21484,8 @@ export namespace Prisma {
   export type DietaryRestrictionsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -22619,6 +22671,8 @@ export namespace Prisma {
   export type DietaryRestrictionsCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -22631,6 +22685,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -22639,6 +22695,8 @@ export namespace Prisma {
   export type DietaryRestrictionsMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    name_en?: SortOrder
+    name_es?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     deleted_at?: SortOrder
@@ -25145,6 +25203,8 @@ export namespace Prisma {
 
   export type DietaryRestrictionsCreateWithoutRecipe_dietary_restrictionsInput = {
     name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -25153,6 +25213,8 @@ export namespace Prisma {
   export type DietaryRestrictionsUncheckedCreateWithoutRecipe_dietary_restrictionsInput = {
     id?: number
     name: string
+    name_en: string
+    name_es: string
     created_at?: Date | string
     updated_at?: Date | string
     deleted_at?: Date | string | null
@@ -25230,6 +25292,8 @@ export namespace Prisma {
 
   export type DietaryRestrictionsUpdateWithoutRecipe_dietary_restrictionsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -25238,6 +25302,8 @@ export namespace Prisma {
   export type DietaryRestrictionsUncheckedUpdateWithoutRecipe_dietary_restrictionsInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    name_en?: StringFieldUpdateOperationsInput | string
+    name_es?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

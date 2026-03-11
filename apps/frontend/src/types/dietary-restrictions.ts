@@ -5,6 +5,8 @@ export type DietaryRestrictionType = keyof typeof DIETARY_RESTRICTIONS;
 export type DietaryRestrictionRaw = {
   id: number;
   name: string;
+  name_en: string;
+  name_es: string;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;

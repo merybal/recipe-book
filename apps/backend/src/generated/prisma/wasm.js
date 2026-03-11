@@ -161,6 +161,8 @@ exports.Prisma.SubrecipesScalarFieldEnum = {
 exports.Prisma.DietaryRestrictionsScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  name_en: 'name_en',
+  name_es: 'name_es',
   created_at: 'created_at',
   updated_at: 'updated_at',
   deleted_at: 'deleted_at'

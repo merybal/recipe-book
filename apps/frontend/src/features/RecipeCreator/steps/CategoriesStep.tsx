@@ -11,20 +11,11 @@ import Separator from "@/design-system/components/Separator";
 import type { RecipeStateType, ErrorStateType } from "@/types";
 import type { DietaryRestrictionType } from "@/types";
 import { useLocale } from "@/hooks/useLocale";
+import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
 
 import styles from "@/features/RecipeCreator/CreateRecipeView.module.scss";
 
 const MAX_SUBCATEGORIES = 3;
-
-const DIETARY_RESTRICTION_OPTIONS: {
-  value: DietaryRestrictionType;
-  label: string;
-}[] = [
-  { value: "glutenFree", label: "Sin gluten" },
-  { value: "dairyFree", label: "Sin lactosa" },
-  { value: "vegetarian", label: "Vegetariano" },
-  { value: "vegan", label: "Vegano" },
-];
 
 type CategoryOption = { value: string; label: string };
 type SubcategoryOption = { value: string; label: string };
@@ -72,6 +63,11 @@ const CategoriesStep = ({
   const [subcategoriesError, setSubcategoriesError] = useState<string | null>(
     null,
   );
+  const [dietaryRestrictionOptions, setDietaryRestrictionOptions] = useState<
+    { value: DietaryRestrictionType; label: string }[]
+  >([]);
+  const [dietaryRestrictionsLoading, setDietaryRestrictionsLoading] =
+    useState(true);
 
   useEffect(() => {
     setCategoriesLoading(true);
@@ -113,6 +109,39 @@ const CategoriesStep = ({
       })
       .finally(() => setSubcategoriesLoading(false));
   }, [locale, recipe.categoryId]);
+
+  useEffect(() => {
+    setDietaryRestrictionsLoading(true);
+    axios
+      .get(`/api/dietary-restrictions`)
+      .then((res) => {
+        const items = parseApiItems(res.data) as Array<{
+          id: number;
+          name: string;
+          name_en?: string;
+          name_es?: string;
+        }>;
+        setDietaryRestrictionOptions(
+          items
+            .map((dr) => {
+              const type = parseDietaryRestrictionsForFrontend(dr.name);
+              if (!type) return null;
+              const label =
+                locale === "en"
+                  ? dr.name_en ?? dr.name
+                  : dr.name_es ?? dr.name;
+              return { value: type, label };
+            })
+            .filter((x): x is { value: DietaryRestrictionType; label: string } =>
+              Boolean(x),
+            ),
+        );
+      })
+      .catch(() => {
+        setDietaryRestrictionOptions([]);
+      })
+      .finally(() => setDietaryRestrictionsLoading(false));
+  }, [locale]);
 
   const handleCategoryChange = (e: { target: { value: string } }) => {
     const value = e.target.value;
@@ -310,8 +339,13 @@ const CategoriesStep = ({
         <p className={styles["step-helper"]}>
           Seleccioná las que correspondan a esta receta.
         </p>
+        {dietaryRestrictionsLoading && (
+          <p className={styles["loading-message"]}>
+            Cargando dietas y restricciones...
+          </p>
+        )}
         <div className={styles["chips-container"]}>
-          {DIETARY_RESTRICTION_OPTIONS.map((option) => {
+          {dietaryRestrictionOptions.map((option) => {
             const isSelected = dietaryRestrictions.includes(option.value);
             return (
               <Chip

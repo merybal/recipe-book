@@ -6,16 +6,20 @@ import { DietaryRestrictions } from '../generated/prisma';
 export class DietaryRestrictionsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(name: string): Promise<DietaryRestrictions> {
+  async create(dto: {
+    name: string;
+    name_en: string;
+    name_es: string;
+  }): Promise<DietaryRestrictions> {
     return this.prisma.dietaryRestrictions.create({
-      data: { name },
+      data: dto,
     });
   }
 
   async getDietaryRestrictions(): Promise<DietaryRestrictions[]> {
     return this.prisma.dietaryRestrictions.findMany({
       where: { deleted_at: null },
-      orderBy: { name: 'asc' },
+      orderBy: { name_es: 'asc' },
     });
   }
 }
