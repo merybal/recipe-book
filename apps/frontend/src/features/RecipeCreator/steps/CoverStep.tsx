@@ -79,6 +79,13 @@ const CoverStep = ({
     }));
   };
 
+  const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRecipe((prev) => ({
+      ...prev,
+      servings: e.target.value,
+    }));
+  };
+
   return (
     <div>
       <section aria-labelledby="cover-section" className={styles.step}>
@@ -103,6 +110,15 @@ const CoverStep = ({
           value={recipe.title}
           onChange={handleTitleChange}
           {...(errors.title && { error: errors.title })}
+        />
+
+        <Input
+          id="servings"
+          label="Rinde"
+          showLabel
+          placeholder="4 porciones"
+          value={recipe.servings ?? ""}
+          onChange={handleServingsChange}
         />
       </section>
 

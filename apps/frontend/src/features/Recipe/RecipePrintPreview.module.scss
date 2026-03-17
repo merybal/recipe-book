@@ -1,0 +1,129 @@
+// Recipe print preview - layout for print/PDF
+@use "../../design-system/styles/font" as *;
+@use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/flex" as *;
+@use "../../design-system/styles/color" as *;
+@use "../../design-system/styles/border" as *;
+
+.page {
+  @include Padding(
+    $left: 4.72rem,
+    $right: 2.36rem,
+    $top: 2.36rem,
+    $bottom: 2.36rem
+  );
+  @include Font($family: text, $size: xs);
+  @include Color($font: black, $bg: white);
+  width: 35rem; // A5 (148mm)
+  min-height: 49.6rem; // A5 (210mm)
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  hyphens: none;
+}
+
+.title {
+  @include Font($size: xl, $weight: bold);
+  @include Color($font: black);
+  @include Margin($bottom: md);
+  margin-top: 0;
+  text-align: center;
+}
+
+.section {
+  @include Margin($top: md);
+}
+
+.sectionWithDivider {
+  @include Margin($top: md);
+  padding-top: 1rem;
+  @include Border($top: (thin, solid, outline));
+}
+
+.ingredientColumns {
+  @include Flex($direction: row);
+  gap: 1.89rem; // 8mm
+}
+
+.ingredientColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+.sectionTitle {
+  @include Font($size: sm, $weight: bold);
+  @include Color($font: black);
+  @include Margin($bottom: md);
+  margin-top: 0;
+  text-align: center;
+}
+
+.subsectionTitle {
+  @include Font($size: xs, $weight: bold);
+  @include Color($font: black);
+  @include Margin($bottom: xs);
+  margin-top: 0;
+}
+
+.infoRow {
+  @include Flex($direction: row);
+  @include Margin($bottom: xxs);
+}
+
+.infoLabel {
+  width: 80px;
+  @include Font($weight: bold);
+  flex-shrink: 0;
+}
+
+.subrecipeBlock {
+  &:not(:last-child) {
+    @include Margin($bottom: lg);
+  }
+}
+
+.ingredientList {
+  list-style: none;
+  @include Margin($all: none);
+  @include Padding($all: none);
+}
+
+.ingredientLine {
+  @include Margin($bottom: xxs);
+}
+
+.instructionList {
+  @include Margin($all: none);
+  @include Padding($all: none);
+  list-style: none;
+  line-height: 1.2;
+}
+
+.instructionStep {
+  @include Flex($direction: row);
+  @include Margin($bottom: xxs);
+}
+
+.instructionNumber {
+  width: 24px;
+  @include Font($weight: bold);
+  flex-shrink: 0;
+}
+
+.instructionText {
+  flex: 1;
+  @include Font($align: justify);
+  line-height: 1.2;
+}
+
+.notesList {
+  @include Margin($all: none);
+  @include Padding($all: none);
+  list-style: none;
+}
+
+.note {
+  @include Margin($bottom: xxs);
+  @include Font($align: justify);
+  font-style: italic;
+}

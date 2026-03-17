@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ import ButtonIcon from "@/design-system/components/ButtonIcon/ButtonIcon";
 import Tabs, { Tab } from "@/design-system/components/Tabs";
 
 import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
-import { exportRecipeToPdf } from "@/utils/exportRecipePdf";
+import { RecipePdfPreview } from "./RecipePdfPreview";
 
 import type {
   RecipeType,
@@ -76,9 +76,11 @@ function RecipeInfoItem({
 
 const RecipeView = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showPdfPreview, setShowPdfPreview] = useState(false);
 
   const isMobile = useIsMobile();
   const locale = useLocale();
@@ -230,15 +232,14 @@ const RecipeView = () => {
                   (a: RecipeSourceRaw, b: RecipeSourceRaw) =>
                     a.sort_order - b.sort_order,
                 )
-                .map((s: RecipeSourceRaw) => s.name)
+                .map((s: RecipeSourceRaw) => s.name ?? "")
                 .filter(Boolean) as string[],
               url: recipeData.recipe_sources
                 .sort(
                   (a: RecipeSourceRaw, b: RecipeSourceRaw) =>
                     a.sort_order - b.sort_order,
                 )
-                .map((s: RecipeSourceRaw) => s.url)
-                .filter(Boolean) as string[],
+                .map((s: RecipeSourceRaw) => s.url ?? null) as (string | null)[],
             },
           }),
           ...(recipeData.recipe_tags?.length > 0 && {
@@ -286,6 +287,15 @@ const RecipeView = () => {
         <h1 className={styles.title}>{recipe.title}</h1>
         <div className={styles["button-container"]}>
           <ButtonIcon
+            icon="Pencil"
+            label="Editar"
+            size="small"
+            variant="primary"
+            onClick={() =>
+              navigate(`/recipes/${id}/edit`, { state: { recipe } })
+            }
+          />
+          <ButtonIcon
             icon="Share2"
             label="Compartir receta"
             size="small"
@@ -295,11 +305,29 @@ const RecipeView = () => {
             }}
           />
           <ButtonIcon
+            icon="FileUp"
+            label="Vista previa PDF"
+            size="small"
+            variant="primary"
+            onClick={() => setShowPdfPreview(true)}
+          />
+          <ButtonIcon
             icon="Download"
             label="Descargar receta como PDF"
             size="small"
             variant="primary"
-            onClick={() => exportRecipeToPdf(recipe)}
+            onClick={async () => {
+              if (!recipe?.id) return;
+              const res = await axios.get(`/api/recipes/${recipe.id}/pdf`, {
+                responseType: "blob",
+              });
+              const url = URL.createObjectURL(res.data);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `${recipe.title.replace(/[^a-z0-9áéíóúñü\s-]/gi, "_")}.pdf`;
+              link.click();
+              URL.revokeObjectURL(url);
+            }}
           />
         </div>
       </header>
@@ -399,6 +427,12 @@ const RecipeView = () => {
         />
       </div>
       {isMobile ? <BottomSheet>{content}</BottomSheet> : <div>{content}</div>}
+      {showPdfPreview && (
+        <RecipePdfPreview
+          recipe={recipe}
+          onClose={() => setShowPdfPreview(false)}
+        />
+      )}
     </>
   );
 };

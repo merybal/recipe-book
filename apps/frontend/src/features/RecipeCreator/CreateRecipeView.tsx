@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import Button from "@/design-system/components/Button";
 import CoverStep from "@/features/RecipeCreator/steps/CoverStep";
@@ -21,6 +21,7 @@ import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
 import styles from "./CreateRecipeView.module.scss";
 import RecipePreview from "./RecipePreview";
+import { RecipePdfPreview } from "@/features/Recipe/RecipePdfPreview";
 
 const recipeExample = {
   title: "Dulce",
@@ -126,6 +127,10 @@ const PREVIEW_STEP_INDEX = 5;
 
 const CreateRecipeView = () => {
   const navigate = useNavigate();
+  const { id: recipeId } = useParams<{ id: string }>();
+  const location = useLocation();
+  const initialRecipe = (location.state as { recipe?: RecipeType })?.recipe;
+
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -157,12 +162,64 @@ const CreateRecipeView = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [showPdfPreview, setShowPdfPreview] = useState(false);
+  const skipNextSyncRef = useRef(false);
   const totalSteps = 6;
 
   const isMobile = useIsMobile();
 
-  const pageTitle =
-    currentStep === 5 ? "Revisá tu receta" : "Creá una nueva receta";
+  const isEditMode = !!recipeId && !!initialRecipe;
+  const pageTitle = isEditMode
+    ? currentStep === 5
+      ? "Revisá los cambios"
+      : "Editá la receta"
+    : currentStep === 5
+      ? "Revisá tu receta"
+      : "Creá una nueva receta";
+
+  // Initialize form when editing (recipe passed via location.state)
+  useEffect(() => {
+    if (!initialRecipe) return;
+    skipNextSyncRef.current = true; // Prevent sync effect from overwriting
+    setCurrentStep(PREVIEW_STEP_INDEX); // Start at preview when editing from RecipeView
+    setRecipe({
+      title: initialRecipe.title,
+      imageUrl: initialRecipe.imageUrl,
+      subrecipes: initialRecipe.subrecipes,
+      bakingInstructions: initialRecipe.bakingInstructions,
+      mold: initialRecipe.mold,
+      servings: initialRecipe.servings,
+      notes: initialRecipe.notes,
+      source: initialRecipe.source,
+      dietaryRestrictions: initialRecipe.dietaryRestrictions,
+      category: initialRecipe.category,
+      categoryId: initialRecipe.categoryId,
+      subcategories: initialRecipe.subcategories,
+      subcategoryIds: initialRecipe.subcategoryIds,
+      tags: initialRecipe.tags,
+    });
+    const hasMultipleOrTitled =
+      initialRecipe.subrecipes.length > 1 ||
+      initialRecipe.subrecipes.some((s) => s.title?.trim());
+    setIsSelected(!!hasMultipleOrTitled);
+    if (hasMultipleOrTitled) {
+      setSubrecipeDrafts(
+        initialRecipe.subrecipes.map((s) => ({
+          title: s.title ?? "",
+          ingredients: s.ingredients ?? [],
+          instructions: s.instructions ?? [],
+        })),
+      );
+    } else {
+      const sub = initialRecipe.subrecipes[0];
+      setSimpleRecipeDraft({
+        ingredientsText: "",
+        ingredients: sub?.ingredients ?? [],
+        instructionsText: "",
+        instructions: sub?.instructions ?? [],
+      });
+    }
+  }, [initialRecipe]);
 
   // TODO remove
   useEffect(() => {
@@ -170,6 +227,10 @@ const CreateRecipeView = () => {
   }, [errors]);
 
   useEffect(() => {
+    if (skipNextSyncRef.current) {
+      skipNextSyncRef.current = false;
+      return;
+    }
     if (isSelected) {
       // When divided into subrecipes, build array from subrecipeDrafts
       const subrecipes = subrecipeDrafts.map((draft) => ({
@@ -292,8 +353,13 @@ const CreateRecipeView = () => {
     setSubmitError(null);
     try {
       const payload = await buildRecipePayload(recipe);
-      const { data } = await axios.post("/api/recipes/full", payload);
-      navigate(`/recipes/${data.id}`);
+      if (isEditMode && recipeId) {
+        await axios.put(`/api/recipes/${recipeId}/full`, payload);
+        navigate(`/recipes/${recipeId}`);
+      } else {
+        const { data } = await axios.post("/api/recipes/full", payload);
+        navigate(`/recipes/${data.id}`);
+      }
     } catch (err) {
       const message =
         axios.isAxiosError(err) && err.response?.data?.message
@@ -333,7 +399,11 @@ const CreateRecipeView = () => {
             inline
             label="Cancelar"
             variant="text"
-            onClick={() => console.log("cancelar")}
+            onClick={() =>
+              isEditMode && recipeId
+                ? navigate(`/recipes/${recipeId}`)
+                : navigate("/")
+            }
           />
           <p className={styles["step-indicator"]}>
             {currentStep + 1} / {totalSteps}
@@ -407,6 +477,7 @@ const CreateRecipeView = () => {
             onEditSubrecipes={() => setCurrentStep(2)}
             onEditCategories={() => setCurrentStep(3)}
             onEditAdditionalInfo={() => setCurrentStep(4)}
+            onPdfPreview={() => setShowPdfPreview(true)}
           />
         )}
 
@@ -451,6 +522,12 @@ const CreateRecipeView = () => {
           )}
         </div>
       </form>
+      {showPdfPreview && (
+        <RecipePdfPreview
+          recipe={recipe}
+          onClose={() => setShowPdfPreview(false)}
+        />
+      )}
     </PageLayout>
   );
 };

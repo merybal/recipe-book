@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { RecipeType } from "@/types";
 
+import { Fragment } from "react";
 import clsx from "clsx";
 import styles from "./RecipePreview.module.scss";
 import Separator from "@/design-system/components/Separator";
@@ -34,6 +35,7 @@ export type RecipePreviewProps = {
   onEditMold?: () => void;
   onEditCategories?: () => void;
   onEditAdditionalInfo?: () => void;
+  onPdfPreview?: () => void;
 };
 
 const RecipePreview = ({
@@ -47,6 +49,7 @@ const RecipePreview = ({
   onEditMold,
   onEditCategories,
   onEditAdditionalInfo,
+  onPdfPreview,
 }: RecipePreviewProps) => {
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
   const dietaryRestrictionLabels = useDietaryRestrictionLabels();
@@ -73,6 +76,17 @@ const RecipePreview = ({
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
+      {onPdfPreview && (
+        <div className={styles["pdf-preview-header"]}>
+          <ButtonIcon
+            icon="FileUp"
+            label="Vista previa PDF"
+            size="small"
+            variant="primary"
+            onClick={onPdfPreview}
+          />
+        </div>
+      )}
       <div className={styles.step}>
         <div className={styles["step-header"]}>
           <h2>Portada</h2>
@@ -95,6 +109,44 @@ const RecipePreview = ({
         <div>
           <h3>Rinde</h3>
           <p>{recipeData.servings ? recipeData.servings : "-"}</p>
+        </div>
+        <div>
+          <h3>Autor</h3>
+          <p>
+            {recipeData.source?.name?.length ? (
+              recipeData.source.name.map((name, i) => (
+                <Fragment key={i}>
+                  {i > 0 && ", "}
+                  {name}
+                </Fragment>
+              ))
+            ) : (
+              "-"
+            )}
+          </p>
+        </div>
+        <div>
+          <h3>Link a la receta original</h3>
+          <p>
+            {recipeData.source?.url?.filter((u) => u)?.length ? (
+              recipeData.source.url
+                .filter((u): u is string => !!u)
+                .map((url, i) => (
+                  <Fragment key={i}>
+                    {i > 0 && ", "}
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {url}
+                    </a>
+                  </Fragment>
+                ))
+            ) : (
+              "-"
+            )}
+          </p>
         </div>
       </div>
 

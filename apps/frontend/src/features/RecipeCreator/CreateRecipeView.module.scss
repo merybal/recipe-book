@@ -66,6 +66,12 @@
     @include Padding($top: xl);
     width: 100%;
     min-width: 0;
+
+    > button,
+    > .submit-container {
+      flex: 1;
+      min-width: 0;
+    }
   }
 
   .step-helper,

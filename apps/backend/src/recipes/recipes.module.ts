@@ -2,8 +2,10 @@ import { Module } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { RecipesController } from './recipes.controller';
 import { PrismaService } from '../prisma/prisma.service';
+import { PdfModule } from '../pdf/pdf.module';
 
 @Module({
+  imports: [PdfModule],
   controllers: [RecipesController],
   providers: [RecipesService, PrismaService],
 })

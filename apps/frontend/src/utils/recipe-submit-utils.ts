@@ -86,17 +86,17 @@ export async function buildRecipePayload(
   const subcategoryIds = (recipe.subcategoryIds ?? []).filter((id) => id > 0);
 
   const source =
-    recipe.source?.name?.length && recipe.source?.url?.length
+    (recipe.source?.name?.length || recipe.source?.url?.length)
       ? Array.from(
           {
-            length: Math.min(
-              recipe.source.name.length,
-              recipe.source.url.length,
+            length: Math.max(
+              recipe.source?.name?.length ?? 0,
+              recipe.source?.url?.length ?? 0,
             ),
           },
           (_, i) => ({
-            name: recipe.source!.name![i]?.trim() || undefined,
-            url: recipe.source!.url![i]?.trim() || undefined,
+            name: recipe.source!.name?.[i]?.trim() || undefined,
+            url: recipe.source!.url?.[i]?.trim() || undefined,
           }),
         ).filter((s) => s.name || s.url)
       : undefined;

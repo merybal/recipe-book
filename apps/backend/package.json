@@ -12,6 +12,10 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
+    "postinstall": "playwright install chromium",
+    "playwright:install": "playwright install chromium",
+    "playwright:install-deps": "playwright install-deps chromium",
+    "pdf:setup": "echo 'Run from backend dir: sudo bash scripts/install-pdf-deps.sh'",
     "prebuild": "prisma generate",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -37,6 +41,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "module-alias": "^2.2.3",
+    "playwright": "^1.58.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

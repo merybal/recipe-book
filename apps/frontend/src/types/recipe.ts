@@ -8,7 +8,7 @@ import type {
 export type Source = {
   // TODO check if this changes when added to backend
   name?: string[];
-  url?: string[];
+  url?: (string | null)[];
 };
 
 export type BakingInstructionsType = {

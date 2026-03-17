@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
@@ -230,6 +230,132 @@ export class RecipesService {
           include: { tag: true },
         },
       },
+    });
+  }
+
+  async updateFullRecipe(recipeId: number, dto: CreateRecipeWithRelationsDto) {
+    const tagIds = await this.getOrCreateTagIds(dto.tags ?? []);
+
+    const existingRecipe = await this.prisma.recipes.findFirst({
+      where: { id: recipeId, deleted_at: null },
+      include: { subrecipes: true },
+    });
+
+    if (!existingRecipe) {
+      throw new NotFoundException('Recipe not found');
+    }
+
+    const subrecipeIds = existingRecipe.subrecipes.map((s) => s.id);
+
+    return this.prisma.$transaction(async (tx) => {
+      await tx.ingredients.deleteMany({
+        where: { subrecipe_id: { in: subrecipeIds } },
+      });
+      await tx.subrecipes.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+      await tx.recipeNotes.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+      await tx.recipeSources.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+      await tx.recipeDietaryRestrictions.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+      await tx.recipeSubcategories.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+      await tx.recipeTags.deleteMany({
+        where: { recipe_id: recipeId },
+      });
+
+      return tx.recipes.update({
+        where: { id: recipeId },
+        data: {
+          title: dto.title,
+          category: { connect: { id: dto.category_id } },
+          ...(dto.country_id != null
+            ? { country: { connect: { id: dto.country_id } } }
+            : { country: { disconnect: true } }),
+          cooking_time: dto.cooking_time,
+          cooking_temperature: dto.cooking_temperature,
+          servings: dto.servings,
+          mold_type: dto.mold_type,
+          mold_size: dto.mold_size,
+          image_url: dto.image_url,
+
+          subrecipes: {
+            create: dto.subrecipes.map((sub) => ({
+              title: sub.title,
+              instructions: sub.instructions,
+              ingredients: {
+                create: sub.ingredients.map((ing) => ({
+                  name: ing.name,
+                  amount: ing.amount,
+                  unit_id: ing.unit_id,
+                })),
+              },
+            })),
+          },
+
+          recipe_dietary_restrictions: {
+            create: dto.dietary_restriction_ids.map((id) => ({
+              dietary_restriction: { connect: { id } },
+            })),
+          },
+
+          recipe_notes: {
+            create: (dto.notes ?? []).map((content, index) => ({
+              content,
+              sort_order: index,
+            })),
+          },
+
+          recipe_sources: {
+            create: (dto.source ?? []).map((item, index) => ({
+              name: item.name,
+              url: item.url,
+              sort_order: index,
+            })),
+          },
+
+          recipe_subcategories: {
+            create: (dto.subcategory_ids ?? []).map((subcategoryId, index) => ({
+              subcategory: { connect: { id: subcategoryId } },
+              sort_order: index,
+            })),
+          },
+
+          recipe_tags: {
+            create: tagIds,
+          },
+        },
+        include: {
+          subrecipes: {
+            include: {
+              ingredients: true,
+            },
+          },
+          recipe_dietary_restrictions: {
+            include: {
+              dietary_restriction: true,
+            },
+          },
+          recipe_notes: {
+            orderBy: { sort_order: 'asc' },
+          },
+          recipe_sources: {
+            orderBy: { sort_order: 'asc' },
+          },
+          recipe_subcategories: {
+            orderBy: { sort_order: 'asc' },
+          },
+          recipe_tags: {
+            include: { tag: true },
+          },
+        },
+      });
     });
   }
 }

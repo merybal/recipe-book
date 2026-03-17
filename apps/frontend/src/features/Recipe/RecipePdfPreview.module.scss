@@ -1,0 +1,50 @@
+@use "../../design-system/styles/color" as *;
+@use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/flex" as *;
+@use "../../design-system/styles/font" as *;
+@use "../../design-system/styles/border" as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  @include Flex($direction: column);
+  @include Color($bg: white);
+}
+
+.header {
+  @include Flex($justify: between, $align: center);
+  @include Padding($x: lg, $y: md);
+  @include Border($bottom: (thin solid outline));
+  flex-shrink: 0;
+}
+
+.title {
+  @include Margin($all: none);
+  @include Font($size: md, $weight: bold);
+}
+
+.close-button {
+  @include Flex($align: center, $justify: center);
+  @include Padding($all: xs);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  @include Border($radius: sm);
+  @include Color($font: secondary-dark);
+
+  &:hover {
+    @include Color($font: primary, $bg: disabled);
+  }
+}
+
+.viewer {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.scrollContent {
+  @include Padding($all: md);
+  @include Color($bg: disabled);
+}

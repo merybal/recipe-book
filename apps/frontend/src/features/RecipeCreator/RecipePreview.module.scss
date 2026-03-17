@@ -6,6 +6,11 @@
 .recipe-preview {
   @include Flex($direction: column);
 
+  .pdf-preview-header {
+    @include Flex($justify: flex-end);
+    @include Margin($bottom: lg);
+  }
+
   .step {
     @include Flex($direction: column, $gap: lg);
 
