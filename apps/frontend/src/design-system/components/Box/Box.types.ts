@@ -1,4 +1,4 @@
-import type { ReactNode, ElementType } from "react";
+import type { ReactNode, ElementType, CSSProperties } from "react";
 import type {
   SpacingValue,
   ColorValue,
@@ -12,6 +12,9 @@ import type {
 // Re-export token types for consumers
 export type { SpacingValue, ColorValue, BorderRadiusValue } from "../../styles/tokens";
 export type { FlexDirection, JustifyContent, AlignItems, FlexWrap } from "../../styles/tokens";
+
+/** Token (none, xxs, xs, sm, md, lg, xl, xxl) or custom value (e.g. "6rem", "1.5rem") */
+export type SpacingOrCustom = SpacingValue | string;
 
 export type BoxProps = {
   children?: ReactNode;
@@ -31,37 +34,37 @@ export type BoxProps = {
   /** Flex wrap */
   wrap?: FlexWrap;
   /** Gap between children */
-  gap?: SpacingValue;
+  gap?: SpacingOrCustom;
   /** Background color (app color token) */
   backgroundColor?: ColorValue;
   /** Padding (all sides) */
-  padding?: SpacingValue;
+  padding?: SpacingOrCustom;
   /** Horizontal padding */
-  paddingX?: SpacingValue;
+  paddingX?: SpacingOrCustom;
   /** Vertical padding */
-  paddingY?: SpacingValue;
+  paddingY?: SpacingOrCustom;
   /** Padding top */
-  paddingTop?: SpacingValue;
+  paddingTop?: SpacingOrCustom;
   /** Padding bottom */
-  paddingBottom?: SpacingValue;
+  paddingBottom?: SpacingOrCustom;
   /** Padding left */
-  paddingLeft?: SpacingValue;
+  paddingLeft?: SpacingOrCustom;
   /** Padding right */
-  paddingRight?: SpacingValue;
+  paddingRight?: SpacingOrCustom;
   /** Margin (all sides) */
-  margin?: SpacingValue;
+  margin?: SpacingOrCustom;
   /** Horizontal margin */
-  marginX?: SpacingValue;
+  marginX?: SpacingOrCustom;
   /** Vertical margin */
-  marginY?: SpacingValue;
+  marginY?: SpacingOrCustom;
   /** Margin top */
-  marginTop?: SpacingValue;
+  marginTop?: SpacingOrCustom;
   /** Margin bottom */
-  marginBottom?: SpacingValue;
+  marginBottom?: SpacingOrCustom;
   /** Margin left */
-  marginLeft?: SpacingValue;
+  marginLeft?: SpacingOrCustom;
   /** Margin right */
-  marginRight?: SpacingValue;
+  marginRight?: SpacingOrCustom;
   /** Flex grow (0 = no grow, 1 = grow) */
   grow?: 0 | 1;
   /** Flex shrink (0 = no shrink) */
@@ -78,4 +81,6 @@ export type BoxProps = {
   id?: string;
   /** ARIA role attribute */
   role?: string;
+  /** Inline styles (merged with custom spacing values) */
+  style?: CSSProperties;
 };

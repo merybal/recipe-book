@@ -17,6 +17,41 @@ const getDisplayClass = (flex: boolean | undefined, inline: boolean | undefined)
   return inline ? styles["box-inline-block"] : styles["box-block"];
 };
 
+const isCustomSpacing = (v: unknown): v is string =>
+  typeof v === "string" && v.length > 0 && !isSpacingValue(v);
+
+const buildSpacingStyle = (props: BoxProps): React.CSSProperties => {
+  const s: React.CSSProperties = {};
+  if (isCustomSpacing(props.padding)) s.padding = props.padding;
+  if (isCustomSpacing(props.paddingTop)) s.paddingTop = props.paddingTop;
+  if (isCustomSpacing(props.paddingBottom)) s.paddingBottom = props.paddingBottom;
+  if (isCustomSpacing(props.paddingLeft)) s.paddingLeft = props.paddingLeft;
+  if (isCustomSpacing(props.paddingRight)) s.paddingRight = props.paddingRight;
+  if (isCustomSpacing(props.paddingX)) {
+    s.paddingLeft = props.paddingX;
+    s.paddingRight = props.paddingX;
+  }
+  if (isCustomSpacing(props.paddingY)) {
+    s.paddingTop = props.paddingY;
+    s.paddingBottom = props.paddingY;
+  }
+  if (isCustomSpacing(props.margin)) s.margin = props.margin;
+  if (isCustomSpacing(props.marginTop)) s.marginTop = props.marginTop;
+  if (isCustomSpacing(props.marginBottom)) s.marginBottom = props.marginBottom;
+  if (isCustomSpacing(props.marginLeft)) s.marginLeft = props.marginLeft;
+  if (isCustomSpacing(props.marginRight)) s.marginRight = props.marginRight;
+  if (isCustomSpacing(props.marginX)) {
+    s.marginLeft = props.marginX;
+    s.marginRight = props.marginX;
+  }
+  if (isCustomSpacing(props.marginY)) {
+    s.marginTop = props.marginY;
+    s.marginBottom = props.marginY;
+  }
+  if (isCustomSpacing(props.gap)) s.gap = props.gap;
+  return s;
+};
+
 const Box = ({
   as: Component = "div",
   children,
@@ -51,8 +86,27 @@ const Box = ({
   borderRadius,
   id,
   role,
+  style: styleProp,
   ...rest
 }: BoxProps) => {
+  const spacingStyle = buildSpacingStyle({
+    padding,
+    paddingX,
+    paddingY,
+    paddingTop,
+    paddingBottom,
+    paddingLeft,
+    paddingRight,
+    margin,
+    marginX,
+    marginY,
+    marginTop,
+    marginBottom,
+    marginLeft,
+    marginRight,
+    gap,
+  });
+
   const useFlex =
     flex === true ||
     direction != null ||
@@ -96,6 +150,11 @@ const Box = ({
         borderRadius && isBorderRadiusValue(borderRadius) && styles[`radius-${borderRadius}`],
         className
       )}
+      style={
+        Object.keys(spacingStyle).length > 0 || styleProp
+          ? { ...spacingStyle, ...styleProp }
+          : undefined
+      }
       title={title}
       {...rest}
     >

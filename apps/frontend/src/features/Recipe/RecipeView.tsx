@@ -12,7 +12,6 @@ import ButtonIcon from "@/design-system/components/ButtonIcon/ButtonIcon";
 import Tabs, { Tab } from "@/design-system/components/Tabs";
 
 import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
-import { RecipePdfPreview } from "./RecipePdfPreview";
 
 import type {
   RecipeType,
@@ -32,6 +31,8 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { useLocale } from "@/hooks/useLocale";
 
 import type { IconName } from "@/design-system/components/Icon";
+
+import DefaultRecipeImage from "@/assets/savory-recipe-default.jpg";
 
 import styles from "./RecipeView.module.scss";
 import Icon from "@/design-system/components/Icon/Icon";
@@ -80,7 +81,6 @@ const RecipeView = () => {
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showPdfPreview, setShowPdfPreview] = useState(false);
 
   const isMobile = useIsMobile();
   const locale = useLocale();
@@ -312,13 +312,6 @@ const RecipeView = () => {
             }}
           />
           <ButtonIcon
-            icon="FileUp"
-            label="Vista previa PDF"
-            size="small"
-            variant="primary"
-            onClick={() => setShowPdfPreview(true)}
-          />
-          <ButtonIcon
             icon="Download"
             label="Descargar receta como PDF"
             size="small"
@@ -424,22 +417,21 @@ const RecipeView = () => {
   return (
     <>
       <div className={styles["image-container"]}>
+        <ButtonIcon
+          className={styles["back-button"]}
+          icon="ArrowLeft"
+          label="Volver"
+          size="small"
+          variant="primary"
+          onClick={() => navigate("/")}
+        />
         <img
           className={styles["recipe-image"]}
-          src={
-            recipe.imageUrl ??
-            "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg"
-          }
+          src={recipe.imageUrl ?? DefaultRecipeImage}
           alt={recipe.title}
         />
       </div>
       {isMobile ? <BottomSheet>{content}</BottomSheet> : <div>{content}</div>}
-      {showPdfPreview && (
-        <RecipePdfPreview
-          recipe={recipe}
-          onClose={() => setShowPdfPreview(false)}
-        />
-      )}
     </>
   );
 };

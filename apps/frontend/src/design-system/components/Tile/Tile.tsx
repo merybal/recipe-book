@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import clsx from "clsx";
 
 import Box from "@/design-system/components/Box";
@@ -25,20 +26,38 @@ const Tile = ({
   title,
   variant = "rectangle",
 }: TileProps) => {
+  const sourceNames =
+    source?.name?.filter((n) => n?.trim()) ?? [];
+
   return (
     <Box
-      className={clsx(styles.tile, { [styles[`${variant}`]]: variant }, className)}
+      className={clsx(
+        styles.tile,
+        { [styles[`${variant}`]]: variant },
+        className,
+      )}
       direction="column"
+      flex
     >
-      <Box className={clsx({ [styles[`${variant}-image`]]: variant })}>
+      <Box
+        borderRadius="lg"
+        className={clsx({ [styles[`${variant}-image`]]: variant })}
+      >
         <img className={styles["recipe-image"]} src={imageUrl} alt="" />
       </Box>
-      <Box className={styles["text-container"]}>
-        <Box direction="column">
+      <Box className={styles["text-container"]} flex>
+        <Box direction="column" flex>
           <h3 className={styles.title}>{title}</h3>
-          {source && source.name?.length && (
-            <p className={styles.subtitle}>{source.name.join(" & ")}</p>
-          )}
+          {sourceNames.length > 0 ? (
+            <div className={styles.subtitle}>
+              {sourceNames.map((name, i) => (
+                <Fragment key={i}>
+                  <span>{name}</span>
+                  {i < sourceNames.length - 1 && <span>•</span>}
+                </Fragment>
+              ))}
+            </div>
+          ) : null}
         </Box>
         {restrictions && restrictions.length > 0 && (
           <DietaryRestrictions

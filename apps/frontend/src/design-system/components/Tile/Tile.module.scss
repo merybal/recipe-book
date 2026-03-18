@@ -1,13 +1,11 @@
 @use "../../styles/spacing" as *;
 @use "../../styles/font" as *;
 @use "../../styles/color" as *;
-@use "../../styles/border" as *;
 @use "../../styles/flex" as *;
 
 .tile {
   .square-image {
     // TODO unfinished
-    @include Border($radius: 1rem);
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
@@ -16,7 +14,6 @@
 
   .rectangle-image {
     @include Margin($bottom: md);
-    @include Border($radius: 1rem);
     width: 100%;
     height: auto;
     aspect-ratio: 2 / 1;
@@ -39,7 +36,8 @@
     }
 
     .subtitle {
-      @include Font($size: xs);
+      @include Flex($gap: xs, $align: center);
+      @include Font($family: text, $size: sm, $weight: medium);
       @include Color($font: secondary-text);
       text-wrap: wrap;
     }

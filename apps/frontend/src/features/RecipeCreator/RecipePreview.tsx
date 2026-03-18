@@ -36,7 +36,6 @@ export type RecipePreviewProps = {
   onEditMold?: () => void;
   onEditCategories?: () => void;
   onEditAdditionalInfo?: () => void;
-  onPdfPreview?: () => void;
 };
 
 const RecipePreview = ({
@@ -50,7 +49,6 @@ const RecipePreview = ({
   onEditMold,
   onEditCategories,
   onEditAdditionalInfo,
-  onPdfPreview,
 }: RecipePreviewProps) => {
   const [coverPreviewUrl, setCoverPreviewUrl] = useState<string | null>(null);
   const dietaryRestrictionLabels = useDietaryRestrictionLabels();
@@ -78,17 +76,6 @@ const RecipePreview = ({
 
   return (
     <div className={clsx(styles["recipe-preview"], className)}>
-      {onPdfPreview && (
-        <div className={styles["pdf-preview-header"]}>
-          <ButtonIcon
-            icon="FileUp"
-            label="Vista previa PDF"
-            size="small"
-            variant="primary"
-            onClick={onPdfPreview}
-          />
-        </div>
-      )}
       <div className={styles.step}>
         <div className={styles["step-header"]}>
           <h2>Portada</h2>

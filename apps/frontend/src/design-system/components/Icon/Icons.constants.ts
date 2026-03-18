@@ -1,6 +1,7 @@
 // library: https://lucide.dev/
 import {
   AlarmClock,
+  ArrowLeft,
   Carrot,
   Check,
   ChefHat,
@@ -16,6 +17,7 @@ import {
   ExternalLink,
   File,
   FileUp,
+  Home,
   Hourglass,
   Image,
   ImagePlus,
@@ -39,6 +41,7 @@ import {
 
 export const iconMap = {
   AlarmClock,
+  ArrowLeft,
   Carrot,
   Check,
   Cylinder,
@@ -54,6 +57,7 @@ export const iconMap = {
   ExternalLink,
   File,
   FileUp,
+  Home,
   Hourglass,
   Image,
   ImagePlus,

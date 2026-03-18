@@ -19,6 +19,7 @@ h5 {
 
 h1 {
   @include Font($size: xl);
+  line-height: 1.3;
 }
 
 h2 {

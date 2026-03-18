@@ -22,7 +22,6 @@ import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
 import styles from "./CreateRecipeView.module.scss";
 import RecipePreview from "./RecipePreview";
-import { RecipePdfPreview } from "@/features/Recipe/RecipePdfPreview";
 
 const recipeExample = {
   title: "Dulce",
@@ -165,7 +164,6 @@ const CreateRecipeView = () => {
   const [files, setFiles] = useState<File[]>([]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showPdfPreview, setShowPdfPreview] = useState(false);
   const skipNextSyncRef = useRef(false);
   const totalSteps = 6;
 
@@ -540,7 +538,6 @@ const CreateRecipeView = () => {
               setEditingFromPreview(4);
               setCurrentStep(4);
             }}
-            onPdfPreview={() => setShowPdfPreview(true)}
           />
         )}
 
@@ -585,12 +582,6 @@ const CreateRecipeView = () => {
           )}
         </div>
       </form>
-      {showPdfPreview && (
-        <RecipePdfPreview
-          recipe={recipe}
-          onClose={() => setShowPdfPreview(false)}
-        />
-      )}
     </PageLayout>
   );
 };

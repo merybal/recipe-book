@@ -7,10 +7,10 @@ import type { DietaryRestrictionType } from "@/types";
 
 import styles from "./HomeView.module.scss";
 import TileGrid from "@/features/Home/TileGrid";
-import MultipleEditableFields from "@/design-system/components/MultipleEditableFields";
+import BottomNav from "@/design-system/components/BottomNav";
+import Box from "@/design-system/components/Box";
 import { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
 import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
-import Button from "@/design-system/components/Button";
 
 const HomeView = () => {
   const navigate = useNavigate();
@@ -28,6 +28,11 @@ const HomeView = () => {
             recipe_dietary_restrictions?: Array<{
               dietary_restriction: { name: string };
             }>;
+            recipe_sources?: Array<{
+              name: string | null;
+              url: string | null;
+              sort_order: number;
+            }>;
           }) => ({
             id: r.id,
             title: r.title,
@@ -38,9 +43,20 @@ const HomeView = () => {
                   rdr.dietary_restriction.name,
                 ),
               )
-              .filter(
-                (dr): dr is DietaryRestrictionType => dr !== undefined,
-              ),
+              .filter((dr): dr is DietaryRestrictionType => dr !== undefined),
+            ...(r.recipe_sources?.length
+              ? {
+                  source: {
+                    name: r.recipe_sources
+                      .sort((a, b) => a.sort_order - b.sort_order)
+                      .map((s) => s.name ?? "")
+                      .filter(Boolean) as string[],
+                    url: r.recipe_sources
+                      .sort((a, b) => a.sort_order - b.sort_order)
+                      .map((s) => s.url ?? null) as (string | null)[],
+                  },
+                }
+              : {}),
           }),
         );
         setRecipePreviews(mappedData);
@@ -97,20 +113,37 @@ const HomeView = () => {
     );
   };
 
-  return (
-    <div className={clsx(styles.home)}>
-      <Button
-        label="Agregar receta"
-        onClick={() => navigate("/create-recipe")}
-      />
-      <TileGrid previewData={recipePreviews} />
+  const bottomNavItems = [
+    {
+      id: "home",
+      label: "Home",
+      icon: "Home" as const,
+      onClick: () => navigate("/"),
+    },
+    {
+      id: "add",
+      label: "Agregar receta",
+      icon: "Plus" as const,
+      onClick: () => navigate("/create-recipe"),
+    },
+  ];
 
-      <MultipleEditableFields
-        fields={fields}
-        singleLabel="Datos de usuario"
-        onChange={handleFieldsChange}
+  return (
+    <Box
+      className={clsx(styles.home)}
+      padding="lg"
+      flex
+      direction="column"
+      gap="lg"
+      paddingBottom="8rem"
+    >
+      <TileGrid previewData={recipePreviews} />
+      <BottomNav
+        items={bottomNavItems}
+        activeItemId="home"
+        centerItemIndex={1}
       />
-    </div>
+    </Box>
   );
 };
 

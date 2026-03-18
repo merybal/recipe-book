@@ -3,6 +3,7 @@ import Box from "./Box";
 export type {
   BoxProps,
   SpacingValue,
+  SpacingOrCustom,
   ColorValue,
   FlexDirection,
   JustifyContent,

@@ -5,9 +5,17 @@
 @use "../../design-system/styles/border" as *;
 
 .image-container {
+  position: relative;
   width: 100%;
   height: 45vh;
   overflow: hidden;
+
+  .back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1;
+  }
 
   .recipe-image {
     width: 100%;
