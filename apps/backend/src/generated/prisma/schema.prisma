@@ -29,6 +29,7 @@ model Recipes {
   mold_type                   String?                     @db.VarChar(255)
   mold_size                   String?                     @db.VarChar(255)
   image_url                   String?                     @db.VarChar(255)
+  introduction                String?                     @db.Text
   is_test                     Boolean                     @default(false)
   created_at                  DateTime                    @default(now())
   updated_at                  DateTime                    @default(now()) @updatedAt

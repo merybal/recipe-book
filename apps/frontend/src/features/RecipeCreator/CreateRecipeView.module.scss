@@ -134,9 +134,26 @@
     @include Flex($direction: column, $gap: md);
   }
 
-  /* Sources (reuses notes-container, note-item) */
+  /* Sources (reuses notes-container) */
   .source-subsection {
     @include Flex($direction: column, $gap: sm);
+  }
+
+  .source-row {
+    @include Flex($align: start, $gap: sm);
+
+    > *:not(.note-remove-button) {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .note-remove-button {
+      @include Margin($top: 0);
+    }
+
+    &.source-row--first .note-remove-button {
+      @include Margin($top: 2rem);
+    }
   }
 
   .source-subsection-title {

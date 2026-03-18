@@ -2490,6 +2490,7 @@ export namespace Prisma {
     mold_type: string | null
     mold_size: string | null
     image_url: string | null
+    introduction: string | null
     is_test: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -2507,6 +2508,7 @@ export namespace Prisma {
     mold_type: string | null
     mold_size: string | null
     image_url: string | null
+    introduction: string | null
     is_test: boolean | null
     created_at: Date | null
     updated_at: Date | null
@@ -2524,6 +2526,7 @@ export namespace Prisma {
     mold_type: number
     mold_size: number
     image_url: number
+    introduction: number
     is_test: number
     created_at: number
     updated_at: number
@@ -2557,6 +2560,7 @@ export namespace Prisma {
     mold_type?: true
     mold_size?: true
     image_url?: true
+    introduction?: true
     is_test?: true
     created_at?: true
     updated_at?: true
@@ -2574,6 +2578,7 @@ export namespace Prisma {
     mold_type?: true
     mold_size?: true
     image_url?: true
+    introduction?: true
     is_test?: true
     created_at?: true
     updated_at?: true
@@ -2591,6 +2596,7 @@ export namespace Prisma {
     mold_type?: true
     mold_size?: true
     image_url?: true
+    introduction?: true
     is_test?: true
     created_at?: true
     updated_at?: true
@@ -2695,6 +2701,7 @@ export namespace Prisma {
     mold_type: string | null
     mold_size: string | null
     image_url: string | null
+    introduction: string | null
     is_test: boolean
     created_at: Date
     updated_at: Date
@@ -2731,6 +2738,7 @@ export namespace Prisma {
     mold_type?: boolean
     mold_size?: boolean
     image_url?: boolean
+    introduction?: boolean
     is_test?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -2757,6 +2765,7 @@ export namespace Prisma {
     mold_type?: boolean
     mold_size?: boolean
     image_url?: boolean
+    introduction?: boolean
     is_test?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -2776,6 +2785,7 @@ export namespace Prisma {
     mold_type?: boolean
     mold_size?: boolean
     image_url?: boolean
+    introduction?: boolean
     is_test?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -2795,13 +2805,14 @@ export namespace Prisma {
     mold_type?: boolean
     mold_size?: boolean
     image_url?: boolean
+    introduction?: boolean
     is_test?: boolean
     created_at?: boolean
     updated_at?: boolean
     deleted_at?: boolean
   }
 
-  export type RecipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "category_id" | "country_id" | "cooking_time" | "cooking_temperature" | "servings" | "mold_type" | "mold_size" | "image_url" | "is_test" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipes"]>
+  export type RecipesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "category_id" | "country_id" | "cooking_time" | "cooking_temperature" | "servings" | "mold_type" | "mold_size" | "image_url" | "introduction" | "is_test" | "created_at" | "updated_at" | "deleted_at", ExtArgs["result"]["recipes"]>
   export type RecipesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoriesDefaultArgs<ExtArgs>
     country?: boolean | Recipes$countryArgs<ExtArgs>
@@ -2845,6 +2856,7 @@ export namespace Prisma {
       mold_type: string | null
       mold_size: string | null
       image_url: string | null
+      introduction: string | null
       is_test: boolean
       created_at: Date
       updated_at: Date
@@ -3290,6 +3302,7 @@ export namespace Prisma {
     readonly mold_type: FieldRef<"Recipes", 'String'>
     readonly mold_size: FieldRef<"Recipes", 'String'>
     readonly image_url: FieldRef<"Recipes", 'String'>
+    readonly introduction: FieldRef<"Recipes", 'String'>
     readonly is_test: FieldRef<"Recipes", 'Boolean'>
     readonly created_at: FieldRef<"Recipes", 'DateTime'>
     readonly updated_at: FieldRef<"Recipes", 'DateTime'>
@@ -19764,6 +19777,7 @@ export namespace Prisma {
     mold_type: 'mold_type',
     mold_size: 'mold_size',
     image_url: 'image_url',
+    introduction: 'introduction',
     is_test: 'is_test',
     created_at: 'created_at',
     updated_at: 'updated_at',
@@ -20089,6 +20103,7 @@ export namespace Prisma {
     mold_type?: StringNullableFilter<"Recipes"> | string | null
     mold_size?: StringNullableFilter<"Recipes"> | string | null
     image_url?: StringNullableFilter<"Recipes"> | string | null
+    introduction?: StringNullableFilter<"Recipes"> | string | null
     is_test?: BoolFilter<"Recipes"> | boolean
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
@@ -20114,6 +20129,7 @@ export namespace Prisma {
     mold_type?: SortOrderInput | SortOrder
     mold_size?: SortOrderInput | SortOrder
     image_url?: SortOrderInput | SortOrder
+    introduction?: SortOrderInput | SortOrder
     is_test?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -20142,6 +20158,7 @@ export namespace Prisma {
     mold_type?: StringNullableFilter<"Recipes"> | string | null
     mold_size?: StringNullableFilter<"Recipes"> | string | null
     image_url?: StringNullableFilter<"Recipes"> | string | null
+    introduction?: StringNullableFilter<"Recipes"> | string | null
     is_test?: BoolFilter<"Recipes"> | boolean
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
@@ -20167,6 +20184,7 @@ export namespace Prisma {
     mold_type?: SortOrderInput | SortOrder
     mold_size?: SortOrderInput | SortOrder
     image_url?: SortOrderInput | SortOrder
+    introduction?: SortOrderInput | SortOrder
     is_test?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -20192,6 +20210,7 @@ export namespace Prisma {
     mold_type?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
     mold_size?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
     image_url?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
+    introduction?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
     is_test?: BoolWithAggregatesFilter<"Recipes"> | boolean
     created_at?: DateTimeWithAggregatesFilter<"Recipes"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Recipes"> | Date | string
@@ -21144,6 +21163,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21169,6 +21189,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21189,6 +21210,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21214,6 +21236,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21237,6 +21260,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -21251,6 +21275,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21268,6 +21293,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22365,6 +22391,7 @@ export namespace Prisma {
     mold_type?: SortOrder
     mold_size?: SortOrder
     image_url?: SortOrder
+    introduction?: SortOrder
     is_test?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -22389,6 +22416,7 @@ export namespace Prisma {
     mold_type?: SortOrder
     mold_size?: SortOrder
     image_url?: SortOrder
+    introduction?: SortOrder
     is_test?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -22406,6 +22434,7 @@ export namespace Prisma {
     mold_type?: SortOrder
     mold_size?: SortOrder
     image_url?: SortOrder
+    introduction?: SortOrder
     is_test?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -24908,6 +24937,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -24932,6 +24962,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -24996,6 +25027,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25020,6 +25052,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25155,6 +25188,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25179,6 +25213,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25238,6 +25273,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25262,6 +25298,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25311,6 +25348,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25335,6 +25373,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25370,6 +25409,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25394,6 +25434,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25454,6 +25495,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25478,6 +25520,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25533,6 +25576,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25557,6 +25601,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25602,6 +25647,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25626,6 +25672,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25661,6 +25708,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25685,6 +25733,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25704,6 +25753,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25727,6 +25777,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25779,6 +25830,7 @@ export namespace Prisma {
     mold_type?: StringNullableFilter<"Recipes"> | string | null
     mold_size?: StringNullableFilter<"Recipes"> | string | null
     image_url?: StringNullableFilter<"Recipes"> | string | null
+    introduction?: StringNullableFilter<"Recipes"> | string | null
     is_test?: BoolFilter<"Recipes"> | boolean
     created_at?: DateTimeFilter<"Recipes"> | Date | string
     updated_at?: DateTimeFilter<"Recipes"> | Date | string
@@ -25793,6 +25845,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -25816,6 +25869,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26097,6 +26151,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26121,6 +26176,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26180,6 +26236,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26204,6 +26261,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26603,6 +26661,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26617,6 +26676,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26640,6 +26700,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26662,6 +26723,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26678,6 +26740,7 @@ export namespace Prisma {
     mold_type?: string | null
     mold_size?: string | null
     image_url?: string | null
+    introduction?: string | null
     is_test?: boolean
     created_at?: Date | string
     updated_at?: Date | string
@@ -26698,6 +26761,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26721,6 +26785,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26743,6 +26808,7 @@ export namespace Prisma {
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
     mold_size?: NullableStringFieldUpdateOperationsInput | string | null
     image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    introduction?: NullableStringFieldUpdateOperationsInput | string | null
     is_test?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string

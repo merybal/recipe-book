@@ -131,6 +131,7 @@ exports.Prisma.RecipesScalarFieldEnum = {
   mold_type: 'mold_type',
   mold_size: 'mold_size',
   image_url: 'image_url',
+  introduction: 'introduction',
   is_test: 'is_test',
   created_at: 'created_at',
   updated_at: 'updated_at',

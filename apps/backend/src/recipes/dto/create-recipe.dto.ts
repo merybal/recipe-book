@@ -32,6 +32,10 @@ export class CreateRecipeDto {
   mold_size?: string;
 
   @IsOptional()
+  @IsString()
+  introduction?: string;
+
+  @IsOptional()
   @IsUrl()
   image_url?: string;
 }

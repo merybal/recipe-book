@@ -107,10 +107,14 @@ const RecipePreview = ({
           <h3>Título</h3>
           <p>{recipeData.title}</p>
         </div>
-        <div>
-          <h3>Rinde</h3>
-          <p>{recipeData.servings ? recipeData.servings : "-"}</p>
-        </div>
+        {recipeData.introduction && (
+          <div>
+            <h3>Introducción</h3>
+            <p className={styles["introduction-text"]}>
+              {recipeData.introduction}
+            </p>
+          </div>
+        )}
         <div>
           <h3>
             {(recipeData.source?.name?.filter(Boolean).length ?? 0) === 1
@@ -179,6 +183,10 @@ const RecipePreview = ({
         <div>
           <h3>Tamaño</h3>
           <p>{recipeData.mold?.size ? recipeData.mold.size : "-"}</p>
+        </div>
+        <div>
+          <h3>Rinde</h3>
+          <p>{recipeData.servings ? recipeData.servings : "-"}</p>
         </div>
       </div>
 

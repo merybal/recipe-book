@@ -5,6 +5,7 @@
 
 export type RecipePdfData = {
   title: string;
+  introduction?: string;
   servings?: string;
   bakingInfo?: string;
   mold?: string;
@@ -99,7 +100,7 @@ const DIETARY_ICON_KEY: Record<string, string> = {
   vegetarian: 'carrot',
 };
 
-function iconSvg(name: string, size = 14): string {
+function iconSvg(name: string, size = 12): string {
   const path = ICON_SVG[name];
   if (!path) return '';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
@@ -213,11 +214,16 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
   }
 
   let preparationHtml = '';
-  if (hasInstructions) {
+  const hasIntroduction = !!recipe.introduction?.trim();
+  if (hasInstructions || hasIntroduction) {
+    const introductionBlock = recipe.introduction
+      ? `<p class="introduction">${escapeHtml(recipe.introduction).replace(/\n/g, '<br>')}</p>`
+      : '';
     preparationHtml = `
       <div class="section-divider" data-pdf-divider></div>
       <section class="section">
         <h2 class="section-title">Preparación</h2>
+        ${introductionBlock}
         ${recipe.subrecipes
           .map(
             (sr) => `
@@ -299,7 +305,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       margin: 0;
       padding: 0;
       font-family: 'Akzidenz Grotesk Light', Helvetica, Arial, sans-serif;
-      font-size: 10pt;
+      font-size: 14px;
       color: #000;
       line-height: 1.3;
       hyphens: none;
@@ -310,7 +316,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     }
     .title {
       font-family: 'Bellerose', sans-serif;
-      font-size: 37px; /* 28pt */
+      font-size: 34px; /* 28pt */
       font-weight: 400;
       text-align: center;
       margin: 0 0 14px 0;
@@ -321,7 +327,6 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       padding: 10px 0;
       border-top: 1px solid #2d5a27;
       border-bottom: 1px solid #2d5a27;
-      font-size: 11pt;
       line-height: 1.4;
       position: relative;
     }
@@ -375,7 +380,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     }
     .section-title {
       font-family: 'Bellerose', sans-serif;
-      font-size: 21px; /* 16pt */
+      font-size: 19px; /* 16pt */
       font-weight: 400;
       text-align: center;
       margin: 0 0 14px 0;
@@ -385,7 +390,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     }
     .subsection-title {
       font-family: 'Bellerose', sans-serif;
-      font-size: 20px; /* 15pt */
+      font-size: 18px; /* 15pt */
       font-weight: 400;
       margin: 0 0 8px 0;
       break-after: avoid;
@@ -427,6 +432,10 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     }
     .subrecipe-block:last-child {
       margin-bottom: 0;
+    }
+    .introduction {
+      margin: 0 0 14px 0;
+      text-align: justify;
     }
   </style>
 </head>

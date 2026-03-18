@@ -156,6 +156,7 @@ export class RecipesService {
         servings: dto.servings,
         mold_type: dto.mold_type,
         mold_size: dto.mold_size,
+        ...(dto.introduction != null && { introduction: dto.introduction }),
         image_url: dto.image_url,
 
         subrecipes: {
@@ -283,6 +284,7 @@ export class RecipesService {
           servings: dto.servings,
           mold_type: dto.mold_type,
           mold_size: dto.mold_size,
+          ...(dto.introduction != null && { introduction: dto.introduction }),
           image_url: dto.image_url,
 
           subrecipes: {

@@ -3,6 +3,7 @@ import DragAndDrop from "@/design-system/components/DragAndDrop";
 import Button from "@/design-system/components/Button";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 import Input from "@/design-system/components/Input";
+import Textarea from "@/design-system/components/Textarea";
 import Separator from "@/design-system/components/Separator";
 
 import type { RecipeStateType, ErrorStateType } from "@/types";
@@ -61,91 +62,72 @@ const CoverStep = ({
 
   const authors = recipe.source?.name ?? [];
   const links = recipe.source?.url ?? [];
-  const authorsToShow = authors.length > 0 ? authors : [""];
-  const linksToShow = links.length > 0 ? links : [""];
+  const sourceCount = Math.max(
+    authors.length || 1,
+    links.length || 1,
+    1,
+  );
+  const sourcesToShow = Array.from({ length: sourceCount }, (_, i) => ({
+    author: authors[i] ?? "",
+    link: links[i] ?? "",
+  }));
 
-  const handleAuthorChange = (index: number, value: string) => {
+  const handleSourceChange = (
+    index: number,
+    field: "author" | "link",
+    value: string,
+  ) => {
     setRecipe((prev) => {
-      const next = [...(prev.source?.name ?? [])];
-      while (next.length <= index) next.push("");
-      next[index] = value;
+      const names = [...(prev.source?.name ?? [])];
+      const urls = [...(prev.source?.url ?? [])];
+      while (names.length <= index) names.push("");
+      while (urls.length <= index) urls.push("");
+      if (field === "author") names[index] = value;
+      else urls[index] = value;
       return {
         ...prev,
-        source: { ...(prev.source ?? {}), name: next },
+        source: { name: names, url: urls },
       };
     });
   };
 
-  const handleAddAuthor = () => {
+  const handleAddSource = () => {
     setRecipe((prev) => {
-      const current = prev.source?.name ?? [];
-      const next =
-        current.length === 0 ? ["", ""] : [...current, ""];
-      if (next.length > MAX_SOURCES) return prev;
+      const names = [...(prev.source?.name ?? [])];
+      const urls = [...(prev.source?.url ?? [])];
+      const len = Math.max(names.length, urls.length, 1);
+      if (len >= MAX_SOURCES) return prev;
+      const nextNames = [...names];
+      const nextUrls = [...urls];
+      while (nextNames.length < len) nextNames.push("");
+      while (nextUrls.length < len) nextUrls.push("");
+      nextNames.push("");
+      nextUrls.push("");
       return {
         ...prev,
-        source: { ...(prev.source ?? {}), name: next },
+        source: { name: nextNames, url: nextUrls },
       };
     });
   };
 
-  const handleRemoveAuthor = (index: number) => {
+  const handleRemoveSource = (index: number) => {
     setRecipe((prev) => {
-      const nextNames = (prev.source?.name ?? []).filter((_, i) => i !== index);
-      const urls = prev.source?.url ?? [];
+      const names = (prev.source?.name ?? []).filter((_, i) => i !== index);
+      const urls = (prev.source?.url ?? []).filter((_, i) => i !== index);
       return {
         ...prev,
         source:
-          nextNames.length > 0 || urls.length > 0
-            ? { name: nextNames, url: urls }
+          names.length > 0 || urls.length > 0
+            ? { name: names, url: urls }
             : undefined,
       };
     });
   };
 
-  const handleLinkChange = (index: number, value: string) => {
-    setRecipe((prev) => {
-      const next = [...(prev.source?.url ?? [])];
-      while (next.length <= index) next.push("");
-      next[index] = value;
-      return {
-        ...prev,
-        source: { ...(prev.source ?? {}), url: next },
-      };
-    });
-  };
-
-  const handleAddLink = () => {
-    setRecipe((prev) => {
-      const current = prev.source?.url ?? [];
-      const next =
-        current.length === 0 ? ["", ""] : [...current, ""];
-      if (next.length > MAX_SOURCES) return prev;
-      return {
-        ...prev,
-        source: { ...(prev.source ?? {}), url: next },
-      };
-    });
-  };
-
-  const handleRemoveLink = (index: number) => {
-    setRecipe((prev) => {
-      const names = prev.source?.name ?? [];
-      const nextUrls = (prev.source?.url ?? []).filter((_, i) => i !== index);
-      return {
-        ...prev,
-        source:
-          names.length > 0 || nextUrls.length > 0
-            ? { name: names, url: nextUrls }
-            : undefined,
-      };
-    });
-  };
-
-  const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleIntroductionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setRecipe((prev) => ({
       ...prev,
-      servings: e.target.value,
+      introduction: e.target.value,
     }));
   };
 
@@ -175,13 +157,14 @@ const CoverStep = ({
           {...(errors.title && { error: errors.title })}
         />
 
-        <Input
-          id="servings"
-          label="Rinde"
+        <Textarea
+          id="introduction"
+          label="Introducción"
           showLabel
-          placeholder="4 porciones"
-          value={recipe.servings ?? ""}
-          onChange={handleServingsChange}
+          placeholder="Breve descripción o contexto de la receta..."
+          rows={3}
+          value={recipe.introduction ?? ""}
+          onChange={handleIntroductionChange}
         />
       </section>
 
@@ -191,95 +174,55 @@ const CoverStep = ({
         <h2 id="source-section">Fuente</h2>
         <div className={styles["notes-container"]}>
           <div className={styles["source-subsection"]}>
-            <h3 className={styles["source-subsection-title"]}>
-              {authorsToShow.length === 1 ? "Autor" : "Autores"}
-            </h3>
-            {authorsToShow.map((author, index) => (
+            {sourcesToShow.map((source, index) => (
               <div
-                key={`author-${index}`}
+                key={`source-${index}`}
                 className={clsx(
-                  styles["note-item"],
-                  index === 0 && styles["note-item--first"]
+                  styles["source-row"],
+                  index === 0 && styles["source-row--first"]
                 )}
               >
                 <Input
                   id={`source-author-${index}`}
-                  label={authorsToShow.length === 1 ? "Autor" : "Autores"}
+                  label="Autor"
                   showLabel={false}
                   placeholder="Laura Bolomo"
-                  value={author}
-                  onChange={(e) => handleAuthorChange(index, e.target.value)}
+                  value={source.author}
+                  onChange={(e) =>
+                    handleSourceChange(index, "author", e.target.value)
+                  }
                 />
-                {authorsToShow.length > 1 && (
-                  <ButtonIcon
-                    className={styles["note-remove-button"]}
-                    disruptive
-                    icon="Trash2"
-                    label="Eliminar autor"
-                    size="small"
-                    variant="secondary"
-                    onClick={() => handleRemoveAuthor(index)}
-                  />
-                )}
-              </div>
-            ))}
-            {authorsToShow.length < MAX_SOURCES && (
-              <Button
-                type="button"
-                label="Agregar autor"
-                iconLeft="Plus"
-                variant="secondary"
-                onClick={handleAddAuthor}
-              />
-            )}
-          </div>
-          <div className={styles["source-subsection"]}>
-            <h3 className={styles["source-subsection-title"]}>
-              {linksToShow.length === 1
-                ? "Link a receta original"
-                : "Links a recetas originales"}
-            </h3>
-            {linksToShow.map((link, index) => (
-              <div
-                key={`link-${index}`}
-                className={clsx(
-                  styles["note-item"],
-                  index === 0 && styles["note-item--first"]
-                )}
-              >
                 <Input
                   id={`source-link-${index}`}
-                  label={
-                    linksToShow.length === 1
-                      ? "Link a receta original"
-                      : "Links a recetas originales"
-                  }
+                  label="Link a receta original"
                   showLabel={false}
                   placeholder="https://ejemplo.com/receta"
                   type="url"
-                  value={link ?? ""}
-                  onChange={(e) => handleLinkChange(index, e.target.value)}
+                  value={source.link}
+                  onChange={(e) =>
+                    handleSourceChange(index, "link", e.target.value)
+                  }
                 />
-                {linksToShow.length > 1 && (
+                {sourcesToShow.length > 1 && (
                   <ButtonIcon
                     className={styles["note-remove-button"]}
                     disruptive
                     icon="Trash2"
-                    label="Eliminar link"
+                    label="Eliminar fuente"
                     size="small"
                     variant="secondary"
-                    onClick={() => handleRemoveLink(index)}
+                    onClick={() => handleRemoveSource(index)}
                   />
                 )}
               </div>
             ))}
-            {linksToShow.length < MAX_SOURCES && (
+            {sourcesToShow.length < MAX_SOURCES && (
               <Button
                 type="button"
-                label="Agregar link"
+                label="Agregar fuente"
                 iconLeft="Plus"
                 variant="secondary"
-                onClick={handleAddLink}
+                onClick={handleAddSource}
               />
             )}
           </div>

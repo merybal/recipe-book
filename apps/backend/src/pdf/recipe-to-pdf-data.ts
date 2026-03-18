@@ -2,6 +2,7 @@ import type { RecipePdfData } from './recipe-pdf.template';
 
 type RawRecipe = {
   title: string;
+  introduction: string | null;
   servings: string | null;
   cooking_time: string | null;
   cooking_temperature: number | null;
@@ -61,6 +62,7 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
 
   return {
     title: recipe.title,
+    introduction: recipe.introduction ?? undefined,
     servings: recipe.servings ?? undefined,
     bakingInfo,
     mold,

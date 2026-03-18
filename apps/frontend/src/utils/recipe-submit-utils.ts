@@ -16,11 +16,12 @@ type CreateRecipeFullPayload = {
   title: string;
   category_id: number;
   country_id?: number;
-  cooking_time?: string;
-  cooking_temperature?: number;
+  cooking_time?: string | null;
+  cooking_temperature?: number | null;
   servings?: string;
   mold_type?: string;
   mold_size?: string;
+  introduction?: string;
   image_url?: string;
   subrecipes: {
     title?: string;
@@ -104,15 +105,19 @@ export async function buildRecipePayload(
     title: recipe.title.trim(),
     category_id: recipe.categoryId!,
     ...(recipe.countryId != null && { country_id: recipe.countryId }),
-    ...(recipe.bakingInstructions?.time?.trim() && {
-      cooking_time: recipe.bakingInstructions.time.trim(),
-    }),
-    ...(recipe.bakingInstructions?.temperature != null && {
-      cooking_temperature: recipe.bakingInstructions.temperature,
+    // Send null when cleared so backend persists the deletion (omit = no update).
+    // When editing (recipe.id), always send cooking fields to persist clears.
+    // When creating, only send when user interacted with baking section.
+    ...((recipe.id != null || recipe.bakingInstructions !== undefined) && {
+      cooking_time: recipe.bakingInstructions?.time?.trim() || null,
+      cooking_temperature: recipe.bakingInstructions?.temperature ?? null,
     }),
     ...(recipe.servings?.trim() && { servings: recipe.servings.trim() }),
     ...(recipe.mold?.type?.trim() && { mold_type: recipe.mold.type.trim() }),
     ...(recipe.mold?.size?.trim() && { mold_size: recipe.mold.size.trim() }),
+    ...(recipe.introduction?.trim() && {
+      introduction: recipe.introduction.trim(),
+    }),
     subrecipes: recipe.subrecipes.map((sub) => ({
       ...(sub.title?.trim() && { title: sub.title.trim() }),
       instructions: (sub.instructions ?? []).join("\n"),

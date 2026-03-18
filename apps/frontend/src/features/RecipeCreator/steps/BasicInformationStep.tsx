@@ -126,6 +126,17 @@ const BasicInformationStep = ({
           value={recipe.mold?.size || ""}
           onChange={handleMoldSizeChange}
         />
+
+        <Input
+          id="servings"
+          label="Rinde"
+          showLabel
+          placeholder="4 porciones"
+          value={recipe.servings ?? ""}
+          onChange={(e) =>
+            setRecipe((prev) => ({ ...prev, servings: e.target.value }))
+          }
+        />
       </section>
 
       <Separator />

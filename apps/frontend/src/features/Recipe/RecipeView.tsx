@@ -174,6 +174,9 @@ const RecipeView = () => {
             : {}),
 
           ...(recipeData.servings && { servings: recipeData.servings }),
+          ...(recipeData.introduction && {
+            introduction: recipeData.introduction,
+          }),
 
           ...(recipeData.recipe_dietary_restrictions?.length
             ? (() => {
@@ -185,8 +188,9 @@ const RecipeView = () => {
                     ),
                   )
                   .filter(
-                    (x: DietaryRestrictionType | undefined): x is DietaryRestrictionType =>
-                      x != null,
+                    (
+                      x: DietaryRestrictionType | undefined,
+                    ): x is DietaryRestrictionType => x != null,
                   );
                 const labels = rdr.reduce(
                   (
@@ -204,8 +208,8 @@ const RecipeView = () => {
                       };
                       acc[type] =
                         locale === "en"
-                          ? dr.name_en ?? dr.name
-                          : dr.name_es ?? dr.name;
+                          ? (dr.name_en ?? dr.name)
+                          : (dr.name_es ?? dr.name);
                     }
                     return acc;
                   },
@@ -239,7 +243,10 @@ const RecipeView = () => {
                   (a: RecipeSourceRaw, b: RecipeSourceRaw) =>
                     a.sort_order - b.sort_order,
                 )
-                .map((s: RecipeSourceRaw) => s.url ?? null) as (string | null)[],
+                .map((s: RecipeSourceRaw) => s.url ?? null) as (
+                | string
+                | null
+              )[],
             },
           }),
           ...(recipeData.recipe_tags?.length > 0 && {

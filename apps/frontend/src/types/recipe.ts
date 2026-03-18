@@ -34,6 +34,7 @@ export type RecipeType = {
   subrecipes: SubrecipeType[];
   bakingInstructions?: BakingInstructionsType;
   mold?: MoldType;
+  introduction?: string;
   servings?: string;
   notes?: string[];
   source?: Source;
@@ -89,6 +90,7 @@ export type RecipeRaw = {
   servings: string | null;
   mold_type: string | null;
   mold_size: string | null;
+  introduction: string | null;
   image_url: string | null;
   created_at: string;
   updated_at: string;

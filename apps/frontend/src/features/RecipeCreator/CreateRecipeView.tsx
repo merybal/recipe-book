@@ -191,6 +191,7 @@ const CreateRecipeView = () => {
       subrecipes: initialRecipe.subrecipes,
       bakingInstructions: initialRecipe.bakingInstructions,
       mold: initialRecipe.mold,
+      introduction: initialRecipe.introduction,
       servings: initialRecipe.servings,
       notes: initialRecipe.notes,
       source: initialRecipe.source,
