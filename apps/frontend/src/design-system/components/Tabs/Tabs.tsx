@@ -51,11 +51,12 @@ const Tabs = ({
   };
 
   return (
-    <Box id={id} className={clsx(styles.wrapper, className)}>
+    <Box id={id} className={clsx(styles.wrapper, className)} flex>
       <Box
         className={styles.tabs}
         role="tablist"
         aria-label="Tabs"
+        flex
       >
         {tabs.map((tab) => (
           <button

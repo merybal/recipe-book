@@ -3,10 +3,6 @@
 @use "../../styles/color" as *;
 @use "../../styles/border" as *;
 
-.box {
-  @include Flex($direction: row);
-}
-
 // Display variants (flex vs block)
 .box-block {
   display: block;
@@ -19,10 +15,10 @@
 }
 
 // Background
-@each $color in primary, primary-light, primary-dark, secondary, secondary-light,
-  secondary-dark, secondary-hover, disruptive, disruptive-dark, main-text,
-  secondary-text, outline, disabled, dark-gray, ochre, "orange", "green",
-  "black", "white", none
+@each $color in primary, primary-light, primary-dark, secondary,
+  secondary-light, secondary-dark, secondary-hover, disruptive, disruptive-dark,
+  main-text, secondary-text, outline, disabled, dark-gray, ochre, "orange",
+  "green", "black", "white", none
 {
   .bg-#{$color} {
     background-color: resolve-color($color);

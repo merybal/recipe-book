@@ -47,7 +47,7 @@ const EditableInput = ({
   };
 
   return (
-    <Box className={clsx(styles["editable-input-container"], className)}>
+    <Box className={clsx(styles["editable-input-container"], className)} fullWidth flex>
       <Input
         id={id}
         className={clsx({ [styles["input-width"]]: !inline })}

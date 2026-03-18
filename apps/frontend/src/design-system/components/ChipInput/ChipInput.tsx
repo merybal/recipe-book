@@ -74,6 +74,7 @@ const ChipInput = ({
             { [styles.error]: error },
             { [styles.disabled]: disabled },
           )}
+          flex
         >
           {value.map((chip, index) => (
             <Chip key={`${chip}-${index}`} onRemove={() => handleRemove(index)}>

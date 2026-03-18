@@ -46,7 +46,7 @@ const DietaryRestrictions = ({
   if (toShow.length === 0) return null;
 
   return (
-    <Box className={className} align="start" gap="xs">
+    <Box className={className} align="start" gap="xs" flex>
       {toShow.map((restriction) => {
         const config = DIETARY_RESTRICTION_CONFIG[restriction];
         const label = labels![restriction];
@@ -54,6 +54,7 @@ const DietaryRestrictions = ({
           <Box
             key={restriction}
             align="center"
+            flex
             gap="xs"
             title={iconsOnly ? label : undefined}
           >

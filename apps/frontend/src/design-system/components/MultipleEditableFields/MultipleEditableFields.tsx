@@ -96,11 +96,11 @@ const MultipleEditableFields = ({
   };
 
   return (
-    <Box className={clsx(styles["editable-fields-container"], className)} direction="column">
-      <Box className={styles["single-label-container"]}>
+    <Box className={clsx(styles["editable-fields-container"], className)} direction="column" fullWidth flex>
+      <Box className={styles["single-label-container"]} flex>
         {singleLabel && <p className={styles["single-label"]}>{singleLabel}</p>}
         {isEditing ? (
-          <Box gap="xs">
+          <Box gap="xs" flex>
             <ButtonIcon
               icon="Check"
               label="guardar"
@@ -127,7 +127,7 @@ const MultipleEditableFields = ({
         )}
       </Box>
 
-      <Box className={styles["fields-container"]}>
+      <Box className={styles["fields-container"]} flex>
         {fields.map((field) => {
           if (field.component === "input") {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars

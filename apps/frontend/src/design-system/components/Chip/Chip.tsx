@@ -53,7 +53,7 @@ const Chip = ({
     );
   }
 
-  return <Box className={rootClassName}>{content}</Box>;
+  return <Box className={rootClassName} flex>{content}</Box>;
 };
 
 export default Chip;

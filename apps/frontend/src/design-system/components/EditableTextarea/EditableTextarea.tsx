@@ -43,7 +43,7 @@ const EditableTextarea = ({
   };
 
   return (
-    <Box className={clsx(styles["editable-textarea-container"], className)}>
+    <Box className={clsx(styles["editable-textarea-container"], className)} fullWidth flex>
       <Textarea
         className={clsx({ [styles["input-width"]]: !inline })}
         {...(hasError && { error: "Este campo es requerido" })}

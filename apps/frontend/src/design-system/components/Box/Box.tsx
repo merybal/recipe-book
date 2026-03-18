@@ -13,15 +13,15 @@ import clsx from "clsx";
 import styles from "./Box.module.scss";
 
 const getDisplayClass = (flex: boolean | undefined, inline: boolean | undefined) => {
-  if (flex === false) return inline ? styles["box-inline-block"] : styles["box-block"];
-  return inline ? styles["box-inline-flex"] : styles.box;
+  if (flex === true) return inline ? styles["box-inline-flex"] : styles.box;
+  return inline ? styles["box-inline-block"] : styles["box-block"];
 };
 
 const Box = ({
   as: Component = "div",
   children,
   className,
-  flex = true,
+  flex,
   inline = false,
   direction,
   justify,
@@ -53,19 +53,29 @@ const Box = ({
   role,
   ...rest
 }: BoxProps) => {
+  const useFlex =
+    flex === true ||
+    direction != null ||
+    justify != null ||
+    align != null ||
+    wrap != null ||
+    gap != null ||
+    grow != null ||
+    shrink != null;
+
   return (
     <Component
       id={id}
       role={role}
       className={clsx(
-        getDisplayClass(flex, inline),
-        flex !== false && direction && isFlexDirection(direction) && styles[`direction-${direction}`],
-        flex !== false && justify && isJustifyContent(justify) && styles[`justify-${justify}`],
-        flex !== false && align && isAlignItems(align) && styles[`align-${align}`],
-        flex !== false && wrap && isFlexWrap(wrap) && styles[`wrap-${wrap}`],
-        flex !== false && gap != null && isSpacingValue(gap) && styles[`gap-${gap}`],
-        flex !== false && grow != null && (grow === 0 || grow === 1) && styles[`grow-${grow}`],
-        flex !== false && shrink != null && (shrink === 0 || shrink === 1) && styles[`shrink-${shrink}`],
+        getDisplayClass(useFlex, inline),
+        useFlex && direction && isFlexDirection(direction) && styles[`direction-${direction}`],
+        useFlex && justify && isJustifyContent(justify) && styles[`justify-${justify}`],
+        useFlex && align && isAlignItems(align) && styles[`align-${align}`],
+        useFlex && wrap && isFlexWrap(wrap) && styles[`wrap-${wrap}`],
+        useFlex && gap != null && isSpacingValue(gap) && styles[`gap-${gap}`],
+        useFlex && grow != null && (grow === 0 || grow === 1) && styles[`grow-${grow}`],
+        useFlex && shrink != null && (shrink === 0 || shrink === 1) && styles[`shrink-${shrink}`],
         backgroundColor && isColorValue(backgroundColor) && styles[`bg-${backgroundColor}`],
         padding != null && isSpacingValue(padding) && styles[`padding-${padding}`],
         paddingX != null && isSpacingValue(paddingX) && styles[`paddingX-${paddingX}`],

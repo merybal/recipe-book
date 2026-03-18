@@ -18,7 +18,7 @@ export type BoxProps = {
   className?: string;
   /** HTML element to render (default: div) */
   as?: ElementType;
-  /** Use flex layout (default: true) */
+  /** Use flex layout. Also applied automatically when any flex prop (direction, justify, align, etc.) is passed. */
   flex?: boolean;
   /** Inline display (inline-flex when flex, inline-block when not) */
   inline?: boolean;
