@@ -1,6 +1,7 @@
 import type { ChipProps } from "./Chip.types";
 import ButtonUnstyled from "../ButtonUnstyled";
 import Icon from "../Icon";
+import Box from "../Box";
 
 import clsx from "clsx";
 import styles from "./Chip.module.scss";
@@ -20,7 +21,7 @@ const Chip = ({
     isRemovable && styles.removable,
     isClickable && styles.clickable,
     selected && styles.selected,
-    className
+    className,
   );
 
   const content = (
@@ -52,7 +53,7 @@ const Chip = ({
     );
   }
 
-  return <div className={rootClassName}>{content}</div>;
+  return <Box className={rootClassName}>{content}</Box>;
 };
 
 export default Chip;

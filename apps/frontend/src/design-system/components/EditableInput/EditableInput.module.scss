@@ -3,7 +3,6 @@
 
 .editable-input-container {
   @include Flex($gap: sm);
-
   .input-width {
     flex: 1;
   }

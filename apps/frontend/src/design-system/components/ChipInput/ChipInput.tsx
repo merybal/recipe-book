@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import type { ChipInputProps } from "./ChipInput.types";
 import Chip from "../Chip";
+import Box from "../Box";
 import clsx from "clsx";
 import styles from "./ChipInput.module.scss";
 
@@ -50,12 +51,13 @@ const ChipInput = ({
   };
 
   return (
-    <div
+    <Box
       className={clsx(
         styles["chip-input-container"],
         { [styles.inline]: inline },
         className,
       )}
+      fullWidth
     >
       <label className={styles.label} htmlFor={id}>
         <p
@@ -66,7 +68,7 @@ const ChipInput = ({
         >
           {label} {required && <span className="required-asterisk" aria-hidden="true">*</span>}
         </p>
-        <div
+        <Box
           className={clsx(
             styles.field,
             { [styles.error]: error },
@@ -93,7 +95,7 @@ const ChipInput = ({
               error ? `${id}-error` : helper ? `${id}-helper` : undefined
             }
           />
-        </div>
+        </Box>
       </label>
       {error && (
         <p className={styles["error-message"]} id={`${id}-error`} role="alert">
@@ -105,7 +107,7 @@ const ChipInput = ({
           {helper}
         </p>
       )}
-    </div>
+    </Box>
   );
 };
 

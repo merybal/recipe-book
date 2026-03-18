@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Icon from "../Icon/Icon";
 import ButtonUnstyled from "../ButtonUnstyled";
+import Box from "../Box";
 
 import type { InputProps } from "./Input.types";
 
@@ -60,12 +61,13 @@ const Input = ({
   const showReset = hasReset && value && !disabled;
 
   return (
-    <div
+    <Box
       className={clsx(
         styles["input-container"],
         { [styles.inline]: inline },
         className
       )}
+      fullWidth
     >
       <label className={clsx(styles.label)} htmlFor={id}>
         <p
@@ -156,7 +158,7 @@ const Input = ({
           {helper}
         </p>
       )}
-    </div>
+    </Box>
   );
 };
 

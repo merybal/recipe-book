@@ -7,6 +7,7 @@ import {
 } from "react";
 import clsx from "clsx";
 
+import Box from "../Box";
 import type { TabProps, TabsProps } from "./Tabs.types";
 
 import styles from "./Tabs.module.scss";
@@ -50,8 +51,12 @@ const Tabs = ({
   };
 
   return (
-    <div id={id} className={clsx(styles.wrapper, className)}>
-      <div className={styles.tabs} role="tablist" aria-label="Tabs">
+    <Box id={id} className={clsx(styles.wrapper, className)}>
+      <Box
+        className={styles.tabs}
+        role="tablist"
+        aria-label="Tabs"
+      >
         {tabs.map((tab) => (
           <button
             key={tab.value}
@@ -71,7 +76,7 @@ const Tabs = ({
             {tab.label}
           </button>
         ))}
-      </div>
+      </Box>
       {hasPanel && (
         <div
           id={`${baseId}-panel-${activeTab}`}
@@ -82,7 +87,7 @@ const Tabs = ({
           {activeTabItem.children}
         </div>
       )}
-    </div>
+    </Box>
   );
 };
 

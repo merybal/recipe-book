@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Input from "@/design-system/components/Input";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
+import Box from "@/design-system/components/Box";
 
 import { EditableInputProps } from "./EditableInput.types";
 
@@ -46,7 +47,7 @@ const EditableInput = ({
   };
 
   return (
-    <div className={clsx(styles["editable-input-container"], className)}>
+    <Box className={clsx(styles["editable-input-container"], className)}>
       <Input
         id={id}
         className={clsx({ [styles["input-width"]]: !inline })}
@@ -89,7 +90,7 @@ const EditableInput = ({
           onClick={() => setIsEditing(true)}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

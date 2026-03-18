@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Input from "@/design-system/components/Input";
 import Select from "@/design-system/components/Select";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
+import Box from "@/design-system/components/Box";
 
 import { MultipleEditableFieldsProps } from "./MultipleEditableFields.types";
 
@@ -95,11 +96,11 @@ const MultipleEditableFields = ({
   };
 
   return (
-    <div className={clsx(styles["editable-fields-container"], className)}>
-      <div className={styles["single-label-container"]}>
+    <Box className={clsx(styles["editable-fields-container"], className)} direction="column">
+      <Box className={styles["single-label-container"]}>
         {singleLabel && <p className={styles["single-label"]}>{singleLabel}</p>}
         {isEditing ? (
-          <div>
+          <Box gap="xs">
             <ButtonIcon
               icon="Check"
               label="guardar"
@@ -114,10 +115,9 @@ const MultipleEditableFields = ({
               variant="secondary"
               onClick={handleCancel}
             />
-          </div>
+          </Box>
         ) : (
           <ButtonIcon
-            // className={styles["edit-button"]}
             icon="Pencil"
             label="editar campos"
             size="small"
@@ -125,9 +125,9 @@ const MultipleEditableFields = ({
             onClick={() => setIsEditing(true)}
           />
         )}
-      </div>
+      </Box>
 
-      <div className={styles["fields-container"]}>
+      <Box className={styles["fields-container"]}>
         {fields.map((field) => {
           if (field.component === "input") {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -177,7 +177,7 @@ const MultipleEditableFields = ({
             );
           }
         })}
-      </div>
+      </Box>
 
       {isEditing ? (
         <div className={styles["button-container"]}>
@@ -206,7 +206,7 @@ const MultipleEditableFields = ({
           onClick={() => setIsEditing(true)}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

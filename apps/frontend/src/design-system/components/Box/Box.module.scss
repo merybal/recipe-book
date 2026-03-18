@@ -1,0 +1,178 @@
+@use "../../styles/flex" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/color" as *;
+@use "../../styles/border" as *;
+
+.box {
+  @include Flex($direction: row);
+}
+
+// Display variants (flex vs block)
+.box-block {
+  display: block;
+}
+.box-inline-flex {
+  display: inline-flex;
+}
+.box-inline-block {
+  display: inline-block;
+}
+
+// Background
+@each $color in primary, primary-light, primary-dark, secondary, secondary-light,
+  secondary-dark, secondary-hover, disruptive, disruptive-dark, main-text,
+  secondary-text, outline, disabled, dark-gray, ochre, "orange", "green",
+  "black", "white", none
+{
+  .bg-#{$color} {
+    background-color: resolve-color($color);
+  }
+}
+
+// Direction
+.direction-row {
+  @include Flex($direction: row);
+}
+.direction-column {
+  @include Flex($direction: column);
+}
+.direction-row-reverse {
+  @include Flex($direction: row-reverse);
+}
+.direction-column-reverse {
+  @include Flex($direction: column-reverse);
+}
+
+// Justify
+.justify-start {
+  @include Flex($justify: start);
+}
+.justify-end {
+  @include Flex($justify: end);
+}
+.justify-center {
+  @include Flex($justify: center);
+}
+.justify-between {
+  @include Flex($justify: between);
+}
+.justify-around {
+  @include Flex($justify: around);
+}
+.justify-evenly {
+  @include Flex($justify: evenly);
+}
+
+// Align
+.align-start {
+  @include Flex($align: start);
+}
+.align-end {
+  @include Flex($align: end);
+}
+.align-center {
+  @include Flex($align: center);
+}
+.align-stretch {
+  @include Flex($align: stretch);
+}
+.align-baseline {
+  @include Flex($align: baseline);
+}
+
+// Wrap
+.wrap-wrap {
+  @include Flex($wrap: wrap);
+}
+.wrap-nowrap {
+  @include Flex($wrap: nowrap);
+}
+.wrap-wrap-reverse {
+  @include Flex($wrap: wrap-reverse);
+}
+
+// Gap
+@each $size in none, xxs, xs, sm, md, lg, xl, xxl {
+  .gap-#{$size} {
+    @include Flex($gap: $size);
+  }
+}
+
+// Padding
+@each $size in none, xxs, xs, sm, md, lg, xl, xxl {
+  .padding-#{$size} {
+    @include Padding($all: $size);
+  }
+  .paddingX-#{$size} {
+    @include Padding($x: $size);
+  }
+  .paddingY-#{$size} {
+    @include Padding($y: $size);
+  }
+  .paddingTop-#{$size} {
+    @include Padding($top: $size);
+  }
+  .paddingBottom-#{$size} {
+    @include Padding($bottom: $size);
+  }
+  .paddingLeft-#{$size} {
+    @include Padding($left: $size);
+  }
+  .paddingRight-#{$size} {
+    @include Padding($right: $size);
+  }
+}
+
+// Margin
+@each $size in none, xxs, xs, sm, md, lg, xl, xxl {
+  .margin-#{$size} {
+    @include Margin($all: $size);
+  }
+  .marginX-#{$size} {
+    @include Margin($x: $size);
+  }
+  .marginY-#{$size} {
+    @include Margin($y: $size);
+  }
+  .marginTop-#{$size} {
+    @include Margin($top: $size);
+  }
+  .marginBottom-#{$size} {
+    @include Margin($bottom: $size);
+  }
+  .marginLeft-#{$size} {
+    @include Margin($left: $size);
+  }
+  .marginRight-#{$size} {
+    @include Margin($right: $size);
+  }
+}
+
+// Flex grow/shrink
+.grow-0 {
+  flex-grow: 0;
+}
+.grow-1 {
+  flex-grow: 1;
+}
+.shrink-0 {
+  flex-shrink: 0;
+}
+.shrink-1 {
+  flex-shrink: 1;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+// Border radius
+@each $radius in sm, md, lg, xl, full {
+  .radius-#{$radius} {
+    @include Border($radius: $radius);
+  }
+}

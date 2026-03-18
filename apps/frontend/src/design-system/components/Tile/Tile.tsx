@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import Box from "@/design-system/components/Box";
 import styles from "./Tile.module.scss";
 
 import type { Source as SourceProps } from "@/types";
@@ -25,31 +26,29 @@ const Tile = ({
   variant = "rectangle",
 }: TileProps) => {
   return (
-    <div
-      className={clsx(
-        styles.tile,
-        { [styles[`${variant}`]]: variant },
-        className,
-      )}
+    <Box
+      className={clsx(styles.tile, { [styles[`${variant}`]]: variant }, className)}
+      direction="column"
     >
-      <div className={clsx({ [styles[`${variant}-image`]]: variant })}>
-        <img className={styles["recipe-image"]} src={imageUrl} />
-      </div>
-      <div className={styles["text-container"]}>
-        <div>
+      <Box className={clsx({ [styles[`${variant}-image`]]: variant })}>
+        <img className={styles["recipe-image"]} src={imageUrl} alt="" />
+      </Box>
+      <Box className={styles["text-container"]}>
+        <Box direction="column">
           <h3 className={styles.title}>{title}</h3>
           {source && source.name?.length && (
             <p className={styles.subtitle}>{source.name.join(" & ")}</p>
           )}
-        </div>
+        </Box>
         {restrictions && restrictions.length > 0 && (
           <DietaryRestrictions
             className={styles.restrictions}
+            iconsOnly
             restrictions={restrictions}
           />
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

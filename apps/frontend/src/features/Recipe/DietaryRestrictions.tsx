@@ -1,10 +1,8 @@
 import Icon from "@/design-system/components/Icon";
+import Box from "@/design-system/components/Box";
 
 import type { IconName } from "@/design-system/components/Icon";
 import type { DietaryRestrictionType } from "@/types";
-
-import clsx from "clsx";
-import styles from "./DietaryRestrictions.module.scss";
 
 import { useDietaryRestrictionLabels } from "@/hooks/useDietaryRestrictionLabels";
 
@@ -12,6 +10,8 @@ export type DietaryRestrictionsProps = {
   restrictions?: DietaryRestrictionType[];
   /** Labels from API (name_es/name_en) - when provided, uses these; otherwise fetches from API */
   labels?: Record<DietaryRestrictionType, string>;
+  /** When true, only show icons (no text) */
+  iconsOnly?: boolean;
   className?: string;
 };
 
@@ -28,6 +28,7 @@ const DIETARY_RESTRICTION_CONFIG: Record<
 const DietaryRestrictions = ({
   restrictions,
   labels: labelsProp,
+  iconsOnly = false,
   className,
 }: DietaryRestrictionsProps) => {
   const labelsFromApi = useDietaryRestrictionLabels();
@@ -45,21 +46,23 @@ const DietaryRestrictions = ({
   if (toShow.length === 0) return null;
 
   return (
-    <div className={clsx(styles["dietary-restrictions-container"], className)}>
+    <Box className={className} align="start" gap="xs">
       {toShow.map((restriction) => {
         const config = DIETARY_RESTRICTION_CONFIG[restriction];
         const label = labels![restriction];
         return (
-          <div
-            className={styles["restriction-container"]}
+          <Box
             key={restriction}
+            align="center"
+            gap="xs"
+            title={iconsOnly ? label : undefined}
           >
             <Icon name={config.iconName} size="sm" color={config.color} />
-            <p>{label}</p>
-          </div>
+            {!iconsOnly && <p>{label}</p>}
+          </Box>
         );
       })}
-    </div>
+    </Box>
   );
 };
 

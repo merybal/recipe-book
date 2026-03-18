@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Textarea from "@/design-system/components/Textarea";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
+import Box from "@/design-system/components/Box";
 import type { EditableTextareaProps } from "./EditableTextarea.types";
 
 import clsx from "clsx";
@@ -42,7 +43,7 @@ const EditableTextarea = ({
   };
 
   return (
-    <div className={clsx(styles["editable-textarea-container"], className)}>
+    <Box className={clsx(styles["editable-textarea-container"], className)}>
       <Textarea
         className={clsx({ [styles["input-width"]]: !inline })}
         {...(hasError && { error: "Este campo es requerido" })}
@@ -88,7 +89,7 @@ const EditableTextarea = ({
           onClick={() => setIsEditing(true)}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

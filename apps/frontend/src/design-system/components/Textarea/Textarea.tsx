@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 
+import Box from "../Box";
 import { TextareaProps } from "./Textarea.types";
 
 import clsx from "clsx";
@@ -42,12 +43,13 @@ const Textarea = ({
   };
 
   return (
-    <div
+    <Box
       className={clsx(
         styles["textarea-container"],
         { [styles.inline]: inline },
         className
       )}
+      fullWidth
     >
       <label className={styles.label} htmlFor={id}>
         <p
@@ -91,7 +93,7 @@ const Textarea = ({
           {helper}
         </p>
       )}
-    </div>
+    </Box>
   );
 };
 
