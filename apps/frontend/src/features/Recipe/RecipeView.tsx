@@ -362,7 +362,7 @@ const RecipeView = () => {
                   title="Cocción"
                   items={[
                     recipe.bakingInstructions.time
-                      ? `${recipe.bakingInstructions.time} minutos`
+                      ? recipe.bakingInstructions.time
                       : undefined,
                     recipe.bakingInstructions.temperature
                       ? `${recipe.bakingInstructions.temperature}°C`

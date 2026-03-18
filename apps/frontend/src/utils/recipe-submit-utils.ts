@@ -16,7 +16,7 @@ type CreateRecipeFullPayload = {
   title: string;
   category_id: number;
   country_id?: number;
-  cooking_time?: number;
+  cooking_time?: string;
   cooking_temperature?: number;
   servings?: string;
   mold_type?: string;
@@ -85,28 +85,27 @@ export async function buildRecipePayload(
 
   const subcategoryIds = (recipe.subcategoryIds ?? []).filter((id) => id > 0);
 
+  // Pair authors with links: 1 author + 2 links -> (author, link1), (author, link2)
   const source =
     (recipe.source?.name?.length || recipe.source?.url?.length)
-      ? Array.from(
-          {
-            length: Math.max(
-              recipe.source?.name?.length ?? 0,
-              recipe.source?.url?.length ?? 0,
-            ),
-          },
-          (_, i) => ({
-            name: recipe.source!.name?.[i]?.trim() || undefined,
-            url: recipe.source!.url?.[i]?.trim() || undefined,
-          }),
-        ).filter((s) => s.name || s.url)
+      ? (() => {
+          const names = recipe.source!.name ?? [];
+          const urls = recipe.source!.url ?? [];
+          const len = Math.max(names.length, urls.length);
+          return Array.from({ length: len }, (_, i) => {
+            const name = (names[i] ?? names[names.length - 1])?.trim() || undefined;
+            const url = (urls[i] ?? urls[urls.length - 1])?.trim() || undefined;
+            return { name, url };
+          }).filter((s) => s.name || s.url);
+        })()
       : undefined;
 
   const payload: CreateRecipeFullPayload = {
     title: recipe.title.trim(),
     category_id: recipe.categoryId!,
     ...(recipe.countryId != null && { country_id: recipe.countryId }),
-    ...(recipe.bakingInstructions?.time != null && {
-      cooking_time: recipe.bakingInstructions.time,
+    ...(recipe.bakingInstructions?.time?.trim() && {
+      cooking_time: recipe.bakingInstructions.time.trim(),
     }),
     ...(recipe.bakingInstructions?.temperature != null && {
       cooking_temperature: recipe.bakingInstructions.temperature,

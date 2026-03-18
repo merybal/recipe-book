@@ -12,8 +12,8 @@ export class CreateRecipeDto {
   country_id?: number;
 
   @IsOptional()
-  @IsInt()
-  cooking_time?: number;
+  @IsString()
+  cooking_time?: string;
 
   @IsOptional()
   @IsInt()

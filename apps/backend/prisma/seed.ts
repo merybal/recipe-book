@@ -363,23 +363,22 @@ async function main() {
     name_es: string;
     categoryIds: number[];
   }[] = [
-    { name_en: 'Pies', name_es: 'Tartas', categoryIds: [sweet.id] },
     {
       name_en: 'Pies & Empanadas',
       name_es: 'Tartas & Empanadas',
       categoryIds: [savory.id],
     },
-
+    { name_en: 'Pies', name_es: 'Tartas', categoryIds: [sweet.id, savory.id] },
     { name_en: 'Rice', name_es: 'Arroz', categoryIds: [savory.id] },
     { name_en: 'Beef', name_es: 'Carne', categoryIds: [savory.id] },
     { name_en: 'Chicken', name_es: 'Pollo', categoryIds: [savory.id] },
     { name_en: 'Pork', name_es: 'Cerdo', categoryIds: [savory.id] },
+    { name_en: 'Muffins', name_es: 'Muffins', categoryIds: [savory.id] },
     {
       name_en: 'Muffins & Cupcakes',
       name_es: 'Muffins & Cupcakes',
-      categoryIds: [sweet.id, savory.id],
+      categoryIds: [sweet.id],
     },
-    { name_en: 'Pies', name_es: 'Tartas', categoryIds: [sweet.id, savory.id] },
     { name_en: 'Cakes', name_es: 'Tortas', categoryIds: [sweet.id] },
     { name_en: 'Ice Cream', name_es: 'Helado', categoryIds: [sweet.id] },
     {
@@ -496,6 +495,11 @@ async function main() {
     {
       name_en: 'No-Bake Desserts',
       name_es: 'Postres Fríos',
+      categoryIds: [sweet.id],
+    },
+    {
+      name_en: 'Warm Desserts',
+      name_es: 'Postres Calientes',
       categoryIds: [sweet.id],
     },
     {

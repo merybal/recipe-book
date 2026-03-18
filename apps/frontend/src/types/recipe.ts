@@ -12,8 +12,8 @@ export type Source = {
 };
 
 export type BakingInstructionsType = {
-  time?: number; // always minutes
-  temperature?: number; //always celcius
+  time?: string; // e.g. "45", "10-15 min"
+  temperature?: number; // always celcius
 };
 
 export type MoldType = {
@@ -84,7 +84,7 @@ export type RecipeRaw = {
   category?: { id: number; name_en: string; name_es: string };
   country_id: number | null;
   country?: { id: number; name_en: string; name_es: string } | null;
-  cooking_time: number | null;
+  cooking_time: string | null;
   cooking_temperature: number | null;
   servings: string | null;
   mold_type: string | null;

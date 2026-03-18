@@ -8,6 +8,7 @@ import Separator from "@/design-system/components/Separator";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
 
 import { useDietaryRestrictionLabels } from "@/hooks/useDietaryRestrictionLabels";
+import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
 
 const COUNTRY_LABELS: Record<string, string> = {
   argentina: "Argentina",
@@ -111,42 +112,51 @@ const RecipePreview = ({
           <p>{recipeData.servings ? recipeData.servings : "-"}</p>
         </div>
         <div>
-          <h3>Autor</h3>
+          <h3>
+            {(recipeData.source?.name?.filter(Boolean).length ?? 0) === 1
+              ? "Autor"
+              : "Autores"}
+          </h3>
           <p>
-            {recipeData.source?.name?.length ? (
-              recipeData.source.name.map((name, i) => (
-                <Fragment key={i}>
-                  {i > 0 && ", "}
-                  {name}
-                </Fragment>
-              ))
-            ) : (
-              "-"
-            )}
-          </p>
-        </div>
-        <div>
-          <h3>Link a la receta original</h3>
-          <p>
-            {recipeData.source?.url?.filter((u) => u)?.length ? (
-              recipeData.source.url
-                .filter((u): u is string => !!u)
-                .map((url, i) => (
+            {recipeData.source?.name?.filter(Boolean).length ? (
+              recipeData.source.name
+                .filter(Boolean)
+                .map((name, i) => (
                   <Fragment key={i}>
                     {i > 0 && ", "}
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {url}
-                    </a>
+                    {name}
                   </Fragment>
                 ))
             ) : (
               "-"
             )}
           </p>
+        </div>
+        <div>
+          <h3>
+            {(recipeData.source?.url?.filter((u) => u)?.length ?? 0) === 1
+              ? "Link a receta original"
+              : "Links a recetas originales"}
+          </h3>
+          <div className={styles["source-links"]}>
+            {recipeData.source?.url?.filter((u) => u)?.length ? (
+              recipeData.source.url
+                .filter((u): u is string => !!u)
+                .map((url, i) => (
+                  <a
+                    key={i}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles["source-link"]}
+                  >
+                    {url}
+                  </a>
+                ))
+            ) : (
+              <span>-</span>
+            )}
+          </div>
         </div>
       </div>
 
@@ -195,8 +205,8 @@ const RecipePreview = ({
         <div>
           <h3>Tiempo</h3>
           <p>
-            {recipeData.bakingInstructions?.time != null
-              ? `${recipeData.bakingInstructions.time} min`
+            {recipeData.bakingInstructions?.time
+              ? recipeData.bakingInstructions.time
               : "-"}
           </p>
         </div>
@@ -233,7 +243,7 @@ const RecipePreview = ({
                       <li key={idx} className={styles["ingredient-li"]}>
                         <p>{i.name},</p>
                         <div className={styles["ingredient-amount"]}>
-                          {i.amount != null && <p>{i.amount}</p>}
+                          {i.amount != null && <p>{formatAmountForDisplay(i.amount)}</p>}
                           {i.unit && <p>{i.unit}</p>}
                         </div>
                       </li>

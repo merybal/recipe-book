@@ -2469,7 +2469,6 @@ export namespace Prisma {
     id: number | null
     category_id: number | null
     country_id: number | null
-    cooking_time: number | null
     cooking_temperature: number | null
   }
 
@@ -2477,7 +2476,6 @@ export namespace Prisma {
     id: number | null
     category_id: number | null
     country_id: number | null
-    cooking_time: number | null
     cooking_temperature: number | null
   }
 
@@ -2486,7 +2484,7 @@ export namespace Prisma {
     title: string | null
     category_id: number | null
     country_id: number | null
-    cooking_time: number | null
+    cooking_time: string | null
     cooking_temperature: number | null
     servings: string | null
     mold_type: string | null
@@ -2503,7 +2501,7 @@ export namespace Prisma {
     title: string | null
     category_id: number | null
     country_id: number | null
-    cooking_time: number | null
+    cooking_time: string | null
     cooking_temperature: number | null
     servings: string | null
     mold_type: string | null
@@ -2538,7 +2536,6 @@ export namespace Prisma {
     id?: true
     category_id?: true
     country_id?: true
-    cooking_time?: true
     cooking_temperature?: true
   }
 
@@ -2546,7 +2543,6 @@ export namespace Prisma {
     id?: true
     category_id?: true
     country_id?: true
-    cooking_time?: true
     cooking_temperature?: true
   }
 
@@ -2693,7 +2689,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id: number | null
-    cooking_time: number | null
+    cooking_time: string | null
     cooking_temperature: number | null
     servings: string | null
     mold_type: string | null
@@ -2843,7 +2839,7 @@ export namespace Prisma {
       title: string
       category_id: number
       country_id: number | null
-      cooking_time: number | null
+      cooking_time: string | null
       cooking_temperature: number | null
       servings: string | null
       mold_type: string | null
@@ -3288,7 +3284,7 @@ export namespace Prisma {
     readonly title: FieldRef<"Recipes", 'String'>
     readonly category_id: FieldRef<"Recipes", 'Int'>
     readonly country_id: FieldRef<"Recipes", 'Int'>
-    readonly cooking_time: FieldRef<"Recipes", 'Int'>
+    readonly cooking_time: FieldRef<"Recipes", 'String'>
     readonly cooking_temperature: FieldRef<"Recipes", 'Int'>
     readonly servings: FieldRef<"Recipes", 'String'>
     readonly mold_type: FieldRef<"Recipes", 'String'>
@@ -20087,7 +20083,7 @@ export namespace Prisma {
     title?: StringFilter<"Recipes"> | string
     category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
-    cooking_time?: IntNullableFilter<"Recipes"> | number | null
+    cooking_time?: StringNullableFilter<"Recipes"> | string | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
     servings?: StringNullableFilter<"Recipes"> | string | null
     mold_type?: StringNullableFilter<"Recipes"> | string | null
@@ -20140,7 +20136,7 @@ export namespace Prisma {
     title?: StringFilter<"Recipes"> | string
     category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
-    cooking_time?: IntNullableFilter<"Recipes"> | number | null
+    cooking_time?: StringNullableFilter<"Recipes"> | string | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
     servings?: StringNullableFilter<"Recipes"> | string | null
     mold_type?: StringNullableFilter<"Recipes"> | string | null
@@ -20190,7 +20186,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Recipes"> | string
     category_id?: IntWithAggregatesFilter<"Recipes"> | number
     country_id?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
-    cooking_time?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
+    cooking_time?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
     cooking_temperature?: IntNullableWithAggregatesFilter<"Recipes"> | number | null
     servings?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
     mold_type?: StringNullableWithAggregatesFilter<"Recipes"> | string | null
@@ -21142,7 +21138,7 @@ export namespace Prisma {
 
   export type RecipesCreateInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -21167,7 +21163,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -21187,7 +21183,7 @@ export namespace Prisma {
 
   export type RecipesUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21212,7 +21208,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21235,7 +21231,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -21249,7 +21245,7 @@ export namespace Prisma {
 
   export type RecipesUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21266,7 +21262,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22379,7 +22375,6 @@ export namespace Prisma {
     id?: SortOrder
     category_id?: SortOrder
     country_id?: SortOrder
-    cooking_time?: SortOrder
     cooking_temperature?: SortOrder
   }
 
@@ -22421,7 +22416,6 @@ export namespace Prisma {
     id?: SortOrder
     category_id?: SortOrder
     country_id?: SortOrder
-    cooking_time?: SortOrder
     cooking_temperature?: SortOrder
   }
 
@@ -23319,16 +23313,16 @@ export namespace Prisma {
     set?: string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -24908,7 +24902,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutSubrecipesInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -24932,7 +24926,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -24996,7 +24990,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutSubrecipesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25020,7 +25014,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25155,7 +25149,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_dietary_restrictionsInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25179,7 +25173,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25238,7 +25232,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_dietary_restrictionsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25262,7 +25256,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25311,7 +25305,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_notesInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25335,7 +25329,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25370,7 +25364,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_notesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25394,7 +25388,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25454,7 +25448,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_tagsInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25478,7 +25472,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25533,7 +25527,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_tagsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25557,7 +25551,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25602,7 +25596,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_sourcesInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25626,7 +25620,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25661,7 +25655,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_sourcesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25685,7 +25679,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25704,7 +25698,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutCountryInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25727,7 +25721,7 @@ export namespace Prisma {
     id?: number
     title: string
     category_id: number
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25779,7 +25773,7 @@ export namespace Prisma {
     title?: StringFilter<"Recipes"> | string
     category_id?: IntFilter<"Recipes"> | number
     country_id?: IntNullableFilter<"Recipes"> | number | null
-    cooking_time?: IntNullableFilter<"Recipes"> | number | null
+    cooking_time?: StringNullableFilter<"Recipes"> | string | null
     cooking_temperature?: IntNullableFilter<"Recipes"> | number | null
     servings?: StringNullableFilter<"Recipes"> | string | null
     mold_type?: StringNullableFilter<"Recipes"> | string | null
@@ -25793,7 +25787,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutCategoryInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -25816,7 +25810,7 @@ export namespace Prisma {
     id?: number
     title: string
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -26097,7 +26091,7 @@ export namespace Prisma {
 
   export type RecipesCreateWithoutRecipe_subcategoriesInput = {
     title: string
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -26121,7 +26115,7 @@ export namespace Prisma {
     title: string
     category_id: number
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -26180,7 +26174,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutRecipe_subcategoriesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26204,7 +26198,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26603,7 +26597,7 @@ export namespace Prisma {
     id?: number
     title: string
     category_id: number
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -26617,7 +26611,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutCountryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26640,7 +26634,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26662,7 +26656,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     category_id?: IntFieldUpdateOperationsInput | number
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26678,7 +26672,7 @@ export namespace Prisma {
     id?: number
     title: string
     country_id?: number | null
-    cooking_time?: number | null
+    cooking_time?: string | null
     cooking_temperature?: number | null
     servings?: string | null
     mold_type?: string | null
@@ -26698,7 +26692,7 @@ export namespace Prisma {
 
   export type RecipesUpdateWithoutCategoryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26721,7 +26715,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null
@@ -26743,7 +26737,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
-    cooking_time?: NullableIntFieldUpdateOperationsInput | number | null
+    cooking_time?: NullableStringFieldUpdateOperationsInput | string | null
     cooking_temperature?: NullableIntFieldUpdateOperationsInput | number | null
     servings?: NullableStringFieldUpdateOperationsInput | string | null
     mold_type?: NullableStringFieldUpdateOperationsInput | string | null

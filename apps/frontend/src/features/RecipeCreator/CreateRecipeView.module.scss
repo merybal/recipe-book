@@ -134,6 +134,17 @@
     @include Flex($direction: column, $gap: md);
   }
 
+  /* Sources (reuses notes-container, note-item) */
+  .source-subsection {
+    @include Flex($direction: column, $gap: sm);
+  }
+
+  .source-subsection-title {
+    @include Font($family: text, $weight: bold, $size: sm);
+    @include Color($font: main-text);
+    @include Margin($bottom: xs);
+  }
+
   /* Categories */
   .subcategory-container {
     @include Flex($direction: column, $gap: md);

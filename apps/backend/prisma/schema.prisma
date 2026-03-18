@@ -23,7 +23,7 @@ model Recipes {
   category              Categories            @relation(fields: [category_id], references: [id])
   country_id             Int?
   country                Countries?           @relation(fields: [country_id], references: [id])
-  cooking_time          Int?                  @db.Integer
+  cooking_time          String?               @db.VarChar(255)
   cooking_temperature   Int?                  @db.Integer
   servings              String?               @db.VarChar(255)
   mold_type             String?               @db.VarChar(255)

@@ -38,8 +38,8 @@ export class UpdateRecipeDto {
   title?: string;
 
   @IsOptional()
-  @IsNumber()
-  cooking_time?: number;
+  @IsString()
+  cooking_time?: string;
 
   @IsOptional()
   @IsNumber()

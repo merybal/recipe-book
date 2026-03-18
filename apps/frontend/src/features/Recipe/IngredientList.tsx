@@ -1,4 +1,5 @@
 import Icon from "@/design-system/components/Icon";
+import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
 
 import type { SubrecipeType } from "@/types";
 
@@ -33,7 +34,9 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                         <Icon name="Circle" color="primary" size="md" />
                         <p>{paragraph.name},</p>
                         <div className={styles["ingredient-amount"]}>
-                          <p>{paragraph.amount}</p>
+                          {paragraph.amount != null && (
+                            <p>{formatAmountForDisplay(paragraph.amount)}</p>
+                          )}
                           {paragraph.unit && <p>{paragraph.unit}</p>}
                         </div>
                       </li>

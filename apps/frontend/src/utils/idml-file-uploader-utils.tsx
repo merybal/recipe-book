@@ -26,7 +26,7 @@ export function getBakingInstructions(i: number, storyContentArray: Element[]) {
 
   sectionContent.forEach((item) => {
     if (item.includes("min")) {
-      bakingInstructions.time = parseInt(item);
+      bakingInstructions.time = item.trim();
     } else if (item.includes("°C")) {
       bakingInstructions.temperature = parseInt(item);
     }
@@ -264,7 +264,74 @@ export function normalizeUnit(
   return unit;
 }
 
+/** Unicode vulgar fractions -> decimal value */
+const UNICODE_FRACTIONS: Record<string, number> = {
+  '¼': 1 / 4,
+  '½': 1 / 2,
+  '¾': 3 / 4,
+  '⅓': 1 / 3,
+  '⅔': 2 / 3,
+  '⅕': 1 / 5,
+  '⅖': 2 / 5,
+  '⅗': 3 / 5,
+  '⅘': 4 / 5,
+  '⅙': 1 / 6,
+  '⅚': 5 / 6,
+  '⅛': 1 / 8,
+  '⅜': 3 / 8,
+  '⅝': 5 / 8,
+  '⅞': 7 / 8,
+};
+
+/** Decimal -> Unicode fraction symbol (for display). Uses epsilon for float comparison. */
+const DECIMAL_TO_UNICODE: { value: number; symbol: string }[] = [
+  { value: 1 / 8, symbol: '⅛' },
+  { value: 1 / 6, symbol: '⅙' },
+  { value: 1 / 5, symbol: '⅕' },
+  { value: 1 / 4, symbol: '¼' },
+  { value: 1 / 3, symbol: '⅓' },
+  { value: 1 / 2, symbol: '½' },
+  { value: 2 / 5, symbol: '⅖' },
+  { value: 2 / 3, symbol: '⅔' },
+  { value: 3 / 8, symbol: '⅜' },
+  { value: 3 / 5, symbol: '⅗' },
+  { value: 3 / 4, symbol: '¾' },
+  { value: 4 / 5, symbol: '⅘' },
+  { value: 5 / 6, symbol: '⅚' },
+  { value: 5 / 8, symbol: '⅝' },
+  { value: 7 / 8, symbol: '⅞' },
+].sort((a, b) => b.value - a.value); // descending to match larger fractions first
+
+const EPSILON = 1e-9;
+
+export function formatAmountForDisplay(amount: number): string {
+  const whole = Math.floor(amount);
+  const frac = amount - whole;
+  if (frac < EPSILON) return String(whole);
+  const match = DECIMAL_TO_UNICODE.find(
+    (f) => Math.abs(frac - f.value) < EPSILON,
+  );
+  if (match) {
+    return whole > 0 ? `${whole}${match.symbol}` : match.symbol;
+  }
+  return String(amount);
+}
+
+function parseUnicodeFraction(value: string): number | null {
+  const trimmed = value.trim();
+  if (trimmed in UNICODE_FRACTIONS) return UNICODE_FRACTIONS[trimmed];
+  // "1½" -> 1 + 0.5
+  const match = trimmed.match(/^(\d+)([¼½¾⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞])$/);
+  if (match) {
+    return parseInt(match[1], 10) + (UNICODE_FRACTIONS[match[2]] ?? 0);
+  }
+  return null;
+}
+
 export function parseAmount(value: string): number {
+  const unicodeVal = parseUnicodeFraction(value);
+  if (unicodeVal !== null) return unicodeVal;
+
   // mixed fraction ("1 1/2")
   if (value.includes(" ")) {
     const [whole, fraction] = value.split(" ");
@@ -314,6 +381,11 @@ export function parseIngredientLine(ingredientLine: string) {
   else if (/\d/.test(parts[0])) {
     amountRaw = parts[0];
     unitRaw = parts.slice(1).join(" ");
+  }
+  // Unicode fraction (eg: "½ taza" or "1½ tazas")
+  else if (parseUnicodeFraction(parts[0]) !== null) {
+    amountRaw = parts[0];
+    unitRaw = parts.slice(1).join(" ");
   } else {
     unitRaw = parts.join(" ");
   }
@@ -355,7 +427,7 @@ export function transformRecipeForPost(
     servings: recipe.servings,
     mold_type: recipe.mold?.type || null,
     mold_size: recipe.mold?.size || null,
-    cooking_time: recipe.bakingInstructions?.time || null,
+    cooking_time: recipe.bakingInstructions?.time?.trim() || null,
     cooking_temperature: recipe.bakingInstructions?.temperature || null,
     image_url: recipe.imageUrl || null,
 
@@ -527,4 +599,21 @@ export function parseIngredientsText(text: string) {
     .map((line) => line.trim())
     .filter((line) => line !== "")
     .map(parseIngredientLine);
+}
+
+/** Inverse of parseIngredientsText: formats ingredients array to text (one per line). */
+export function formatIngredientsToText(
+  ingredients: { name: string; amount?: number; unit?: string }[],
+): string {
+  return ingredients
+    .map((ing) => {
+      const amountPart =
+        ing.amount != null
+          ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ""}`.trim()
+          : ing.unit
+            ? String(ing.unit)
+            : "";
+      return amountPart ? `${ing.name}, ${amountPart}` : ing.name;
+    })
+    .join("\n");
 }

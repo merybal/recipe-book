@@ -10,7 +10,7 @@ export type RecipePdfData = {
   mold?: string;
   /** Author/source name only (no URL) */
   author?: string;
-  sourceUrl?: string;
+  sourceUrls?: string[];
   /** Each item: label for display, iconKey for icon (gluten_free, dairy_free, vegan, vegetarian) */
   dietaryRestrictions?: { label: string; iconKey: string }[];
   subrecipes: {
@@ -21,6 +21,36 @@ export type RecipePdfData = {
   notes?: string[];
 };
 
+const UNICODE_FRACTIONS: { value: number; symbol: string }[] = [
+  { value: 7 / 8, symbol: '⅞' },
+  { value: 5 / 6, symbol: '⅚' },
+  { value: 5 / 8, symbol: '⅝' },
+  { value: 4 / 5, symbol: '⅘' },
+  { value: 3 / 4, symbol: '¾' },
+  { value: 3 / 5, symbol: '⅗' },
+  { value: 3 / 8, symbol: '⅜' },
+  { value: 2 / 3, symbol: '⅔' },
+  { value: 2 / 5, symbol: '⅖' },
+  { value: 1 / 2, symbol: '½' },
+  { value: 1 / 3, symbol: '⅓' },
+  { value: 1 / 4, symbol: '¼' },
+  { value: 1 / 5, symbol: '⅕' },
+  { value: 1 / 6, symbol: '⅙' },
+  { value: 1 / 8, symbol: '⅛' },
+];
+const EPSILON = 1e-9;
+
+function formatAmountForDisplay(amount: number): string {
+  const whole = Math.floor(amount);
+  const frac = amount - whole;
+  if (frac < EPSILON) return String(whole);
+  const match = UNICODE_FRACTIONS.find(
+    (f) => Math.abs(frac - f.value) < EPSILON,
+  );
+  if (match) return whole > 0 ? `${whole}${match.symbol}` : match.symbol;
+  return String(amount);
+}
+
 function formatIngredient(ing: {
   name: string;
   amount?: number;
@@ -28,7 +58,7 @@ function formatIngredient(ing: {
 }): string {
   const amountPart =
     ing.amount != null
-      ? `${ing.amount} ${ing.unit || ''}`.trim()
+      ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ''}`.trim()
       : ing.unit
         ? String(ing.unit)
         : '';
@@ -204,14 +234,26 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       </section>`;
   }
 
-  const recetaOriginalHtml = recipe.sourceUrl
-    ? `
+  const recetaOriginalTitle =
+    recipe.sourceUrls && recipe.sourceUrls.length > 1
+      ? 'Recetas originales'
+      : 'Receta original';
+  const recetaOriginalHtml =
+    recipe.sourceUrls && recipe.sourceUrls.length > 0
+      ? `
       <div class="section-divider" data-pdf-divider></div>
       <section class="section">
-        <h2 class="section-title">Receta original</h2>
-        <p class="source-url"><a href="${escapeHtml(recipe.sourceUrl)}">${escapeHtml(recipe.sourceUrl)}</a></p>
+        <h3 class="subsection-title">${recetaOriginalTitle}</h3>
+        <ul class="ingredient-list">
+          ${recipe.sourceUrls
+            .map(
+              (url) =>
+                `<li><a href="${escapeHtml(url)}">${escapeHtml(url)}</a></li>`,
+            )
+            .join('')}
+        </ul>
       </section>`
-    : '';
+      : '';
 
   const notesHtml =
     recipe.notes && recipe.notes.length > 0
@@ -257,7 +299,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       margin: 0;
       padding: 0;
       font-family: 'Akzidenz Grotesk Light', Helvetica, Arial, sans-serif;
-      font-size: 11pt;
+      font-size: 10pt;
       color: #000;
       line-height: 1.3;
       hyphens: none;
@@ -277,8 +319,8 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     .info-block {
       margin-top: 14px;
       padding: 10px 0;
-      border-top: 1px solid #2c3e50;
-      border-bottom: 1px solid #2c3e50;
+      border-top: 1px solid #2d5a27;
+      border-bottom: 1px solid #2d5a27;
       font-size: 11pt;
       line-height: 1.4;
       position: relative;
@@ -302,7 +344,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       top: 0;
       bottom: 0;
       width: 1px;
-      background: #2c3e50;
+      background: #2d5a27;
       transform: translateX(-50%);
     }
     .info-row {
@@ -315,11 +357,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: #2c3e50;
+      color: #2d5a27;
     }
-    .source-url {
-      margin: 0;
-      font-size: 10pt;
+    .ingredient-list a {
       word-break: break-all;
       text-align: justify;
     }
@@ -329,7 +369,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     .section-divider {
       margin-top: 20px;
       height: 1px;
-      background: #2c3e50;
+      background: #2d5a27;
+      break-before: avoid;
+      page-break-before: avoid;
     }
     .section-title {
       font-family: 'Bellerose', sans-serif;
@@ -338,12 +380,16 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       text-align: center;
       margin: 0 0 14px 0;
       text-transform: uppercase;
+      break-after: avoid;
+      page-break-after: avoid;
     }
     .subsection-title {
       font-family: 'Bellerose', sans-serif;
       font-size: 20px; /* 15pt */
       font-weight: 400;
       margin: 0 0 8px 0;
+      break-after: avoid;
+      page-break-after: avoid;
     }
     .ingredient-columns {
       display: flex;
@@ -372,7 +418,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       text-align: justify;
     }
     .instruction-text {
-      margin: 0 0 4px 0;
+      margin: 0 0 10px 0;
       text-align: justify;
       line-height: 1.2;
     }

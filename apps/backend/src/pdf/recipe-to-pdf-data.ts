@@ -3,7 +3,7 @@ import type { RecipePdfData } from './recipe-pdf.template';
 type RawRecipe = {
   title: string;
   servings: string | null;
-  cooking_time: number | null;
+  cooking_time: string | null;
   cooking_temperature: number | null;
   mold_type: string | null;
   mold_size: string | null;
@@ -28,7 +28,7 @@ type RawRecipe = {
 
 export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
   const bakingParts: string[] = [];
-  if (recipe.cooking_time) bakingParts.push(`${recipe.cooking_time} min`);
+  if (recipe.cooking_time) bakingParts.push(recipe.cooking_time);
   if (recipe.cooking_temperature)
     bakingParts.push(`${recipe.cooking_temperature}°C`);
   const bakingInfo =
@@ -43,12 +43,12 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
   const sourceNames = recipe.recipe_sources
     ?.map((s) => s.name)
     .filter(Boolean) as string[] | undefined;
-  const author = sourceNames?.length ? sourceNames.join(', ') : undefined;
+  const uniqueNames = sourceNames ? [...new Set(sourceNames)] : [];
+  const author = uniqueNames.length ? uniqueNames.join(', ') : undefined;
 
   const sourceUrls = recipe.recipe_sources
     ?.map((s) => s.url)
     .filter(Boolean) as string[] | undefined;
-  const sourceUrl = sourceUrls?.length ? sourceUrls.join(', ') : undefined;
 
   const dietaryRestrictions =
     recipe.recipe_dietary_restrictions?.map((rdr) => ({
@@ -65,7 +65,7 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
     bakingInfo,
     mold,
     author: author ?? undefined,
-    sourceUrl: sourceUrl ?? undefined,
+    sourceUrls: sourceUrls ?? undefined,
     dietaryRestrictions:
       dietaryRestrictions.length > 0 ? dietaryRestrictions : undefined,
     subrecipes: recipe.subrecipes.map((sr) => {

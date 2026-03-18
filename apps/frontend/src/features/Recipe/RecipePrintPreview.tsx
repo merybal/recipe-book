@@ -1,4 +1,5 @@
 import type { RecipeType, SubrecipeType } from "@/types";
+import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
 
 import styles from "./RecipePrintPreview.module.scss";
 
@@ -11,7 +12,7 @@ type RecipePrintPreviewProps = {
 function formatIngredient(ing: { name: string; amount?: number | null; unit?: string | null }) {
   const amountPart =
     ing.amount != null
-      ? `${ing.amount} ${ing.unit || ""}`.trim()
+      ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ""}`.trim()
       : ing.unit
         ? String(ing.unit)
         : "";
@@ -21,7 +22,7 @@ function formatIngredient(ing: { name: string; amount?: number | null; unit?: st
 function formatBakingInfo(recipe: RecipeType) {
   if (!recipe.bakingInstructions) return null;
   const parts = [
-    recipe.bakingInstructions.time && `${recipe.bakingInstructions.time} min`,
+    recipe.bakingInstructions.time,
     recipe.bakingInstructions.temperature && `${recipe.bakingInstructions.temperature}°C`,
   ].filter(Boolean);
   return parts.length ? parts.join(" • ") : null;

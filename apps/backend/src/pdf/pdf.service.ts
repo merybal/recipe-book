@@ -6,7 +6,6 @@ import {
 } from './recipe-pdf.template';
 
 // A5: 210mm height, 10mm top + 10mm bottom margins = 190mm content per page
-// 190mm * 96dpi / 25.4mm ≈ 718px
 const PAGE_CONTENT_HEIGHT_PX = (190 * 96) / 25.4;
 
 @Injectable()
@@ -22,39 +21,39 @@ export class PdfService {
     try {
       const page = await browser.newPage();
 
-      // Match viewport to A5 so layout matches PDF
-      await page.setViewportSize({
-        width: Math.round((148 * 96) / 25.4),
-        height: Math.round((210 * 96) / 25.4),
-      });
+      // Emulate print media so layout matches PDF
+      await page.emulateMedia({ media: 'print' });
 
       await page.setContent(html, {
         waitUntil: 'networkidle',
       });
 
-      // Wait for fonts to load
       await page.evaluate(async () => {
-        if (document.fonts?.ready) {
-          await document.fonts.ready;
-        }
+        if (document.fonts?.ready) await document.fonts.ready;
       });
 
-      // Hide dividers that fall at page breaks
+      // Hide dividers at page boundaries (top or bottom of a page)
       await page.evaluate((pageHeight: number) => {
         const dividers = document.querySelectorAll('[data-pdf-divider]');
-        const threshold = 5;
+        const threshold = 15;
 
         dividers.forEach((el) => {
           const rect = el.getBoundingClientRect();
           const top = rect.top + window.scrollY;
+          const bottom = top + rect.height;
 
-          const pageIndex = Math.floor(top / pageHeight);
-          const pageStart = pageIndex * pageHeight;
-
-          // Hide if at the top of a page (except first page)
-          if (pageIndex > 0 && Math.abs(top - pageStart) < threshold) {
-            (el as HTMLElement).style.display = 'none';
+          let hide = false;
+          for (let i = 1; i < 20; i++) {
+            const boundary = i * pageHeight;
+            if (
+              Math.abs(top - boundary) < threshold ||
+              Math.abs(bottom - boundary) < threshold
+            ) {
+              hide = true;
+              break;
+            }
           }
+          if (hide) (el as HTMLElement).style.display = 'none';
         });
       }, PAGE_CONTENT_HEIGHT_PX);
 

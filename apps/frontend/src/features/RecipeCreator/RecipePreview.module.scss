@@ -72,5 +72,14 @@
         }
       }
     }
+
+    .source-links {
+      @include Flex($direction: column, $gap: xs);
+
+      .source-link {
+        display: block;
+        word-break: break-all;
+      }
+    }
   }
 }

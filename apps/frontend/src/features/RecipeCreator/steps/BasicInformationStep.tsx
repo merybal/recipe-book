@@ -13,14 +13,6 @@ const BasicInformationStep = ({
   setErrors,
   setRecipe,
 }: BasicInformationStepProps) => {
-  const handleServingsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setRecipe((prev) => ({
-      ...prev,
-      servings: value,
-    }));
-  };
-
   const handleMoldTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRecipe((prev) => ({
       ...prev,
@@ -41,10 +33,7 @@ const BasicInformationStep = ({
     }));
   };
 
-  const validateOptionalNumber = (
-    input: string,
-    field: "temperature" | "time",
-  ) => {
+  const validateOptionalNumber = (input: string, field: "temperature") => {
     const isValidNumber = /^[1-9]\d*$/.test(input); // integers > 0
 
     if (input === "") {
@@ -99,24 +88,25 @@ const BasicInformationStep = ({
   };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    validateOptionalNumber(e.target.value, "time");
+    const value = e.target.value;
+    setRecipe((prev) => ({
+      ...prev,
+      bakingInstructions: {
+        ...(prev.bakingInstructions || {}),
+        time: value || undefined,
+      },
+    }));
+    if (errors.time) {
+      setErrors((prev) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { time: _removed, ...rest } = prev;
+        return rest;
+      });
+    }
   };
 
   return (
     <div>
-      <section aria-labelledby="servings-section" className={styles.step}>
-        <Input
-          id="servings"
-          label="Rinde"
-          showLabel
-          placeholder="4 porciones"
-          value={recipe.servings ?? ""}
-          onChange={handleServingsChange}
-        />
-      </section>
-
-      <Separator />
-
       <section aria-labelledby="mold-section" className={styles.step}>
         <h2 id="mold-section">Molde</h2>
         <Input
@@ -164,17 +154,11 @@ const BasicInformationStep = ({
 
         <Input
           id="time"
-          inputMode="numeric"
-          label="Tiempo en minutos"
+          label="Tiempo"
           showLabel
-          pattern="[0-9]*"
-          placeholder="45"
+          placeholder="45 min o 10-15 min"
           type="text"
-          value={
-            recipe.bakingInstructions?.time !== undefined
-              ? recipe.bakingInstructions.time.toString()
-              : ""
-          }
+          value={recipe.bakingInstructions?.time ?? ""}
           onChange={handleTimeChange}
           {...(errors.time && { error: errors.time })}
         />

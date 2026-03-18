@@ -16,6 +16,7 @@ import {
   validateCategories,
 } from "@/utils/form-validation-utils";
 import { buildRecipePayload } from "@/utils/recipe-submit-utils";
+import { formatIngredientsToText } from "@/utils/idml-file-uploader-utils";
 
 import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
 
@@ -107,7 +108,7 @@ const recipeExample = {
     size: "22-24 cm",
   },
   bakingInstructions: {
-    time: 10,
+    time: "45 min",
     temperature: 180,
   },
   notes: [
@@ -134,8 +135,10 @@ const CreateRecipeView = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  /** True cuando el usuario fue al step 0 desde "Editar portada" en la preview. */
-  const [editingCoverFromPreview, setEditingCoverFromPreview] = useState(false);
+  /** Step index when editing from preview (0-4), null when in normal flow. */
+  const [editingFromPreview, setEditingFromPreview] = useState<number | null>(
+    null,
+  );
 
   const [recipe, setRecipe] = useState<RecipeType>({
     title: "",
@@ -206,17 +209,21 @@ const CreateRecipeView = () => {
       setSubrecipeDrafts(
         initialRecipe.subrecipes.map((s) => ({
           title: s.title ?? "",
+          ingredientsText: formatIngredientsToText(s.ingredients ?? []),
           ingredients: s.ingredients ?? [],
+          instructionsText: (s.instructions ?? []).join("\n"),
           instructions: s.instructions ?? [],
         })),
       );
     } else {
       const sub = initialRecipe.subrecipes[0];
+      const ingredients = sub?.ingredients ?? [];
+      const instructions = sub?.instructions ?? [];
       setSimpleRecipeDraft({
-        ingredientsText: "",
-        ingredients: sub?.ingredients ?? [],
-        instructionsText: "",
-        instructions: sub?.instructions ?? [],
+        ingredientsText: formatIngredientsToText(ingredients),
+        ingredients,
+        instructionsText: instructions.join("\n"),
+        instructions,
       });
     }
   }, [initialRecipe]);
@@ -315,12 +322,53 @@ const CreateRecipeView = () => {
   };
 
   const prevStep = () => {
-    if (currentStep === 0 && editingCoverFromPreview) {
-      setEditingCoverFromPreview(false);
+    if (editingFromPreview !== null) {
+      setEditingFromPreview(null);
       setCurrentStep(PREVIEW_STEP_INDEX);
       return;
     }
     if (currentStep > 0) setCurrentStep(currentStep - 1);
+  };
+
+  const saveAndReturnToPreview = () => {
+    const stepErrors: Record<string, string> = {};
+
+    if (currentStep === 0) {
+      const { title } = validateStepCover(recipe);
+      if (title) stepErrors.title = title;
+    }
+    if (currentStep === 1) {
+      Object.assign(stepErrors, validateBakingInstructions(recipe));
+    }
+    if (currentStep === 2) {
+      if (errors.subrecipes) stepErrors.subrecipes = errors.subrecipes;
+    }
+    if (currentStep === 3) {
+      Object.assign(stepErrors, validateCategories(recipe));
+    }
+
+    if (Object.keys(stepErrors).length > 0) {
+      setErrors(stepErrors);
+      return;
+    }
+
+    setErrors({});
+    setRecipe((prev) => ({
+      ...prev,
+      subcategories: (prev.subcategories ?? []).map((s) => s.trim()).filter(Boolean),
+      notes: (prev.notes ?? []).map((n) => n.trim()).filter(Boolean),
+    }));
+    if (currentStep === 2 && isSelected) {
+      const filteredDrafts = subrecipeDrafts.filter(
+        (d) =>
+          (d.title ?? "").trim() !== "" ||
+          (d.ingredientsText ?? "").trim() !== "" ||
+          (d.instructionsText ?? "").trim() !== "",
+      );
+      setSubrecipeDrafts(filteredDrafts.length > 0 ? filteredDrafts : []);
+    }
+    setEditingFromPreview(null);
+    setCurrentStep(PREVIEW_STEP_INDEX);
   };
 
   const hasStepErrors = (): boolean => {
@@ -369,22 +417,6 @@ const CreateRecipeView = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  /** Valida la portada y, si es válida, vuelve al step de preview. Usado desde "Editar portada". */
-  const saveCoverAndReturnToPreview = () => {
-    const { title } = validateStepCover(recipe);
-    if (title) {
-      setErrors((prev) => ({ ...prev, title }));
-      return;
-    }
-    setErrors((prev) => {
-      const next = { ...prev };
-      delete next.title;
-      return next;
-    });
-    setEditingCoverFromPreview(false);
-    setCurrentStep(PREVIEW_STEP_INDEX);
   };
 
   return (
@@ -469,33 +501,48 @@ const CreateRecipeView = () => {
             coverImageFiles={files}
             onCoverImageChange={setFiles}
             onEditCover={() => {
-              setEditingCoverFromPreview(true);
+              setEditingFromPreview(0);
               setCurrentStep(0);
             }}
-            onEditMold={() => setCurrentStep(1)}
-            onEditBakingInstructions={() => setCurrentStep(2)}
-            onEditSubrecipes={() => setCurrentStep(2)}
-            onEditCategories={() => setCurrentStep(3)}
-            onEditAdditionalInfo={() => setCurrentStep(4)}
+            onEditMold={() => {
+              setEditingFromPreview(1);
+              setCurrentStep(1);
+            }}
+            onEditBakingInstructions={() => {
+              setEditingFromPreview(1);
+              setCurrentStep(1);
+            }}
+            onEditSubrecipes={() => {
+              setEditingFromPreview(2);
+              setCurrentStep(2);
+            }}
+            onEditCategories={() => {
+              setEditingFromPreview(3);
+              setCurrentStep(3);
+            }}
+            onEditAdditionalInfo={() => {
+              setEditingFromPreview(4);
+              setCurrentStep(4);
+            }}
             onPdfPreview={() => setShowPdfPreview(true)}
           />
         )}
 
         <div className={styles["form-navigation"]}>
-          {(currentStep > 0 || editingCoverFromPreview) && (
+          {(currentStep > 0 || editingFromPreview !== null) && (
             <Button
               type="button"
-              label={editingCoverFromPreview ? "Cancelar edición" : "Anterior"}
+              label={editingFromPreview !== null ? "Cancelar" : "Anterior"}
               variant="secondary"
               onClick={prevStep}
               disabled={hasStepErrors()}
             />
           )}
-          {currentStep === 0 && editingCoverFromPreview ? (
+          {editingFromPreview !== null ? (
             <Button
               type="button"
-              label="Guardar cambios"
-              onClick={saveCoverAndReturnToPreview}
+              label="Guardar"
+              onClick={saveAndReturnToPreview}
               disabled={hasStepErrors()}
             />
           ) : currentStep < totalSteps - 1 ? (
