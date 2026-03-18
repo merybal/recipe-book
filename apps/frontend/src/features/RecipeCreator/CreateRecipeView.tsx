@@ -186,6 +186,7 @@ const CreateRecipeView = () => {
     skipNextSyncRef.current = true; // Prevent sync effect from overwriting
     setCurrentStep(PREVIEW_STEP_INDEX); // Start at preview when editing from RecipeView
     setRecipe({
+      id: initialRecipe.id,
       title: initialRecipe.title,
       imageUrl: initialRecipe.imageUrl,
       subrecipes: initialRecipe.subrecipes,
@@ -401,7 +402,21 @@ const CreateRecipeView = () => {
     setIsSubmitting(true);
     setSubmitError(null);
     try {
-      const payload = await buildRecipePayload(recipe);
+      let imageUrl = recipe.imageUrl;
+      if (files.length > 0) {
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        const { data } = await axios.post<{ url: string }>(
+          "/api/upload/recipe-cover",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          },
+        );
+        imageUrl = data.url;
+      }
+      const recipeWithImage = { ...recipe, ...(imageUrl && { imageUrl }) };
+      const payload = await buildRecipePayload(recipeWithImage);
       if (isEditMode && recipeId) {
         await axios.put(`/api/recipes/${recipeId}/full`, payload);
         navigate(`/recipes/${recipeId}`);

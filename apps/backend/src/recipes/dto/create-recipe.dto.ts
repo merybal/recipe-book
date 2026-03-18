@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsInt, IsUrl } from 'class-validator';
+import { IsOptional, IsString, IsInt } from 'class-validator';
 
 export class CreateRecipeDto {
   @IsString()
@@ -36,6 +36,6 @@ export class CreateRecipeDto {
   introduction?: string;
 
   @IsOptional()
-  @IsUrl()
-  image_url?: string;
+  @IsString()
+  image_url?: string | null;
 }

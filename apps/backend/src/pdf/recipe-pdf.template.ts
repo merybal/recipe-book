@@ -8,7 +8,11 @@ export type RecipePdfData = {
   introduction?: string;
   servings?: string;
   bakingInfo?: string;
+  /** Baking parts (time, temperature) for custom bullet styling */
+  bakingInfoParts?: string[];
   mold?: string;
+  /** Mold parts (type, size) for custom bullet styling */
+  moldParts?: string[];
   /** Author/source name only (no URL) */
   author?: string;
   sourceUrls?: string[];
@@ -128,13 +132,23 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       );
     }
     if (recipe.bakingInfo) {
+      const bakingContent = recipe.bakingInfoParts?.length
+        ? recipe.bakingInfoParts
+            .map((p) => escapeHtml(p))
+            .join('<span class="info-bullet"> • </span>')
+        : escapeHtml(recipe.bakingInfo);
       leftItems.push(
-        `<div class="info-row"><span class="info-icon">${iconSvg('clock')}</span><span>${escapeHtml(recipe.bakingInfo)}</span></div>`,
+        `<div class="info-row"><span class="info-icon">${iconSvg('clock')}</span><span>${bakingContent}</span></div>`,
       );
     }
     if (recipe.mold) {
+      const moldContent = recipe.moldParts?.length
+        ? recipe.moldParts
+            .map((p) => escapeHtml(p))
+            .join('<span class="info-bullet"> • </span>')
+        : escapeHtml(recipe.mold);
       leftItems.push(
-        `<div class="info-row"><span class="info-icon">${iconSvg('cylinder')}</span><span>${escapeHtml(recipe.mold)}</span></div>`,
+        `<div class="info-row"><span class="info-icon">${iconSvg('cylinder')}</span><span>${moldContent}</span></div>`,
       );
     }
 
@@ -151,14 +165,21 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       );
     });
 
-    const showDivider = leftItems.length > 0 && rightItems.length > 0;
-    infoHtml = `
+    const isSingleSide = leftItems.length === 0 || rightItems.length === 0;
+    const singleSideItems = leftItems.length > 0 ? leftItems : rightItems;
+
+    infoHtml = isSingleSide
+      ? `
+      <div class="info-block info-block--row">
+        <div class="info-row-wrap">${singleSideItems.join('')}</div>
+      </div>`
+      : `
       <div class="info-block">
         <div class="info-columns">
-          <div class="info-column info-column-left">${leftItems.join('') || '&nbsp;'}</div>
-          <div class="info-column info-column-right">${rightItems.join('') || '&nbsp;'}</div>
+          <div class="info-column info-column-left">${leftItems.join('')}</div>
+          <div class="info-column info-column-right">${rightItems.join('')}</div>
         </div>
-        ${showDivider ? '<div class="info-divider"></div>' : ''}
+        <div class="info-divider"></div>
       </div>`;
   }
 
@@ -330,6 +351,18 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       line-height: 1.4;
       position: relative;
     }
+    .info-block--row .info-row-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      align-items: center;
+      justify-content: center;
+    }
+    .info-block--row .info-row-wrap .info-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
     .info-columns {
       display: flex;
       align-items: stretch;
@@ -363,6 +396,11 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       justify-content: center;
       flex-shrink: 0;
       color: #2d5a27;
+    }
+    .info-bullet {
+      font-size: 0.7em;
+      color: #2d5a27;
+      margin: 0 4px;
     }
     .ingredient-list a {
       word-break: break-all;

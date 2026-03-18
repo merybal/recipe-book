@@ -66,7 +66,8 @@ const RecipePreview = ({
     return () => URL.revokeObjectURL(url);
   }, [coverImageFiles]);
 
-  const coverImageSrc = coverPreviewUrl ?? undefined;
+  const coverImageSrc =
+    coverPreviewUrl ?? (recipeData.imageUrl || undefined);
   const subrecipes = recipeData.subrecipes ?? [];
   const notes = recipeData.notes ?? [];
   const subcategories = recipeData.subcategories ?? [];

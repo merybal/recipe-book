@@ -22,7 +22,7 @@ type CreateRecipeFullPayload = {
   mold_type?: string;
   mold_size?: string;
   introduction?: string;
-  image_url?: string;
+  image_url?: string | null;
   subrecipes: {
     title?: string;
     instructions: string;
@@ -117,6 +117,10 @@ export async function buildRecipePayload(
     ...(recipe.mold?.size?.trim() && { mold_size: recipe.mold.size.trim() }),
     ...(recipe.introduction?.trim() && {
       introduction: recipe.introduction.trim(),
+    }),
+    // When editing, always send image_url to persist clears (null = remove)
+    ...((recipe.id != null || recipe.imageUrl) && {
+      image_url: recipe.imageUrl?.trim() || null,
     }),
     subrecipes: recipe.subrecipes.map((sub) => ({
       ...(sub.title?.trim() && { title: sub.title.trim() }),

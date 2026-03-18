@@ -29,6 +29,7 @@ pendientes.md
 Logo.psd
 
 /apps/backend/.env
+/apps/backend/uploads
 .env
 /apps/backend/dist
 /apps/frontend/dist

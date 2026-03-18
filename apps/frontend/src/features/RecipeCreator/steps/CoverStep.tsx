@@ -41,6 +41,9 @@ const CoverStep = ({
 
   const handleFileChange = (newFiles: File[]) => {
     setFiles(newFiles);
+    if (newFiles.length === 0) {
+      setRecipe((prev) => ({ ...prev, imageUrl: undefined }));
+    }
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

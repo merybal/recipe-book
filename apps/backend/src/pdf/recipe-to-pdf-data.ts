@@ -32,14 +32,10 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
   if (recipe.cooking_time) bakingParts.push(recipe.cooking_time);
   if (recipe.cooking_temperature)
     bakingParts.push(`${recipe.cooking_temperature}°C`);
-  const bakingInfo =
-    bakingParts.length > 0 ? bakingParts.join(' • ') : undefined;
 
   const moldParts: string[] = [];
   if (recipe.mold_type) moldParts.push(recipe.mold_type);
   if (recipe.mold_size) moldParts.push(recipe.mold_size);
-  const mold =
-    moldParts.length > 0 ? moldParts.join(' • ') : undefined;
 
   const sourceNames = recipe.recipe_sources
     ?.map((s) => s.name)
@@ -64,8 +60,10 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
     title: recipe.title,
     introduction: recipe.introduction ?? undefined,
     servings: recipe.servings ?? undefined,
-    bakingInfo,
-    mold,
+    bakingInfo: bakingParts.length > 0 ? bakingParts.join(' • ') : undefined,
+    bakingInfoParts: bakingParts.length > 0 ? bakingParts : undefined,
+    mold: moldParts.length > 0 ? moldParts.join(' • ') : undefined,
+    moldParts: moldParts.length > 0 ? moldParts : undefined,
     author: author ?? undefined,
     sourceUrls: sourceUrls ?? undefined,
     dietaryRestrictions:

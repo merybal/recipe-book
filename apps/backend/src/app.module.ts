@@ -6,11 +6,13 @@ import { UnitsModule } from './units/units.module';
 import { CountriesModule } from './countries/countries.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
     RecipesModule,
     SubrecipesModule,
+    UploadsModule,
     DietaryRestrictionsModule,
     UnitsModule,
     CountriesModule,
