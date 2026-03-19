@@ -6,6 +6,8 @@
 export type RecipePdfData = {
   title: string;
   introduction?: string;
+  /** Category display name (e.g. "Bebidas") for icon selection */
+  category?: string;
   servings?: string;
   bakingInfo?: string;
   /** Baking parts (time, temperature) for custom bullet styling */
@@ -95,6 +97,7 @@ const ICON_SVG: Record<string, string> = {
     '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
   cylinder:
     '<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/>',
+  wine: '<path d="M8 22h8"/><path d="M7 10h10"/><path d="M12 15v7"/><path d="M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z"/>',
 };
 
 const DIETARY_ICON_KEY: Record<string, string> = {
@@ -154,8 +157,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
 
     const rightItems: string[] = [];
     if (recipe.servings) {
+      const servingsIcon = recipe.category === 'bebidas' ? 'wine' : 'utensils';
       rightItems.push(
-        `<div class="info-row"><span class="info-icon">${iconSvg('utensils')}</span><span>${escapeHtml(recipe.servings)}</span></div>`,
+        `<div class="info-row"><span class="info-icon">${iconSvg(servingsIcon)}</span><span>${escapeHtml(recipe.servings)}</span></div>`,
       );
     }
     dietaryFiltered.forEach((dr) => {
@@ -313,6 +317,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       size: A5;
       margin: 10mm 0;
     }
+    @page :first {
+      margin-top: 5mm;
+    }
     @page :left {
       margin-left: 10mm;
       margin-right: 20mm;
@@ -337,7 +344,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     }
     .title {
       font-family: 'Bellerose', sans-serif;
-      font-size: 34px; /* 28pt */
+      font-size: 32px;
       font-weight: 400;
       text-align: center;
       margin: 0 0 14px 0;

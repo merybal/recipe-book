@@ -7,6 +7,13 @@
 .instructions {
   @include Flex($direction: column, $gap: lg);
 
+  .introduction {
+    @include Font($align: justify);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    margin: 0;
+  }
+
   .subrecipe {
     @include Flex($direction: column, $gap: md);
 

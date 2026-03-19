@@ -18,9 +18,9 @@ type CreateRecipeFullPayload = {
   country_id?: number;
   cooking_time?: string | null;
   cooking_temperature?: number | null;
-  servings?: string;
-  mold_type?: string;
-  mold_size?: string;
+  servings?: string | null;
+  mold_type?: string | null;
+  mold_size?: string | null;
   introduction?: string;
   image_url?: string | null;
   subrecipes: {
@@ -110,9 +110,16 @@ export async function buildRecipePayload(
       cooking_time: recipe.bakingInstructions?.time?.trim() || null,
       cooking_temperature: recipe.bakingInstructions?.temperature ?? null,
     }),
-    ...(recipe.servings?.trim() && { servings: recipe.servings.trim() }),
-    ...(recipe.mold?.type?.trim() && { mold_type: recipe.mold.type.trim() }),
-    ...(recipe.mold?.size?.trim() && { mold_size: recipe.mold.size.trim() }),
+    // When editing, always send to persist clears (null = remove)
+    ...(recipe.id != null
+      ? { servings: recipe.servings?.trim() || null }
+      : (recipe.servings?.trim() && { servings: recipe.servings.trim() })),
+    ...(recipe.id != null
+      ? { mold_type: recipe.mold?.type?.trim() || null }
+      : (recipe.mold?.type?.trim() && { mold_type: recipe.mold.type.trim() })),
+    ...(recipe.id != null
+      ? { mold_size: recipe.mold?.size?.trim() || null }
+      : (recipe.mold?.size?.trim() && { mold_size: recipe.mold.size.trim() })),
     ...(recipe.introduction?.trim() && {
       introduction: recipe.introduction.trim(),
     }),

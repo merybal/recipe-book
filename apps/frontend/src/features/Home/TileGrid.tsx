@@ -4,97 +4,12 @@ import ButtonUnstyled from "@/design-system/components/ButtonUnstyled";
 
 import { useNavigate } from "react-router-dom";
 
+import { useIsMobile } from "@/hooks/useIsMobile";
 import type { DietaryRestrictionType } from "@/types";
 
 import DefaultRecipeImage from "@/assets/savory-recipe-default.jpg";
 
 import styles from "./TileGrid.module.scss";
-
-const recipeArray = [
-  {
-    id: 1,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-    source: {
-      name: ["Paulina Cocina", "Laura Bolomo"],
-      url: [
-        "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-        "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-      ],
-    },
-  },
-  {
-    id: 2,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-    source: {
-      name: ["Paulina Cocina", "Laura Bolomo"],
-      url: [
-        "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-        "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-      ],
-    },
-  },
-  {
-    id: 3,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-    source: {
-      name: ["Paulina Cocina", "Laura Bolomo"],
-      url: [
-        "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-        "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-      ],
-    },
-  },
-  {
-    id: 4,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-    source: {
-      name: ["Paulina Cocina", "Laura Bolomo"],
-      url: [
-        "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-        "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-      ],
-    },
-  },
-  {
-    id: 5,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-    source: {
-      name: ["Paulina Cocina", "Laura Bolomo"],
-      url: [
-        "https://www.paulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-        "https://www.noespaulinacocina.net/bizcochuelo-sin-azucar-recetas-diabeticos/10067",
-      ],
-    },
-  },
-  {
-    id: 6,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-  },
-  {
-    id: 7,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-  },
-  {
-    id: 8,
-    title: "Crumble de manzana",
-    imageUrl:
-      "https://terrunioalmacennatural.com/wp-content/uploads/2022/07/crumble-1.jpg",
-  },
-];
 
 export type PreviewData = {
   id: number;
@@ -110,26 +25,39 @@ export type PreviewData = {
 type TileGridProps = {
   className?: string;
   grid?: "single" | "double";
+  /** Max recipes per row on desktop. Ignored on mobile. */
+  maxDesktopColumns?: number;
   previewData?: PreviewData[];
 };
 
 const TileGrid = ({
   className,
   grid = "single",
+  maxDesktopColumns = 4,
   previewData,
 }: TileGridProps) => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const handleTileClick = (id: number) => {
     navigate(`/recipes/${id}`);
   };
+
+  const isDesktopGrid = !isMobile && grid === "single";
+
   return (
     <div
       className={clsx(
         styles["tile-grid"],
         { [styles[`${grid}`]]: grid },
+        { [styles["desktop-grid"]]: isDesktopGrid },
         className,
       )}
+      style={
+        isDesktopGrid
+          ? { gridTemplateColumns: `repeat(${maxDesktopColumns}, 1fr)` }
+          : undefined
+      }
     >
       {previewData?.map((recipe) => (
         <ButtonUnstyled

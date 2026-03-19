@@ -11,7 +11,13 @@ import { extname } from 'path';
 import { randomUUID } from 'crypto';
 
 const UPLOAD_DIR = 'uploads/recipes';
-const ALLOWED_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+const ALLOWED_MIMES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/avif',
+];
 const MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB
 
 const storage = diskStorage({

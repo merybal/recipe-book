@@ -145,6 +145,7 @@ const CoverStep = ({
           buttonLabel={getButtonLabelDragAndDrop}
           maxFileAmount={1}
           showSingleImagePreview
+          existingImageUrl={files.length === 0 ? recipe.imageUrl : undefined}
           value={files}
           onChange={handleFileChange}
         />

@@ -4,13 +4,21 @@ import styles from "./Instructions.module.scss";
 
 type InstructionsProps = {
   isNumbered?: boolean;
+  introduction?: string;
   subrecipes: SubrecipeType[];
 };
 
-const Instructions = ({ isNumbered, subrecipes }: InstructionsProps) => {
+const Instructions = ({
+  isNumbered,
+  introduction,
+  subrecipes,
+}: InstructionsProps) => {
   return (
     <div className={styles.instructions}>
       <h2>Preparación</h2>
+      {introduction?.trim() && (
+        <p className={styles.introduction}>{introduction.trim()}</p>
+      )}
       {subrecipes.map((subrecipes, i) => {
         return (
           <div key={`seccion-${i}`} className={styles.subrecipe}>

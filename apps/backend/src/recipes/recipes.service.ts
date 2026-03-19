@@ -67,7 +67,7 @@ export class RecipesService {
   async getAllRecipes() {
     return this.prisma.recipes.findMany({
       where: { deleted_at: null },
-      orderBy: { created_at: 'desc' },
+      orderBy: { title: 'asc' },
       include: {
         category: true,
         country: true,

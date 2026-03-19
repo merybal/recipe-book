@@ -24,10 +24,12 @@ h1 {
 
 h2 {
   @include Font($size: lg);
+  line-height: 1.3;
 }
 
 h3 {
   @include Font($size: md);
+  line-height: 1.3;
 }
 
 p,

@@ -31,6 +31,7 @@ const DragAndDrop = ({
   maxFileSize,
   showFilePreviews,
   showSingleImagePreview,
+  existingImageUrl,
   size = "medium",
   value = [],
   variant = "primary",
@@ -45,12 +46,22 @@ const DragAndDrop = ({
   const pixelSize = iconSizeMap[size];
   const multiple = maxFileAmount !== 1;
 
-  const shouldShowSingleImagePreview =
+  const hasFilePreview =
     showSingleImagePreview &&
     value.length === 1 &&
     maxFileAmount === 1 &&
     accept?.includes("image/") &&
     previews.length === 1;
+
+  const hasExistingImagePreview =
+    showSingleImagePreview &&
+    value.length === 0 &&
+    !!existingImageUrl &&
+    maxFileAmount === 1 &&
+    accept?.includes("image/");
+
+  const shouldShowSingleImagePreview = hasFilePreview || hasExistingImagePreview;
+  const imagePreviewSrc = hasFilePreview ? previews[0] : existingImageUrl;
 
   useEffect(() => {
     const newPreviews: string[] = [];
@@ -187,7 +198,7 @@ const DragAndDrop = ({
 
   return (
     <>
-      {shouldShowSingleImagePreview ? (
+      {shouldShowSingleImagePreview && imagePreviewSrc ? (
         <div
           className={clsx(
             styles["drop-zone"],
@@ -197,7 +208,7 @@ const DragAndDrop = ({
           )}
         >
           <img
-            src={previews[0]}
+            src={imagePreviewSrc}
             alt="Previsualización del archivo"
             className={styles["image-preview"]}
           />

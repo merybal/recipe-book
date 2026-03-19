@@ -64,6 +64,10 @@ export type DragAndDropProps = {
    */
   showSingleImagePreview?: boolean;
   /**
+   * URL of existing image to show when value is empty (e.g. when editing a recipe with an existing cover).
+   */
+  existingImageUrl?: string;
+  /**
    * Current list of uploaded files.
    * @default []
    */

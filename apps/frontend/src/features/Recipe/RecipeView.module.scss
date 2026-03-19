@@ -67,4 +67,28 @@
       }
     }
   }
+
+  .notes-container {
+    @include Flex($direction: column);
+
+    .notes-title {
+      @include Margin($bottom: lg);
+    }
+
+    .notes-list {
+      @include Margin($all: none);
+      padding-left: 1.5em;
+      list-style: disc;
+
+      .note {
+        @include Font($family: text, $weight: medium, $align: justify);
+        line-height: 1.5;
+        @include Margin($bottom: xs);
+
+        &:last-child {
+          @include Margin($bottom: none);
+        }
+      }
+    }
+  }
 }

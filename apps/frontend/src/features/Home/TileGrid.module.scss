@@ -1,16 +1,22 @@
 @use "../../design-system/styles/flex" as *;
+@use "../../design-system/styles/spacing" as *;
 
 .tile-grid {
   &.single {
-    @include Flex(
-      $direction: column,
-      $gap: 2.5rem
-    ); // TODO check if variable is used
+    @include Flex($direction: column, $gap: 2.5rem);
+  }
+
+  &.single.desktop-grid {
+    display: grid;
+    flex-direction: unset;
+    gap: resolve-size(md);
+    align-items: start;
   }
 
   &.double {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
-    gap: 1rem; /* Espaciado entre columnas y filas */
+    grid-template-columns: repeat(2, 1fr);
+    gap: resolve-size(md);
+    align-items: start;
   }
 }

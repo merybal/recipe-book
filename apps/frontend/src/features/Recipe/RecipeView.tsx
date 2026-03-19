@@ -379,7 +379,11 @@ const RecipeView = () => {
               )}
               {recipe.servings && (
                 <RecipeInfoItem
-                  icon="Utensils"
+                  icon={
+                    recipe.category?.toLowerCase() === "bebidas"
+                      ? "Wine"
+                      : "Utensils"
+                  }
                   title="Rinde"
                   items={[recipe.servings]}
                 />
@@ -392,8 +396,6 @@ const RecipeView = () => {
                 />
               )}
             </div>
-
-            {/* TODO agregar notas */}
           </div>
 
           <Separator marginY="lg" />
@@ -404,11 +406,28 @@ const RecipeView = () => {
               labels={recipe.dietaryRestrictionLabels}
             />
           )}
+
+          {recipe.notes && recipe.notes.length > 0 && (
+            <div className={styles["notes-container"]}>
+              <h2 className={styles["notes-title"]}>Notas</h2>
+              <ul className={styles["notes-list"]}>
+                {recipe.notes.map((note, i) => (
+                  <li key={i} className={styles.note}>
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </Tab>
         <Tab value="Receta" label="Receta">
           <IngredientList subrecipes={recipe.subrecipes} />
           <Separator marginY="lg" />
-          <Instructions isNumbered subrecipes={recipe.subrecipes} />
+          <Instructions
+            isNumbered
+            introduction={recipe.introduction}
+            subrecipes={recipe.subrecipes}
+          />
         </Tab>
       </Tabs>
     </div>

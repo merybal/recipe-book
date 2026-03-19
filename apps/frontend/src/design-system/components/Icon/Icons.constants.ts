@@ -36,6 +36,7 @@ import {
   Utensils,
   Vegan,
   Wheat,
+  Wine,
   X,
 } from "lucide-react";
 
@@ -76,5 +77,6 @@ export const iconMap = {
   Utensils,
   Wheat,
   Vegan,
+  Wine,
   X,
 };

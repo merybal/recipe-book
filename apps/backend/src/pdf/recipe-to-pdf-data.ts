@@ -3,6 +3,7 @@ import type { RecipePdfData } from './recipe-pdf.template';
 type RawRecipe = {
   title: string;
   introduction: string | null;
+  category?: { name_es: string; name_en: string } | null;
   servings: string | null;
   cooking_time: string | null;
   cooking_temperature: number | null;
@@ -56,9 +57,15 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
       iconKey: rdr.dietary_restriction.name,
     })) ?? [];
 
+  const isBebidas =
+    recipe.category &&
+    (recipe.category.name_es?.toLowerCase() === 'bebidas' ||
+      recipe.category.name_en?.toLowerCase() === 'drinks');
+
   return {
     title: recipe.title,
     introduction: recipe.introduction ?? undefined,
+    category: isBebidas ? 'bebidas' : undefined,
     servings: recipe.servings ?? undefined,
     bakingInfo: bakingParts.length > 0 ? bakingParts.join(' • ') : undefined,
     bakingInfoParts: bakingParts.length > 0 ? bakingParts : undefined,

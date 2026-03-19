@@ -309,6 +309,13 @@ const UNITS = [
     ],
   },
   {
+    abbreviation_singular: 'cubo',
+    abbreviation_plural: 'cubos',
+    name_en: 'cube',
+    name_es: 'cubo',
+    synonyms: ['cube', 'cubes', 'cubo', 'cubos'],
+  },
+  {
     abbreviation_singular: 'taza',
     abbreviation_plural: 'tazas',
     name_en: 'cup',
@@ -321,6 +328,13 @@ const UNITS = [
     name_en: 'dice',
     name_es: 'dado',
     synonyms: ['dice', 'dado', 'dados'],
+  },
+  {
+    abbreviation_singular: 'dedal',
+    abbreviation_plural: 'dedales',
+    name_en: 'thimble',
+    name_es: 'dedal',
+    synonyms: ['thimble', 'thimbles', 'dedal', 'dedales'],
   },
   {
     abbreviation_singular: 'diente',
@@ -384,7 +398,7 @@ async function main() {
     {
       name_en: 'Cookies',
       name_es: 'Cookies',
-      categoryIds: [sweet.id, savory.id],
+      categoryIds: [sweet.id],
     },
     {
       name_en: 'Scones',
@@ -400,6 +414,11 @@ async function main() {
     {
       name_en: 'Sauces',
       name_es: 'Salsas',
+      categoryIds: [sweet.id, savory.id],
+    },
+    {
+      name_en: 'Spices & Seasonings',
+      name_es: 'Especias & Condimentos',
       categoryIds: [sweet.id, savory.id],
     },
     {
@@ -448,6 +467,11 @@ async function main() {
       categoryIds: [savory.id],
     },
     {
+      name_en: 'Fajitas & Wraps',
+      name_es: 'Fajitas & Wraps',
+      categoryIds: [savory.id],
+    },
+    {
       name_en: 'Potatoes',
       name_es: 'Papas',
       categoryIds: [savory.id],
@@ -460,6 +484,11 @@ async function main() {
     {
       name_en: 'Pizza',
       name_es: 'Pizza',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Crackers & Savory Biscuits',
+      name_es: 'Galletas, Crackers & Bizcochos',
       categoryIds: [savory.id],
     },
     {
@@ -510,7 +539,12 @@ async function main() {
     {
       name_en: 'Fillings & Frostings',
       name_es: 'Rellenos & Coverturas',
-      categoryIds: [sweet.id, savory.id],
+      categoryIds: [sweet.id],
+    },
+    {
+      name_en: 'Fillings',
+      name_es: 'Rellenos',
+      categoryIds: [savory.id],
     },
     {
       name_en: 'Fruit Desserts',
@@ -533,6 +567,32 @@ async function main() {
     { name_en: 'Mocktails', name_es: 'Mocktails', categoryIds: [drinks.id] },
   ];
 
+  // Remove Cookies from Savory (now only in Sweet)
+  const cookiesSub = await prisma.subcategories.findUnique({
+    where: { name_en: 'Cookies' },
+  });
+  if (cookiesSub) {
+    await prisma.categorySubcategories.deleteMany({
+      where: {
+        subcategory_id: cookiesSub.id,
+        category_id: savory.id,
+      },
+    });
+  }
+
+  // Remove Fillings & Frostings from Savory (now only in Sweet)
+  const fillingsFrostingsSub = await prisma.subcategories.findUnique({
+    where: { name_en: 'Fillings & Frostings' },
+  });
+  if (fillingsFrostingsSub) {
+    await prisma.categorySubcategories.deleteMany({
+      where: {
+        subcategory_id: fillingsFrostingsSub.id,
+        category_id: savory.id,
+      },
+    });
+  }
+
   for (const s of SUBCATEGORIES) {
     const sub = await prisma.subcategories.upsert({
       where: { name_en: s.name_en },
@@ -549,6 +609,35 @@ async function main() {
         },
         update: {},
         create: { category_id: catId, subcategory_id: sub.id },
+      });
+    }
+  }
+
+  // Migrate savory recipes from Fillings & Frostings to Fillings (Rellenos)
+  const fillingsSub = await prisma.subcategories.findUnique({
+    where: { name_en: 'Fillings' },
+  });
+  if (fillingsFrostingsSub && fillingsSub) {
+    const savoryRecipesWithFillingsFrostings = await prisma.recipeSubcategories.findMany({
+      where: {
+        subcategory_id: fillingsFrostingsSub.id,
+        recipe: { category_id: savory.id },
+      },
+      select: { recipe_id: true, sort_order: true },
+    });
+    for (const rs of savoryRecipesWithFillingsFrostings) {
+      await prisma.recipeSubcategories.deleteMany({
+        where: {
+          recipe_id: rs.recipe_id,
+          subcategory_id: fillingsFrostingsSub.id,
+        },
+      });
+      await prisma.recipeSubcategories.create({
+        data: {
+          recipe_id: rs.recipe_id,
+          subcategory_id: fillingsSub.id,
+          sort_order: rs.sort_order,
+        },
       });
     }
   }
