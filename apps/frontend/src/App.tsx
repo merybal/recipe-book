@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import ThemeProvider from "./design-system/ThemeProvider";
+import DesktopNav from "./design-system/components/DesktopNav/DesktopNav";
 import RecipeView from "./features/Recipe/RecipeView";
 import RecipePdfPreviewRoute from "./features/Recipe/RecipePdfPreviewRoute";
 import HomeView from "./features/Home/HomeView";
@@ -14,6 +15,7 @@ function App() {
   return (
     <ThemeProvider>
       <div className={styles.app}>
+        <DesktopNav />
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<HomeView />} />

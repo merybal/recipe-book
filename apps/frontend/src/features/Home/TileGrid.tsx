@@ -55,7 +55,9 @@ const TileGrid = ({
       )}
       style={
         isDesktopGrid
-          ? { gridTemplateColumns: `repeat(${maxDesktopColumns}, 1fr)` }
+          ? {
+              gridTemplateColumns: `repeat(${maxDesktopColumns}, minmax(0, 1fr))`,
+            }
           : undefined
       }
     >

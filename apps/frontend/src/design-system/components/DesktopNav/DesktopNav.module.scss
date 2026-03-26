@@ -1,0 +1,57 @@
+@use "../../styles/flex" as *;
+@use "../../styles/color" as *;
+@use "../../styles/font" as *;
+@use "../../styles/spacing" as *;
+@use "../../styles/border" as *;
+
+.nav {
+  @include Flex($justify: between, $align: center);
+  @include Padding($y: lg, $x: lg);
+  @include Color($bg: white);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  @include Border(
+    $bottom: (
+      thin,
+      solid,
+      outline,
+    )
+  );
+}
+
+.brand {
+  @include Flex($align: center);
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.logo {
+  display: block;
+  height: auto;
+  max-width: 24rem;
+  object-fit: contain;
+}
+
+.links {
+  @include Flex($align: center, $gap: xl);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  @include Font($family: text, $size: sm, $weight: medium);
+  @include Color($font: secondary-text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    @include Color($font: main-text);
+  }
+}
+
+.linkActive {
+  @include Color($font: primary);
+}

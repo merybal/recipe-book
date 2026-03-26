@@ -12,6 +12,15 @@
   @include Flex($align: center, $gap: xs, $justify: center);
   letter-spacing: 0.2px;
   cursor: pointer;
+  text-decoration: none;
+}
+
+// `<Link>` renders as `<a>`: no outline/shadow ring (focus ring stays on `button` only, see below).
+a.button:focus,
+a.button:focus-visible,
+a.button:active {
+  outline: none;
+  box-shadow: none;
 }
 
 .size-medium {
@@ -75,69 +84,77 @@
   width: 100%;
 }
 
-//FOCUS STYLES
-.variant-primary:focus-visible,
-.variant-secondary:focus-visible,
-.variant-tertiary:focus-visible {
+// FOCUS STYLES (native `<button>` only — links use `a.button` rules above)
+button.variant-primary:focus-visible,
+button.variant-secondary:focus-visible,
+button.variant-tertiary:focus-visible {
   outline: 0.125rem solid resolve-color(primary);
   outline-offset: 2px;
 }
 
-//DISABLED STYLES
-.variant-primary:disabled {
+//DISABLED STYLES (native button + Link with aria-disabled)
+.variant-primary:is(:disabled, [aria-disabled="true"]) {
   @include Color($bg: disabled, $font: secondary-text);
   cursor: not-allowed;
 }
 
-.variant-secondary:disabled {
+.variant-secondary:is(:disabled, [aria-disabled="true"]) {
   @include Color($font: secondary-text);
   @include Border($width: medium, $style: solid, $color: disabled);
   cursor: not-allowed;
 }
 
-.variant-tertiary:disabled {
+.variant-tertiary:is(:disabled, [aria-disabled="true"]) {
   @include Color($font: secondary-text);
   cursor: not-allowed;
 }
 
 //HOVER STYLES
 @media (hover: hover) and (pointer: fine) {
-  .variant-primary:hover:not(:disabled):not(:focus) {
+  .variant-primary:hover:not(:is(:disabled, [aria-disabled="true"])):not(:focus) {
     @include Color($bg: primary-dark);
   }
 
-  .variant-secondary:hover:not(:disabled):not(:focus) {
+  .variant-secondary:hover:not(:is(:disabled, [aria-disabled="true"])):not(
+      :focus
+    ) {
     @include Border($width: medium, $style: solid, $color: primary-dark);
     @include Color($bg: primary-dark, $font: white);
   }
 
-  .variant-tertiary:hover:not(:disabled):not(:focus) {
+  .variant-tertiary:hover:not(:is(:disabled, [aria-disabled="true"])):not(
+      :focus
+    ) {
     @include Color($bg: primary-dark, $font: white);
   }
 
-  .variant-text:hover:not(:disabled):not(:focus) {
+  .variant-text:hover:not(:is(:disabled, [aria-disabled="true"])):not(:focus) {
     @include Color($font: primary-dark);
   }
 
   // Compound selector so disruptive hover wins when both variant and disruptive-variant are applied
-  .variant-primary.disruptive-variant-primary:hover:not(:disabled):not(:focus) {
+  .variant-primary.disruptive-variant-primary:hover:not(
+      :is(:disabled, [aria-disabled="true"])
+    ):not(:focus) {
     @include Color($bg: disruptive-dark);
   }
 
-  .variant-secondary.disruptive-variant-secondary:hover:not(:disabled):not(
-      :focus
-    ) {
+  .variant-secondary.disruptive-variant-secondary:hover:not(
+      :is(:disabled, [aria-disabled="true"])
+    ):not(:focus) {
     @include Color($bg: disruptive-dark, $font: white);
     @include Border($width: medium, $style: solid, $color: disruptive-dark);
   }
 
-  .variant-tertiary.disruptive-variant-tertiary:hover:not(:disabled):not(
-      :focus
-    ) {
+  .variant-tertiary.disruptive-variant-tertiary:hover:not(
+      :is(:disabled, [aria-disabled="true"])
+    ):not(:focus) {
     @include Color($bg: disruptive-dark, $font: white);
   }
 
-  .variant-text.disruptive-variant-text:hover:not(:disabled):not(:focus) {
+  .variant-text.disruptive-variant-text:hover:not(
+      :is(:disabled, [aria-disabled="true"])
+    ):not(:focus) {
     @include Color($bg: transparent, $font: disruptive-dark);
   }
 }

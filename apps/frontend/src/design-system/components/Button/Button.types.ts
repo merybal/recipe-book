@@ -1,11 +1,13 @@
-import { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes } from "react";
+import type { LinkProps } from "react-router-dom";
 
 import { IconName } from "../Icon";
 
-export type ButtonProps = {
-  /** Extra CSS class applied to the button. */
+/** Shared visual props for both button and link variants. */
+type SharedButtonProps = {
+  /** Extra CSS class applied to the root element. */
   className?: string;
-  /** When true, the button is disabled and not clickable. */
+  /** When true, the control is disabled and not clickable. */
   disabled?: boolean;
   /** When true, uses the disruptive (destructive) visual variant. */
   disruptive?: boolean;
@@ -13,19 +15,32 @@ export type ButtonProps = {
   iconLeft?: IconName;
   /** Icon name shown to the right of the label. */
   iconRight?: IconName;
-  /** When true, the button does not grow to full width. */
+  /** When true, the control does not grow to full width. */
   inline?: boolean;
-  /** Button text. */
+  /** Visible text label. */
   label: string;
-  /** Visual size of the button and icons.
+  /** Visual size of the control and icons.
    * @default "medium"
    */
   size?: "medium" | "large";
-  /** Native button type (button, submit, reset). */
-  type?: "button" | "submit" | "reset";
   /** Visual style variant. */
   variant?: "primary" | "secondary" | "tertiary" | "text";
-  /** Called when the button is clicked. */
-  onClick: () => void;
-  // loading?: boolean;
-} & ButtonHTMLAttributes<HTMLButtonElement>;
+};
+
+/** Renders a native `<button>`. */
+export type ButtonAsButtonProps = SharedButtonProps & {
+  href?: undefined;
+  /** Native button type (button, submit, reset). */
+  type?: "button" | "submit" | "reset";
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">;
+
+/**
+ * Renders a React Router `<Link>`. `href` maps to Link’s `to`.
+ * Accepts anchor/router props from `LinkProps` (e.g. `replace`, `state`, `prefetch`), not `ButtonHTMLAttributes`.
+ */
+export type ButtonAsLinkProps = SharedButtonProps & {
+  /** Target route; passed to `<Link to={...}>`. */
+  href: LinkProps["to"];
+} & Omit<LinkProps, "to" | "children">;
+
+export type ButtonProps = ButtonAsButtonProps | ButtonAsLinkProps;

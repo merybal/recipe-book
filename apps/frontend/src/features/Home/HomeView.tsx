@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import clsx from "clsx";
 import type { PreviewData } from "@/features/Home/TileGrid";
 import type { DietaryRestrictionType } from "@/types";
 
 import styles from "./HomeView.module.scss";
+import homeLogo from "@/assets/Logo-provisorio.png";
 import TileGrid from "@/features/Home/TileGrid";
 import BottomNav from "@/design-system/components/BottomNav";
 import Box from "@/design-system/components/Box";
-import { EditableFieldType } from "@/design-system/components/MultipleEditableFields";
 import { parseDietaryRestrictionsForFrontend } from "@/utils/dietary-restrictions-utils";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const HomeView = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [recipePreviews, setRecipePreviews] = useState<PreviewData[]>([]);
 
   useEffect(() => {
@@ -68,51 +69,6 @@ const HomeView = () => {
     fetchRecipePreviews();
   }, []);
 
-  const [fields, setFields] = useState<EditableFieldType[]>([
-    {
-      key: "name",
-      label: "Nombre",
-      value: "Juan Pérez",
-      required: true,
-      component: "input",
-      placeholder: "Ingresa tu nombre",
-    },
-    {
-      key: "age",
-      label: "Edad",
-      value: "30",
-      component: "input",
-      type: "number",
-      validate: (val: string) => {
-        if (!val) return "La edad es obligatoria";
-        if (isNaN(Number(val))) return "Debe ser un número";
-        if (Number(val) < 0) return "No puede ser negativa";
-        return undefined;
-      },
-    },
-    {
-      key: "gender",
-      label: "Género",
-      value: "male",
-      component: "select",
-      options: [
-        { value: "male", label: "Masculino" },
-        { value: "female", label: "Femenino" },
-        { value: "other", label: "Otro" },
-      ],
-    },
-  ]);
-
-  const handleFieldsChange = (updatedValues: Record<string, string>) => {
-    // Update fields state with new values
-    setFields((prevFields) =>
-      prevFields.map((field) => ({
-        ...field,
-        value: updatedValues[field.key] ?? field.value,
-      })),
-    );
-  };
-
   const bottomNavItems = [
     {
       id: "home",
@@ -130,19 +86,29 @@ const HomeView = () => {
 
   return (
     <Box
-      className={clsx(styles.home)}
       padding="lg"
       flex
       direction="column"
       gap="lg"
-      paddingBottom="8rem"
+      paddingBottom={isMobile ? "8rem" : "lg"}
     >
+      {isMobile && (
+        <header className={styles.header}>
+          <img
+            src={homeLogo}
+            alt="Recipe book"
+            className={styles.logo}
+          />
+        </header>
+      )}
       <TileGrid previewData={recipePreviews} />
-      <BottomNav
-        items={bottomNavItems}
-        activeItemId="home"
-        centerItemIndex={1}
-      />
+      {isMobile && (
+        <BottomNav
+          items={bottomNavItems}
+          activeItemId="home"
+          centerItemIndex={1}
+        />
+      )}
     </Box>
   );
 };
