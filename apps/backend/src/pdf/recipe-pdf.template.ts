@@ -6,7 +6,7 @@
 export type RecipePdfData = {
   title: string;
   introduction?: string;
-  /** Category display name (e.g. "Bebidas") for icon selection */
+  /** Category display name (e.g. "Bebida") for icon selection */
   category?: string;
   servings?: string;
   bakingInfo?: string;
@@ -54,22 +54,30 @@ function formatAmountForDisplay(amount: number): string {
   const match = UNICODE_FRACTIONS.find(
     (f) => Math.abs(frac - f.value) < EPSILON,
   );
-  if (match) return whole > 0 ? `${whole}${match.symbol}` : match.symbol;
+  if (match) return whole > 0 ? `${whole} ${match.symbol}` : match.symbol;
   return String(amount);
 }
 
-function formatIngredient(ing: {
+function formatIngredientAmountPart(ing: {
+  amount?: number;
+  unit?: string;
+}): string {
+  if (ing.amount != null) {
+    return `${formatAmountForDisplay(ing.amount)} ${ing.unit || ''}`.trim();
+  }
+  return ing.unit ? String(ing.unit) : '';
+}
+
+/** HTML: quantity + unit wrapped so they never break across lines (PDF). */
+function formatIngredientHtml(ing: {
   name: string;
   amount?: number;
   unit?: string;
 }): string {
-  const amountPart =
-    ing.amount != null
-      ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ''}`.trim()
-      : ing.unit
-        ? String(ing.unit)
-        : '';
-  return amountPart ? `${ing.name}, ${amountPart}` : ing.name;
+  const amountPart = formatIngredientAmountPart(ing);
+  const escapedName = escapeHtml(ing.name);
+  if (!amountPart) return escapedName;
+  return `${escapedName}, <span class="ingredient-amount">${escapeHtml(amountPart)}</span>`;
 }
 
 function escapeHtml(text: string): string {
@@ -157,7 +165,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
 
     const rightItems: string[] = [];
     if (recipe.servings) {
-      const servingsIcon = recipe.category === 'bebidas' ? 'wine' : 'utensils';
+      const servingsIcon = recipe.category === 'bebida' ? 'wine' : 'utensils';
       rightItems.push(
         `<div class="info-row"><span class="info-icon">${iconSvg(servingsIcon)}</span><span>${escapeHtml(recipe.servings)}</span></div>`,
       );
@@ -194,48 +202,123 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     (s) => s.instructions && s.instructions.length > 0,
   );
 
+  const SPLIT_LONGEST_THRESHOLD = 1.5;
+
+  function buildIngredientColumns(): {
+    title?: string;
+    titleSpacer?: string;
+    ingredients: { name: string; amount?: number; unit?: string }[];
+  }[] {
+    const subrecipes = recipe.subrecipes.filter(
+      (sr) => sr.ingredients && sr.ingredients.length > 0,
+    );
+    if (subrecipes.length === 0) return [];
+
+    if (subrecipes.length === 1) {
+      const ings = subrecipes[0].ingredients || [];
+      const mid = Math.ceil(ings.length / 2);
+      // Only one subrecipe has ingredients: no subsection titles (same as frontend)
+      return [
+        { ingredients: ings.slice(0, mid) },
+        { ingredients: ings.slice(mid) },
+      ];
+    }
+
+    return subrecipes.map((sr) => ({
+      title: sr.title,
+      ingredients: sr.ingredients || [],
+    }));
+  }
+
+  function maybeSplitLongestColumn(
+    columns: {
+      title?: string;
+      titleSpacer?: string;
+      ingredients: { name: string; amount?: number; unit?: string }[];
+    }[],
+  ): typeof columns {
+    if (columns.length === 0) return columns;
+
+    const counts = columns.map((c) => c.ingredients.length);
+    const maxIdx = counts.reduce(
+      (best, _, i) => (counts[i] > counts[best] ? i : best),
+      0,
+    );
+    const maxCount = counts[maxIdx];
+    const secondMax =
+      counts.length === 1
+        ? 0
+        : Math.max(...counts.filter((_, i) => i !== maxIdx));
+
+    if (secondMax === 0 || maxCount <= secondMax * SPLIT_LONGEST_THRESHOLD) {
+      return columns;
+    }
+
+    const col = columns[maxIdx];
+    const ings = col.ingredients;
+    const mid = Math.ceil(ings.length / 2);
+    const firstHalf = ings.slice(0, mid);
+    const secondHalf = ings.slice(mid);
+
+    const before = columns.slice(0, maxIdx);
+    const after = columns.slice(maxIdx + 1);
+    const spacerText = col.title ?? col.titleSpacer;
+    const firstCol = {
+      title: col.title,
+      titleSpacer: col.titleSpacer,
+      ingredients: firstHalf,
+    };
+    const secondCol = {
+      titleSpacer: spacerText,
+      ingredients: secondHalf,
+    };
+
+    return [...before, firstCol, secondCol, ...after];
+  }
+
+  function renderColumn(
+    col: {
+      title?: string;
+      titleSpacer?: string;
+      ingredients: { name: string; amount?: number; unit?: string }[];
+    },
+  ): string {
+    const titleHtml = col.title
+      ? `<h3 class="subsection-title">${escapeHtml(col.title)}</h3>`
+      : '';
+    const spacerHtml =
+      col.titleSpacer ?
+        `<h3 class="subsection-title subsection-title--spacer" aria-hidden="true">${escapeHtml(col.titleSpacer)}</h3>`
+      : '';
+    const listHtml = col.ingredients
+      .map((i) => `<li>${formatIngredientHtml(i)}</li>`)
+      .join('');
+    return `
+      <div class="ingredient-column">
+        ${titleHtml}
+        ${spacerHtml}
+        <ul class="ingredient-list">${listHtml}</ul>
+      </div>`;
+  }
+
+  /** When there is no basic-info block, still show a rule between title and ingredients. */
+  const titleToIngredientsDivider =
+    !hasInfo && hasIngredients ?
+      `<div class="section-divider section-divider--after-title" data-pdf-divider></div>`
+    : '';
+
   let ingredientsHtml = '';
   if (hasIngredients) {
-    if (recipe.subrecipes.length === 1) {
-      const ings = recipe.subrecipes[0].ingredients || [];
-      const mid = Math.ceil(ings.length / 2);
-      const left = ings.slice(0, mid);
-      const right = ings.slice(mid);
-      ingredientsHtml = `
-        <section class="section">
-          <h2 class="section-title">Ingredientes</h2>
-          <div class="ingredient-columns">
-            <div class="ingredient-column">
-              <ul class="ingredient-list">${left
-                .map((i) => `<li>${escapeHtml(formatIngredient(i))}</li>`)
-                .join('')}</ul>
-            </div>
-            <div class="ingredient-column">
-              <ul class="ingredient-list">${right
-                .map((i) => `<li>${escapeHtml(formatIngredient(i))}</li>`)
-                .join('')}</ul>
-            </div>
-          </div>
-        </section>`;
-    } else {
-      ingredientsHtml = `
-        <section class="section">
-          <h2 class="section-title">Ingredientes</h2>
-          <div class="ingredient-columns">
-            ${recipe.subrecipes
-              .map(
-                (sr) => `
-              <div class="ingredient-column">
-                ${sr.title ? `<h3 class="subsection-title">${escapeHtml(sr.title)}</h3>` : ''}
-                <ul class="ingredient-list">${(sr.ingredients || [])
-                  .map((i) => `<li>${escapeHtml(formatIngredient(i))}</li>`)
-                  .join('')}</ul>
-              </div>`,
-              )
-              .join('')}
-          </div>
-        </section>`;
-    }
+    let columns = buildIngredientColumns();
+    columns = maybeSplitLongestColumn(columns);
+
+    ingredientsHtml = `
+      <section class="section">
+        <h2 class="section-title">Ingredientes</h2>
+        <div class="ingredient-columns">
+          ${columns.map(renderColumn).join('')}
+        </div>
+      </section>`;
   }
 
   let preparationHtml = '';
@@ -423,6 +506,10 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       break-before: avoid;
       page-break-before: avoid;
     }
+    /* Match title → top border gap when .info-block is present (title margin-bottom + collapsed margins = 14px). */
+    .section-divider--after-title {
+      margin-top: 0;
+    }
     .section-title {
       font-family: 'Bellerose', sans-serif;
       font-size: 19px; /* 16pt */
@@ -441,6 +528,10 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       break-after: avoid;
       page-break-after: avoid;
     }
+    .subsection-title--spacer {
+      visibility: hidden;
+      /* Keeps layout space to align column 2 ingredients with column 1 */
+    }
     .ingredient-columns {
       display: flex;
       gap: 8mm;
@@ -449,6 +540,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       flex: 1;
       min-width: 0;
       text-align: center;
+    }
+    .ingredient-amount {
+      white-space: nowrap;
     }
     .ingredient-list {
       list-style: none;
@@ -488,6 +582,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
   <div class="page">
     <h1 class="title">${escapeHtml(recipe.title)}</h1>
     ${infoHtml}
+    ${titleToIngredientsDivider}
     ${ingredientsHtml}
     ${preparationHtml}
     ${notesHtml}

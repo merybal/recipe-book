@@ -1,4 +1,5 @@
 import type { RecipePdfData } from './recipe-pdf.template';
+import { pickUnitAbbreviationFromDb } from './unit-abbreviation';
 
 type RawRecipe = {
   title: string;
@@ -57,15 +58,15 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
       iconKey: rdr.dietary_restriction.name,
     })) ?? [];
 
-  const isBebidas =
+  const isBebida =
     recipe.category &&
-    (recipe.category.name_es?.toLowerCase() === 'bebidas' ||
+    (recipe.category.name_es?.toLowerCase() === 'bebida' ||
       recipe.category.name_en?.toLowerCase() === 'drinks');
 
   return {
     title: recipe.title,
     introduction: recipe.introduction ?? undefined,
-    category: isBebidas ? 'bebidas' : undefined,
+    category: isBebida ? 'bebida' : undefined,
     servings: recipe.servings ?? undefined,
     bakingInfo: bakingParts.length > 0 ? bakingParts.join(' • ') : undefined,
     bakingInfoParts: bakingParts.length > 0 ? bakingParts : undefined,
@@ -76,17 +77,12 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
     dietaryRestrictions:
       dietaryRestrictions.length > 0 ? dietaryRestrictions : undefined,
     subrecipes: recipe.subrecipes.map((sr) => {
-      const unit = (amount: number | null, u: typeof sr.ingredients[0]['units']) =>
-        u && amount != null && amount > 1 && u.abbreviation_plural
-          ? u.abbreviation_plural
-          : u?.abbreviation_singular;
-
       return {
         title: sr.title ?? undefined,
         ingredients: sr.ingredients.map((ing) => ({
           name: ing.name,
           amount: ing.amount ?? undefined,
-          unit: unit(ing.amount, ing.units),
+          unit: pickUnitAbbreviationFromDb(ing.amount, ing.units),
         })),
         instructions: sr.instructions
           .split('\n')

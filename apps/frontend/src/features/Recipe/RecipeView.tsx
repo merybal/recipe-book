@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
+import { pickUnitAbbreviationFromDb } from "@/utils/unit-abbreviation";
 
 import Instructions from "@/features/Recipe/Instructions";
 import IngredientList from "@/features/Recipe/IngredientList";
@@ -93,11 +94,7 @@ const RecipeView = () => {
     function parseIngredient(ingredient: IngredientRaw): IngredientType {
       const units = ingredient.units;
       const amount = ingredient.amount;
-      const parsedUnit =
-        units &&
-        (amount && amount > 1 && units.abbreviation_plural
-          ? units.abbreviation_plural
-          : units.abbreviation_singular);
+      const parsedUnit = pickUnitAbbreviationFromDb(amount ?? null, units);
 
       const parsedIngredient: IngredientType = {
         name: ingredient.name,
@@ -380,7 +377,7 @@ const RecipeView = () => {
               {recipe.servings && (
                 <RecipeInfoItem
                   icon={
-                    recipe.category?.toLowerCase() === "bebidas"
+                    recipe.category?.toLowerCase() === "bebida"
                       ? "Wine"
                       : "Utensils"
                   }

@@ -1,5 +1,8 @@
 import Icon from "@/design-system/components/Icon";
-import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
+import {
+  formatAmountForDisplay,
+  normalizeUnit,
+} from "@/utils/idml-file-uploader-utils";
 
 import type { SubrecipeType } from "@/types";
 
@@ -10,38 +13,51 @@ type IngredientListProps = {
 };
 
 const IngredientList = ({ subrecipes }: IngredientListProps) => {
-  console.log("subrecipes", subrecipes);
+  const withIngredients = subrecipes.filter(
+    (s) => (s.ingredients?.length ?? 0) > 0,
+  );
+
+  if (withIngredients.length === 0) {
+    return null;
+  }
+
+  const showSubrecipeTitles = withIngredients.length > 1;
 
   return (
     <div>
       <h2 className={styles["ingredients-title"]}>Ingredientes</h2>
       <div className={styles["sections-container"]}>
-        {subrecipes.map((subrecipe, i) => {
+        {withIngredients.map((subrecipe, i) => {
           return (
             <div key={`seccion-${i}`} className={styles.section}>
-              {subrecipe.title && (
+              {showSubrecipeTitles && subrecipe.title && (
                 <h3 className={styles["section-title"]}>{subrecipe.title}</h3>
               )}
               <ul className={styles["ingredients-ul"]}>
-                {subrecipe.ingredients &&
-                  subrecipe.ingredients.map((paragraph, j) => {
-                    console.log(typeof paragraph.unit);
-                    return (
-                      <li
-                        key={`ingredient-${j}`}
-                        className={styles["ingredient-li"]}
-                      >
-                        <Icon name="Circle" color="primary" size="md" />
-                        <p>{paragraph.name},</p>
-                        <div className={styles["ingredient-amount"]}>
-                          {paragraph.amount != null && (
-                            <p>{formatAmountForDisplay(paragraph.amount)}</p>
-                          )}
-                          {paragraph.unit && <p>{paragraph.unit}</p>}
-                        </div>
-                      </li>
-                    );
-                  })}
+                {subrecipe.ingredients!.map((paragraph, j) => (
+                  <li
+                    key={`ingredient-${j}`}
+                    className={styles["ingredient-li"]}
+                  >
+                    <Icon name="Circle" color="primary" size="md" />
+                    <p>{paragraph.name},</p>
+                    <div className={styles["ingredient-amount"]}>
+                      {paragraph.amount != null && (
+                        <p>{formatAmountForDisplay(paragraph.amount)}</p>
+                      )}
+                      {paragraph.unit && (
+                        <p>
+                          {paragraph.amount != null
+                            ? normalizeUnit(
+                                paragraph.unit,
+                                paragraph.amount,
+                              )
+                            : paragraph.unit}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           );

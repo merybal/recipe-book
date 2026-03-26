@@ -251,12 +251,17 @@ export function normalizeUnit(
 ): UnitAbbreviationsType | string {
   const lowerCaseUnit = unit.trim().toLowerCase();
 
-  for (const unit of Object.values(UNITS)) {
-    if (unit.synonyms.includes(lowerCaseUnit)) {
-      if (amount && amount > 1 && unit.abbreviation.plural) {
-        return unit.abbreviation.plural;
+  for (const u of Object.values(UNITS)) {
+    if (u.synonyms.includes(lowerCaseUnit)) {
+      const plural = u.abbreviation.plural;
+      if (amount == null || Number.isNaN(Number(amount)) || !plural) {
+        return u.abbreviation.singular;
       }
-      return unit.abbreviation.singular;
+      const amt = Number(amount);
+      const usePlural = u.pluralOnlyWhenGtOne
+        ? amt > 1
+        : Math.abs(amt) !== 1;
+      return usePlural ? plural : u.abbreviation.singular;
     }
   }
 
@@ -312,7 +317,7 @@ export function formatAmountForDisplay(amount: number): string {
     (f) => Math.abs(frac - f.value) < EPSILON,
   );
   if (match) {
-    return whole > 0 ? `${whole}${match.symbol}` : match.symbol;
+    return whole > 0 ? `${whole} ${match.symbol}` : match.symbol;
   }
   return String(amount);
 }
@@ -363,11 +368,11 @@ export function parseIngredientLine(ingredientLine: string) {
   let amountRaw: string | undefined;
   let unitRaw: string | undefined;
 
-  // check if there is a combined fraction (eg: "1 1/2")
+  // check if there is a combined fraction (eg: "1 1/2" or "1 ½")
   if (
     parts.length >= 2 &&
     /^\d+$/.test(parts[0]) && // integer
-    /^\d+\/\d+$/.test(parts[1]) // fraction
+    (/^\d+\/\d+$/.test(parts[1]) || parseUnicodeFraction(parts[1]) !== null) // fraction (slash or Unicode)
   ) {
     amountRaw = `${parts[0]} ${parts[1]}`;
     unitRaw = parts.slice(2).join(" ");
@@ -607,11 +612,17 @@ export function formatIngredientsToText(
 ): string {
   return ingredients
     .map((ing) => {
+      const unitDisplay =
+        ing.unit != null && ing.unit !== ""
+          ? ing.amount != null
+            ? normalizeUnit(ing.unit, ing.amount)
+            : ing.unit
+          : "";
       const amountPart =
         ing.amount != null
-          ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ""}`.trim()
-          : ing.unit
-            ? String(ing.unit)
+          ? `${formatAmountForDisplay(ing.amount)} ${unitDisplay}`.trim()
+          : unitDisplay
+            ? String(unitDisplay)
             : "";
       return amountPart ? `${ing.name}, ${amountPart}` : ing.name;
     })

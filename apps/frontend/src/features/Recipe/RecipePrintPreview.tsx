@@ -1,5 +1,8 @@
 import type { RecipeType, SubrecipeType } from "@/types";
-import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
+import {
+  formatAmountForDisplay,
+  normalizeUnit,
+} from "@/utils/idml-file-uploader-utils";
 
 import styles from "./RecipePrintPreview.module.scss";
 
@@ -10,11 +13,18 @@ type RecipePrintPreviewProps = {
 };
 
 function formatIngredient(ing: { name: string; amount?: number | null; unit?: string | null }) {
+  const unitStr = ing.unit ?? "";
+  const unitDisplay =
+    unitStr !== ""
+      ? ing.amount != null
+        ? normalizeUnit(unitStr, ing.amount)
+        : unitStr
+      : "";
   const amountPart =
     ing.amount != null
-      ? `${formatAmountForDisplay(ing.amount)} ${ing.unit || ""}`.trim()
-      : ing.unit
-        ? String(ing.unit)
+      ? `${formatAmountForDisplay(ing.amount)} ${unitDisplay}`.trim()
+      : unitDisplay
+        ? String(unitDisplay)
         : "";
   return amountPart ? `${ing.name}, ${amountPart}` : ing.name;
 }
@@ -75,14 +85,14 @@ function InfoSection({ recipe }: { recipe: RecipeType }) {
 }
 
 function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
-  const hasIngredients = subrecipes.some(
-    (s) => s.ingredients && s.ingredients.length > 0
+  const withIngredients = subrecipes.filter(
+    (s) => s.ingredients && s.ingredients.length > 0,
   );
-  if (!hasIngredients) return null;
+  if (withIngredients.length === 0) return null;
 
-  // Single subrecipe: split ingredients into 2 columns
-  if (subrecipes.length === 1) {
-    const ingredients = subrecipes[0].ingredients || [];
+  // Only one subrecipe has ingredients: two columns, no subsection titles
+  if (withIngredients.length === 1) {
+    const ingredients = withIngredients[0].ingredients || [];
     const mid = Math.ceil(ingredients.length / 2);
     const left = ingredients.slice(0, mid);
     const right = ingredients.slice(mid);
@@ -117,7 +127,6 @@ function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
     );
   }
 
-  // Multiple subrecipes: one column per subrecipe
   return (
     <section
       className={styles.sectionWithDivider}
@@ -125,20 +134,18 @@ function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
     >
       <h2 className={styles.sectionTitle}>Ingredientes</h2>
       <div className={styles.ingredientColumns}>
-        {subrecipes.map((subrecipe, idx) => (
+        {withIngredients.map((subrecipe, idx) => (
           <div key={idx} className={styles.ingredientColumn}>
             {subrecipe.title && (
               <h3 className={styles.subsectionTitle}>{subrecipe.title}</h3>
             )}
-            {subrecipe.ingredients && subrecipe.ingredients.length > 0 && (
-              <ul className={styles.ingredientList}>
-                {subrecipe.ingredients.map((ing, i) => (
-                  <li key={i} className={styles.ingredientLine}>
-                    {formatIngredient(ing)}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul className={styles.ingredientList}>
+              {subrecipe.ingredients!.map((ing, i) => (
+                <li key={i} className={styles.ingredientLine}>
+                  {formatIngredient(ing)}
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>

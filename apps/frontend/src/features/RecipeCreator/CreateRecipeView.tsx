@@ -167,6 +167,20 @@ const CreateRecipeView = () => {
   const skipNextSyncRef = useRef(false);
   const totalSteps = 6;
 
+  /** Snapshot of state when entering edit-from-preview mode. Restored on cancel. */
+  const editSnapshotRef = useRef<{
+    recipe: RecipeType;
+    subrecipeDrafts: SubrecipeDraftType[];
+    simpleRecipeDraft: {
+      ingredientsText: string;
+      ingredients: IngredientType[];
+      instructionsText: string;
+      instructions: string[];
+    };
+    isSelected: boolean;
+    files: File[];
+  } | null>(null);
+
   const isMobile = useIsMobile();
 
   const isEditMode = !!recipeId && !!initialRecipe;
@@ -197,6 +211,10 @@ const CreateRecipeView = () => {
       dietaryRestrictions: initialRecipe.dietaryRestrictions,
       category: initialRecipe.category,
       categoryId: initialRecipe.categoryId,
+      ...(initialRecipe.countryId != null && {
+        countryId: initialRecipe.countryId,
+        countryOfOrigin: initialRecipe.countryOfOrigin,
+      }),
       subcategories: initialRecipe.subcategories,
       subcategoryIds: initialRecipe.subcategoryIds,
       tags: initialRecipe.tags,
@@ -321,8 +339,30 @@ const CreateRecipeView = () => {
     if (currentStep < totalSteps - 1) setCurrentStep((prev) => prev + 1);
   };
 
+  const saveEditSnapshot = () => {
+    editSnapshotRef.current = {
+      recipe: JSON.parse(JSON.stringify(recipe)),
+      subrecipeDrafts: JSON.parse(JSON.stringify(subrecipeDrafts)),
+      simpleRecipeDraft: JSON.parse(JSON.stringify(simpleRecipeDraft)),
+      isSelected,
+      files: [...files],
+    };
+  };
+
+  const restoreEditSnapshot = () => {
+    const snap = editSnapshotRef.current;
+    if (!snap) return;
+    setRecipe(snap.recipe);
+    setSubrecipeDrafts(snap.subrecipeDrafts);
+    setSimpleRecipeDraft(snap.simpleRecipeDraft);
+    setIsSelected(snap.isSelected);
+    setFiles(snap.files);
+  };
+
   const prevStep = () => {
     if (editingFromPreview !== null) {
+      restoreEditSnapshot();
+      setErrors({});
       setEditingFromPreview(null);
       setCurrentStep(PREVIEW_STEP_INDEX);
       return;
@@ -515,26 +555,32 @@ const CreateRecipeView = () => {
             coverImageFiles={files}
             onCoverImageChange={setFiles}
             onEditCover={() => {
+              saveEditSnapshot();
               setEditingFromPreview(0);
               setCurrentStep(0);
             }}
             onEditMold={() => {
+              saveEditSnapshot();
               setEditingFromPreview(1);
               setCurrentStep(1);
             }}
             onEditBakingInstructions={() => {
+              saveEditSnapshot();
               setEditingFromPreview(1);
               setCurrentStep(1);
             }}
             onEditSubrecipes={() => {
+              saveEditSnapshot();
               setEditingFromPreview(2);
               setCurrentStep(2);
             }}
             onEditCategories={() => {
+              saveEditSnapshot();
               setEditingFromPreview(3);
               setCurrentStep(3);
             }}
             onEditAdditionalInfo={() => {
+              saveEditSnapshot();
               setEditingFromPreview(4);
               setCurrentStep(4);
             }}

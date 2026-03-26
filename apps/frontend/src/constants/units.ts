@@ -20,18 +20,21 @@ export const UNITS: Record<string, Unit> = {
     fullUnit: "pizca",
     name: "pinch",
     synonyms: ["pinch", "pizca", "pzc"],
+    pluralOnlyWhenGtOne: true,
   },
   TEASPOON: {
     abbreviation: { singular: "cdta", plural: "cdtas" },
     fullUnit: "cucharadita",
     name: "teaspoon",
     synonyms: ["teaspoon", "cdta", "cucharadita", "cucharadita de té"],
+    pluralOnlyWhenGtOne: true,
   },
   TABLESPOON: {
     abbreviation: { singular: "cda", plural: "cdas" },
     fullUnit: "cucharada sopera",
     name: "tablespoon",
     synonyms: ["tablespoon", "cda", "cucharada", "cucharada sopera"],
+    pluralOnlyWhenGtOne: true,
   },
   AMOUNT_NEEDED: {
     abbreviation: { singular: "c/n" },
@@ -70,18 +73,58 @@ export const UNITS: Record<string, Unit> = {
     fullUnit: "taza",
     name: "cup",
     synonyms: ["cup", "taza", "tazas"],
+    pluralOnlyWhenGtOne: true,
+  },
+  GLASS: {
+    abbreviation: { singular: "vaso", plural: "vasos" },
+    fullUnit: "vaso",
+    name: "glass",
+    synonyms: ["glass", "glasses", "vaso", "vasos"],
+    pluralOnlyWhenGtOne: true,
   },
   DICE: {
     abbreviation: { singular: "dado", plural: "dados" },
     fullUnit: "dado",
     name: "dice",
     synonyms: ["dice", "dado", "dados"],
+    pluralOnlyWhenGtOne: true,
   },
   CLOVE: {
     abbreviation: { singular: "diente", plural: "dientes" },
     fullUnit: "diente",
     name: "clove",
     synonyms: ["clove", "diente", "dientes"],
+  },
+  /** Lasagna / pasta sheets (e.g. for lasagna). */
+  PASTA_SHEET: {
+    abbreviation: { singular: "plancha", plural: "planchas" },
+    fullUnit: "plancha",
+    name: "sheet",
+    synonyms: [
+      "sheet",
+      "sheets",
+      "plancha",
+      "planchas",
+      "lasagna sheet",
+      "lasagna sheets",
+      "pasta sheet",
+      "pasta sheets",
+    ],
+  },
+  /** Pasta / lasagna layer (Spanish tapa; English layer). */
+  TAPA: {
+    abbreviation: { singular: "tapa", plural: "tapas" },
+    fullUnit: "tapa",
+    name: "layer",
+    synonyms: ["layer", "layers", "tapa", "tapas"],
+  },
+  /** Leaf (e.g. bay leaf); phyllo/pasta sheets use plancha. */
+  HOJA: {
+    abbreviation: { singular: "hoja", plural: "hojas" },
+    fullUnit: "hoja",
+    name: "leaf",
+    synonyms: ["hoja", "hojas", "leaf", "leaves"],
+    pluralOnlyWhenGtOne: true,
   },
 } as const;
 

@@ -3,6 +3,9 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 
+/** Spanish alphabetical order (Ñ after N, not at end of list). */
+const TITLE_SORT_ES = new Intl.Collator('es', { usage: 'sort' });
+
 @Injectable()
 export class RecipesService {
   constructor(private prisma: PrismaService) {}
@@ -65,9 +68,8 @@ export class RecipesService {
   }
 
   async getAllRecipes() {
-    return this.prisma.recipes.findMany({
-      where: { deleted_at: null },
-      orderBy: { title: 'asc' },
+    const recipes = await this.prisma.recipes.findMany({
+      where: { deleted_at: null, is_test: false },
       include: {
         category: true,
         country: true,
@@ -107,6 +109,8 @@ export class RecipesService {
         },
       },
     });
+    recipes.sort((a, b) => TITLE_SORT_ES.compare(a.title, b.title));
+    return recipes;
   }
 
   async addDietaryRestrictions(

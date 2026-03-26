@@ -147,6 +147,17 @@ const BasicInformationStep = ({
       >
         <h2 id="baking-instructions-section">Cocción</h2>
         <Input
+          id="time"
+          label="Tiempo"
+          showLabel
+          placeholder="45 min o 10-15 min"
+          type="text"
+          value={recipe.bakingInstructions?.time ?? ""}
+          onChange={handleTimeChange}
+          {...(errors.time && { error: errors.time })}
+        />
+
+        <Input
           id="temperature"
           inputMode="numeric"
           label="Temperatura en Celcius (°C)"
@@ -161,17 +172,6 @@ const BasicInformationStep = ({
           }
           onChange={handleTemperatureChange}
           {...(errors.temperature && { error: errors.temperature })}
-        />
-
-        <Input
-          id="time"
-          label="Tiempo"
-          showLabel
-          placeholder="45 min o 10-15 min"
-          type="text"
-          value={recipe.bakingInstructions?.time ?? ""}
-          onChange={handleTimeChange}
-          {...(errors.time && { error: errors.time })}
         />
       </section>
     </div>

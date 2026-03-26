@@ -191,18 +191,18 @@ const RecipePreview = ({
           />
         </div>
         <div>
-          <h3>Temperatura</h3>
-          <p>
-            {recipeData.bakingInstructions?.temperature != null
-              ? `${recipeData.bakingInstructions.temperature}°C`
-              : "-"}
-          </p>
-        </div>
-        <div>
           <h3>Tiempo</h3>
           <p>
             {recipeData.bakingInstructions?.time
               ? recipeData.bakingInstructions.time
+              : "-"}
+          </p>
+        </div>
+        <div>
+          <h3>Temperatura</h3>
+          <p>
+            {recipeData.bakingInstructions?.temperature != null
+              ? `${recipeData.bakingInstructions.temperature}°C`
               : "-"}
           </p>
         </div>
