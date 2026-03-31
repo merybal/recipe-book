@@ -287,11 +287,11 @@ const UNITS = [
     synonyms: ['mililiter', 'mililitre', 'ml', 'mililitro', 'mililitros'],
   },
   {
-    abbreviation_singular: 'l',
-    abbreviation_plural: null,
+    abbreviation_singular: 'L',
+    abbreviation_plural: 'Lts',
     name_en: 'liter',
     name_es: 'litros',
-    synonyms: ['liter', 'litre', 'l', 'litro', 'litros'],
+    synonyms: ['liter', 'litre', 'l', 'L', 'lt', 'lts', 'litro', 'litros'],
   },
   {
     abbreviation_singular: 'cc',
@@ -393,6 +393,48 @@ const UNITS = [
     name_en: 'leaf',
     name_es: 'hoja',
     synonyms: ['hoja', 'hojas', 'leaf', 'leaves'],
+  },
+  {
+    abbreviation_singular: 'tallo',
+    abbreviation_plural: 'tallos',
+    name_en: 'stem',
+    name_es: 'tallo',
+    synonyms: ['stem', 'stems', 'stalk', 'stalks', 'tallo', 'tallos'],
+  },
+  {
+    abbreviation_singular: 'chorrito',
+    abbreviation_plural: 'chorritos',
+    name_en: 'dash',
+    name_es: 'chorrito',
+    synonyms: [
+      'dash',
+      'dashes',
+      'splash',
+      'splashes',
+      'chorrito',
+      'chorritos',
+    ],
+  },
+  {
+    abbreviation_singular: 'tira',
+    abbreviation_plural: 'tiras',
+    name_en: 'strip',
+    name_es: 'tira',
+    synonyms: ['strip', 'strips', 'tira', 'tiras'],
+  },
+  {
+    abbreviation_singular: 'puñado',
+    abbreviation_plural: 'puñados',
+    name_en: 'handful',
+    name_es: 'puñado',
+    synonyms: [
+      'handful',
+      'handfuls',
+      'puñado',
+      'puñados',
+      'punado',
+      'punados',
+    ],
   },
 ];
 
@@ -1084,6 +1126,11 @@ async function main() {
   await prisma.dietaryRestrictions.createMany({
     data: DIETARY_RESTRICTIONS,
     skipDuplicates: true,
+  });
+
+  await prisma.units.updateMany({
+    where: { abbreviation_singular: 'l', name_en: 'liter' },
+    data: { abbreviation_singular: 'L', abbreviation_plural: 'Lts' },
   });
 
   for (const u of UNITS) {

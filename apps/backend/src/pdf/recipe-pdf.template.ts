@@ -17,7 +17,6 @@ export type RecipePdfData = {
   moldParts?: string[];
   /** Author/source name only (no URL) */
   author?: string;
-  sourceUrls?: string[];
   /** Each item: label for display, iconKey for icon (gluten_free, dairy_free, vegan, vegetarian) */
   dietaryRestrictions?: { label: string; iconKey: string }[];
   subrecipes: {
@@ -276,19 +275,16 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     return [...before, firstCol, secondCol, ...after];
   }
 
-  function renderColumn(
-    col: {
-      title?: string;
-      titleSpacer?: string;
-      ingredients: { name: string; amount?: number; unit?: string }[];
-    },
-  ): string {
+  function renderColumn(col: {
+    title?: string;
+    titleSpacer?: string;
+    ingredients: { name: string; amount?: number; unit?: string }[];
+  }): string {
     const titleHtml = col.title
       ? `<h3 class="subsection-title">${escapeHtml(col.title)}</h3>`
       : '';
-    const spacerHtml =
-      col.titleSpacer ?
-        `<h3 class="subsection-title subsection-title--spacer" aria-hidden="true">${escapeHtml(col.titleSpacer)}</h3>`
+    const spacerHtml = col.titleSpacer
+      ? `<h3 class="subsection-title subsection-title--spacer" aria-hidden="true">${escapeHtml(col.titleSpacer)}</h3>`
       : '';
     const listHtml = col.ingredients
       .map((i) => `<li>${formatIngredientHtml(i)}</li>`)
@@ -303,9 +299,9 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
 
   /** When there is no basic-info block, still show a rule between title and ingredients. */
   const titleToIngredientsDivider =
-    !hasInfo && hasIngredients ?
-      `<div class="section-divider section-divider--after-title" data-pdf-divider></div>`
-    : '';
+    !hasInfo && hasIngredients
+      ? `<div class="section-divider section-divider--after-title" data-pdf-divider></div>`
+      : '';
 
   let ingredientsHtml = '';
   if (hasIngredients) {
@@ -347,27 +343,6 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
           .join('')}
       </section>`;
   }
-
-  const recetaOriginalTitle =
-    recipe.sourceUrls && recipe.sourceUrls.length > 1
-      ? 'Recetas originales'
-      : 'Receta original';
-  const recetaOriginalHtml =
-    recipe.sourceUrls && recipe.sourceUrls.length > 0
-      ? `
-      <div class="section-divider" data-pdf-divider></div>
-      <section class="section">
-        <h3 class="subsection-title">${recetaOriginalTitle}</h3>
-        <ul class="ingredient-list">
-          ${recipe.sourceUrls
-            .map(
-              (url) =>
-                `<li><a href="${escapeHtml(url)}">${escapeHtml(url)}</a></li>`,
-            )
-            .join('')}
-        </ul>
-      </section>`
-      : '';
 
   const notesHtml =
     recipe.notes && recipe.notes.length > 0
@@ -438,7 +413,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       padding: 10px 0;
       border-top: 1px solid #2d5a27;
       border-bottom: 1px solid #2d5a27;
-      line-height: 1.4;
+      line-height: 1.2;
       position: relative;
     }
     .info-block--row .info-row-wrap {
@@ -558,13 +533,13 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       margin-bottom: 0;
     }
     .note {
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       text-align: justify;
     }
     .instruction-text {
-      margin: 0 0 10px 0;
+      margin: 0 0 6px 0;
       text-align: justify;
-      line-height: 1.2;
+      line-height: 1.15;
     }
     .subrecipe-block {
       margin-bottom: 14px;
@@ -586,7 +561,6 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     ${ingredientsHtml}
     ${preparationHtml}
     ${notesHtml}
-    ${recetaOriginalHtml}
   </div>
 </body>
 </html>`;

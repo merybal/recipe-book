@@ -113,6 +113,61 @@ export class RecipesService {
     return recipes;
   }
 
+  async getRecipesBySubcategoryId(subcategoryId: number) {
+    const recipes = await this.prisma.recipes.findMany({
+      where: {
+        deleted_at: null,
+        is_test: false,
+        recipe_subcategories: {
+          some: {
+            subcategory_id: subcategoryId,
+            deleted_at: null,
+          },
+        },
+      },
+      include: {
+        category: true,
+        country: true,
+        subrecipes: {
+          where: { deleted_at: null },
+          include: {
+            ingredients: {
+              where: { deleted_at: null },
+              include: {
+                units: true,
+              },
+            },
+          },
+        },
+        recipe_dietary_restrictions: {
+          where: { deleted_at: null },
+          include: {
+            dietary_restriction: true,
+          },
+        },
+        recipe_notes: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_sources: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+        },
+        recipe_subcategories: {
+          where: { deleted_at: null },
+          orderBy: { sort_order: 'asc' },
+          include: { subcategory: true },
+        },
+        recipe_tags: {
+          where: { deleted_at: null },
+          include: { tag: true },
+        },
+      },
+    });
+    recipes.sort((a, b) => TITLE_SORT_ES.compare(a.title, b.title));
+    return recipes;
+  }
+
   async addDietaryRestrictions(
     recipeId: number,
     dietaryRestrictionIds: number[],

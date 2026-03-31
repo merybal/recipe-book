@@ -60,7 +60,14 @@ const IdmlFileUploader = () => {
   const handleFileChange = async (newFiles: File[]) => {
     setFiles(newFiles);
 
-    const recipe = await parseIdmlFile(newFiles[0]);
+    let u = units;
+    if (u.length === 0) {
+      const res = await axios.get<UnitRaw[]>(`/api/units?locale=${locale}`);
+      u = res.data;
+      setUnits(u);
+    }
+
+    const recipe = await parseIdmlFile(newFiles[0], u);
     if (recipe) {
       setRecipe(recipe);
     }

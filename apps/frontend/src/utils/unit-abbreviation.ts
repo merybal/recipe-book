@@ -1,5 +1,34 @@
 import type { UnitRaw } from "@/types";
 
+/**
+ * Match a free-text unit token (synonym, singular or plural abbreviation) to a row from GET /api/units.
+ */
+export function findUnitRowByToken(
+  token: string,
+  units: UnitRaw[],
+): UnitRaw | undefined {
+  const lower = token.trim().toLowerCase();
+  if (!lower) return undefined;
+  return units.find((u) => {
+    if (u.abbreviation_singular.toLowerCase() === lower) return true;
+    if (u.abbreviation_plural?.toLowerCase() === lower) return true;
+    return u.synonyms.some((s) => s.toLowerCase() === lower);
+  });
+}
+
+/**
+ * Resolve a unit token to the canonical abbreviation for display (plural rules aligned with backend PDF).
+ */
+export function normalizeUnit(
+  unit: string,
+  amount: number | undefined | null,
+  units: UnitRaw[],
+): string {
+  const row = findUnitRowByToken(unit, units);
+  if (!row) return unit.trim();
+  return pickUnitAbbreviationFromDb(amount, row) ?? unit.trim();
+}
+
 /** Same set as backend `unit-abbreviation.ts` MEASURE_PLURAL_IF_GT_ONE */
 const MEASURE_PLURAL_IF_GT_ONE = new Set([
   "cdta",
@@ -10,6 +39,8 @@ const MEASURE_PLURAL_IF_GT_ONE = new Set([
   "cubo",
   "dado",
   "hoja",
+  "l",
+  "puñado",
 ]);
 
 function shouldUsePluralAbbrev(n: number, abbreviationSingular: string): boolean {
@@ -37,6 +68,11 @@ const FALLBACK_PLURAL_ES: Record<string, string> = {
   rodaja: 'rodajas',
   atado: 'atados',
   hoja: 'hojas',
+  tallo: 'tallos',
+  chorrito: 'chorritos',
+  tira: 'tiras',
+  'puñado': 'puñados',
+  l: 'Lts',
 };
 
 export function pickUnitAbbreviationFromDb(

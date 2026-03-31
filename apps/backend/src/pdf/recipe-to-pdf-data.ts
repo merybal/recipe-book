@@ -45,10 +45,6 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
   const uniqueNames = sourceNames ? [...new Set(sourceNames)] : [];
   const author = uniqueNames.length ? uniqueNames.join(', ') : undefined;
 
-  const sourceUrls = recipe.recipe_sources
-    ?.map((s) => s.url)
-    .filter(Boolean) as string[] | undefined;
-
   const dietaryRestrictions =
     recipe.recipe_dietary_restrictions?.map((rdr) => ({
       label:
@@ -73,7 +69,6 @@ export function recipeToPdfData(recipe: RawRecipe): RecipePdfData {
     mold: moldParts.length > 0 ? moldParts.join(' • ') : undefined,
     moldParts: moldParts.length > 0 ? moldParts : undefined,
     author: author ?? undefined,
-    sourceUrls: sourceUrls ?? undefined,
     dietaryRestrictions:
       dietaryRestrictions.length > 0 ? dietaryRestrictions : undefined,
     subrecipes: recipe.subrecipes.map((sr) => {

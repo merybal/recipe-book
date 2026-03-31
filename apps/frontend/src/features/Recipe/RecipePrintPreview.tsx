@@ -1,8 +1,9 @@
-import type { RecipeType, SubrecipeType } from "@/types";
-import {
-  formatAmountForDisplay,
-  normalizeUnit,
-} from "@/utils/idml-file-uploader-utils";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import type { RecipeType, SubrecipeType, UnitRaw } from "@/types";
+import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
+import { normalizeUnit } from "@/utils/unit-abbreviation";
 
 import styles from "./RecipePrintPreview.module.scss";
 
@@ -12,12 +13,15 @@ type RecipePrintPreviewProps = {
   recipe: RecipeType;
 };
 
-function formatIngredient(ing: { name: string; amount?: number | null; unit?: string | null }) {
+function formatIngredient(
+  ing: { name: string; amount?: number | null; unit?: string | null },
+  units: UnitRaw[],
+) {
   const unitStr = ing.unit ?? "";
   const unitDisplay =
     unitStr !== ""
       ? ing.amount != null
-        ? normalizeUnit(unitStr, ing.amount)
+        ? normalizeUnit(unitStr, ing.amount, units)
         : unitStr
       : "";
   const amountPart =
@@ -84,7 +88,13 @@ function InfoSection({ recipe }: { recipe: RecipeType }) {
   );
 }
 
-function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
+function IngredientsSection({
+  subrecipes,
+  units,
+}: {
+  subrecipes: SubrecipeType[];
+  units: UnitRaw[];
+}) {
   const withIngredients = subrecipes.filter(
     (s) => s.ingredients && s.ingredients.length > 0,
   );
@@ -108,7 +118,7 @@ function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
             <ul className={styles.ingredientList}>
               {left.map((ing, i) => (
                 <li key={i} className={styles.ingredientLine}>
-                  {formatIngredient(ing)}
+                  {formatIngredient(ing, units)}
                 </li>
               ))}
             </ul>
@@ -117,7 +127,7 @@ function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
             <ul className={styles.ingredientList}>
               {right.map((ing, i) => (
                 <li key={i} className={styles.ingredientLine}>
-                  {formatIngredient(ing)}
+                  {formatIngredient(ing, units)}
                 </li>
               ))}
             </ul>
@@ -142,7 +152,7 @@ function IngredientsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
             <ul className={styles.ingredientList}>
               {subrecipe.ingredients!.map((ing, i) => (
                 <li key={i} className={styles.ingredientLine}>
-                  {formatIngredient(ing)}
+                  {formatIngredient(ing, units)}
                 </li>
               ))}
             </ul>
@@ -209,13 +219,22 @@ function NotesSection({ notes }: { notes: string[] }) {
 }
 
 export function RecipePrintPreview({ recipe }: RecipePrintPreviewProps) {
+  const [units, setUnits] = useState<UnitRaw[]>([]);
+
+  useEffect(() => {
+    axios
+      .get<UnitRaw[]>("/api/units?locale=es")
+      .then((res) => setUnits(res.data))
+      .catch(() => setUnits([]));
+  }, []);
+
   return (
     <div className={styles.page} data-pdf-measure="page">
       <h1 className={styles.title}>{recipe.title}</h1>
 
       <InfoSection recipe={recipe} />
 
-      <IngredientsSection subrecipes={recipe.subrecipes} />
+      <IngredientsSection subrecipes={recipe.subrecipes} units={units} />
 
       <InstructionsSection subrecipes={recipe.subrecipes} />
 

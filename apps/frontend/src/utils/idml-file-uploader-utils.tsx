@@ -11,8 +11,11 @@ import type {
   UnitRaw,
 } from "@/types";
 
-import type { UnitAbbreviationsType } from "@/types";
-import { DIETARY_RESTRICTIONS, UNITS } from "@/constants";
+import { DIETARY_RESTRICTIONS } from "@/constants";
+import {
+  findUnitRowByToken,
+  normalizeUnit,
+} from "@/utils/unit-abbreviation";
 
 export function getBakingInstructions(i: number, storyContentArray: Element[]) {
   const next = storyContentArray[i + 1];
@@ -244,31 +247,6 @@ export async function getImageNamesFromIDML(zip: JSZip): Promise<string[]> {
   return allergyTags;
 }
 
-// TODO move to a general utils? likely used in the form
-export function normalizeUnit(
-  unit: string,
-  amount?: number
-): UnitAbbreviationsType | string {
-  const lowerCaseUnit = unit.trim().toLowerCase();
-
-  for (const u of Object.values(UNITS)) {
-    if (u.synonyms.includes(lowerCaseUnit)) {
-      const plural = u.abbreviation.plural;
-      if (amount == null || Number.isNaN(Number(amount)) || !plural) {
-        return u.abbreviation.singular;
-      }
-      const amt = Number(amount);
-      const usePlural = u.pluralOnlyWhenGtOne
-        ? amt > 1
-        : Math.abs(amt) !== 1;
-      return usePlural ? plural : u.abbreviation.singular;
-    }
-  }
-
-  // TODO check if it's handled when unit doesn't exist
-  return unit;
-}
-
 /** Unicode vulgar fractions -> decimal value */
 const UNICODE_FRACTIONS: Record<string, number> = {
   '¼': 1 / 4,
@@ -354,7 +332,10 @@ export function parseAmount(value: string): number {
   return parseFloat(value);
 }
 
-export function parseIngredientLine(ingredientLine: string) {
+export function parseIngredientLine(
+  ingredientLine: string,
+  units: UnitRaw[],
+) {
   const [namePart, amountAndUnitPart] = ingredientLine
     .split(",")
     .map((s) => s.trim());
@@ -395,31 +376,22 @@ export function parseIngredientLine(ingredientLine: string) {
     unitRaw = parts.join(" ");
   }
 
+  const amount =
+    amountRaw !== undefined ? parseAmount(amountRaw) : undefined;
+
   return {
     name: namePart,
-    ...(amountRaw && { amount: parseAmount(amountRaw) }),
-    ...(unitRaw && { unit: normalizeUnit(unitRaw) }),
+    ...(amountRaw && { amount }),
+    ...(unitRaw && { unit: normalizeUnit(unitRaw, amount, units) }),
   };
 }
 
 export function getUnitId(
   unit: string | undefined | null,
-  units: UnitRaw[]
+  units: UnitRaw[],
 ): number | null {
   if (!unit) return null;
-
-  const normalized = normalizeUnit(unit);
-  if (!normalized) return null;
-
-  const lower = normalized.toLowerCase();
-  const match = units.find(
-    (u) =>
-      u.abbreviation_singular.toLowerCase() === lower ||
-      (u.abbreviation_plural?.toLowerCase() ?? "") === lower ||
-      u.synonyms.some((s) => s.toLowerCase() === lower)
-  );
-
-  return match?.id ?? null;
+  return findUnitRowByToken(unit, units)?.id ?? null;
 }
 
 export function transformRecipeForPost(
@@ -469,7 +441,8 @@ export function transformRecipeForPost(
 }
 
 export async function parseIdmlFile(
-  selectedFile: File
+  selectedFile: File,
+  units: UnitRaw[],
 ): Promise<RecipeType | undefined> {
   if (!selectedFile) return undefined;
 
@@ -538,7 +511,9 @@ export async function parseIdmlFile(
               (subrecipe: SubrecipeIdmlType) => {
                 return {
                   title: subrecipe.sectionTitle,
-                  ingredients: subrecipe.sectionBody.map(parseIngredientLine),
+                  ingredients: subrecipe.sectionBody.map((line) =>
+                    parseIngredientLine(line, units),
+                  ),
                   instructions: [],
                 };
               }
@@ -598,24 +573,25 @@ export async function parseIdmlFile(
   return recipeObject;
 }
 
-export function parseIngredientsText(text: string) {
+export function parseIngredientsText(text: string, units: UnitRaw[]) {
   return text
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line !== "")
-    .map(parseIngredientLine);
+    .map((line) => parseIngredientLine(line, units));
 }
 
 /** Inverse of parseIngredientsText: formats ingredients array to text (one per line). */
 export function formatIngredientsToText(
   ingredients: { name: string; amount?: number; unit?: string }[],
+  units: UnitRaw[],
 ): string {
   return ingredients
     .map((ing) => {
       const unitDisplay =
         ing.unit != null && ing.unit !== ""
           ? ing.amount != null
-            ? normalizeUnit(ing.unit, ing.amount)
+            ? normalizeUnit(ing.unit, ing.amount, units)
             : ing.unit
           : "";
       const amountPart =

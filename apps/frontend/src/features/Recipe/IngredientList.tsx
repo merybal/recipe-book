@@ -1,18 +1,17 @@
 import Icon from "@/design-system/components/Icon";
-import {
-  formatAmountForDisplay,
-  normalizeUnit,
-} from "@/utils/idml-file-uploader-utils";
+import { formatAmountForDisplay } from "@/utils/idml-file-uploader-utils";
+import { normalizeUnit } from "@/utils/unit-abbreviation";
 
-import type { SubrecipeType } from "@/types";
+import type { SubrecipeType, UnitRaw } from "@/types";
 
 import styles from "./IngredientList.module.scss";
 
 type IngredientListProps = {
   subrecipes: SubrecipeType[];
+  units: UnitRaw[];
 };
 
-const IngredientList = ({ subrecipes }: IngredientListProps) => {
+const IngredientList = ({ subrecipes, units }: IngredientListProps) => {
   const withIngredients = subrecipes.filter(
     (s) => (s.ingredients?.length ?? 0) > 0,
   );
@@ -51,6 +50,7 @@ const IngredientList = ({ subrecipes }: IngredientListProps) => {
                             ? normalizeUnit(
                                 paragraph.unit,
                                 paragraph.amount,
+                                units,
                               )
                             : paragraph.unit}
                         </p>

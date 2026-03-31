@@ -26,6 +26,7 @@ import type {
   RecipeTagRaw,
   RecipeSubcategoryRaw,
   DietaryRestrictionType,
+  UnitRaw,
 } from "@/types";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -37,6 +38,7 @@ import DefaultRecipeImage from "@/assets/savory-recipe-default.jpg";
 
 import styles from "./RecipeView.module.scss";
 import Icon from "@/design-system/components/Icon/Icon";
+import Spinner from "@/design-system/components/Spinner";
 
 function RecipeInfoItem({
   icon,
@@ -82,9 +84,17 @@ const RecipeView = () => {
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [units, setUnits] = useState<UnitRaw[]>([]);
 
   const isMobile = useIsMobile();
   const locale = useLocale();
+
+  useEffect(() => {
+    axios
+      .get<UnitRaw[]>(`/api/units?locale=${locale}`)
+      .then((res) => setUnits(res.data))
+      .catch(() => setUnits([]));
+  }, [locale]);
 
   useEffect(() => {
     if (!id) return;
@@ -281,7 +291,7 @@ const RecipeView = () => {
     fetchRecipe();
   }, [id]);
 
-  if (loading) return <div>Cargando...</div>;
+  if (loading) return <Spinner />;
   if (error) return <div>{error}</div>;
   if (!recipe) return <div>No se encontró la receta</div>;
 
@@ -418,7 +428,7 @@ const RecipeView = () => {
           )}
         </Tab>
         <Tab value="Receta" label="Receta">
-          <IngredientList subrecipes={recipe.subrecipes} />
+          <IngredientList subrecipes={recipe.subrecipes} units={units} />
           <Separator marginY="lg" />
           <Instructions
             isNumbered

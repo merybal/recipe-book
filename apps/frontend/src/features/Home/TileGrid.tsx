@@ -28,6 +28,8 @@ type TileGridProps = {
   /** Max recipes per row on desktop. Ignored on mobile. */
   maxDesktopColumns?: number;
   previewData?: PreviewData[];
+  /** Defaults to `/recipes/:id`. */
+  getTileHref?: (id: number) => string;
 };
 
 const TileGrid = ({
@@ -35,12 +37,13 @@ const TileGrid = ({
   grid = "single",
   maxDesktopColumns = 4,
   previewData,
+  getTileHref = (id: number) => `/recipes/${id}`,
 }: TileGridProps) => {
   const navigate = useNavigate();
   const isMobile = useIsMobile();
 
   const handleTileClick = (id: number) => {
-    navigate(`/recipes/${id}`);
+    navigate(getTileHref(id));
   };
 
   const isDesktopGrid = !isMobile && grid === "single";

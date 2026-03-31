@@ -18,7 +18,13 @@ import {
 import { buildRecipePayload } from "@/utils/recipe-submit-utils";
 import { formatIngredientsToText } from "@/utils/idml-file-uploader-utils";
 
-import type { RecipeType, IngredientType, SubrecipeDraftType } from "@/types";
+import type {
+  RecipeType,
+  IngredientType,
+  SubrecipeDraftType,
+  UnitRaw,
+} from "@/types";
+import { useLocale } from "@/hooks/useLocale";
 
 import styles from "./CreateRecipeView.module.scss";
 import RecipePreview from "./RecipePreview";
@@ -130,6 +136,9 @@ const CreateRecipeView = () => {
   const { id: recipeId } = useParams<{ id: string }>();
   const location = useLocation();
   const initialRecipe = (location.state as { recipe?: RecipeType })?.recipe;
+  const locale = useLocale();
+
+  const [units, setUnits] = useState<UnitRaw[]>([]);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -183,6 +192,13 @@ const CreateRecipeView = () => {
 
   const isMobile = useIsMobile();
 
+  useEffect(() => {
+    axios
+      .get<UnitRaw[]>(`/api/units?locale=${locale}`)
+      .then((res) => setUnits(res.data))
+      .catch(() => setUnits([]));
+  }, [locale]);
+
   const isEditMode = !!recipeId && !!initialRecipe;
   const pageTitle = isEditMode
     ? currentStep === 5
@@ -194,7 +210,7 @@ const CreateRecipeView = () => {
 
   // Initialize form when editing (recipe passed via location.state)
   useEffect(() => {
-    if (!initialRecipe) return;
+    if (!initialRecipe || units.length === 0) return;
     skipNextSyncRef.current = true; // Prevent sync effect from overwriting
     setCurrentStep(PREVIEW_STEP_INDEX); // Start at preview when editing from RecipeView
     setRecipe({
@@ -227,7 +243,10 @@ const CreateRecipeView = () => {
       setSubrecipeDrafts(
         initialRecipe.subrecipes.map((s) => ({
           title: s.title ?? "",
-          ingredientsText: formatIngredientsToText(s.ingredients ?? []),
+          ingredientsText: formatIngredientsToText(
+            s.ingredients ?? [],
+            units,
+          ),
           ingredients: s.ingredients ?? [],
           instructionsText: (s.instructions ?? []).join("\n"),
           instructions: s.instructions ?? [],
@@ -238,13 +257,13 @@ const CreateRecipeView = () => {
       const ingredients = sub?.ingredients ?? [];
       const instructions = sub?.instructions ?? [];
       setSimpleRecipeDraft({
-        ingredientsText: formatIngredientsToText(ingredients),
+        ingredientsText: formatIngredientsToText(ingredients, units),
         ingredients,
         instructionsText: instructions.join("\n"),
         instructions,
       });
     }
-  }, [initialRecipe]);
+  }, [initialRecipe, units]);
 
   // TODO remove
   useEffect(() => {
@@ -527,6 +546,7 @@ const CreateRecipeView = () => {
             setSubrecipeDrafts={setSubrecipeDrafts}
             simpleRecipeDraft={simpleRecipeDraft}
             subrecipeDrafts={subrecipeDrafts}
+            units={units}
           />
         )}
 

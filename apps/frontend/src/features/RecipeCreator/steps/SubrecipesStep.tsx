@@ -18,6 +18,7 @@ import type {
   RecipeStateType,
   IngredientType,
   SubrecipeDraftType,
+  UnitRaw,
 } from "@/types";
 
 import { parseIngredientsText } from "@/utils/idml-file-uploader-utils";
@@ -40,6 +41,7 @@ type SubrecipesStepProps = {
   >;
   simpleRecipeDraft: SimpleRecipeDraft;
   setSimpleRecipeDraft: React.Dispatch<React.SetStateAction<SimpleRecipeDraft>>;
+  units: UnitRaw[];
 } & RecipeStateType;
 
 const SubrecipesStep = ({
@@ -49,6 +51,7 @@ const SubrecipesStep = ({
   setSubrecipeDrafts,
   simpleRecipeDraft,
   setSimpleRecipeDraft,
+  units,
 }: SubrecipesStepProps) => {
   const handleSeparateIntoPreparations = () => {
     setIsSelected(true);
@@ -93,7 +96,7 @@ const SubrecipesStep = ({
           return {
             ...draft,
             ingredientsText: value,
-            ingredients: parseIngredientsText(value),
+            ingredients: parseIngredientsText(value, units),
           };
         }
 
@@ -157,7 +160,7 @@ const SubrecipesStep = ({
         value={simpleRecipeDraft.ingredientsText}
         onChange={(e) => {
           const text = e.target.value;
-          const parsedIngredients = parseIngredientsText(text);
+          const parsedIngredients = parseIngredientsText(text, units);
           setSimpleRecipeDraft((prev) => ({
             ...prev,
             ingredientsText: text,
@@ -253,7 +256,10 @@ const SubrecipesStep = ({
                   value={subrecipeDrafts[index].ingredientsText || ""}
                   onChange={(e) => {
                     const text = e.target.value;
-                    const parsedIngredients = parseIngredientsText(text);
+                    const parsedIngredients = parseIngredientsText(
+                      text,
+                      units,
+                    );
                     setSubrecipeDrafts((prev) =>
                       prev.map((draft, i) =>
                         i === index

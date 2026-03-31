@@ -6,6 +6,7 @@ import DesktopNav from "./design-system/components/DesktopNav/DesktopNav";
 import RecipeView from "./features/Recipe/RecipeView";
 import RecipePdfPreviewRoute from "./features/Recipe/RecipePdfPreviewRoute";
 import HomeView from "./features/Home/HomeView";
+import RecipeGridView from "./features/RecipeGrid/RecipeGridView";
 import CreateRecipeView from "./features/RecipeCreator/CreateRecipeView";
 import ComponentShowcaseView from "./features/ComponentShowcase/ComponentShowcaseView"; // TODO remove when storybook is added
 
@@ -19,6 +20,10 @@ function App() {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<HomeView />} />
+            <Route
+              path="/subcategories/:subcategoryId"
+              element={<RecipeGridView />}
+            />
             <Route path="/components" element={<ComponentShowcaseView />} />
             <Route path="/recipes/:id" element={<RecipeView />} />
             <Route path="/recipes/:id/pdf-preview" element={<RecipePdfPreviewRoute />} />

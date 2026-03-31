@@ -11,6 +11,8 @@ const MEASURE_PLURAL_IF_GT_ONE = new Set([
   'cubo',
   'dado',
   'hoja',
+  'l',
+  'puñado',
 ]);
 
 function shouldUsePluralAbbrev(n: number, abbreviationSingular: string): boolean {
@@ -38,6 +40,11 @@ const FALLBACK_PLURAL_ES: Record<string, string> = {
   rodaja: 'rodajas',
   atado: 'atados',
   hoja: 'hojas',
+  tallo: 'tallos',
+  chorrito: 'chorritos',
+  tira: 'tiras',
+  'puñado': 'puñados',
+  l: 'Lts',
 };
 
 export function pickUnitAbbreviationFromDb(

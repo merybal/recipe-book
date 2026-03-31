@@ -1,0 +1,15 @@
+@use "../../styles/flex" as *;
+
+.root {
+  @include Flex($align: center, $justify: center);
+}
+
+.spin {
+  animation: spinner-rotate 0.75s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}

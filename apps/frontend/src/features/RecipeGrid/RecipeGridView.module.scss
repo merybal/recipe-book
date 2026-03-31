@@ -1,21 +1,22 @@
-@use "../../design-system/styles/spacing" as *;
+@use "../../design-system/styles/color" as *;
 @use "../../design-system/styles/flex" as *;
 @use "../../design-system/styles/font" as *;
-@use "../../design-system/styles/color" as *;
+@use "../../design-system/styles/spacing" as *;
 
-.header {
-  @include Flex($justify: center, $align: center);
-  width: 100%;
+.titleRow {
+  @include Flex($align: center, $gap: sm);
+}
+
+.backButton {
+  flex-shrink: 0;
 }
 
 .pageTitle {
   @include Font($family: text, $size: xl, $weight: bold);
   @include Color($font: main-text);
+  flex: 1;
   margin: 0;
-}
-
-.chipRow {
-  @include Flex($wrap: wrap, $gap: sm, $align: center);
+  min-width: 0;
 }
 
 .error {
@@ -26,13 +27,4 @@
 .empty {
   @include Font($family: text, $size: sm, $weight: medium);
   @include Color($font: secondary-text);
-}
-
-.logo {
-  display: block;
-  height: auto;
-  max-height: 3.5rem;
-  width: auto;
-  max-width: min(100%, 17.5rem);
-  object-fit: contain;
 }

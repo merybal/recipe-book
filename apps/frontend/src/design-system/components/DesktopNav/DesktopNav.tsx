@@ -9,6 +9,7 @@ import styles from "./DesktopNav.module.scss";
 
 function isRecetasPath(pathname: string): boolean {
   if (pathname === "/") return true;
+  if (/^\/subcategories\/\d+$/.test(pathname)) return true;
   if (/^\/recipes\/\d+$/.test(pathname)) return true;
   if (/^\/recipes\/\d+\/pdf-preview$/.test(pathname)) return true;
   return false;
