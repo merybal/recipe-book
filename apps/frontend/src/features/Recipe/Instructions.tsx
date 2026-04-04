@@ -13,33 +13,42 @@ const Instructions = ({
   introduction,
   subrecipes,
 }: InstructionsProps) => {
+  const subrecipesWithInstructions = subrecipes.filter(
+    (s) => s.instructions && s.instructions.length > 0,
+  );
+  const hasPrepContent =
+    !!introduction?.trim() || subrecipesWithInstructions.length > 0;
+
+  if (!hasPrepContent) {
+    return null;
+  }
+
   return (
     <div className={styles.instructions}>
       <h2>Preparación</h2>
       {introduction?.trim() && (
         <p className={styles.introduction}>{introduction.trim()}</p>
       )}
-      {subrecipes.map((subrecipes, i) => {
+      {subrecipesWithInstructions.map((subrecipe, i) => {
         return (
           <div key={`seccion-${i}`} className={styles.subrecipe}>
-            {subrecipes.title && <h3>{subrecipes.title}</h3>}
+            {subrecipe.title && <h3>{subrecipe.title}</h3>}
             <ul className={styles["instructions-ul"]}>
-              {subrecipes.instructions &&
-                subrecipes.instructions.map((paragraph, j) => {
-                  return (
-                    <li
-                      key={`ingrediente-${j}`}
-                      className={styles["instructions-li"]}
-                    >
-                      {isNumbered && (
-                        <div className={styles["step-number"]}>
-                          <p>{j + 1}</p>
-                        </div>
-                      )}
-                      <p className={styles.paragraph}>{paragraph}</p>
-                    </li>
-                  );
-                })}
+              {subrecipe.instructions.map((paragraph, j) => {
+                return (
+                  <li
+                    key={`ingrediente-${j}`}
+                    className={styles["instructions-li"]}
+                  >
+                    {isNumbered && (
+                      <div className={styles["step-number"]}>
+                        <p>{j + 1}</p>
+                      </div>
+                    )}
+                    <p className={styles.paragraph}>{paragraph}</p>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         );

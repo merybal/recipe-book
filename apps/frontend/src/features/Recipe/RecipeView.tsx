@@ -429,12 +429,19 @@ const RecipeView = () => {
         </Tab>
         <Tab value="Receta" label="Receta">
           <IngredientList subrecipes={recipe.subrecipes} units={units} />
-          <Separator marginY="lg" />
-          <Instructions
-            isNumbered
-            introduction={recipe.introduction}
-            subrecipes={recipe.subrecipes}
-          />
+          {(Boolean(recipe.introduction?.trim()) ||
+            recipe.subrecipes.some(
+              (s) => s.instructions && s.instructions.length > 0,
+            )) && (
+            <>
+              <Separator marginY="lg" />
+              <Instructions
+                isNumbered
+                introduction={recipe.introduction}
+                subrecipes={recipe.subrecipes}
+              />
+            </>
+          )}
         </Tab>
       </Tabs>
     </div>

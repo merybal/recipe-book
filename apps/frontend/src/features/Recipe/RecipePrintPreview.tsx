@@ -175,12 +175,13 @@ function InstructionsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
       data-section="preparation"
     >
       <h2 className={styles.sectionTitle}>Preparación</h2>
-      {subrecipes.map((subrecipe, idx) => (
-        <div key={idx} className={styles.subrecipeBlock}>
-          {subrecipe.title && (
-            <h3 className={styles.subsectionTitle}>{subrecipe.title}</h3>
-          )}
-          {subrecipe.instructions && subrecipe.instructions.length > 0 && (
+      {subrecipes
+        .filter((s) => s.instructions && s.instructions.length > 0)
+        .map((subrecipe, idx) => (
+          <div key={idx} className={styles.subrecipeBlock}>
+            {subrecipe.title && (
+              <h3 className={styles.subsectionTitle}>{subrecipe.title}</h3>
+            )}
             <ol className={styles.instructionList}>
               {subrecipe.instructions.map((step, i) => (
                 <li key={i} className={styles.instructionStep}>
@@ -191,9 +192,8 @@ function InstructionsSection({ subrecipes }: { subrecipes: SubrecipeType[] }) {
                 </li>
               ))}
             </ol>
-          )}
-        </div>
-      ))}
+          </div>
+        ))}
     </section>
   );
 }

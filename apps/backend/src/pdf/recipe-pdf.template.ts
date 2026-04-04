@@ -329,11 +329,12 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
         <h2 class="section-title">Preparación</h2>
         ${introductionBlock}
         ${recipe.subrecipes
+          .filter((sr) => sr.instructions && sr.instructions.length > 0)
           .map(
             (sr) => `
           <div class="subrecipe-block">
             ${sr.title ? `<h3 class="subsection-title">${escapeHtml(sr.title)}</h3>` : ''}
-            ${(sr.instructions || [])
+            ${sr.instructions
               .map(
                 (step) => `<p class="instruction-text">${escapeHtml(step)}</p>`,
               )
@@ -411,8 +412,8 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     .info-block {
       margin-top: 14px;
       padding: 10px 0;
-      border-top: 1px solid #2d5a27;
-      border-bottom: 1px solid #2d5a27;
+      border-top: 1px solid #366c2f;
+      border-bottom: 1px solid #366c2f;
       line-height: 1.2;
       position: relative;
     }
@@ -447,7 +448,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       top: 0;
       bottom: 0;
       width: 1px;
-      background: #2d5a27;
+      background: #366c2f;
       transform: translateX(-50%);
     }
     .info-row {
@@ -460,11 +461,11 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      color: #2d5a27;
+      color: #366c2f;
     }
     .info-bullet {
       font-size: 0.7em;
-      color: #2d5a27;
+      color: #366c2f;
       margin: 0 4px;
     }
     .ingredient-list a {
@@ -474,10 +475,16 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     .section {
       margin-top: 14px;
     }
+    /* Same gap from horizontal rule to section title (Ingredientes, Preparación, Notas). */
+    .section-divider:not(.section-divider--after-title) + .section,
+    .info-block + .section,
+    .section-divider--after-title + .section {
+      margin-top: 8px;
+    }
     .section-divider {
-      margin-top: 20px;
+      margin-top: 12px;
       height: 1px;
-      background: #2d5a27;
+      background: #366c2f;
       break-before: avoid;
       page-break-before: avoid;
     }

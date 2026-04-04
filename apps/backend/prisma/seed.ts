@@ -249,7 +249,15 @@ const UNITS = [
     abbreviation_plural: null,
     name_en: 'kilogram',
     name_es: 'kilogramo',
-    synonyms: ['kilogram', 'kg', 'kilo', 'kilos', 'kilogramo', 'kilogramos'],
+    synonyms: [
+      'kilogram',
+      'kg',
+      'k',
+      'kilo',
+      'kilos',
+      'kilogramo',
+      'kilogramos',
+    ],
   },
   {
     abbreviation_singular: 'pzc',
@@ -406,14 +414,7 @@ const UNITS = [
     abbreviation_plural: 'chorritos',
     name_en: 'dash',
     name_es: 'chorrito',
-    synonyms: [
-      'dash',
-      'dashes',
-      'splash',
-      'splashes',
-      'chorrito',
-      'chorritos',
-    ],
+    synonyms: ['dash', 'dashes', 'splash', 'splashes', 'chorrito', 'chorritos'],
   },
   {
     abbreviation_singular: 'tira',
@@ -427,14 +428,7 @@ const UNITS = [
     abbreviation_plural: 'puñados',
     name_en: 'handful',
     name_es: 'puñado',
-    synonyms: [
-      'handful',
-      'handfuls',
-      'puñado',
-      'puñados',
-      'punado',
-      'punados',
-    ],
+    synonyms: ['handful', 'handfuls', 'puñado', 'puñados', 'punado', 'punados'],
   },
 ];
 
@@ -447,7 +441,7 @@ async function main() {
     });
   }
 
-  // Categories
+  // Categories (Sweet / Savory / Drinks). Only upsert — never delete categories here.
   const sweet = await prisma.categories.upsert({
     where: { name_en: 'Sweet' },
     update: { name_es: 'Dulce' },
@@ -464,155 +458,22 @@ async function main() {
     create: { name_en: 'Drinks', name_es: 'Bebida' },
   });
 
-  // Subcategories (many-to-many with Categories)
+  /**
+   * Subcategories (many-to-many with categories via CategorySubcategories).
+   * Fill `categoryIds` with any of: sweet.id, savory.id, drinks.id
+   *
+   * Example:
+   * { name_en: 'Pasta', name_es: 'Pastas', categoryIds: [savory.id] },
+   * { name_en: 'Cocktails', name_es: 'Tragos', categoryIds: [drinks.id] },
+   */
   const SUBCATEGORIES: {
     name_en: string;
     name_es: string;
     categoryIds: number[];
   }[] = [
+    // Sweet
     {
-      name_en: 'Pies & Empanadas',
-      name_es: 'Tartas & Empanadas',
-      categoryIds: [savory.id],
-    },
-    { name_en: 'Rice', name_es: 'Arroz', categoryIds: [savory.id] },
-    { name_en: 'Beef', name_es: 'Carne', categoryIds: [savory.id] },
-    { name_en: 'Chicken', name_es: 'Pollo', categoryIds: [savory.id] },
-    { name_en: 'Pork', name_es: 'Cerdo', categoryIds: [savory.id] },
-    { name_en: 'Muffins', name_es: 'Muffins', categoryIds: [savory.id] },
-    {
-      name_en: 'Muffins & Cupcakes',
-      name_es: 'Muffins & Cupcakes',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Breakfast',
-      name_es: 'Desayunos',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Cakes & Pies',
-      name_es: 'Tortas & Tartas',
-      categoryIds: [sweet.id],
-    },
-    { name_en: 'Ice Cream', name_es: 'Helado', categoryIds: [sweet.id] },
-    {
-      name_en: 'Cookies, Cookie Sandwiches & Biscuits',
-      name_es: 'Cookies, Alfajores & Masitas',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Scones',
-      name_es: 'Scones',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'Dressings & Dips',
-      name_es: 'Aderezos & Dips',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'Sauces',
-      name_es: 'Salsas',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'Spices & Seasonings',
-      name_es: 'Especias & Condimentos',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Pickled & Preserved',
-      name_es: 'Conservas',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'Croquettes',
-      name_es: 'Croquetas',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Finger Food',
-      name_es: 'Finger Food',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Side Dishes',
-      name_es: 'Guarniciones',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Salads',
-      name_es: 'Ensaladas',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Stews, Soups & Casseroles',
-      name_es: 'Guisos, Estofados, Sopas & Cazuelas',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Baked Dishes',
-      name_es: 'Platos al Horno',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Cold Dishes',
-      name_es: 'Platos Fríos',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Sandwiches',
-      name_es: 'Sandwiches',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Fajitas & Wraps',
-      name_es: 'Fajitas & Wraps',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Pasta',
-      name_es: 'Pasta',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Pizza',
-      name_es: 'Pizza',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Crackers & Savory Biscuits',
-      name_es: 'Galletas, Crackers & Bizcochos',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Fish & Seafood',
-      name_es: 'Pescado & Mariscos',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Bruschettas',
-      name_es: 'Bruschettas',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Vegetables',
-      name_es: 'Vegetales',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Loaf Cakes',
-      name_es: 'Budines',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'Mousses',
-      name_es: 'Mousses',
-      categoryIds: [sweet.id, savory.id],
-    },
-    {
-      name_en: 'No-Bake Desserts',
+      name_en: 'Cold Desserts',
       name_es: 'Postres Fríos',
       categoryIds: [sweet.id],
     },
@@ -622,265 +483,119 @@ async function main() {
       categoryIds: [sweet.id],
     },
     {
-      name_en: 'Brownies & Bars',
+      name_en: 'Brownies & Squares',
       name_es: 'Brownies & Cuadrados',
       categoryIds: [sweet.id],
     },
     {
-      name_en: 'Fillings & Frostings',
-      name_es: 'Rellenos & Coverturas',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Fillings',
-      name_es: 'Rellenos',
-      categoryIds: [savory.id],
-    },
-    {
-      name_en: 'Fruit Desserts',
-      name_es: 'Postres de Fruta',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Doughs',
-      name_es: 'Masas',
-      categoryIds: [sweet.id],
-    },
-    {
-      name_en: 'Doughs & Breads',
-      name_es: 'Masas & Panes',
-      categoryIds: [savory.id],
-    },
-    {
       name_en: 'Recipe Components',
-      name_es: 'Componentes de Receta',
+      name_es: 'Preparaciones Base',
+      categoryIds: [sweet.id],
+    },
+    {
+      name_en: 'Muffins, Cupcakes & Pancakes',
+      name_es: 'Muffins, Cupcakes & Panqueques',
+      categoryIds: [sweet.id],
+    },
+    {
+      name_en: 'Cakes & Pies',
+      name_es: 'Tortas & Tartas',
+      categoryIds: [sweet.id],
+    },
+    { name_en: 'Loaf Cakes', name_es: 'Budines', categoryIds: [sweet.id] },
+    // Sweet & Savory
+    {
+      name_en: 'Cookies, Cookie Sandwiches, Biscuits & Crackers',
+      name_es: 'Cookies, Alfajores, Masitas & Crackers',
       categoryIds: [sweet.id, savory.id],
     },
-    // Bebida
-    { name_en: 'Cocktails', name_es: 'Tragos', categoryIds: [drinks.id] },
-    { name_en: 'Smoothies', name_es: 'Licuados', categoryIds: [drinks.id] },
-    { name_en: 'Mocktails', name_es: 'Mocktails', categoryIds: [drinks.id] },
+    {
+      name_en: 'Scones & Chipa',
+      name_es: 'Scones & Chipa',
+      categoryIds: [sweet.id, savory.id],
+    },
+    // Savory
+    {
+      name_en: 'Empanadas & Pies',
+      name_es: 'Empanadas & Tartas',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Baked Dishes',
+      name_es: 'Platos Horneados',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Cold Dishes',
+      name_es: 'Platos Fríos',
+      categoryIds: [savory.id],
+    },
+    { name_en: 'Pasta', name_es: 'Pastas', categoryIds: [savory.id] },
+    {
+      name_en: 'Fish & Seafood',
+      name_es: 'Pescado & Mariscos',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Doughs, Breads & Pizza',
+      name_es: 'Masas, Panes & Pizza',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Side Dishes & Vegetables',
+      name_es: 'Guarniciones & Vegetales',
+      categoryIds: [savory.id],
+    },
+    { name_en: 'Rice Dishes', name_es: 'Arroces', categoryIds: [savory.id] },
+    {
+      name_en: 'Beef & Lamb',
+      name_es: 'Carne de Res & Cordero',
+      categoryIds: [savory.id],
+    },
+    { name_en: 'Poultry', name_es: 'Aves', categoryIds: [savory.id] },
+    { name_en: 'Pork', name_es: 'Cerdo', categoryIds: [savory.id] },
+    {
+      name_en: 'Dressings, Dips & Sauces',
+      name_es: 'Aderezos, Dips & Salsas',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Spices & Seasonings',
+      name_es: 'Especias & Condimentos',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Pickled & Preserved',
+      name_es: 'Conservas',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Finger Food',
+      name_es: 'Finger Food',
+      categoryIds: [savory.id],
+    },
+    {
+      name_en: 'Stews, Soups & Casseroles',
+      name_es: 'Guisos, Estofados, Sopas & Cazuelas',
+      categoryIds: [savory.id],
+    },
+    // Drinks
+    {
+      name_en: 'Cocktails',
+      name_es: 'Cocktails',
+      categoryIds: [drinks.id],
+    },
+    {
+      name_en: 'Mocktails',
+      name_es: 'Mocktails',
+      categoryIds: [drinks.id],
+    },
+    {
+      name_en: 'Juices & Smoothies',
+      name_es: 'Jugos & Smoothies',
+      categoryIds: [drinks.id],
+    },
   ];
-
-  // Remove Cookies from Savory (now only in Sweet)
-  const cookiesSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Cookies' },
-  });
-  if (cookiesSub) {
-    await prisma.categorySubcategories.deleteMany({
-      where: {
-        subcategory_id: cookiesSub.id,
-        category_id: savory.id,
-      },
-    });
-  }
-
-  // Remove Fillings & Frostings from Savory (now only in Sweet)
-  const fillingsFrostingsSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Fillings & Frostings' },
-  });
-  if (fillingsFrostingsSub) {
-    await prisma.categorySubcategories.deleteMany({
-      where: {
-        subcategory_id: fillingsFrostingsSub.id,
-        category_id: savory.id,
-      },
-    });
-  }
-
-  // Merge Cookie Sandwiches & Biscuits into Cookies -> Cookies, Alfajores & Masitas
-  const cookieSandwichesBiscuitsSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Cookie Sandwiches & Biscuits' },
-  });
-  if (cookiesSub && cookieSandwichesBiscuitsSub) {
-    // Migrate recipes from Cookie Sandwiches & Biscuits to Cookies
-    const recipesToMigrate = await prisma.recipeSubcategories.findMany({
-      where: { subcategory_id: cookieSandwichesBiscuitsSub.id },
-      select: { recipe_id: true, sort_order: true },
-    });
-    for (const rs of recipesToMigrate) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: cookieSandwichesBiscuitsSub.id,
-        },
-      });
-      const existing = await prisma.recipeSubcategories.findFirst({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: cookiesSub.id,
-        },
-      });
-      if (!existing) {
-        await prisma.recipeSubcategories.create({
-          data: {
-            recipe_id: rs.recipe_id,
-            subcategory_id: cookiesSub.id,
-            sort_order: rs.sort_order,
-          },
-        });
-      }
-    }
-    await prisma.categorySubcategories.deleteMany({
-      where: { subcategory_id: cookieSandwichesBiscuitsSub.id },
-    });
-    await prisma.subcategories.delete({
-      where: { id: cookieSandwichesBiscuitsSub.id },
-    });
-    await prisma.subcategories.update({
-      where: { id: cookiesSub.id },
-      data: {
-        name_en: 'Cookies, Cookie Sandwiches & Biscuits',
-        name_es: 'Cookies, Alfajores & Masitas',
-      },
-    });
-  }
-
-  // Migrate Potatoes (Papas) to Vegetables (Vegetales) and remove Potatoes subcategory
-  const potatoesSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Potatoes' },
-  });
-  const vegetablesSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Vegetables' },
-  });
-  if (potatoesSub && vegetablesSub) {
-    const recipesToMigrate = await prisma.recipeSubcategories.findMany({
-      where: { subcategory_id: potatoesSub.id },
-      select: { recipe_id: true, sort_order: true },
-    });
-    for (const rs of recipesToMigrate) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: potatoesSub.id,
-        },
-      });
-      const existing = await prisma.recipeSubcategories.findFirst({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: vegetablesSub.id,
-        },
-      });
-      if (!existing) {
-        await prisma.recipeSubcategories.create({
-          data: {
-            recipe_id: rs.recipe_id,
-            subcategory_id: vegetablesSub.id,
-            sort_order: rs.sort_order,
-          },
-        });
-      }
-    }
-    await prisma.categorySubcategories.deleteMany({
-      where: { subcategory_id: potatoesSub.id },
-    });
-    await prisma.subcategories.delete({
-      where: { id: potatoesSub.id },
-    });
-  }
-
-  // Remove Pies (Tartas) from Savory (now only in Sweet; savory uses Pies & Empanadas)
-  const piesSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Pies' },
-  });
-  const piesEmpanadasSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Pies & Empanadas' },
-  });
-  if (piesSub) {
-    await prisma.categorySubcategories.deleteMany({
-      where: {
-        subcategory_id: piesSub.id,
-        category_id: savory.id,
-      },
-    });
-  }
-  if (piesSub && piesEmpanadasSub) {
-    const savoryRecipesWithPies = await prisma.recipeSubcategories.findMany({
-      where: {
-        subcategory_id: piesSub.id,
-        recipe: { category_id: savory.id },
-      },
-      select: { recipe_id: true, sort_order: true },
-    });
-    for (const rs of savoryRecipesWithPies) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: piesSub.id,
-        },
-      });
-      const existing = await prisma.recipeSubcategories.findFirst({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: piesEmpanadasSub.id,
-        },
-      });
-      if (!existing) {
-        await prisma.recipeSubcategories.create({
-          data: {
-            recipe_id: rs.recipe_id,
-            subcategory_id: piesEmpanadasSub.id,
-            sort_order: rs.sort_order,
-          },
-        });
-      }
-    }
-  }
-
-  // Remove Doughs from Savory (now only in Sweet)
-  const doughsSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Doughs' },
-  });
-  if (doughsSub) {
-    await prisma.categorySubcategories.deleteMany({
-      where: {
-        subcategory_id: doughsSub.id,
-        category_id: savory.id,
-      },
-    });
-  }
-
-  // Remove Spices & Seasonings, Croquettes from Sweet (now only in Savory)
-  for (const name of ['Spices & Seasonings', 'Croquettes']) {
-    const sub = await prisma.subcategories.findUnique({
-      where: { name_en: name },
-    });
-    if (sub) {
-      await prisma.categorySubcategories.deleteMany({
-        where: {
-          subcategory_id: sub.id,
-          category_id: sweet.id,
-        },
-      });
-    }
-  }
-
-  // Rename legacy subcategory key (upsert uses name_en as unique)
-  const browniesLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Brownies' },
-  });
-  if (browniesLegacy) {
-    await prisma.subcategories.update({
-      where: { id: browniesLegacy.id },
-      data: {
-        name_en: 'Brownies & Bars',
-        name_es: 'Brownies & Cuadrados',
-      },
-    });
-  }
-
-  const breakfastsLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Breakfasts' },
-  });
-  if (breakfastsLegacy) {
-    await prisma.subcategories.update({
-      where: { id: breakfastsLegacy.id },
-      data: {
-        name_en: 'Breakfast',
-        name_es: 'Desayunos',
-      },
-    });
-  }
 
   for (const s of SUBCATEGORIES) {
     const sub = await prisma.subcategories.upsert({
@@ -898,220 +613,6 @@ async function main() {
         },
         update: {},
         create: { category_id: catId, subcategory_id: sub.id },
-      });
-    }
-  }
-
-  // Merge legacy Dressings + Dips into Dressings & Dips / Aderezos & Dips
-  const dressingsDipsMerged = await prisma.subcategories.findUnique({
-    where: { name_en: 'Dressings & Dips' },
-  });
-  const dipsLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Dips' },
-  });
-  const dressingsLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Dressings' },
-  });
-  if (dressingsDipsMerged && (dipsLegacy || dressingsLegacy)) {
-    for (const oldSub of [dipsLegacy, dressingsLegacy].filter(
-      (s): s is NonNullable<typeof dipsLegacy> => s != null,
-    )) {
-      const links = await prisma.recipeSubcategories.findMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      for (const link of links) {
-        await prisma.recipeSubcategories.deleteMany({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: oldSub.id,
-          },
-        });
-        const existing = await prisma.recipeSubcategories.findFirst({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: dressingsDipsMerged.id,
-          },
-        });
-        if (!existing) {
-          await prisma.recipeSubcategories.create({
-            data: {
-              recipe_id: link.recipe_id,
-              subcategory_id: dressingsDipsMerged.id,
-              sort_order: link.sort_order,
-            },
-          });
-        }
-      }
-      await prisma.categorySubcategories.deleteMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      await prisma.subcategories.delete({ where: { id: oldSub.id } });
-    }
-  }
-
-  // Merge legacy Stews + Soups into Stews, Soups & Casseroles / Guisos, Estofados, Sopas & Cazuelas
-  const stewsSoupsMerged = await prisma.subcategories.findUnique({
-    where: { name_en: 'Stews, Soups & Casseroles' },
-  });
-  const stewsLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Stews' },
-  });
-  const soupsLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Soups' },
-  });
-  if (stewsSoupsMerged && (stewsLegacy || soupsLegacy)) {
-    for (const oldSub of [stewsLegacy, soupsLegacy].filter(
-      (s): s is NonNullable<typeof stewsLegacy> => s != null,
-    )) {
-      const links = await prisma.recipeSubcategories.findMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      for (const link of links) {
-        await prisma.recipeSubcategories.deleteMany({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: oldSub.id,
-          },
-        });
-        const existing = await prisma.recipeSubcategories.findFirst({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: stewsSoupsMerged.id,
-          },
-        });
-        if (!existing) {
-          await prisma.recipeSubcategories.create({
-            data: {
-              recipe_id: link.recipe_id,
-              subcategory_id: stewsSoupsMerged.id,
-              sort_order: link.sort_order,
-            },
-          });
-        }
-      }
-      await prisma.categorySubcategories.deleteMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      await prisma.subcategories.delete({ where: { id: oldSub.id } });
-    }
-  }
-
-  // Merge legacy Pies (Tartas) + Cakes (Tortas) into Cakes & Pies / Tortas & Tartas
-  const cakesPiesMerged = await prisma.subcategories.findUnique({
-    where: { name_en: 'Cakes & Pies' },
-  });
-  const piesSweetLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Pies' },
-  });
-  const cakesLegacy = await prisma.subcategories.findUnique({
-    where: { name_en: 'Cakes' },
-  });
-  if (cakesPiesMerged && (piesSweetLegacy || cakesLegacy)) {
-    for (const oldSub of [piesSweetLegacy, cakesLegacy].filter(
-      (s): s is NonNullable<typeof piesSweetLegacy> => s != null,
-    )) {
-      const links = await prisma.recipeSubcategories.findMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      for (const link of links) {
-        await prisma.recipeSubcategories.deleteMany({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: oldSub.id,
-          },
-        });
-        const existing = await prisma.recipeSubcategories.findFirst({
-          where: {
-            recipe_id: link.recipe_id,
-            subcategory_id: cakesPiesMerged.id,
-          },
-        });
-        if (!existing) {
-          await prisma.recipeSubcategories.create({
-            data: {
-              recipe_id: link.recipe_id,
-              subcategory_id: cakesPiesMerged.id,
-              sort_order: link.sort_order,
-            },
-          });
-        }
-      }
-      await prisma.categorySubcategories.deleteMany({
-        where: { subcategory_id: oldSub.id },
-      });
-      await prisma.subcategories.delete({ where: { id: oldSub.id } });
-    }
-  }
-
-  // Migrate savory recipes from Doughs to Doughs & Breads (Masas & Panes)
-  const doughsBreadsSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Doughs & Breads' },
-  });
-  if (doughsSub && doughsBreadsSub) {
-    const savoryRecipesWithDoughs = await prisma.recipeSubcategories.findMany({
-      where: {
-        subcategory_id: doughsSub.id,
-        recipe: { category_id: savory.id },
-      },
-      select: { recipe_id: true, sort_order: true },
-    });
-    for (const rs of savoryRecipesWithDoughs) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: doughsSub.id,
-        },
-      });
-      await prisma.recipeSubcategories.create({
-        data: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: doughsBreadsSub.id,
-          sort_order: rs.sort_order,
-        },
-      });
-    }
-  }
-
-  // Remove Spices & Seasonings, Croquettes from Sweet recipes (no longer valid for Sweet)
-  for (const name of ['Spices & Seasonings', 'Croquettes']) {
-    const sub = await prisma.subcategories.findUnique({
-      where: { name_en: name },
-    });
-    if (sub) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          subcategory_id: sub.id,
-          recipe: { category_id: sweet.id },
-        },
-      });
-    }
-  }
-
-  // Migrate savory recipes from Fillings & Frostings to Fillings (Rellenos)
-  const fillingsSub = await prisma.subcategories.findUnique({
-    where: { name_en: 'Fillings' },
-  });
-  if (fillingsFrostingsSub && fillingsSub) {
-    const savoryRecipesWithFillingsFrostings = await prisma.recipeSubcategories.findMany({
-      where: {
-        subcategory_id: fillingsFrostingsSub.id,
-        recipe: { category_id: savory.id },
-      },
-      select: { recipe_id: true, sort_order: true },
-    });
-    for (const rs of savoryRecipesWithFillingsFrostings) {
-      await prisma.recipeSubcategories.deleteMany({
-        where: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: fillingsFrostingsSub.id,
-        },
-      });
-      await prisma.recipeSubcategories.create({
-        data: {
-          recipe_id: rs.recipe_id,
-          subcategory_id: fillingsSub.id,
-          sort_order: rs.sort_order,
-        },
       });
     }
   }
@@ -1144,6 +645,17 @@ async function main() {
       },
       create: u,
     });
+  }
+
+  const pocilloUnit = await prisma.units.findUnique({
+    where: { abbreviation_singular: 'pocillo' },
+  });
+  if (pocilloUnit) {
+    await prisma.ingredients.updateMany({
+      where: { unit_id: pocilloUnit.id },
+      data: { unit_id: null },
+    });
+    await prisma.units.delete({ where: { id: pocilloUnit.id } });
   }
 
   console.log('Seed completed');

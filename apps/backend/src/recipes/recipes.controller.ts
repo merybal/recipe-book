@@ -26,11 +26,20 @@ export class RecipesController {
   ) {}
 
   @Get()
-  async getAllRecipes(@Query('subcategory_id') subcategoryId?: string) {
+  async getAllRecipes(
+    @Query('subcategory_id') subcategoryId?: string,
+    @Query('category_id') categoryId?: string,
+  ) {
     if (subcategoryId != null && subcategoryId !== '') {
       const id = parseInt(subcategoryId, 10);
       if (!Number.isNaN(id)) {
         return this.recipesService.getRecipesBySubcategoryId(id);
+      }
+    }
+    if (categoryId != null && categoryId !== '') {
+      const id = parseInt(categoryId, 10);
+      if (!Number.isNaN(id)) {
+        return this.recipesService.getRecipesByCategoryId(id);
       }
     }
     return this.recipesService.getAllRecipes();

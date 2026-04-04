@@ -146,17 +146,21 @@ const HomeView = () => {
       <h1 className={styles.pageTitle}>Recetas</h1>
 
       <div className={styles.chipRow}>
-        {categories.map((c) => (
-          <Chip
-            key={c.id}
-            selected={selectedCategoryId === c.id}
-            onClick={() =>
-              setSelectedCategoryId((prev) => (prev === c.id ? null : c.id))
-            }
-          >
-            {c.name}
-          </Chip>
-        ))}
+        {categories.map((c) => {
+          const chipLabel =
+            locale === "es" && c.name_es === "Bebida" ? "Bebidas" : c.name;
+          return (
+            <Chip
+              key={c.id}
+              selected={selectedCategoryId === c.id}
+              onClick={() =>
+                setSelectedCategoryId((prev) => (prev === c.id ? null : c.id))
+              }
+            >
+              {chipLabel}
+            </Chip>
+          );
+        })}
         <Chip
           key="all-recipes"
           selected={selectedCategoryId === null && categoriesLoaded}
@@ -180,7 +184,9 @@ const HomeView = () => {
             ? locale === "es"
               ? "No hay recetas para mostrar."
               : "No recipes to show."
-            : "No hay subcategorías para mostrar."}
+            : locale === "es"
+              ? "No hay subcategorías con recetas para mostrar."
+              : "No subcategories with recipes to show."}
         </p>
       )}
 
