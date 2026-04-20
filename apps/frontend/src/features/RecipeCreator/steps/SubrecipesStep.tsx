@@ -8,6 +8,8 @@
  * - When deleting all sets except one: returns to initial state (simple mode)
  *   with "Separate..." button, helper text, and the set without title.
  */
+import clsx from "clsx";
+import Box from "@/design-system/components/Box";
 import Input from "@/design-system/components/Input";
 import Textarea from "@/design-system/components/Textarea";
 import Separator from "@/design-system/components/Separator";
@@ -150,7 +152,7 @@ const SubrecipesStep = ({
   };
 
   const subrecipeInputs = (
-    <div className={styles.step}>
+    <Box className={clsx(styles.step, styles["subrecipe-textarea-grid"])}>
       <Textarea
         id="simple-ingredients"
         label="Ingredientes"
@@ -187,7 +189,7 @@ const SubrecipesStep = ({
           }));
         }}
       />
-    </div>
+    </Box>
   );
 
   return (
@@ -221,9 +223,9 @@ const SubrecipesStep = ({
       {isSelected ? (
         <>
           {subrecipeDrafts.map((draft, index) => (
-            <div key={index}>
-              <div className={styles.step}>
-                <div className={styles["subrecipe-title-container"]}>
+            <Box key={index}>
+              <Box className={styles.step}>
+                <Box className={styles["subrecipe-title-container"]}>
                   <Input
                     id={`subrecipe-title-${index}`}
                     label="Título de preparación"
@@ -245,52 +247,54 @@ const SubrecipesStep = ({
                       onClick={() => handleRemoveSubrecipe(index)}
                     />
                   )}
-                </div>
+                </Box>
 
-                <Textarea
-                  id={`subrecipe-${index}-ingredients`}
-                  label="Ingredientes"
-                  required
-                  rows={5}
-                  showLabel
-                  value={subrecipeDrafts[index].ingredientsText || ""}
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    const parsedIngredients = parseIngredientsText(
-                      text,
-                      units,
-                    );
-                    setSubrecipeDrafts((prev) =>
-                      prev.map((draft, i) =>
-                        i === index
-                          ? {
-                              ...draft,
-                              ingredientsText: text,
-                              ingredients: parsedIngredients,
-                            }
-                          : draft,
-                      ),
-                    );
-                  }}
-                />
-                <Textarea
-                  id={`instructions-subrecipe-${index}`}
-                  label="Instrucciones"
-                  required
-                  rows={5}
-                  showLabel
-                  value={subrecipeDrafts[index].instructionsText}
-                  onChange={(e) =>
-                    handleSubrecipeChange(
-                      index,
-                      "instructionsText",
-                      e.target.value,
-                    )
-                  }
-                />
-              </div>
+                <Box className={styles["subrecipe-textarea-grid"]}>
+                  <Textarea
+                    id={`subrecipe-${index}-ingredients`}
+                    label="Ingredientes"
+                    required
+                    rows={5}
+                    showLabel
+                    value={subrecipeDrafts[index].ingredientsText || ""}
+                    onChange={(e) => {
+                      const text = e.target.value;
+                      const parsedIngredients = parseIngredientsText(
+                        text,
+                        units,
+                      );
+                      setSubrecipeDrafts((prev) =>
+                        prev.map((draft, i) =>
+                          i === index
+                            ? {
+                                ...draft,
+                                ingredientsText: text,
+                                ingredients: parsedIngredients,
+                              }
+                            : draft,
+                        ),
+                      );
+                    }}
+                  />
+                  <Textarea
+                    id={`instructions-subrecipe-${index}`}
+                    label="Instrucciones"
+                    required
+                    rows={5}
+                    showLabel
+                    value={subrecipeDrafts[index].instructionsText}
+                    onChange={(e) =>
+                      handleSubrecipeChange(
+                        index,
+                        "instructionsText",
+                        e.target.value,
+                      )
+                    }
+                  />
+                </Box>
+              </Box>
               {index < subrecipeDrafts.length - 1 && <Separator />}
-            </div>
+            </Box>
           ))}
           <Button
             className={styles["add-subrecipe-button"]}

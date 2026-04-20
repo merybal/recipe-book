@@ -9,7 +9,6 @@ import BasicInformationStep from "./steps/BasicInformationStep";
 import SubrecipesStep from "./steps/SubrecipesStep";
 import AdditionalInformationStep from "./steps/AdditionalInformationStep";
 import PageLayout from "@/design-system/components/PageLayout/PageLayout";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import {
   validateStepCover,
   validateBakingInstructions,
@@ -189,8 +188,6 @@ const CreateRecipeView = () => {
     isSelected: boolean;
     files: File[];
   } | null>(null);
-
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     axios

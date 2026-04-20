@@ -1,5 +1,13 @@
 @use "../../design-system/styles/flex" as *;
+@use "../../design-system/styles/spacing" as *;
 
 .file-upload {
   @include Flex($direction: column, $gap: md);
+  width: 100%;
+  min-width: 0;
+
+  @media (min-width: 769px) {
+    max-width: 50rem;
+    @include Margin($x: auto);
+  }
 }

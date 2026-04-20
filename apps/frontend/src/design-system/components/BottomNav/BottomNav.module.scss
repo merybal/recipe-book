@@ -25,7 +25,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  @include Padding($all: none);
   font: inherit;
   color: inherit;
 
@@ -57,7 +57,7 @@
 .center-slot {
   flex: 1;
   @include Flex($direction: column, $align: center, $justify: flex-end);
-  padding-bottom: 0.5rem;
+  @include Padding($bottom: xs);
 }
 
 .center-button {
@@ -84,5 +84,5 @@
 .center-label {
   @include Font($family: text, $size: xxs, $weight: medium);
   @include Color($font: secondary-text);
-  margin-top: 0.25rem;
+  @include Margin($top: xxs);
 }

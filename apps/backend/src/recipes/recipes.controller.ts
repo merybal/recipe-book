@@ -17,6 +17,7 @@ import { recipeToPdfData } from '../pdf/recipe-to-pdf-data';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { CreateRecipeWithRelationsDto } from './dto/create-recipe-with-relations.dto';
 import { AddDietaryRestrictionsDto } from '@/dietary-restrictions/dto/add-dietary-restrictions.dto';
+import { buildContentDispositionFilename } from '../utils/content-disposition-filename';
 
 @Controller('recipes')
 export class RecipesController {
@@ -87,7 +88,10 @@ export class RecipesController {
     const buffer = await this.pdfService.generateRecipePdf(pdfData);
     const filename = `${recipe.title.replace(/[^a-z0-9áéíóúñü\s-]/gi, '_')}.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.setHeader(
+      'Content-Disposition',
+      buildContentDispositionFilename('attachment', filename),
+    );
     res.send(buffer);
   }
 
@@ -102,10 +106,15 @@ export class RecipesController {
       throw new NotFoundException('Recipe not found');
     }
     const pdfData = recipeToPdfData(recipe as Parameters<typeof recipeToPdfData>[0]);
-    const buffer = await this.pdfService.generateRecipePdf(pdfData);
+    const buffer = await this.pdfService.generateRecipePdf(pdfData, {
+      preview: true,
+    });
     const filename = `${recipe.title.replace(/[^a-z0-9áéíóúñü\s-]/gi, '_')}.pdf`;
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `inline; filename="${filename}"`);
+    res.setHeader(
+      'Content-Disposition',
+      buildContentDispositionFilename('inline', filename),
+    );
     res.send(buffer);
   }
 

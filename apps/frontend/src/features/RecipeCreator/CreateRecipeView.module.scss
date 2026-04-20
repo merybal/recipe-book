@@ -6,6 +6,18 @@
 
 // TODO organize this mess
 
+$form-desktop-min: 769px;
+
+.create-recipe-page {
+  width: 100%;
+  min-width: 0;
+
+  @media (min-width: $form-desktop-min) {
+    max-width: 70rem;
+    @include Margin($x: auto);
+  }
+}
+
 .recipe-form {
   @include Flex($direction: column);
   flex: 1;
@@ -28,9 +40,9 @@
 
   .fieldset-categories {
     @include Flex($direction: column, $gap: sm);
+    @include Margin($all: none);
+    @include Padding($all: none);
     border: none;
-    padding: 0;
-    margin: 0;
   }
 
   .legend-categories {
@@ -52,8 +64,7 @@
   }
 
   .submit-container {
-    @include Flex($direction: column, $gap: sm);
-    align-items: flex-start;
+    @include Flex($direction: column, $gap: sm, $align: start);
   }
 
   .submit-error {
@@ -71,6 +82,68 @@
     > .submit-container {
       flex: 1;
       min-width: 0;
+    }
+
+    @media (min-width: $form-desktop-min) {
+      @include Flex($justify: end, $gap: md);
+
+      > button,
+      > .submit-container {
+        flex: 0 0 auto;
+        min-width: 10rem;
+      }
+    }
+  }
+
+  .cover-step-grid {
+    @include Flex($direction: column, $gap: xl);
+
+    @media (min-width: $form-desktop-min) {
+      display: grid;
+      grid-template-columns: minmax(14rem, 22rem) minmax(0, 1fr);
+      column-gap: resolve-size(xl);
+      row-gap: resolve-size(xl);
+      align-items: start;
+    }
+  }
+
+  .cover-step-fields {
+    @include Flex($direction: column, $gap: xl);
+    min-width: 0;
+  }
+
+  .mold-fields-row,
+  .baking-fields-row {
+    @include Flex($direction: column, $gap: xl);
+
+    @media (min-width: $form-desktop-min) {
+      display: grid;
+      gap: resolve-size(lg);
+      align-items: start;
+    }
+  }
+
+  .mold-fields-row {
+    @media (min-width: $form-desktop-min) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .baking-fields-row {
+    @media (min-width: $form-desktop-min) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .subrecipe-textarea-grid {
+    @include Flex($direction: column, $gap: xl);
+
+    @media (min-width: $form-desktop-min) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: resolve-size(xl);
+      row-gap: resolve-size(xl);
+      align-items: start;
     }
   }
 

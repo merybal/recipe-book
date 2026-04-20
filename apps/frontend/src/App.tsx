@@ -17,20 +17,25 @@ function App() {
     <ThemeProvider>
       <div className={styles.app}>
         <DesktopNav />
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/" element={<HomeView />} />
-            <Route
-              path="/subcategories/:subcategoryId"
-              element={<RecipeGridView />}
-            />
-            <Route path="/components" element={<ComponentShowcaseView />} />
-            <Route path="/recipes/:id" element={<RecipeView />} />
-            <Route path="/recipes/:id/pdf-preview" element={<RecipePdfPreviewRoute />} />
-            <Route path="/recipes/:id/edit" element={<CreateRecipeView />} />
-            <Route path="/create-recipe" element={<CreateRecipeView />} />
-          </Routes>
-        </Suspense>
+        <div className={styles["app-main"]}>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<HomeView />} />
+              <Route
+                path="/subcategories/:subcategoryId"
+                element={<RecipeGridView />}
+              />
+              <Route path="/components" element={<ComponentShowcaseView />} />
+              <Route path="/recipes/:id" element={<RecipeView />} />
+              <Route
+                path="/recipes/:id/pdf-preview"
+                element={<RecipePdfPreviewRoute />}
+              />
+              <Route path="/recipes/:id/edit" element={<CreateRecipeView />} />
+              <Route path="/create-recipe" element={<CreateRecipeView />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
     </ThemeProvider>
   );

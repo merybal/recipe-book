@@ -11,7 +11,7 @@
     @include Font($align: justify);
     line-height: 1.5;
     white-space: pre-wrap;
-    margin: 0;
+    @include Margin($all: none);
   }
 
   .subrecipe {

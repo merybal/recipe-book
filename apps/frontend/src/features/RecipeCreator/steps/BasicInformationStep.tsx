@@ -1,3 +1,4 @@
+import Box from "@/design-system/components/Box";
 import Input from "@/design-system/components/Input";
 import Separator from "@/design-system/components/Separator";
 
@@ -109,34 +110,36 @@ const BasicInformationStep = ({
     <div>
       <section aria-labelledby="mold-section" className={styles.step}>
         <h2 id="mold-section">Molde</h2>
-        <Input
-          id="mold-type"
-          label="Tipo"
-          showLabel
-          placeholder="Budinera"
-          value={recipe.mold?.type || ""}
-          onChange={handleMoldTypeChange}
-        />
+        <Box className={styles["mold-fields-row"]}>
+          <Input
+            id="mold-type"
+            label="Tipo"
+            showLabel
+            placeholder="Budinera"
+            value={recipe.mold?.type || ""}
+            onChange={handleMoldTypeChange}
+          />
 
-        <Input
-          id="mold-size"
-          label="Tamaño"
-          showLabel
-          placeholder="24x30 cm"
-          value={recipe.mold?.size || ""}
-          onChange={handleMoldSizeChange}
-        />
+          <Input
+            id="mold-size"
+            label="Tamaño"
+            showLabel
+            placeholder="24x30 cm"
+            value={recipe.mold?.size || ""}
+            onChange={handleMoldSizeChange}
+          />
 
-        <Input
-          id="servings"
-          label="Rinde"
-          showLabel
-          placeholder="4 porciones"
-          value={recipe.servings ?? ""}
-          onChange={(e) =>
-            setRecipe((prev) => ({ ...prev, servings: e.target.value }))
-          }
-        />
+          <Input
+            id="servings"
+            label="Rinde"
+            showLabel
+            placeholder="4 porciones"
+            value={recipe.servings ?? ""}
+            onChange={(e) =>
+              setRecipe((prev) => ({ ...prev, servings: e.target.value }))
+            }
+          />
+        </Box>
       </section>
 
       <Separator />
@@ -146,33 +149,35 @@ const BasicInformationStep = ({
         className={styles.step}
       >
         <h2 id="baking-instructions-section">Cocción</h2>
-        <Input
-          id="time"
-          label="Tiempo"
-          showLabel
-          placeholder="45 min o 10-15 min"
-          type="text"
-          value={recipe.bakingInstructions?.time ?? ""}
-          onChange={handleTimeChange}
-          {...(errors.time && { error: errors.time })}
-        />
+        <Box className={styles["baking-fields-row"]}>
+          <Input
+            id="time"
+            label="Tiempo"
+            showLabel
+            placeholder="45 min o 10-15 min"
+            type="text"
+            value={recipe.bakingInstructions?.time ?? ""}
+            onChange={handleTimeChange}
+            {...(errors.time && { error: errors.time })}
+          />
 
-        <Input
-          id="temperature"
-          inputMode="numeric"
-          label="Temperatura en Celcius (°C)"
-          showLabel
-          pattern="[0-9]*"
-          placeholder="180"
-          type="text"
-          value={
-            recipe.bakingInstructions?.temperature !== undefined
-              ? recipe.bakingInstructions.temperature.toString()
-              : ""
-          }
-          onChange={handleTemperatureChange}
-          {...(errors.temperature && { error: errors.temperature })}
-        />
+          <Input
+            id="temperature"
+            inputMode="numeric"
+            label="Temperatura en Celcius (°C)"
+            showLabel
+            pattern="[0-9]*"
+            placeholder="180"
+            type="text"
+            value={
+              recipe.bakingInstructions?.temperature !== undefined
+                ? recipe.bakingInstructions.temperature.toString()
+                : ""
+            }
+            onChange={handleTemperatureChange}
+            {...(errors.temperature && { error: errors.temperature })}
+          />
+        </Box>
       </section>
     </div>
   );

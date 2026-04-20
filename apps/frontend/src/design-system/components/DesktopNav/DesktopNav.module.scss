@@ -22,8 +22,7 @@
 }
 
 .brand {
-  @include Flex($align: center);
-  flex-shrink: 0;
+  @include Flex($align: center, $shrink: 0);
   text-decoration: none;
 }
 
@@ -37,8 +36,8 @@
 .links {
   @include Flex($align: center, $gap: xl);
   list-style: none;
-  margin: 0;
-  padding: 0;
+  @include Margin($all: none);
+  @include Padding($all: none);
 }
 
 .link {

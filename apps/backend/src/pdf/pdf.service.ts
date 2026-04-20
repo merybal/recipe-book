@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { chromium } from 'playwright';
 import {
   buildRecipeHtml,
+  type BuildRecipeHtmlOptions,
   type RecipePdfData,
 } from './recipe-pdf.template';
 
@@ -10,8 +11,11 @@ const PAGE_CONTENT_HEIGHT_PX = (190 * 96) / 25.4;
 
 @Injectable()
 export class PdfService {
-  async generateRecipePdf(recipe: RecipePdfData): Promise<Buffer> {
-    const html = buildRecipeHtml(recipe);
+  async generateRecipePdf(
+    recipe: RecipePdfData,
+    options?: BuildRecipeHtmlOptions,
+  ): Promise<Buffer> {
+    const html = buildRecipeHtml(recipe, options);
 
     const browser = await chromium.launch({
       headless: true,
@@ -32,9 +36,12 @@ export class PdfService {
         if (document.fonts?.ready) await document.fonts.ready;
       });
 
-      // Hide dividers at page boundaries (top or bottom of a page)
+      // Hide dividers at page boundaries (top or bottom of a page).
+      // Skip [data-pdf-always-show] — section breaks must stay visible even if Y aligns with an estimated page edge.
       await page.evaluate((pageHeight: number) => {
-        const dividers = document.querySelectorAll('[data-pdf-divider]');
+        const dividers = document.querySelectorAll(
+          '[data-pdf-divider]:not([data-pdf-always-show])',
+        );
         const threshold = 15;
 
         dividers.forEach((el) => {

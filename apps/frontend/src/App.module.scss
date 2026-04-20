@@ -1,8 +1,18 @@
 @use "./design-system/styles/flex" as *;
+@use "./design-system/styles/spacing" as *;
 
 .app {
   @include Flex($direction: column);
-  margin-left: auto; // TODO check if it's passed to pagelayout in desktop mode
-  margin-right: auto;
-  max-width: 75rem; //1200px
+  width: 100%;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.app-main {
+  @include Flex($direction: column);
+  flex: 1;
+  min-width: 0;
+  @include Margin($x: auto);
+  max-width: 75rem;
+  width: 100%;
 }

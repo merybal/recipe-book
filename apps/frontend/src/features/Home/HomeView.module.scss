@@ -11,7 +11,7 @@
 .pageTitle {
   @include Font($family: text, $size: xl, $weight: bold);
   @include Color($font: main-text);
-  margin: 0;
+  @include Margin($all: none);
 }
 
 .chipRow {

@@ -16,17 +16,15 @@
   @include Color($font: black, $bg: white);
   width: 35rem; // A5 (148mm)
   min-height: 49.6rem; // A5 (210mm)
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
+  @include Margin($y: none, $x: auto);
+  @include Flex($direction: column);
   hyphens: none;
 }
 
 .title {
   @include Font($size: xl, $weight: bold);
   @include Color($font: black);
-  @include Margin($bottom: md);
-  margin-top: 0;
+  @include Margin($top: none, $bottom: md);
   text-align: center;
 }
 
@@ -36,7 +34,7 @@
 
 .sectionWithDivider {
   @include Margin($top: md);
-  padding-top: 1rem;
+  @include Padding($top: md);
   @include Border($top: (thin, solid, outline));
 }
 
@@ -53,16 +51,14 @@
 .sectionTitle {
   @include Font($size: sm, $weight: bold);
   @include Color($font: black);
-  @include Margin($bottom: md);
-  margin-top: 0;
+  @include Margin($top: none, $bottom: md);
   text-align: center;
 }
 
 .subsectionTitle {
   @include Font($size: xs, $weight: bold);
   @include Color($font: black);
-  @include Margin($bottom: xs);
-  margin-top: 0;
+  @include Margin($top: none, $bottom: xs);
 }
 
 .infoRow {

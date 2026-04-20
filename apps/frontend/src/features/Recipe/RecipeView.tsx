@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { pickUnitAbbreviationFromDb } from "@/utils/unit-abbreviation";
+import { parseFilenameFromContentDisposition } from "@/utils/content-disposition";
 
 import Instructions from "@/features/Recipe/Instructions";
 import IngredientList from "@/features/Recipe/IngredientList";
@@ -328,10 +329,16 @@ const RecipeView = () => {
               const res = await axios.get(`/api/recipes/${recipe.id}/pdf`, {
                 responseType: "blob",
               });
+              const cd =
+                res.headers["content-disposition"] ??
+                res.headers["Content-Disposition"];
+              const fallback = `${recipe.title.replace(/[^a-z0-9áéíóúñü\s-]/gi, "_")}.pdf`;
+              const filename =
+                parseFilenameFromContentDisposition(cd) ?? fallback;
               const url = URL.createObjectURL(res.data);
               const link = document.createElement("a");
               link.href = url;
-              link.download = `${recipe.title.replace(/[^a-z0-9áéíóúñü\s-]/gi, "_")}.pdf`;
+              link.download = filename;
               link.click();
               URL.revokeObjectURL(url);
             }}

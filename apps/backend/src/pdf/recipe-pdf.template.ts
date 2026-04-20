@@ -3,6 +3,11 @@
  * Duplex margins: @page :left (binding left), @page :right (binding right).
  */
 
+export type BuildRecipeHtmlOptions = {
+  /** When true, uses preview duplex @page margins and pdf--preview class (see template). */
+  preview?: boolean;
+};
+
 export type RecipePdfData = {
   title: string;
   introduction?: string;
@@ -120,7 +125,46 @@ function iconSvg(name: string, size = 12): string {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
 }
 
-export function buildRecipeHtml(recipe: RecipePdfData): string {
+/**
+ * Duplex margins for GET .../pdf (download). Optional CSS: `html.pdf--download`.
+ */
+const PDF_PAGE_DUPLEX_DOWNLOAD = `
+    @page :left {
+      margin-left: 10mm;
+      margin-right: 20mm;
+    }
+    @page :right {
+      margin-left: 20mm;
+      margin-right: 10mm;
+    }`;
+
+/**
+ * Duplex margins for GET .../pdf-preview only.
+ * Adjusts for problems with specific printer.
+ * Download uses PDF_PAGE_DUPLEX_DOWNLOAD. Optional CSS: `html.pdf--preview`.
+ * Page right: odd number (1)
+ * Page left: even number (2)
+ */
+const PDF_PAGE_DUPLEX_PREVIEW = `
+    @page :left {
+      margin-left: 8mm;
+      margin-right: 22mm;
+    }
+    @page :right {
+      margin-left: 18mm;
+      margin-right: 12mm;
+    }`;
+
+export function buildRecipeHtml(
+  recipe: RecipePdfData,
+  options?: BuildRecipeHtmlOptions,
+): string {
+  const isPreview = options?.preview === true;
+  const pdfVariantClass = isPreview ? 'pdf--preview' : 'pdf--download';
+  const duplexPageMarginsCss = isPreview
+    ? PDF_PAGE_DUPLEX_PREVIEW
+    : PDF_PAGE_DUPLEX_DOWNLOAD;
+
   const hasLeft = !!recipe.author || !!recipe.bakingInfo || !!recipe.mold;
   const hasRight =
     !!recipe.servings || (recipe.dietaryRestrictions?.length ?? 0) > 0;
@@ -324,7 +368,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       ? `<p class="introduction">${escapeHtml(recipe.introduction).replace(/\n/g, '<br>')}</p>`
       : '';
     preparationHtml = `
-      <div class="section-divider" data-pdf-divider></div>
+      <div class="section-divider" data-pdf-divider data-pdf-always-show></div>
       <section class="section">
         <h2 class="section-title">Preparación</h2>
         ${introductionBlock}
@@ -348,7 +392,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
   const notesHtml =
     recipe.notes && recipe.notes.length > 0
       ? `
-      <div class="section-divider" data-pdf-divider></div>
+      <div class="section-divider" data-pdf-divider data-pdf-always-show></div>
       <section class="section">
         <h2 class="section-title">Notas</h2>
         <ul class="notes-list">
@@ -358,7 +402,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       : '';
 
   return `<!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="${pdfVariantClass}">
 <head>
   <meta charset="UTF-8">
   <title>${escapeHtml(recipe.title)}</title>
@@ -379,14 +423,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
     @page :first {
       margin-top: 5mm;
     }
-    @page :left {
-      margin-left: 10mm;
-      margin-right: 20mm;
-    }
-    @page :right {
-      margin-left: 20mm;
-      margin-right: 10mm;
-    }
+${duplexPageMarginsCss}
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -558,6 +595,7 @@ export function buildRecipeHtml(recipe: RecipePdfData): string {
       margin: 0 0 14px 0;
       text-align: justify;
     }
+    /* Optional: extra rules for preview vs download (html.pdf--preview / html.pdf--download) */
   </style>
 </head>
 <body>

@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Box from "@/design-system/components/Box";
 import DragAndDrop from "@/design-system/components/DragAndDrop";
 import Button from "@/design-system/components/Button";
 import ButtonIcon from "@/design-system/components/ButtonIcon";
@@ -138,38 +139,42 @@ const CoverStep = ({
     <div>
       <section aria-labelledby="cover-section" className={styles.step}>
         <h2 id="cover-section">Portada</h2>
-        <DragAndDrop
-          accept="image/*"
-          boxIcon="Image"
-          boxLabelInitial={getBoxLabelInitial}
-          buttonLabel={getButtonLabelDragAndDrop}
-          maxFileAmount={1}
-          showSingleImagePreview
-          existingImageUrl={files.length === 0 ? recipe.imageUrl : undefined}
-          value={files}
-          onChange={handleFileChange}
-        />
+        <Box className={styles["cover-step-grid"]}>
+          <DragAndDrop
+            accept="image/*"
+            boxIcon="Image"
+            boxLabelInitial={getBoxLabelInitial}
+            buttonLabel={getButtonLabelDragAndDrop}
+            maxFileAmount={1}
+            showSingleImagePreview
+            existingImageUrl={files.length === 0 ? recipe.imageUrl : undefined}
+            value={files}
+            onChange={handleFileChange}
+          />
 
-        <Input
-          id="title"
-          label="Titulo"
-          required
-          showLabel
-          placeholder="Tarta de manzana"
-          value={recipe.title}
-          onChange={handleTitleChange}
-          {...(errors.title && { error: errors.title })}
-        />
+          <Box className={styles["cover-step-fields"]}>
+            <Input
+              id="title"
+              label="Titulo"
+              required
+              showLabel
+              placeholder="Tarta de manzana"
+              value={recipe.title}
+              onChange={handleTitleChange}
+              {...(errors.title && { error: errors.title })}
+            />
 
-        <Textarea
-          id="introduction"
-          label="Introducción"
-          showLabel
-          placeholder="Breve descripción o contexto de la receta..."
-          rows={3}
-          value={recipe.introduction ?? ""}
-          onChange={handleIntroductionChange}
-        />
+            <Textarea
+              id="introduction"
+              label="Introducción"
+              showLabel
+              placeholder="Breve descripción o contexto de la receta..."
+              rows={3}
+              value={recipe.introduction ?? ""}
+              onChange={handleIntroductionChange}
+            />
+          </Box>
+        </Box>
       </section>
 
       <Separator />

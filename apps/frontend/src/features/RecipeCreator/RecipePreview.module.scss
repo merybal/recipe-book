@@ -3,6 +3,8 @@
 @use "../../design-system/styles/spacing" as *;
 @use "../../design-system/styles/font" as *;
 
+$preview-desktop-min: 769px;
+
 .recipe-preview {
   @include Flex($direction: column);
 
@@ -10,7 +12,7 @@
     @include Flex($direction: column, $gap: lg);
 
     .step-header {
-      @include Flex($justify: space-between, $align: center);
+      @include Flex($justify: between, $align: center);
     }
 
     .recipe-image {
@@ -26,6 +28,56 @@
         object-position: center;
         display: block;
       }
+
+      @media (min-width: $preview-desktop-min) {
+        max-width: 26rem;
+      }
+    }
+
+    .cover-preview-layout {
+      @include Flex($direction: column, $gap: lg);
+
+      @media (min-width: $preview-desktop-min) {
+        display: grid;
+        grid-template-columns: minmax(14rem, 26rem) minmax(0, 1fr);
+        column-gap: resolve-size(xl);
+        row-gap: resolve-size(lg);
+        align-items: start;
+      }
+
+      &.cover-preview-layout--no-image {
+        @media (min-width: $preview-desktop-min) {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+
+    .cover-preview-text {
+      @include Flex($direction: column, $gap: lg);
+      min-width: 0;
+    }
+
+    .preview-mold-row,
+    .preview-baking-row {
+      @include Flex($direction: column, $gap: lg);
+
+      @media (min-width: $preview-desktop-min) {
+        display: grid;
+        gap: resolve-size(lg);
+        align-items: start;
+      }
+    }
+
+    .preview-mold-row {
+      @media (min-width: $preview-desktop-min) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .preview-baking-row {
+      @media (min-width: $preview-desktop-min) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     h3 {
@@ -37,6 +89,18 @@
 
       &:not(:last-child) {
         @include Margin($bottom: xl);
+      }
+    }
+
+    .subrecipe-preview-columns {
+      @include Flex($direction: column, $gap: lg);
+
+      @media (min-width: $preview-desktop-min) {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: resolve-size(xl);
+        row-gap: resolve-size(lg);
+        align-items: start;
       }
     }
 
